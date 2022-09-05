@@ -32,6 +32,11 @@ export const ClusterProvider = ({ children }) => {
         endpoint,
       });
     } else {
+      setCluster({
+        name: "Mainnet Beta",
+        endpoint: "https://solana-api.projectserum.com",
+      });
+
       localStorage.setItem(
         "Solana-Cluster",
         JSON.stringify({
@@ -43,7 +48,7 @@ export const ClusterProvider = ({ children }) => {
   }, []);
 
   return (
-    <ClusterContext.Provider value={{ Cluster,changeCluster }}>
+    <ClusterContext.Provider value={{ Cluster, changeCluster }}>
       {children}
     </ClusterContext.Provider>
   );
