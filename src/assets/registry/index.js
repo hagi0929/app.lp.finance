@@ -9,16 +9,6 @@ export const RpcRegistry = [
     name: "Mainnet Beta",
     endpoint: "https://solana-api.projectserum.com",
   },
-  {
-    id: 2,
-    name: "Testnet",
-    endpoint: "https://api.testnet.solana.com",
-  },
-  {
-    id: 3,
-    name: "Devnet",
-    endpoint: "https://api.devnet.solana.com",
-  },
 ];
 
 export const NavbarRegistry = [
