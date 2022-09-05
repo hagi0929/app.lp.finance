@@ -1,5 +1,6 @@
 import React, { useEffect, memo } from "react";
 import TokenWrapper from "./TokenModel.style";
+import Input from "Layout/Form/Input";
 
 const TokenModel = ({ isOpen, isClose, List, setSelected }) => {
   const FilterFunction = () => {
@@ -56,13 +57,16 @@ const TokenModel = ({ isOpen, isClose, List, setSelected }) => {
             <div className="row Coin_bottom_Section mt-4">
               <div className="col-12">
                 <div className="search_box">
-                  <input
+                  <Input
                     type="text"
                     name="search"
                     autoComplete="off"
                     id="myInput"
                     placeholder="Search name"
                     onKeyUp={() => FilterFunction()}
+                    active={3}
+                    p="0.8rem 1.5rem"
+                    br="15px"
                   />
                 </div>
               </div>

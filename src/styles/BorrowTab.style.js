@@ -10,7 +10,6 @@ const BorrowTabWrapper = styled.div`
         width: 100% !important;
 
         .nav-link {
-          position: relative;
           padding: 1.4rem 0rem;
           width: 100%;
           text-align: center;
@@ -26,31 +25,8 @@ const BorrowTabWrapper = styled.div`
           &.active {
             color: ${(props) => props.theme.BodyMainColor};
             background: ${(props) => props.theme.BodySecondaryBg};
-            backdrop-filter: ${(props) => props.theme.BodyFilter};
             border-radius: 20px 20px 0px 0px;
             top: 1px;
-
-            &::before {
-              content: "";
-              position: absolute;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              border-radius: 20px 20px 0px 0px;
-              border-top: 2px solid transparent;
-              border-right: 2px solid transparent;
-              border-left: 2px solid transparent;
-              border-bottom: 0px solid transparent;
-              background: ${(props) => props.theme.BodyMainLine};
-              -webkit-mask: ${(props) => props.theme.BodyMask};
-              -webkit-mask-composite: destination-out;
-              -moz-mask: ${(props) => props.theme.BodyMask};
-              -moz-mask-composite: destination-out;
-              -o-mask: ${(props) => props.theme.BodyMask};
-              -o-mask-composite: destination-out;
-              mask-composite: exclude;
-            }
           }
 
           &:hover {
@@ -91,27 +67,6 @@ const BorrowTabWrapper = styled.div`
         padding: 2rem 2rem;
         z-index: 500;
 
-        &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          border-top: 2px solid transparent;
-          border-bottom: 2px solid transparent;
-          border-left: 2px solid transparent;
-          border-right: 2px solid transparent;
-          background: ${(props) => props.theme.BodyMainLine};
-          -webkit-mask: ${(props) => props.theme.BodyMask};
-          -webkit-mask-composite: destination-out;
-          -moz-mask: ${(props) => props.theme.BodyMask};
-          -moz-mask-composite: destination-out;
-          -o-mask: ${(props) => props.theme.BodyMask};
-          -o-mask-composite: destination-out;
-          mask-composite: exclude;
-        }
-
         .deposit {
           .deposit_card {
             .input_form {
@@ -121,17 +76,6 @@ const BorrowTabWrapper = styled.div`
                 position: absolute;
                 top: 10px;
                 left: 10px;
-              }
-            }
-          }
-
-          .details {
-            .btn_section {
-              button {
-                color: ${(props) => props.theme.BodyMainColor};
-                border: none;
-                background: ${(props) => props.theme.BodySecondaryBg};
-                padding: 0.6rem 3.5rem;
               }
             }
           }
@@ -154,7 +98,7 @@ const BorrowTabWrapper = styled.div`
         position: relative;
 
         hr {
-          border: 1px solid white;
+          border: 1px solid ${(props) => props.theme.BodyMainColor};
           width: 100%;
         }
 
@@ -292,9 +236,8 @@ const BorrowTabWrapper = styled.div`
               vertical-align: top;
 
               p {
-                color: ${(props) => props.theme.BodyTraceryColor};
-                font-weight: bold;
-                font-size: 1.5rem;
+                color: ${(props) => props.theme.BodyMainColor};
+                font-size: 1.3rem;
               }
 
               span {

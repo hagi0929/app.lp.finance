@@ -338,15 +338,15 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
                 />
                 <defs>
                   <linearGradient id="gradientArea" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#8b4898" stopOpacity={0.9} />
-                    <stop offset="90%" stopColor="#8b4898" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#0c0" stopOpacity={0.9} />
+                    <stop offset="90%" stopColor="#0c0" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <Area
                   isAnimationActive={true}
                   type="monotone"
                   dataKey="price"
-                  stroke="#8b4898"
+                  stroke="#0c0"
                   fill="url(#gradientArea)"
                 />
                 <XAxis dataKey="time" hide />

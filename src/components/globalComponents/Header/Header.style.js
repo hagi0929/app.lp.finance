@@ -97,22 +97,6 @@ const HeaderWrapper = styled.div`
       .left_ui_block {
         display: flex !important;
 
-        .Network_section {
-          display: none;
-
-          .Network_btn {
-            background: ${(props) => props.theme.BodySecondaryBg};
-            padding: 0.5rem 2rem;
-            border-radius: 16px;
-            cursor: pointer;
-
-            .network_img {
-              width: auto;
-              height: 1.5rem;
-            }
-          }
-        }
-
         .left_ui_block_hide {
           display: flex !important;
 
@@ -138,7 +122,7 @@ const HeaderWrapper = styled.div`
                 width: 100%;
                 height: 2px;
                 opacity: 0;
-                background: ${(props) => props.theme.BodySecondaryLine};
+                background: ${(props) => props.theme.BodyMainColor};
                 transition: 450ms all;
               }
 
@@ -170,7 +154,7 @@ const HeaderWrapper = styled.div`
                 width: 100%;
                 height: 2px;
                 opacity: 1;
-                background: ${(props) => props.theme.BodySecondaryLine};
+                background: ${(props) => props.theme.BodyMainColor};
                 transition: 450ms all;
               }
             }
@@ -193,7 +177,7 @@ const HeaderWrapper = styled.div`
 
               button {
                 background: ${(props) => props.theme.BodySecondaryBg};
-                border: none;
+                border: 1px solid ${(props) => props.theme.BodyMainColor};
                 color: ${(props) => props.theme.BodyMainColor};
                 font-style: normal;
                 font-weight: 600;
@@ -203,7 +187,7 @@ const HeaderWrapper = styled.div`
                 justify-content: center;
                 font-size: 1rem;
                 height: 48px;
-                padding: 0.5rem 2rem;
+                padding: 0.5rem 0rem;
                 border-radius: 50px;
                 width: 180px;
               }
@@ -214,12 +198,6 @@ const HeaderWrapper = styled.div`
 
               .dropdown_btn {
                 background: transparent;
-                border: none;
-                outline: none;
-                width: 100%;
-                transition: all 0.3s;
-                display: flex;
-                align-items: center;
 
                 .setting {
                   color: ${(props) => props.theme.BodyMainColor};
@@ -255,7 +233,7 @@ const HeaderWrapper = styled.div`
                       font-size: 1.1rem;
                       font-weight: 600;
                       border-bottom: 2px solid
-                        ${(props) => props.theme.HeaderSecondary};
+                        ${(props) => props.theme.BodyMainColor};
                       padding-bottom: 7px;
                     }
 

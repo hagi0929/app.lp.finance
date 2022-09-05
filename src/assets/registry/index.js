@@ -84,33 +84,33 @@ export const NavbarMobileRegistry = [
 export const FooterRegistry = [
   {
     id: 1,
-    icon: <FaTwitter />,
+    icon: <FaTwitter className="foot_icon" />,
     url: "https://twitter.com/LPFinance_",
   },
   {
     id: 2,
-    icon: <FaTelegramPlane />,
+    icon: <FaTelegramPlane className="foot_icon" />,
     url: "https://t.me/LP_Defi_Official_group",
   },
   {
     id: 3,
-    icon: <AiFillMediumCircle />,
+    icon: <AiFillMediumCircle className="foot_icon" />,
     url: " https://medium.com/@LP_Finance",
   },
   {
     id: 4,
-    icon: <GrLinkedinOption />,
+    icon: <GrLinkedinOption className="foot_icon" />,
     url: "https://www.linkedin.com/company/lpdefi/",
   },
 
   {
     id: 5,
-    icon: <AiFillGithub />,
+    icon: <AiFillGithub className="foot_icon" />,
     url: "https://github.com/LP-Finance-Inc",
   },
   {
     id: 6,
-    icon: <FaDiscord />,
+    icon: <FaDiscord className="foot_icon" />,
     url: "https://discord.gg/ug7mstrHNW",
   },
 ];
@@ -230,7 +230,7 @@ export const TokenRegistry = {
   ZRX: "https://lptokenbucket.s3.amazonaws.com/73bb05b24fe2e29a2becac2dd13f9f7e",
   ENJ: "https://lptokenbucket.s3.amazonaws.com/5a6293e7ed85b850afd627c361f00657",
   USDP: "https://lptokenbucket.s3.amazonaws.com/f7492ff0e2c823bf731146c48eb1590e",
-  zSOL: "https://lptokenbucket.s3.amazonaws.com/230c108aaf8ccc43b13c51e79b2a4cd4",
+  zSOL: "https://lptokenbucket.s3.amazonaws.com/3bbe25222b5f0f485fe1fb61003f55e8",
 };
 
 export const LiquidStaking = [

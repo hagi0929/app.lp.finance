@@ -12,7 +12,7 @@ const StakeSolana = () => {
 
   return (
     <StakeWrapper>
-      <div className="container Stake mb-5">
+      <div className="container Stake mb-5 mt-lg-4 mt-md-4 mt-2">
         <div className="row">
           <div className="col-12 d-flex justify-content-center flex-column">
             <div className="stake_title text-center">

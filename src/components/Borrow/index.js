@@ -10,9 +10,9 @@ const Borrow = () => {
 
   return (
     <>
-      <BorrowWrapper pie={0}>
+      <BorrowWrapper pie={30}>
         <div className="container borrow">
-          <div className="row">
+          <div className="row mt-4">
             <div className="col-12 d-flex justify-content-center flex-column">
               <div className="borrow_title text-center">
                 <h1>LP Finance Protocol</h1>

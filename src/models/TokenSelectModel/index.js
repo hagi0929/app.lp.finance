@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import TokenSelectWrapper from "./TokenSelect.style";
+import Input from "Layout/Form/Input";
 
 const generateSearchTerm = (item, searchValue) => {
   const normalizedSearchValue = searchValue.toLowerCase();
@@ -86,15 +87,18 @@ const TokenSelectModel = ({
                 <i className="zmdi zmdi-close" onClick={CloseCoinModel} />
               </div>
             </div>
-            <div className="row Coin_bottom_Section mt-3">
+            <div className="row Coin_bottom_Section mt-4">
               <div className="col-12">
                 <div className="search_box">
-                  <input
+                  <Input
                     type="text"
-                    placeholder="Search by token or paste address"
+                    placeholder="Search by token or address"
                     autoFocus
                     value={search}
                     onChange={handleUpdateSearch}
+                    active={3}
+                    p="0.8rem 1.5rem"
+                    br="15px"
                   />
                 </div>
               </div>

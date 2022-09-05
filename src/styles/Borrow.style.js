@@ -14,7 +14,7 @@ const BorrowWrapper = styled.div`
       align-items: center;
 
       p {
-        color: ${(props) => props.theme.HeaderSecondary};
+        color: ${(props) => props.theme.BodyMainColor};
         font-size: 1.1rem;
       }
     }
@@ -51,7 +51,7 @@ const BorrowWrapper = styled.div`
         position: relative;
 
         hr {
-          border: 1px solid white;
+          border: 1px solid ${(props) => props.theme.BodyMainColor};
           width: 100%;
         }
 
@@ -97,7 +97,7 @@ const BorrowWrapper = styled.div`
               }
 
               .pie {
-                --c: #fd37ae;
+                --c: ${(props) => props.theme.BodyTraceryColor};
                 --b: 16px;
                 --w: 150px;
                 --p: ${(props) => props.pie};
@@ -179,11 +179,14 @@ const BorrowWrapper = styled.div`
 
             .miter1,
             .miter2 {
-              z-index: -1;
               position: absolute;
 
               p {
                 color: ${(props) => props.theme.BodyMainColor};
+              }
+
+              img {
+                z-index: 300;
               }
             }
 
@@ -214,7 +217,6 @@ const BorrowWrapper = styled.div`
             }
 
             .cart_details {
-              z-index: -1;
               p,
               span {
                 color: ${(props) => props.theme.BodyMainColor};

@@ -6,20 +6,14 @@ const FooterWrapper = styled.div`
     margin: auto;
     padding: 1rem 0rem 0rem 0rem;
     min-height: 10rem;
-    background: black;
+    background: ${(props) => props.theme.BodySecondaryBg};
     box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
       rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
 
     hr {
       height: 1px;
       margin: 10px 0px;
-
-      background: linear-gradient(
-        90deg,
-        #664898 0%,
-        #009dd9 47.53%,
-        #18b298 97.08%
-      );
+      background: ${(props) => props.theme.BodyPrimaryBg};
     }
 
     .top_section {
@@ -35,28 +29,23 @@ const FooterWrapper = styled.div`
           a {
             color: white;
             font-size: 1.7rem;
+
+            .foot_icon {
+              color: ${(props) => props.theme.BodyMainColor};
+            }
           }
         }
       }
     }
+
     .bottom_section {
       padding: 0rem 0rem 1rem 0rem;
+
       .copyright {
         p {
-          color: white;
+          color: ${(props) => props.theme.BodyMainColor};
           font-size: 0.9rem;
           width: 230px;
-          background-image: linear-gradient(
-            90deg,
-            #664898 0%,
-            #009dd9 47.53%,
-            #18b298 97.08%
-          );
-          background-clip: text;
-          -webkit-background-clip: text;
-          -moz-background-clip: text;
-          -webkit-text-stroke: 1.5px transparent;
-          -moz-text-stroke: 1.5px transparent;
         }
       }
     }

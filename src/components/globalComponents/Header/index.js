@@ -8,6 +8,7 @@ import HeaderWrapper from "./Header.style";
 import { AiOutlineSetting } from "react-icons/ai";
 import { RpcRegistry } from "assets/registry";
 import { useCluster } from "contexts/ClusterContext";
+import Button from "Layout/Button";
 
 const Header = () => {
   const { Cluster, changeCluster } = useCluster();
@@ -106,7 +107,7 @@ const Header = () => {
                       <div
                         className={dropdown ? "btn-group show" : "btn-group"}
                       >
-                        <button
+                        <Button
                           type="button"
                           className="dropdown_btn"
                           data-display="static"
@@ -120,7 +121,7 @@ const Header = () => {
                           }}
                         >
                           <AiOutlineSetting className="setting" />
-                        </button>
+                        </Button>
                         <div
                           className={
                             dropdown

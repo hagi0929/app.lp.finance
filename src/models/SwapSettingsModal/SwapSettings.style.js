@@ -33,7 +33,7 @@ const SwapSettingsWrapper = styled.div`
     transition: all 300ms ease-in-out;
     background: ${(props) => props.theme.BodySecondaryBg};
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
-    border: 1px solid ${(props) => props.theme.BodyMainColorBg};
+    border: 1px solid ${(props) => props.theme.BodyPrimaryBg};
   }
 
   .popup.active .popup-container {
@@ -105,7 +105,7 @@ const SwapSettingsWrapper = styled.div`
               transition: 0.4s all;
 
               &.active {
-                color: ${(props) => props.theme.ButtonLine};
+                color: ${(props) => props.theme.BodyMainColor};
                 background: rgba(255, 255, 255, 0.1);
               }
 
@@ -138,12 +138,12 @@ const SwapSettingsWrapper = styled.div`
               }
 
               &::placeholder {
-                color: ${(props) => props.theme.HeaderSecondary};
+                color: ${(props) => props.theme.BodyMainColor};
               }
             }
             p {
               position: absolute;
-              color: ${(props) => props.theme.HeaderSecondary};
+              color: ${(props) => props.theme.BodyMainColor};
               right: 20px;
               top: 11px;
               font-size: 1rem;

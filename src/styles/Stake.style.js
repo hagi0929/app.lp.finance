@@ -14,7 +14,7 @@ const StakeWrapper = styled.div`
       align-items: center;
 
       p {
-        color: ${(props) => props.theme.HeaderSecondary};
+        color: ${(props) => props.theme.BodyMainColor};
       }
     }
 
@@ -24,7 +24,7 @@ const StakeWrapper = styled.div`
       padding: 0.2rem;
 
       p {
-        color: ${(props) => props.theme.HeaderSecondary};
+        color: ${(props) => props.theme.BodyMainColor};
         padding: 0.5rem 2rem;
         cursor: pointer;
       }

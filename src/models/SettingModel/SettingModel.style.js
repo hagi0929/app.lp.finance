@@ -31,6 +31,7 @@ const SettingModelWrapper = styled.div`
     opacity: 0.5;
     transition: all 300ms ease-in-out;
     background: ${(props) => props.theme.BodySecondaryBg};
+    border: 1px solid ${(props) => props.theme.BodyPrimaryBg};
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
   }
 
@@ -103,7 +104,7 @@ const SettingModelWrapper = styled.div`
               text-align: center;
               font-size: 1rem;
               border-radius: 5px;
-              color: ${(props) => props.theme.HeaderSecondary};
+              color: ${(props) => props.theme.BodyMainColor};
               margin-bottom: none;
               border: 0px solid transparent;
               border-top-left-radius: none;
@@ -147,12 +148,12 @@ const SettingModelWrapper = styled.div`
               }
 
               &::placeholder {
-                color: ${(props) => props.theme.HeaderSecondary};
+                color: ${(props) => props.theme.BodyMainColor};
               }
             }
             p {
               position: absolute;
-              color: ${(props) => props.theme.HeaderSecondary};
+              color: ${(props) => props.theme.BodyMainColor};
               right: 20px;
               top: 11px;
               font-size: 1rem;

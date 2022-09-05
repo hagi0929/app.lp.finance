@@ -19,7 +19,6 @@ const SwapWrapper = styled.div`
         padding: 1rem;
         background: ${(props) => props.theme.BodySecondaryBg};
         border-radius: 18px;
-        border: 1px solid ${(props) => props.theme.BodyLine};
 
         .swap_form {
           .swapPay_section,
@@ -249,7 +248,7 @@ const SwapWrapper = styled.div`
             width: 100%;
             height: 2px;
             opacity: 1;
-            background: ${(props) => props.theme.BodySecondaryLine};
+            background: ${(props) => props.theme.BodyMainColor};
             transition: 450ms all;
           }
 
@@ -309,8 +308,7 @@ const SwapWrapper = styled.div`
                   color: ${(props) => props.theme.BodyMainColor};
                   border: 1px solid ${(props) => props.theme.BodyMainColor};
                   border-radius: 10px;
-                  padding: 0.2rem 0.5rem;
-                  background: #8b4898;
+                  padding: 0.2rem 0.6rem;
                 }
 
                 .notActive {

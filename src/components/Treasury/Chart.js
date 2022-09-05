@@ -28,7 +28,7 @@ const Chart = () => {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+          <Area type="monotone" dataKey="uv" stroke="#0c0" fill="#0c0" />
         </AreaChart>
       </ResponsiveContainer>
     </div>

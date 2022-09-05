@@ -32,6 +32,7 @@ const RoutesWrapper = styled.div`
     opacity: 0.5;
     transition: all 300ms ease-in-out;
     background: ${(props) => props.theme.BodySecondaryBg};
+    border: 1px solid ${(props) => props.theme.BodyPrimaryBg};
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
   }
 
@@ -108,7 +109,7 @@ const RoutesWrapper = styled.div`
           }
 
           .active {
-            border: 1px solid ${(props) => props.theme.ButtonLine};
+            border: 1px solid ${(props) => props.theme.BodyMainColor};
           }
 
           .routes_card {

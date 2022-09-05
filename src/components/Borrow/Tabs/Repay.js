@@ -67,7 +67,7 @@ const Repay = ({ publicKey }) => {
               <div className="btn_section">
                 <Button
                   active={1}
-                  p="0.6rem 1rem"
+                  p="0.6rem 2rem"
                   br="0px"
                   className="not-allowed"
                 >

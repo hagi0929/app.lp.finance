@@ -31,6 +31,7 @@ const TokenWrapper = styled.div`
     opacity: 0.5;
     transition: all 300ms ease-in-out;
     background: ${(props) => props.theme.BodySecondaryBg};
+    border: 1px solid ${(props) => props.theme.BodyPrimaryBg};
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
   }
 
@@ -63,45 +64,11 @@ const TokenWrapper = styled.div`
       }
 
       .Coin_bottom_Section {
-        .search_box {
-          input {
-            position: relative;
-            display: flex;
-            align-items: center;
-            -webkit-box-align: center;
-            outline: none;
-            border: none;
-            border: 1px solid ${(props) => props.theme.BodyPrimaryBg};
-            border-radius: 15px;
-            overflow-y: scroll;
-            width: 100%;
-            outline: none;
-            text-indent: 10px;
-            padding: 0.8rem 0.5rem;
-            color: ${(props) => props.theme.BodyMainColor};
-            opacity: 0.9;
-            background: none;
-            white-space: nowrap;
-            appearance: none;
-            font-size: 1rem;
-            transition: border 100ms ease 0s;
-            &:hover,
-            &:focus {
-              outline: none;
-            }
-            &::placeholder {
-              color: ${(props) => props.theme.BodyMainColor};
-              opacity: 0.9;
-            }
-          }
-        }
-
         .token_list {
           max-height: 350px;
           min-height: 100px;
           overflow-y: scroll;
           overflow-x: hidden;
-          width: 100%;
 
           &::-webkit-scrollbar {
             width: 7px;
@@ -139,7 +106,7 @@ const TokenWrapper = styled.div`
               font-size: 0.9rem;
             }
             span {
-              color: rgba(255, 255, 255, 0.8);
+              color: ${(props) => props.theme.BodyMainColor};
               font-size: 0.8rem;
             }
           }
