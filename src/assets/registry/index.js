@@ -3,6 +3,24 @@ import { AiFillGithub, AiFillMediumCircle } from "react-icons/ai";
 import { GrLinkedinOption } from "react-icons/gr";
 import { FaDiscord } from "react-icons/fa";
 
+export const RpcRegistry = [
+  {
+    id: 1,
+    name: "Mainnet Beta",
+    endpoint: "https://solana-api.projectserum.com",
+  },
+  {
+    id: 2,
+    name: "Testnet",
+    endpoint: "https://api.testnet.solana.com",
+  },
+  {
+    id: 3,
+    name: "Devnet",
+    endpoint: "https://api.devnet.solana.com",
+  },
+];
+
 export const NavbarRegistry = [
   {
     id: 1,
@@ -28,6 +46,38 @@ export const NavbarRegistry = [
     name: "Stake",
     pathName: "/stake",
     href: "/stake",
+  },
+];
+
+export const NavbarMobileRegistry = [
+  {
+    id: 1,
+    name: "Borrow",
+    pathName: "/",
+    href: "/",
+  },
+
+  {
+    id: 2,
+    name: "Swap",
+    pathName: "/swap",
+    href: "/swap",
+  },
+  {
+    id: 3,
+    name: "Treasury",
+    pathName: "/treasury",
+    href: "/treasury",
+  },
+  {
+    id: 4,
+    name: "Stake",
+    pathName: "/stake",
+    href: "/stake",
+  },
+  {
+    id: 5,
+    name: "Setting",
   },
 ];
 

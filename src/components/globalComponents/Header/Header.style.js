@@ -36,7 +36,8 @@ const HeaderWrapper = styled.div`
       list-style-type: none;
 
       li {
-        a {
+        a,
+        p {
           padding: 10px 8px 10px 0px;
           text-decoration: none;
           font-size: 0.9rem;
@@ -188,7 +189,7 @@ const HeaderWrapper = styled.div`
 
             .Wallet_section {
               position: relative;
-              margin-left: 1rem;
+              margin-left: 0.5rem;
 
               button {
                 background: ${(props) => props.theme.BodySecondaryBg};
@@ -205,6 +206,103 @@ const HeaderWrapper = styled.div`
                 padding: 0.5rem 2rem;
                 border-radius: 50px;
                 width: 180px;
+              }
+            }
+
+            .btn-group {
+              width: 100%;
+
+              .dropdown_btn {
+                background: transparent;
+                border: none;
+                outline: none;
+                width: 100%;
+                transition: all 0.3s;
+                display: flex;
+                align-items: center;
+
+                .setting {
+                  color: ${(props) => props.theme.BodyMainColor};
+                  font-size: 1.3rem;
+                  margin-left: 10px;
+                }
+              }
+
+              .dropdown-menu {
+                position: absolute !important;
+                background: ${(props) => props.theme.BodySecondaryBg};
+                margin: 1.7rem 0 0;
+                padding: 0rem;
+                border-radius: 8px;
+                transition: all 0.2s;
+                opacity: 1;
+                overflow: hidden;
+                transform-origin: top center;
+                transform: scale(1, 0);
+                display: block;
+                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                width: 350px;
+
+                .dropdown-item {
+                  padding: 1rem;
+                  margin: 0rem 0rem;
+                  width: 100%;
+                  transition: all 0.2s;
+
+                  .title {
+                    p {
+                      color: ${(props) => props.theme.BodyMainColor};
+                      font-size: 1.1rem;
+                      font-weight: 600;
+                      border-bottom: 2px solid
+                        ${(props) => props.theme.HeaderSecondary};
+                      padding-bottom: 7px;
+                    }
+
+                    span {
+                      color: ${(props) => props.theme.BodyMainColor};
+                      font-size: 1rem;
+                    }
+                  }
+
+                  .networks_card {
+                    background: ${(props) => props.theme.BodyPrimaryBg};
+                    padding: 0.5rem 1rem;
+                    border-radius: 10px;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+
+                    .name,
+                    .checked {
+                      p,
+                      i {
+                        color: ${(props) => props.theme.BodyMainColor};
+                      }
+                    }
+
+                    .checked {
+                      width: 100%;
+                      text-align: end;
+                    }
+                  }
+
+                  &:hover {
+                    background: ${(props) => props.theme.BodyPrimaryBg};
+                  }
+                  $:focus {
+                    background: ${(props) => props.theme.BodyPrimaryBg};
+                  }
+                }
+                .dropdown-item:hover > span,
+                .dropdown-item:hover > profile_icon {
+                  color: ${(props) => props.theme.BodyMainColor};
+                }
+              }
+              &.show {
+                .dropdown-menu {
+                  transform: scale(1);
+                }
               }
             }
           }

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState, memo } from "react";
 import {
   ConnectionProvider,
   WalletProvider,
@@ -15,13 +15,13 @@ import {
   Coin98WalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 import { WalletModalProvider } from "WalletAdapter";
-// import { clusterApiUrl } from "@solana/web3.js";
+import { useCluster } from "contexts/ClusterContext";
 
 require("assets/css/wallet.css");
 
 const WalletWrapper = ({ children }) => {
-  const network = WalletAdapterNetwork.Mainnet;
-  // const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+  const { Cluster } = useCluster();
+  const [network, setNetwork] = useState(null);
 
   const endpoint = useMemo(() => "https://solana-api.projectserum.com", []);
 
@@ -39,10 +39,25 @@ const WalletWrapper = ({ children }) => {
     [network]
   );
 
+  useEffect(() => {
+    if (Cluster?.name === "Mainnet Beta") {
+      setNetwork(WalletAdapterNetwork.Mainnet);
+    } else if (Cluster?.name === "Testnet") {
+      setNetwork(WalletAdapterNetwork.Testnet);
+    } else if (Cluster?.name === "Devnet") {
+      setNetwork(WalletAdapterNetwork.Devnet);
+    }
+    return () => {
+      setNetwork(null);
+    };
+  }, [Cluster]);
+
   return (
     <>
       {/* autoConnect */}
-      <ConnectionProvider endpoint={endpoint}>
+      <ConnectionProvider
+        endpoint={Cluster?.endpoint ? Cluster?.endpoint : endpoint}
+      >
         <WalletProvider wallets={wallets}>
           <WalletModalProvider>{children}</WalletModalProvider>
         </WalletProvider>
@@ -51,4 +66,4 @@ const WalletWrapper = ({ children }) => {
   );
 };
 
-export default WalletWrapper;
+export default memo(WalletWrapper);

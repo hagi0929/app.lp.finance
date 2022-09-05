@@ -1,29 +1,33 @@
-import { ENV as ENVChainId } from "@solana/spl-token-registry";
+import { PublicKey } from "@solana/web3.js";
 
-// Endpoints, connection
-export const ENV = process.env.REACT_APP_PUBLIC_CLUSTER || "mainnet-beta";
+export const getInputMintAddress = (network) => {
+  let INPUT_MINT_ADDRESS;
+  if (network === "Devnet") {
+    //SOL
+    INPUT_MINT_ADDRESS = new PublicKey(
+      "So11111111111111111111111111111111111111112"
+    );
+  } else {
+    // USDC
+    INPUT_MINT_ADDRESS = new PublicKey(
+      "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    );
+  }
+  return INPUT_MINT_ADDRESS;
+};
 
-export const CHAIN_ID =
-  ENV === "mainnet-beta"
-    ? ENVChainId.MainnetBeta
-    : ENV === "devnet"
-    ? ENVChainId.Devnet
-    : ENV === "testnet"
-    ? ENVChainId.Testnet
-    : ENVChainId.MainnetBeta;
-
-export const SOLANA_RPC_ENDPOINT =
-  ENV === "devnet"
-    ? "https://api.devnet.solana.com"
-    : "https://api.mainnet-beta.solana.com";
-
-// Token Mints
-export const INPUT_MINT_ADDRESS =
-  ENV === "devnet"
-    ? "So11111111111111111111111111111111111111112" // SOL
-    : "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"; // USDC
-
-export const OUTPUT_MINT_ADDRESS =
-  ENV === "devnet"
-    ? "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt" // SRM
-    : "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac"; // MANGO
+export const getOutMintAddress = (network) => {
+  let OUTPUT_MINT_ADDRESS;
+  if (network === "Devnet") {
+    // SRM
+    OUTPUT_MINT_ADDRESS = new PublicKey(
+      "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt"
+    );
+  } else {
+    // MANGO
+    OUTPUT_MINT_ADDRESS = new PublicKey(
+      "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac"
+    );
+  }
+  return OUTPUT_MINT_ADDRESS;
+};

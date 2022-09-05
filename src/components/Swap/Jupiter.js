@@ -232,13 +232,6 @@ const Jupiter = ({
     setWalletTokenPrices(data);
   };
 
-  const refreshWallet = async () => {
-    setLoadWalletTokens(true);
-    await fetchWalletTokens();
-    await getWalletTokenPrices();
-    setLoadWalletTokens(false);
-  };
-
   const getSwapFeeTokenValue = async () => {
     if (!selectedRoute) return;
     const mints = selectedRoute.marketInfos.map((info) => info.lpFee.mint);

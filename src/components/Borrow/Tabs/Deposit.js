@@ -4,12 +4,13 @@ import Button from "Layout/Button";
 import Image from "Layout/Image";
 import { DepositTokens } from "assets/registry/BorrowRegistry";
 import TokenModel from "models/TokenModel";
+import { TokenRegistry } from "assets/registry";
 
 const Deposit = ({ publicKey }) => {
   const [isModel, setIsModel] = useState(false);
   const [selected, setSelected] = useState({
-    img: "",
-    name: "Select",
+    img: TokenRegistry.SOL,
+    name: "wSOL",
   });
 
   return (

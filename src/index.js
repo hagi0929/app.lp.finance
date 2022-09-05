@@ -7,23 +7,23 @@ import ModeProvider from "./assets/theme";
 import store from "Redux/store";
 import SnackbarProviderMessage from "components/globalComponents/SnackbarProviderMessage";
 import CustomizedSnackbar from "components/globalComponents/CustomizedSnackbar";
-import WalletWrapper from "utils/WalletWrapper";
 import App from "./App";
+import { ClusterProvider } from "contexts/ClusterContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <ClusterProvider>
       <ModeProvider>
         <Provider store={store}>
           <SnackbarProviderMessage>
             <CustomizedSnackbar />
-            <WalletWrapper>
+            <BrowserRouter>
               <App />
-            </WalletWrapper>
+            </BrowserRouter>
           </SnackbarProviderMessage>
         </Provider>
       </ModeProvider>
-    </BrowserRouter>
+    </ClusterProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -4,12 +4,13 @@ import Button from "Layout/Button";
 import Image from "Layout/Image";
 import { RepayTokens } from "assets/registry/BorrowRegistry";
 import TokenModel from "models/TokenModel";
+import { TokenRegistry } from "assets/registry";
 
 const Repay = ({ publicKey }) => {
   const [isModel, setIsModel] = useState(false);
   const [selected, setSelected] = useState({
-    img: "",
-    name: "Select",
+    img: TokenRegistry.zSOL,
+    name: "zSOL",
   });
 
   return (

@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { BiX } from "react-icons/bi";
 import { CgMenuLeftAlt } from "react-icons/cg";
-import { NavbarRegistry } from "assets/registry";
+import { NavbarRegistry, NavbarMobileRegistry } from "assets/registry";
 import { WalletMultiButton } from "WalletAdapter";
 import HeaderWrapper from "./Header.style";
+import { AiOutlineSetting } from "react-icons/ai";
+import { RpcRegistry } from "assets/registry";
+import { useCluster } from "contexts/ClusterContext";
 
 const Header = () => {
+  const { Cluster, changeCluster } = useCluster();
+  const [dropdown, setDropdown] = useState(false);
+
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
   };
@@ -38,12 +44,16 @@ const Header = () => {
             <div className="row">
               <div className="col-12 d-flex justify-content-start">
                 <ul className="mt-5 ml-3 pl-1">
-                  {NavbarRegistry.map((nav) => {
+                  {NavbarMobileRegistry.map((nav) => {
                     return (
                       <li key={nav.id}>
-                        <NavLink to={nav.href} onClick={closeNav}>
-                          {nav.name}
-                        </NavLink>
+                        {nav.name === "Setting" ? (
+                          <p>{nav.name}</p>
+                        ) : (
+                          <NavLink to={nav.href} onClick={closeNav}>
+                            {nav.name}
+                          </NavLink>
+                        )}
                       </li>
                     );
                   })}
@@ -90,6 +100,61 @@ const Header = () => {
                     <li className="nav-item">
                       <div className="Wallet_section">
                         <WalletMultiButton />
+                      </div>
+                    </li>
+                    <li className="nav-item">
+                      <div
+                        className={dropdown ? "btn-group show" : "btn-group"}
+                      >
+                        <button
+                          type="button"
+                          className="dropdown_btn"
+                          data-display="static"
+                          aria-expanded="false"
+                          onClick={() => {
+                            if (dropdown) {
+                              setDropdown(false);
+                            } else {
+                              setDropdown(true);
+                            }
+                          }}
+                        >
+                          <AiOutlineSetting className="setting" />
+                        </button>
+                        <div
+                          className={
+                            dropdown
+                              ? "dropdown-menu dropdown-menu-right show"
+                              : "dropdown-menu dropdown-menu-right"
+                          }
+                        >
+                          <div className="dropdown-item">
+                            <div className="title">
+                              <p>Settings</p>
+                            </div>
+                            <div className="title mt-3">
+                              <span>Networks -</span>
+                            </div>
+                            {RpcRegistry.map((list) => {
+                              return (
+                                <div
+                                  className="networks_card mt-2"
+                                  key={list.id}
+                                  onClick={() => changeCluster(list)}
+                                >
+                                  <div className="name">
+                                    <p>{list.name}</p>
+                                  </div>
+                                  {list.endpoint === Cluster?.endpoint && (
+                                    <div className="checked">
+                                      <i className="zmdi zmdi-check" />
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
                       </div>
                     </li>
                   </div>

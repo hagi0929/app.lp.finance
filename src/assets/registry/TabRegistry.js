@@ -113,3 +113,24 @@ export const slippageTabs = [
     value: 2,
   },
 ];
+
+export const ThemeTabsRegistry = [
+  {
+    id: "nav-1-tab",
+    name: "1",
+    class: "nav-link",
+    href: "#nav-1",
+    ariaControls: "nav-1",
+    ariaSelected: true,
+    theme: "Light",
+  },
+  {
+    id: "nav-2-tab",
+    name: "2",
+    class: "nav-link",
+    href: "#nav-2",
+    ariaControls: "nav-2",
+    ariaSelected: false,
+    theme: "Dark",
+  },
+];

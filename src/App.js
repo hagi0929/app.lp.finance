@@ -6,10 +6,11 @@ import Treasury from "components/Treasury";
 import StakeSolana from "components/StakeSolana";
 import Layout from "components/globalComponents/Layout";
 import JupiterWrapper from "utils/JupiterWrapper";
+import WalletWrapper from "utils/WalletWrapper";
 
 const App = () => {
   return (
-    <>
+    <WalletWrapper>
       <Layout>
         <Routes>
           <Route exact path="/" element={<Borrow />} />
@@ -26,7 +27,7 @@ const App = () => {
           />
         </Routes>
       </Layout>
-    </>
+    </WalletWrapper>
   );
 };
 

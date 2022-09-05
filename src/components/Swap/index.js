@@ -4,21 +4,22 @@ import Jupiter from "./Jupiter";
 import api from "api";
 import { useConnection } from "@solana/wallet-adapter-react";
 import { TOKEN_LIST_URL } from "@jup-ag/core";
-import { PublicKey } from "@solana/web3.js";
 import {
-  INPUT_MINT_ADDRESS,
-  OUTPUT_MINT_ADDRESS,
+  getInputMintAddress,
+  getOutMintAddress,
 } from "helper/constants/swapConstants";
+import { useCluster } from "contexts/ClusterContext";
 
 const Swap = () => {
+  const { Cluster } = useCluster();
   const [tokens, setTokens] = useState([]);
   const { connection } = useConnection();
   const [coinGeckoList, setCoinGeckoList] = useState(null);
   const [slippage, setSlippage] = useState(0.5);
   const [formValue, setFormValue] = useState({
     amount: null,
-    inputMint: new PublicKey(INPUT_MINT_ADDRESS),
-    outputMint: new PublicKey(OUTPUT_MINT_ADDRESS),
+    inputMint: getInputMintAddress(Cluster?.name),
+    outputMint: getOutMintAddress(Cluster?.name),
     slippage,
   });
 
