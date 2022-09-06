@@ -12,6 +12,12 @@ export const RpcRegistry = [
 ];
 
 export const NavbarRegistry = [
+  // {
+  //   id: 1,
+  //   name: "Dashboard",
+  //   pathName: "/",
+  //   href: "/",
+  // },
   {
     id: 1,
     name: "Borrow",

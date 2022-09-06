@@ -972,33 +972,35 @@ const Jupiter = ({
         </div>
         <div className="col-lg-8 col-md-12 col-12 pb-lg-3 my-lg-4 my-md-5 my-4 my-2">
           <div className="row">
-            <div className="col-12 TradingView_section">
-              <ul className="nav nav-tabs" id="myTab" role="tablist">
-                <li className="nav-item" role="presentation">
-                  <a
-                    className="nav-link active"
-                    id="home-tab"
-                    data-toggle="tab"
-                    href="#home"
-                    role="tab"
-                    aria-controls="home"
-                    aria-selected="true"
+            <div className="col-12 ">
+              <div className="TradingView_section">
+                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                  <li className="nav-item" role="presentation">
+                    <a
+                      className="nav-link active"
+                      id="home-tab"
+                      data-toggle="tab"
+                      href="#home"
+                      role="tab"
+                      aria-controls="home"
+                      aria-selected="true"
+                    >
+                      <h1>Market Data</h1>
+                    </a>
+                  </li>
+                </ul>
+                <div className="tab-content" id="myTabContent">
+                  <div
+                    className="tab-pane fade show active"
+                    id="home"
+                    role="tabpanel"
+                    aria-labelledby="home-tab"
                   >
-                    <h1>Market Data</h1>
-                  </a>
-                </li>
-              </ul>
-              <div className="tab-content" id="myTabContent">
-                <div
-                  className="tab-pane fade show active"
-                  id="home"
-                  role="tabpanel"
-                  aria-labelledby="home-tab"
-                >
-                  <Chart
-                    inputTokenId={inputTokenInfos?.extensions?.coingeckoId}
-                    outputTokenId={outputTokenInfos?.extensions?.coingeckoId}
-                  />
+                    <Chart
+                      inputTokenId={inputTokenInfos?.extensions?.coingeckoId}
+                      outputTokenId={outputTokenInfos?.extensions?.coingeckoId}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

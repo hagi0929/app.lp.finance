@@ -219,7 +219,9 @@ const SwapWrapper = styled.div`
       }
 
       .TradingView_section {
+        width: 100%;
         .nav-tabs {
+          width: 100%;
           border-bottom: 1px solid ${(props) => props.theme.BodyTraceryBg};
         }
 
