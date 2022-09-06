@@ -6,23 +6,21 @@ const FooterWrapper = styled.div`
     margin: auto;
     padding: 1rem 0rem 0rem 0rem;
     min-height: 10rem;
-    background: ${(props) => props.theme.BodySecondaryBg};
+    background: ${(props) => props.theme.BodyMainBg};
     box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
       rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
 
-    hr {
-      height: 1px;
-      margin: 10px 0px;
-      background: ${(props) => props.theme.BodyPrimaryBg};
-    }
-
     .top_section {
+      border-top: 1px solid ${(props) => props.theme.BodyMainColor};
+      border-bottom: 1px solid ${(props) => props.theme.BodyMainColor};
+      padding: 0.8rem 0rem;
+
       .footer_logo {
         img {
-          height: 4.8rem;
-          width: auto;
+          max-width: 80%;
         }
       }
+
       ul {
         li {
           padding: 0rem 1rem;
@@ -39,13 +37,12 @@ const FooterWrapper = styled.div`
     }
 
     .bottom_section {
-      padding: 0rem 0rem 1rem 0rem;
+      padding: 0.3rem 0rem 1rem 0rem;
 
       .copyright {
         p {
           color: ${(props) => props.theme.BodyMainColor};
           font-size: 0.9rem;
-          width: 230px;
         }
       }
     }

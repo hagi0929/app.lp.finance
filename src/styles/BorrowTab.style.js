@@ -19,18 +19,14 @@ const BorrowTabWrapper = styled.div`
           border: 0px solid transparent;
           border-top-left-radius: none;
           border-top-right-radius: none;
-          z-index: 100;
           cursor: pointer;
+          top: 1px;
 
           &.active {
             color: ${(props) => props.theme.BodyMainColor};
             background: ${(props) => props.theme.BodySecondaryBg};
+            border: 1px solid ${(props) => props.theme.BodyMainColor};
             border-radius: 20px 20px 0px 0px;
-            top: 1px;
-          }
-
-          &:hover {
-            border: none;
           }
         }
       }
@@ -64,8 +60,8 @@ const BorrowTabWrapper = styled.div`
         width: 100%;
         min-height: 115px;
         background: ${(props) => props.theme.BodySecondaryBg};
+        border: 1px solid ${(props) => props.theme.BodyMainColor};
         padding: 2rem 2rem;
-        z-index: 500;
 
         .deposit {
           .deposit_card {

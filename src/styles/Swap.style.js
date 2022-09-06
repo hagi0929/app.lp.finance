@@ -15,11 +15,6 @@ const SwapWrapper = styled.div`
       }
 
       .swap_card {
-        width: 100%;
-        padding: 1rem;
-        background: ${(props) => props.theme.BodySecondaryBg};
-        border-radius: 18px;
-
         .swap_form {
           .swapPay_section,
           .swapReceive_section {
@@ -225,7 +220,7 @@ const SwapWrapper = styled.div`
 
       .TradingView_section {
         .nav-tabs {
-          border-bottom: 1px solid #404040;
+          border-bottom: 1px solid ${(props) => props.theme.BodyTraceryBg};
         }
 
         .nav-tabs .nav-item.show .nav-link,
@@ -321,8 +316,8 @@ const SwapWrapper = styled.div`
               }
 
               .accordion-tab {
-                border-top: 1px solid #333333;
-                border-bottom: 1px solid #333333;
+                border-top: 1px solid ${(props) => props.theme.BodyTraceryBg};
+                border-bottom: 1px solid ${(props) => props.theme.BodyTraceryBg};
               }
 
               .accordion-tab .accordion-toggle {
@@ -496,10 +491,6 @@ const SwapWrapper = styled.div`
   @media only screen and (max-width: 907px) {
     .swap {
       .swap_section {
-        .swap_card {
-          // padding: 0.5rem;
-        }
-
         .TradingView_section {
           .tab-content {
             .tab-pane {

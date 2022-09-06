@@ -97,7 +97,7 @@ const BorrowWrapper = styled.div`
               }
 
               .pie {
-                --c: ${(props) => props.theme.BodyTraceryColor};
+                --c: ${(props) => props.theme.BodyMainColor};
                 --b: 16px;
                 --w: 150px;
                 --p: ${(props) => props.pie};
@@ -158,15 +158,13 @@ const BorrowWrapper = styled.div`
               .totalSupplyPie {
                 position: absolute;
                 display: inline-block;
-                top: 22px;
-                left: 37px;
+                top: 20px;
+                left: 35.3px;
                 cursor: pointer;
 
                 img {
-                  height: 85px;
+                  height: 5.8rem;
                   width: auto;
-                  border-radius: 50%;
-                  z-index: -1;
                 }
               }
 

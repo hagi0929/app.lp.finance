@@ -16,6 +16,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { setSnackbar } from "Redux/actions";
 import { useDispatch } from "react-redux";
 import Input from "Layout/Form/Input";
+import Card from "Layout/Card";
 import Chart from "./Chart";
 
 const Jupiter = ({
@@ -311,7 +312,7 @@ const Jupiter = ({
                   </div>
                 </div>
                 <div className="col-lg-12 col-md-12 col-12 d-flex justify-content-center mt-1">
-                  <div className="swap_card">
+                  <Card className="swap_card" active={1} p="1rem" br="18px">
                     <div className="row swap_form">
                       <div className="col-12">
                         {/* swap pay section  */}
@@ -963,7 +964,7 @@ const Jupiter = ({
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Card>
                 </div>
               </div>
             </div>

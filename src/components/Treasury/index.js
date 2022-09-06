@@ -7,7 +7,7 @@ import Chart from "./Chart";
 
 const Treasury = () => {
   return (
-    <TreasuryWrapper pie={10}>
+    <TreasuryWrapper pie={100}>
       <div className="container Treasury">
         <div className="row">
           <div className="col-12 mt-lg-5 mt-md-4 mt-2">

@@ -16,10 +16,9 @@ const Footer = () => {
           <div className="container">
             <div className="row">
               <div className="col-12">
-                <hr />
                 <div className="row d-flex align-items-center top_section">
                   <div className="col-lg-2 col-md-2 col-sm-3 col-12">
-                    <div className="footer_logo d-flex justify-content-center">
+                    <div className="footer_logo ">
                       <img
                         src="/images/Logo.png"
                         alt="Loading..."
@@ -45,7 +44,7 @@ const Footer = () => {
                     </ul>
                   </div>
                 </div>
-                <hr />
+
                 <div className="row bottom_section">
                   <div className="col-12 d-flex justify-content-lg-start justify-content-md-start justify-content-sm-start justify-content-center">
                     <div className="copyright text-center">

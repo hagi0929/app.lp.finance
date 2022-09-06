@@ -5,6 +5,7 @@ const CardWrapper = styled.div`
   height: 100%;
   border-radius: ${(props) => props.br};
   padding: ${(props) => props.p};
+  border: 1px solid #0c0;
 
   ${(props) =>
     props.active === 1 &&
