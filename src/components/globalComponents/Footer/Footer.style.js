@@ -17,7 +17,8 @@ const FooterWrapper = styled.div`
 
       .footer_logo {
         img {
-          max-width: 80%;
+          height: 5rem;
+          width: auto;
         }
       }
 
@@ -37,7 +38,7 @@ const FooterWrapper = styled.div`
     }
 
     .bottom_section {
-      padding: 0.3rem 0rem 1rem 0rem;
+      padding: 0.5rem 0rem 1rem 0rem;
 
       .copyright {
         p {
@@ -49,10 +50,12 @@ const FooterWrapper = styled.div`
   }
   @media only screen and (max-width: 600px) {
     .footer {
+      padding: 0rem 0rem 0rem 0rem;
+
       .top_section {
         .footer_logo {
           display: flex;
-          justify-content: flex-start;
+          justify-content: center;
         }
         ul {
           li {

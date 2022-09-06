@@ -59,7 +59,7 @@ const Treasury = () => {
                             />
                           </div>
                           <div className="miter2">
-                            <p className="ml-5 pl-2">10%</p>
+                            <p className="ml-5 pl-2">100%</p>
                             <img
                               src="/images/figma/cartLine2.png"
                               alt="loading..."

@@ -34,7 +34,7 @@ const Repay = ({ publicKey }) => {
                   />
 
                   <div className="max_btn d-flex align-items-center">
-                    <Button active={3} p="0.3rem 0.6rem" br="4px" size="0.7rem">
+                    <Button active={3} p="0.3rem 0.6rem" br="4px" size="0.8rem">
                       Max
                     </Button>
                   </div>
@@ -68,10 +68,10 @@ const Repay = ({ publicKey }) => {
                 <Button
                   active={1}
                   p="0.6rem 2rem"
-                  br="0px"
+                  br="6px"
                   className="not-allowed"
                 >
-                  Repay
+                  {!publicKey ? "Connect wallet" : "Repay"}
                 </Button>
               </div>
             </div>

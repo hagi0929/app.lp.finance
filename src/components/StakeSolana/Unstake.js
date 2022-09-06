@@ -66,9 +66,9 @@ const Unstake = ({ publicKey }) => {
               p="0.6rem 1rem"
               id="btn"
               size="1.2rem"
-              className="d-flex align-items-center"
+              className="not-allowed"
             >
-              Unstake
+              {!publicKey ? "Connect wallet" : "Unstake"}
             </Button>
           </div>
         </div>

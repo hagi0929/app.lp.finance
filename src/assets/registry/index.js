@@ -37,6 +37,12 @@ export const NavbarRegistry = [
     pathName: "/stake",
     href: "/stake",
   },
+  {
+    id: 5,
+    name: "PSM",
+    pathName: "/psm",
+    href: "/psm",
+  },
 ];
 
 export const NavbarMobileRegistry = [

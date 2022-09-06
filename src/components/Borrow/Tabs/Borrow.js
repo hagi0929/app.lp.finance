@@ -34,7 +34,7 @@ const Borrow = ({ publicKey }) => {
                   />
 
                   <div className="max_btn d-flex align-items-center">
-                    <Button active={3} p="0.3rem 0.6rem" br="4px" size="0.7rem">
+                    <Button active={3} p="0.3rem 0.6rem" br="4px" size="0.8rem">
                       Max
                     </Button>
                   </div>
@@ -68,10 +68,10 @@ const Borrow = ({ publicKey }) => {
                 <Button
                   active={1}
                   p="0.6rem 2rem"
-                  br="0px"
+                  br="6px"
                   className="not-allowed"
                 >
-                  Borrow
+                  {!publicKey ? "Connect wallet" : "Borrow"}
                 </Button>
               </div>
             </div>

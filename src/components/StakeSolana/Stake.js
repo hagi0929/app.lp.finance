@@ -110,11 +110,10 @@ const Stake = ({ publicKey }) => {
               active={1}
               br="50px"
               p="0.6rem 1rem"
-              id="btn"
               size="1.2rem"
-              className="d-flex align-items-center"
+              className="not-allowed"
             >
-              Stake
+              {!publicKey ? "Connect wallet" : "Stake"}
             </Button>
           </div>
         </div>

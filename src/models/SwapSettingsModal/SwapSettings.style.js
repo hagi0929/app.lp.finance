@@ -33,7 +33,7 @@ const SwapSettingsWrapper = styled.div`
     transition: all 300ms ease-in-out;
     background: ${(props) => props.theme.BodySecondaryBg};
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
-    border: 1px solid ${(props) => props.theme.BodyPrimaryBg};
+    border: 1px solid ${(props) => props.theme.BodyMainColor};
   }
 
   .popup.active .popup-container {

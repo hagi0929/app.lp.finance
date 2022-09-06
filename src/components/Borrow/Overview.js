@@ -55,7 +55,7 @@ const Overview = () => {
                         />
                       </div>
                       <div className="miter2">
-                        <p className="ml-4 pl-2">0%</p>
+                        <p className="ml-4 pl-2">100%</p>
                         <img
                           src="/images/figma/cartLine2.png"
                           alt="loading..."
@@ -98,7 +98,12 @@ const Overview = () => {
                 </div>
                 <div className="col-lg-3 col-md-8 col-12 mt-lg-0 mt-md-0 mt-4">
                   <div className="mr-2">
-                    <Button id="btn" active={1} br="0px" p="0.6rem 1rem">
+                    <Button
+                      active={1}
+                      br="6px"
+                      p="0.6rem 1rem"
+                      className="not-allowed"
+                    >
                       Data
                     </Button>
                   </div>

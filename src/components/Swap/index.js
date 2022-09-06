@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import SwapWrapper from "styles/Swap.style";
 import Jupiter from "./Jupiter";
 import api from "api";
+import JupiterWrapper from "utils/JupiterWrapper";
+import { useCluster } from "contexts/ClusterContext";
 import { useConnection } from "@solana/wallet-adapter-react";
 import { TOKEN_LIST_URL } from "@jup-ag/core";
 import {
   getInputMintAddress,
   getOutMintAddress,
 } from "helper/constants/swapConstants";
-import { useCluster } from "contexts/ClusterContext";
 
 const Swap = () => {
   const { Cluster } = useCluster();
@@ -47,25 +48,27 @@ const Swap = () => {
   }, []);
 
   return (
-    <SwapWrapper>
-      <div className="container  mt-3 mb-5">
-        <div className="swap">
-          <div className="col-12">
-            <div className="swap_section">
-              <Jupiter
-                coinGeckoList={coinGeckoList}
-                connection={connection}
-                tokens={tokens}
-                formValue={formValue}
-                setFormValue={setFormValue}
-                slippage={slippage}
-                setSlippage={setSlippage}
-              />
+    <JupiterWrapper>
+      <SwapWrapper>
+        <div className="container  mt-3 mb-5">
+          <div className="swap">
+            <div className="col-12">
+              <div className="swap_section">
+                <Jupiter
+                  coinGeckoList={coinGeckoList}
+                  connection={connection}
+                  tokens={tokens}
+                  formValue={formValue}
+                  setFormValue={setFormValue}
+                  slippage={slippage}
+                  setSlippage={setSlippage}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </SwapWrapper>
+      </SwapWrapper>
+    </JupiterWrapper>
   );
 };
 

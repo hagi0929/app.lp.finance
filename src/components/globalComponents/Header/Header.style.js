@@ -2,20 +2,19 @@ import styled from "styled-components";
 
 const HeaderWrapper = styled.div`
   .sideNav {
-    height: 100%;
-    width: 0;
     position: fixed;
+    height: 100%;
+    width: 0px;
     z-index: 1000;
     top: 0;
-    border-radius: 0px 12px 12px 0px;
     left: 0;
-    overflow-x: hidden;
+    border-radius: 0px 12px 12px 0px;
+    background: ${(props) => props.theme.BodySecondaryBg};
+    border: rgba(255, 255, 255, 1);
     box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+    overflow-x: hidden;
     transition: 0.2s;
-    background: rgba(0, 0, 0, 1);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+    padding-bottom: 13rem;
 
     .small_logo {
       height: 3.8rem;
@@ -53,7 +52,7 @@ const HeaderWrapper = styled.div`
 
       button {
         background: ${(props) => props.theme.BodySecondaryBg};
-        border: none;
+        border: 1px solid ${(props) => props.theme.BodyMainColor};
         color: ${(props) => props.theme.BodyMainColor};
         font-style: normal;
         font-weight: 600;
@@ -61,7 +60,6 @@ const HeaderWrapper = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: "Nunito Sans", sans-serif;
         font-size: 1rem;
         height: 48px;
         width: 220px;
