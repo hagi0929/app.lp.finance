@@ -1,0 +1,20 @@
+
+{   
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "es6",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "noEmit": true,
+        "allowJs": true,
+        "baseUrl": "src",
+        "paths": {
+            "*": [
+                "src/*"
+            ]
+        }
+    },
+    "exclude": ["node_modules"],
+    "include": ["**/*.js"]
+}

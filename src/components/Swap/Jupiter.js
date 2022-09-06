@@ -13,8 +13,6 @@ import RoutesModel from "models/RoutesModel";
 import SwapSettingsModal from "models/SwapSettingsModal";
 import Button from "Layout/Button";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { setSnackbar } from "Redux/actions";
-import { useDispatch } from "react-redux";
 import Input from "Layout/Form/Input";
 import Card from "Layout/Card";
 import Chart from "./Chart";
@@ -28,7 +26,6 @@ const Jupiter = ({
   slippage,
   setSlippage,
 }) => {
-  const dispatch = useDispatch();
   const { wallet, publicKey, connected, signAllTransactions, signTransaction } =
     useWallet();
   const [walletTokens, setWalletTokens] = useState([]);
@@ -860,12 +857,8 @@ const Jupiter = ({
                                         ) => {
                                           if (txCount === totalTxs) {
                                             errorTxid = txid;
-                                            dispatch(
-                                              setSnackbar(
-                                                true,
-                                                "success",
-                                                `Confirming Transaction`
-                                              )
+                                            console.log(
+                                              "Confirming Transaction"
                                             );
                                           }
                                           await connection.confirmTransaction(
@@ -886,16 +879,12 @@ const Jupiter = ({
                                       fetchWalletTokens();
 
                                       if ("error" in swapResult) {
-                                        dispatch(
-                                          setSnackbar(
-                                            true,
-                                            "error",
-                                            `${
-                                              swapResult?.error?.name
-                                                ? swapResult.error.name
-                                                : ""
-                                            } ${swapResult?.error?.message}`
-                                          )
+                                        console.log(
+                                          `${
+                                            swapResult?.error?.name
+                                              ? swapResult.error.name
+                                              : ""
+                                          } ${swapResult?.error?.message}`
                                         );
                                       } else if ("txid" in swapResult) {
                                         const description =
@@ -914,14 +903,8 @@ const Jupiter = ({
                                               } ${outputTokenInfo?.symbol}`
                                             : "";
 
-                                        dispatch(
-                                          setSnackbar(
-                                            true,
-                                            "Success",
-                                            `Swap Successful ${swapResult.txid}
-                                 ${description}`
-                                          )
-                                        );
+                                        console.log(`Swap Successful ${swapResult.txid}
+                                            ${description}`);
 
                                         setFormValue((val) => ({
                                           ...val,

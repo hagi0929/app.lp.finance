@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { BiX } from "react-icons/bi";
 import { CgMenuLeftAlt } from "react-icons/cg";
 import { NavbarRegistry, NavbarMobileRegistry } from "assets/registry";
-import { WalletMultiButton } from "WalletAdapter";
+import { WalletMultiButton } from "lib/WalletAdapter";
 import HeaderWrapper from "./Header.style";
 import { AiOutlineSetting } from "react-icons/ai";
 import { RpcRegistry } from "assets/registry";

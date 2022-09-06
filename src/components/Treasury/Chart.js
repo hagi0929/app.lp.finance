@@ -24,11 +24,23 @@ const Chart = () => {
             bottom: 0,
           }}
         >
+          <defs>
+            <linearGradient id="gradientArea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#0c0" stopOpacity={0.9} />
+              <stop offset="90%" stopColor="#0c0" stopOpacity={0} />
+            </linearGradient>
+          </defs>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Area type="monotone" dataKey="uv" stroke="#0c0" fill="#0c0" />
+          <Area
+            isAnimationActive={true}
+            type="monotone"
+            dataKey="uv"
+            stroke="#0c0"
+            fill="url(#gradientArea)"
+          />
         </AreaChart>
       </ResponsiveContainer>
     </div>

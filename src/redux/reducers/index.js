@@ -1,8 +1,5 @@
 import { combineReducers } from "redux";
-import SnackbarReducer from "./SnackbarReducer";
 
-const rootReducer = combineReducers({
-  SnackbarReducer,
-});
+const rootReducer = combineReducers({});
 
 export default rootReducer;

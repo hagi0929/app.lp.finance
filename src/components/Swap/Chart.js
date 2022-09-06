@@ -155,10 +155,7 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
 
     const getOutData = {
       img: data.image.small,
-      symbol:
-        data.symbol.toUpperCase() === "SOL"
-          ? "wSOL"
-          : data.symbol.toUpperCase(),
+      symbol: data.symbol.toUpperCase(),
       name: data.name,
       price: CalcFiveDigit(data.market_data.current_price.usd),
       percentage: data.market_data.price_change_percentage_24h.toFixed(2),
@@ -212,6 +209,7 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
     return () => {
       setChartData([]);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [daysToShow, baseTokenId, quoteTokenId]);
 
   useMemo(() => {
@@ -226,6 +224,7 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
       setOutputTokenInfo(null);
       setInputTokenInfo(null);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [baseTokenId, quoteTokenId]);
 
   const chartChange = chartData.length

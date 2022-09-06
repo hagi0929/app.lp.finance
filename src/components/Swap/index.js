@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SwapWrapper from "styles/Swap.style";
 import Jupiter from "./Jupiter";
 import api from "api";
-import JupiterWrapper from "utils/JupiterWrapper";
+import JupiterWrapper from "lib/JupiterWrapper";
 import { useCluster } from "contexts/ClusterContext";
 import { useConnection } from "@solana/wallet-adapter-react";
 import { TOKEN_LIST_URL } from "@jup-ag/core";
@@ -15,7 +15,7 @@ const Swap = () => {
   const { Cluster } = useCluster();
   const [tokens, setTokens] = useState([]);
   const { connection } = useConnection();
-  const [coinGeckoList, setCoinGeckoList] = useState(null);
+  const [coinGeckoList, setCoinGeckoList] = useState([]);
   const [slippage, setSlippage] = useState(0.5);
   const [formValue, setFormValue] = useState({
     amount: null,
@@ -31,19 +31,14 @@ const Swap = () => {
       setCoinGeckoList(data);
     };
 
-    fetchCoinGeckoList();
-    return () => {
-      setCoinGeckoList(null);
-    };
-  }, []);
-
-  useEffect(() => {
     fetch(TOKEN_LIST_URL["mainnet-beta"])
       .then((response) => response.json())
       .then((result) => setTokens(result));
 
+    fetchCoinGeckoList();
     return () => {
       setTokens([]);
+      setCoinGeckoList([]);
     };
   }, []);
 

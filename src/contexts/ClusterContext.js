@@ -45,6 +45,13 @@ export const ClusterProvider = ({ children }) => {
         })
       );
     }
+
+    return () => {
+      setCluster({
+        name: "",
+        endpoint: "",
+      });
+    };
   }, []);
 
   return (
