@@ -138,7 +138,7 @@ export const WalletMultiButton = (_a) => {
           <tbody>
             <tr>
               <td>
-                <Image src="/images/icons/copy.png" alt="copy" />
+                <Image src="/images/icons/copy.png" alt="copy" h="1.4rem" />
               </td>
               <td className="pl-2"> {copied ? "Copied" : "Copy address"}</td>
             </tr>
@@ -156,7 +156,7 @@ export const WalletMultiButton = (_a) => {
           <tbody>
             <tr>
               <td>
-                <Image src="/images/icons/switch.png" alt="copy" />
+                <Image src="/images/icons/switch.png" alt="switch" h="1.2rem" />
               </td>
               <td className="pl-2"> Change wallet</td>
             </tr>
@@ -174,7 +174,7 @@ export const WalletMultiButton = (_a) => {
           <tbody>
             <tr>
               <td>
-                <Image src="/images/icons/logout.png" alt="copy" />
+                <Image src="/images/icons/logout.png" alt="logout" />
               </td>
               <td className="pl-2"> Disconnect</td>
             </tr>

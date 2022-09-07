@@ -81,12 +81,12 @@ const Treasury = () => {
                           <div className="row">
                             <div className="col-lg-12 col-6 cart_details">
                               <p>Total Supply</p>
-                              <span>$ 0</span>
+                              <span>$0</span>
                             </div>
 
                             <div className="col-lg-12 col-6 cart_details mt-lg-4 mt-md-0 pt-lg-3 mt-md-3 mt-0">
                               <p>Total Borrowed</p>
-                              <span>$ 0</span>
+                              <span>$0</span>
                             </div>
                           </div>
                         </div>

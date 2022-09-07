@@ -73,10 +73,10 @@ const PSMWrapper = styled.div`
 
       .switch_section {
         .switch_icon_section {
-          height: 2rem;
-          width: 2rem;
+          height: 2.4rem;
+          width: 2.4rem;
           border: 1px solid ${(props) => props.theme.BodyPrimaryBg};
-          padding: 0.1rem;
+          padding: 0rem;
           border-radius: 50%;
           display: flex;
           justify-content: center;

@@ -9,8 +9,8 @@ import { TokenRegistry } from "assets/registry";
 const Deposit = ({ publicKey }) => {
   const [isModel, setIsModel] = useState(false);
   const [selected, setSelected] = useState({
-    img: TokenRegistry.SOL,
-    name: "SOL",
+    logoURI: TokenRegistry.SOL,
+    symbol: "SOL",
   });
 
   return (
@@ -48,11 +48,15 @@ const Deposit = ({ publicKey }) => {
                     br="10px"
                     onClick={() => setIsModel(true)}
                   >
-                    {selected.img && (
-                      <Image src={selected.img} alt={selected.name} h="2rem" />
+                    {selected.logoURI && (
+                      <Image
+                        src={selected.logoURI}
+                        alt={selected.symbol}
+                        h="2rem"
+                      />
                     )}
 
-                    <p className="mx-1">{selected.name}</p>
+                    <p className="mx-1">{selected.symbol}</p>
                     <i className="zmdi zmdi-chevron-down pl-1" />
                   </Button>
                 </div>

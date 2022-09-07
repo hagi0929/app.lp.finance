@@ -5,7 +5,7 @@ import Image from "Layout/Image";
 
 const generateSearchTerm = (item, searchValue) => {
   const normalizedSearchValue = searchValue.toLowerCase();
-  const values = `${item.symbol} ${item.name}`.toLowerCase();
+  const values = `${item.symbol} ${item.name} ${item.address}`.toLowerCase();
 
   const isMatchingWithSymbol =
     item.symbol.toLowerCase().indexOf(normalizedSearchValue) >= 0;
@@ -84,7 +84,8 @@ const TokenSelectModel = ({
         <div className="popup-container">
           <div className="container-fluid Coin_section">
             <div className="row Coin_top_Section pb-2">
-              <div className="col-12 d-flex justify-content-end align-items-center title_section">
+              <div className="col-12 d-flex justify-content-center align-items-center title_section">
+                <p>Select Token</p>
                 <i className="zmdi zmdi-close" onClick={CloseCoinModel} />
               </div>
             </div>

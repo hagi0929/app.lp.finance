@@ -56,7 +56,7 @@ const TokenSelectWrapper = styled.div`
           i {
             position: absolute;
             right: 20px;
-            top: -2px;
+            top: 7px;
             color: ${(props) => props.theme.BodyMainColor};
             font-size: 1.3rem;
             cursor: pointer;

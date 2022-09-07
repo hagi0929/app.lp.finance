@@ -7,7 +7,9 @@ const FooterWrapper = styled.div`
     padding: 1rem 0rem 0rem 0rem;
     min-height: 10rem;
     background: ${(props) => props.theme.BodyMainBg};
-    border-top: 1px solid ${(props) => props.theme.BodyPrimaryBg};
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+      rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+      rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
 
     .top_section {
       border-top: 1px solid ${(props) => props.theme.BodyMainColor};

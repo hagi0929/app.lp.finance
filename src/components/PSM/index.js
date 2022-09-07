@@ -12,12 +12,26 @@ import { PSMTokens } from "assets/registry/PsmRegistry";
 const PSM = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
-
   const [isModel, setIsModel] = useState(false);
   const [selected, setSelected] = useState({
-    img: TokenRegistry.mSOL,
-    name: "mSOL",
+    logoURI: TokenRegistry.mSOL,
+    symbol: "mSOL",
   });
+  const [MintSelect, setMintSelect] = useState({
+    logoURI: TokenRegistry.zSOL,
+    symbol: "zSOL",
+  });
+
+  const HandleSwitch = () => {
+    setMintSelect({
+      logoURI: selected.logoURI,
+      symbol: selected.symbol,
+    });
+    setSelected({
+      logoURI: MintSelect.logoURI,
+      symbol: MintSelect.symbol,
+    });
+  };
 
   return (
     <>
@@ -81,8 +95,12 @@ const PSM = () => {
                               className="d-flex align-items-center"
                               onClick={() => setIsModel(true)}
                             >
-                              <Image src={selected.img} alt="SOL" h="2rem" />
-                              <p className="mx-2">{selected.name}</p>
+                              <Image
+                                src={selected.logoURI}
+                                alt="SOL"
+                                h="2rem"
+                              />
+                              <p className="mx-2">{selected.symbol}</p>
                             </Button>
                           </div>
                         </div>
@@ -108,7 +126,10 @@ const PSM = () => {
                     <div className="switch_section mt-4">
                       <div className="row">
                         <div className="col-12 d-flex justify-content-center">
-                          <div className="switch_icon_section">
+                          <div
+                            className="switch_icon_section"
+                            onClick={() => HandleSwitch()}
+                          >
                             <Image src="/images/icons/swap.png" alt="swap" />
                           </div>
                         </div>
@@ -138,11 +159,11 @@ const PSM = () => {
                               className="d-flex align-items-center"
                             >
                               <Image
-                                src={TokenRegistry.zSOL}
+                                src={MintSelect.logoURI}
                                 alt="mSOL"
                                 h="2rem"
                               />
-                              <p className="mx-2">zSOL</p>
+                              <p className="mx-2">{MintSelect.symbol}</p>
                             </Button>
                           </div>
                         </div>

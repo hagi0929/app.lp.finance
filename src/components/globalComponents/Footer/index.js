@@ -40,7 +40,8 @@ const Footer = () => {
                               <Image
                                 src={items.icon}
                                 alt={items.name}
-                                h="1.8rem"
+                                h="1.9rem"
+                                w="1.9rem"
                               />
                             </a>
                           </li>

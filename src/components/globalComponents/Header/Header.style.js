@@ -265,10 +265,10 @@ const HeaderWrapper = styled.div`
                   }
 
                   &:hover {
-                    background: ${(props) => props.theme.BodyPrimaryBg};
+                    background: none;
                   }
                   $:focus {
-                    background: ${(props) => props.theme.BodyPrimaryBg};
+                    background: none;
                   }
                 }
                 .dropdown-item:hover > span,
