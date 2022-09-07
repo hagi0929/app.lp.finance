@@ -7,7 +7,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import useDimensions from "react-cool-dimensions";
 import moment from "moment";
 import { CalcFiveDigit, numFormatter } from "helper";
 import Image from "Layout/Image";
@@ -22,7 +21,6 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
   const [daysToShow, setDaysToShow] = useState(1);
   const [InputList, setInputList] = useState({});
   const [OutputList, setOutputList] = useState({});
-  const { observe, width, height } = useDimensions();
 
   const handleMouseMove = (coords) => {
     if (coords.activePayload) {
@@ -235,7 +233,7 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
     : 0;
 
   return (
-    <div className="container-fluid mt-4 TradingView_chart" ref={observe}>
+    <div className="container-fluid mt-4 TradingView_chart">
       <div className="row">
         <div className="col-6">
           <div className="trading_name">
@@ -324,8 +322,6 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
           <div style={{ width: "100%", height: 200 }}>
             <ResponsiveContainer>
               <AreaChart
-                width={width}
-                height={height}
                 data={chartData}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}

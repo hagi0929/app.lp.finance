@@ -44,7 +44,7 @@ const PSM = () => {
                 <div className="col-lg-5 col-md-6 col-12">
                   <Card
                     active={1}
-                    p="2rem 2.5rem 1rem 2.5rem"
+                    p="2rem 2rem 1rem 2rem"
                     br="18px"
                     className="PSM_card"
                   >
@@ -104,6 +104,17 @@ const PSM = () => {
                         </div>
                       </div>
                     </div>
+
+                    <div className="switch_section mt-4">
+                      <div className="row">
+                        <div className="col-12 d-flex justify-content-center">
+                          <div className="switch_icon_section">
+                            <Image src="/images/icons/swap.png" alt="swap" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     {/* PSM receive section  */}
                     <div className="Receive_section mt-3">
                       <div className="row">
@@ -163,7 +174,7 @@ const PSM = () => {
                             br="50px"
                             p="0.6rem 1rem"
                             id="btn"
-                            size="1.2rem"
+                            size="1.1rem"
                             className="not-allowed"
                           >
                             {!publicKey ? "Connect wallet" : "Mint zSOL"}

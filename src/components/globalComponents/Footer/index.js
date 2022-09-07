@@ -37,7 +37,11 @@ const Footer = () => {
                               target="_blank"
                               rel="noreferrer"
                             >
-                              <Image src={items.icon} alt={items.name} />
+                              <Image
+                                src={items.icon}
+                                alt={items.name}
+                                h="1.8rem"
+                              />
                             </a>
                           </li>
                         );

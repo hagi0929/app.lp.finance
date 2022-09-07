@@ -1,6 +1,7 @@
 import React, { useEffect, memo } from "react";
 import TokenWrapper from "./TokenModel.style";
 import Input from "Layout/Form/Input";
+import Image from "Layout/Image";
 
 const TokenModel = ({ isOpen, isClose, List, setSelected }) => {
   const FilterFunction = () => {
@@ -80,7 +81,11 @@ const TokenModel = ({ isOpen, isClose, List, setSelected }) => {
                           <div className="details" onClick={() => Select(item)}>
                             <div className="row">
                               <div className="col-7 d-flex align-items-center">
-                                <img src={item.img} alt="" loading="lazy" />
+                                <Image
+                                  src={item.img}
+                                  alt={item.name}
+                                  h="1.9rem"
+                                />
                                 <div className="ml-3 details_name d-flex flex-column">
                                   <p>{item.name}</p>
                                   <span>{item.fullName}</span>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import TokenSelectWrapper from "./TokenSelect.style";
 import Input from "Layout/Form/Input";
+import Image from "Layout/Image";
 
 const generateSearchTerm = (item, searchValue) => {
   const normalizedSearchValue = searchValue.toLowerCase();
@@ -115,12 +116,10 @@ const TokenSelectModel = ({
                           >
                             <div className="row">
                               <div className="col-10 d-flex align-items-center">
-                                <img
+                                <Image
                                   src={token?.logoURI}
                                   alt={token?.name}
-                                  height="29"
-                                  width="29"
-                                  loading="lazy"
+                                  h="1.9rem"
                                 />
 
                                 <div className="ml-3 details_name">

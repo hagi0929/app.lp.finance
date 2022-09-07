@@ -97,12 +97,6 @@ const TokenSelectWrapper = styled.div`
               background: ${(props) => props.theme.BodyPrimaryBg};
             }
 
-            img {
-              height: 1.8rem;
-              width: auto;
-              border-radius: 50%;
-            }
-
             p {
               color: ${(props) => props.theme.BodyMainColor};
               font-size: 0.9rem;

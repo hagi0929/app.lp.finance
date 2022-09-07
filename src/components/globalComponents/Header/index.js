@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { BiX } from "react-icons/bi";
-import { CgMenuLeftAlt } from "react-icons/cg";
 import { NavbarRegistry, NavbarMobileRegistry } from "assets/registry";
 import { WalletMultiButton } from "lib/WalletAdapter";
 import HeaderWrapper from "./Header.style";
-import { AiOutlineSetting } from "react-icons/ai";
 import { RpcRegistry } from "assets/registry";
 import { useCluster } from "contexts/ClusterContext";
 import Button from "Layout/Button";
@@ -50,7 +47,7 @@ const Header = () => {
               </div>
               <div className="col-4 d-flex justify-content-end">
                 <p className="closeBtn" onClick={closeNav}>
-                  <BiX className="close_icon" />
+                  <i className="zmdi zmdi-close close_icon" />
                 </p>
               </div>
             </div>
@@ -85,10 +82,7 @@ const Header = () => {
           <div className="row">
             <div className="col-12">
               <nav className="navbar navbar-light">
-                <CgMenuLeftAlt
-                  className="navbar-icon"
-                  onClick={openNav}
-                ></CgMenuLeftAlt>
+                <i className="zmdi zmdi-menu navbar-icon" onClick={openNav} />
 
                 <NavLink to="/" className="navbar-brand mb-2 ml-3">
                   <img src="/images/Logo.png" alt="Loading..." />
@@ -127,7 +121,7 @@ const Header = () => {
                           aria-expanded="false"
                           onClick={() => setDropdown((prev) => !prev)}
                         >
-                          <AiOutlineSetting className="setting" />
+                          <i className="zmdi zmdi-settings setting"></i>
                         </Button>
                         <div
                           className={

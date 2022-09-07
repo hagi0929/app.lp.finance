@@ -26,7 +26,7 @@ const HeaderWrapper = styled.div`
       cursor: pointer;
 
       .close_icon {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         color: ${(props) => props.theme.BodyMainColor};
       }
     }
@@ -88,7 +88,7 @@ const HeaderWrapper = styled.div`
       .navbar-icon {
         color: ${(props) => props.theme.BodyMainColor};
         display: none;
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         cursor: pointer;
       }
 

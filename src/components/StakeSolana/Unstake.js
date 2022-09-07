@@ -65,7 +65,7 @@ const Unstake = ({ publicKey }) => {
               br="50px"
               p="0.6rem 1rem"
               id="btn"
-              size="1.2rem"
+              size="1.1rem"
               className="not-allowed"
             >
               {!publicKey ? "Connect wallet" : "Unstake"}

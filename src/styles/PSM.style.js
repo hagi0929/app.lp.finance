@@ -70,6 +70,20 @@ const PSMWrapper = styled.div`
           }
         }
       }
+
+      .switch_section {
+        .switch_icon_section {
+          height: 2rem;
+          width: 2rem;
+          border: 1px solid ${(props) => props.theme.BodyPrimaryBg};
+          padding: 0.1rem;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+        }
+      }
     }
   }
 `;
