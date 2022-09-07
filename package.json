@@ -55,16 +55,15 @@
   },
   "devDependencies": {
     "@blockworks-foundation/mango-client": "^3.6.12",
+    "@jup-ag/core": "^2.0.0-beta.3",
     "@jup-ag/react-hook": "^2.0.0-beta.3",
     "@solana/spl-token-registry": "^0.2.4574",
     "@solana/wallet-adapter-base": "^0.9.10",
     "@solana/wallet-adapter-react": "^0.15.9",
     "@solana/wallet-adapter-wallets": "^0.17.2",
     "@solana/web3.js": "^1.52.0",
-    "jsbi": "^4.3.0",
     "lodash": "^4.17.21",
     "react-app-rewired": "^2.2.1",
-    "react-script-tag": "^1.1.2",
     "source-map-loader": "^4.0.0",
     "styled-components": "^5.3.5",
     "webpack": "^5.74.0"
