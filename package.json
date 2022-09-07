@@ -55,7 +55,6 @@
   },
   "devDependencies": {
     "@blockworks-foundation/mango-client": "^3.6.12",
-    "@jup-ag/core": "^2.0.0-beta.3",
     "@jup-ag/react-hook": "^2.0.0-beta.3",
     "@solana/spl-token-registry": "^0.2.4574",
     "@solana/wallet-adapter-base": "^0.9.10",
