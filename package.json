@@ -61,6 +61,7 @@
     "@solana/wallet-adapter-react": "^0.15.9",
     "@solana/wallet-adapter-wallets": "^0.17.2",
     "@solana/web3.js": "^1.52.0",
+    "jsbi": "^4.3.0",
     "lodash": "^4.17.21",
     "react-app-rewired": "^2.2.1",
     "source-map-loader": "^4.0.0",
