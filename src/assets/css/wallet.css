@@ -105,10 +105,6 @@
   margin: 0;
 }
 
-.wallet-adapter-dropdown-list-item .wallet_icon {
-  font-size: 1rem;
-}
-
 .wallet-adapter-dropdown-list-item:not([disabled]):hover {
   background-color: rgba(255, 255, 255, 0.2);
 }

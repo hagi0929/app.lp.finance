@@ -1,4 +1,3 @@
-import { useWallet } from "@solana/wallet-adapter-react";
 import React, {
   useCallback,
   useEffect,
@@ -6,14 +5,13 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useWallet } from "@solana/wallet-adapter-react";
+import Image from "Layout/Image";
 import { Button } from "./Button";
 import { useWalletModal } from "./useWalletModal";
 import { WalletConnectButton } from "./WalletConnectButton";
 import { WalletIcon } from "./WalletIcon";
 import { WalletModalButton } from "./WalletModalButton";
-import { FiCopy } from "react-icons/fi";
-import { AiOutlineDisconnect } from "react-icons/ai";
-import { MdOutlineChangeCircle } from "react-icons/md";
 
 var __rest =
   (this && this.__rest) ||
@@ -140,7 +138,7 @@ export const WalletMultiButton = (_a) => {
           <tbody>
             <tr>
               <td>
-                <FiCopy className="wallet_icon" />
+                <Image src="/images/icons/copy.png" alt="copy" />
               </td>
               <td className="pl-2"> {copied ? "Copied" : "Copy address"}</td>
             </tr>
@@ -158,7 +156,7 @@ export const WalletMultiButton = (_a) => {
           <tbody>
             <tr>
               <td>
-                <MdOutlineChangeCircle className="wallet_icon" />
+                <Image src="/images/icons/switch.png" alt="copy" />
               </td>
               <td className="pl-2"> Change wallet</td>
             </tr>
@@ -176,7 +174,7 @@ export const WalletMultiButton = (_a) => {
           <tbody>
             <tr>
               <td>
-                <AiOutlineDisconnect className="wallet_icon" />
+                <Image src="/images/icons/logout.png" alt="copy" />
               </td>
               <td className="pl-2"> Disconnect</td>
             </tr>
