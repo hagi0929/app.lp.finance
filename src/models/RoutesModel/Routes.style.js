@@ -158,9 +158,12 @@ const RoutesWrapper = styled.div`
   @media only screen and (max-width: 600px) {
     .Routes_Popup .Routes-container {
       width: 98% !important;
+      height: 98% !important;
+      max-width: auto !important;
+      min-width: auto !important;
     }
     .Routes_Popup .Routes_section {
-      padding: 1rem 0.8rem;
+      padding: 1rem 0.3rem;
     }
   }
 `;

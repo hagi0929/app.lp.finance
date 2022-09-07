@@ -68,7 +68,9 @@ export const NavbarMobileRegistry = [
   },
   {
     id: 5,
-    name: "Setting",
+    name: "PSM",
+    pathName: "/psm",
+    href: "/psm",
   },
 ];
 

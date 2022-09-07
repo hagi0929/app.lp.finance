@@ -7,40 +7,55 @@ import Input from "Layout/Form/Input";
 import { TokenRegistry } from "assets/registry";
 import { useWallet } from "@solana/wallet-adapter-react";
 import TokenModel from "models/TokenModel";
-import { PSMTokens } from "assets/registry/PsmRegistry";
+import { PSMRegistry } from "assets/registry/PsmRegistry";
 
 const PSM = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const [isModel, setIsModel] = useState(false);
-  const [selected, setSelected] = useState({
-    logoURI: TokenRegistry.mSOL,
-    symbol: "mSOL",
-  });
-  const [MintSelect, setMintSelect] = useState({
+  const [isPayModel, setIsPayModel] = useState(false);
+  const [isReceiveModel, setIsReceiveModel] = useState(false);
+
+  const [PaySelected, setPaySelected] = useState({
     logoURI: TokenRegistry.zSOL,
     symbol: "zSOL",
   });
 
+  const [ReceiveSelect, setReceiveSelect] = useState({
+    logoURI: TokenRegistry.mSOL,
+    symbol: "mSOL",
+  });
+
   const HandleSwitch = () => {
-    setMintSelect({
-      logoURI: selected.logoURI,
-      symbol: selected.symbol,
+    setPaySelected({
+      logoURI: ReceiveSelect.logoURI,
+      symbol: ReceiveSelect.symbol,
     });
-    setSelected({
-      logoURI: MintSelect.logoURI,
-      symbol: MintSelect.symbol,
+    setReceiveSelect({
+      logoURI: PaySelected.logoURI,
+      symbol: PaySelected.symbol,
     });
   };
 
   return (
     <>
-      {isModel && (
+      {isPayModel && (
         <TokenModel
-          isOpen={isModel}
-          isClose={() => setIsModel(false)}
-          List={PSMTokens}
-          setSelected={setSelected}
+          isOpen={isPayModel}
+          isClose={() => setIsPayModel(false)}
+          List={PSMRegistry.filter((items) => {
+            return items.symbol !== ReceiveSelect.symbol;
+          })}
+          setSelected={setPaySelected}
+        />
+      )}
+      {isReceiveModel && (
+        <TokenModel
+          isOpen={setIsReceiveModel}
+          isClose={() => setIsReceiveModel(false)}
+          List={PSMRegistry.filter((items) => {
+            return items.symbol !== PaySelected.symbol;
+          })}
+          setSelected={setReceiveSelect}
         />
       )}
 
@@ -93,14 +108,14 @@ const PSM = () => {
                               p="0.6rem 1rem"
                               id="btn"
                               className="d-flex align-items-center"
-                              onClick={() => setIsModel(true)}
+                              onClick={() => setIsPayModel(true)}
                             >
                               <Image
-                                src={selected.logoURI}
+                                src={PaySelected.logoURI}
                                 alt="SOL"
                                 h="2rem"
                               />
-                              <p className="mx-2">{selected.symbol}</p>
+                              <p className="mx-2">{PaySelected.symbol}</p>
                             </Button>
                           </div>
                         </div>
@@ -157,13 +172,14 @@ const PSM = () => {
                               p="0.6rem 1rem"
                               id="btn"
                               className="d-flex align-items-center"
+                              onClick={() => setIsReceiveModel(true)}
                             >
                               <Image
-                                src={MintSelect.logoURI}
+                                src={ReceiveSelect.logoURI}
                                 alt="mSOL"
                                 h="2rem"
                               />
-                              <p className="mx-2">{MintSelect.symbol}</p>
+                              <p className="mx-2">{ReceiveSelect.symbol}</p>
                             </Button>
                           </div>
                         </div>

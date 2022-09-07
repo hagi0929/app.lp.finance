@@ -1,6 +1,14 @@
 import { TokenRegistry } from "./index";
 
-export var PSMTokens = [
+export var PSMRegistry = [
+  {
+    address: "So11111111111111111111111111111111111111112",
+    chainId: 101,
+    decimals: 9,
+    logoURI: TokenRegistry.zSOL,
+    name: "zSOL",
+    symbol: "zSOL",
+  },
   {
     address: "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So",
     chainId: 101,

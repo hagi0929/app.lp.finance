@@ -46,7 +46,7 @@ const Header = () => {
                 />
               </div>
               <div className="col-4 d-flex justify-content-end">
-                <p className="closeBtn" onClick={closeNav}>
+                <p className="closeBtn mr-2" onClick={closeNav}>
                   <i className="zmdi zmdi-close close_icon" />
                 </p>
               </div>
@@ -89,76 +89,73 @@ const Header = () => {
                 </NavLink>
 
                 <ul className="navbar-nav left_ui_block ml-auto d-flex justify-content-center  align-items-center flex-row">
-                  <div className="left_ui_block_hide d-flex align-items-center">
-                    {NavbarRegistry.map((nav) => {
-                      return (
-                        <li className="nav-item" key={nav.id}>
-                          <NavLink
-                            exact="true"
-                            to={nav.href}
-                            className="nav-link"
-                            activeclassname="active"
-                          >
-                            {nav.name}
-                          </NavLink>
-                        </li>
-                      );
-                    })}
+                  {NavbarRegistry.map((nav) => {
+                    return (
+                      <li className="nav-item" key={nav.id}>
+                        <NavLink
+                          exact="true"
+                          to={nav.href}
+                          className="nav-link"
+                          activeclassname="active"
+                        >
+                          {nav.name}
+                        </NavLink>
+                      </li>
+                    );
+                  })}
 
-                    <li className="nav-item">
-                      <div className="Wallet_section">
-                        <WalletMultiButton />
-                      </div>
-                    </li>
-                    <li className="nav-item">
-                      <div
-                        className={dropdown ? "btn-group show" : "btn-group"}
-                      >
-                        <Button
-                          type="button"
-                          className="dropdown_btn"
-                          data-display="static"
-                          aria-expanded="false"
-                          onClick={() => setDropdown((prev) => !prev)}
-                        >
-                          <i className="zmdi zmdi-settings setting"></i>
-                        </Button>
-                        <div
-                          className={
-                            dropdown
-                              ? "dropdown-menu dropdown-menu-right show"
-                              : "dropdown-menu dropdown-menu-right"
-                          }
-                        >
-                          <div className="dropdown-item">
-                            <div className="title">
-                              <p>Settings</p>
-                            </div>
-                            <div className="title mt-3">
-                              <span>Networks -</span>
-                            </div>
-                            {RpcRegistry.map((list) => {
-                              return (
-                                <div
-                                  className="networks_card mt-2"
-                                  key={list.id}
-                                  onClick={() => changeCluster(list)}
-                                >
-                                  <div className="name">
-                                    <p>{list.name}</p>
-                                  </div>
-                                  {list.endpoint === Cluster?.endpoint && (
-                                    <div className="checked">
-                                      <i className="zmdi zmdi-check" />
-                                    </div>
-                                  )}
-                                </div>
-                              );
-                            })}
-                          </div>
+                  <li className="nav-item">
+                    <div className="Wallet_section">
+                      <WalletMultiButton />
+                    </div>
+                  </li>
+                </ul>
+
+                <ul className="navbar-nav setting_section d-flex justify-content-center  align-items-center flex-row">
+                  <div className={dropdown ? "btn-group show" : "btn-group"}>
+                    <Button
+                      type="button"
+                      className="dropdown_btn"
+                      data-display="static"
+                      aria-expanded="false"
+                      onClick={() => setDropdown((prev) => !prev)}
+                    >
+                      <i className="zmdi zmdi-settings setting"></i>
+                    </Button>
+                    <div
+                      className={
+                        dropdown
+                          ? "dropdown-menu dropdown-menu-right show"
+                          : "dropdown-menu dropdown-menu-right"
+                      }
+                    >
+                      <div className="dropdown-item">
+                        <div className="title">
+                          <p>Settings</p>
                         </div>
+                        <div className="title mt-3">
+                          <span>Networks -</span>
+                        </div>
+                        {RpcRegistry.map((list) => {
+                          return (
+                            <div
+                              className="networks_card mt-2"
+                              key={list.id}
+                              onClick={() => changeCluster(list)}
+                            >
+                              <div className="name">
+                                <p>{list.name}</p>
+                              </div>
+                              {list.endpoint === Cluster?.endpoint && (
+                                <div className="checked">
+                                  <i className="zmdi zmdi-check" />
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
-                    </li>
+                    </div>
                   </div>
                 </ul>
               </nav>
