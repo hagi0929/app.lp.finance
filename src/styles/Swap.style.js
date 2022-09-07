@@ -32,11 +32,6 @@ const SwapWrapper = styled.div`
 
             .model_btn {
               button {
-                img {
-                  width: auto;
-                  height: 1.8rem;
-                  border-radius: 50%;
-                }
                 p {
                   font-size: 1rem;
                   color: ${(props) => props.theme.BodyMainColor};
@@ -72,18 +67,13 @@ const SwapWrapper = styled.div`
             .switch_icon_section {
               height: 2rem;
               width: 2rem;
-              background: ${(props) => props.theme.BodyPrimaryBg};
+              border: 1px solid ${(props) => props.theme.BodyPrimaryBg};
               padding: 0.1rem;
               border-radius: 50%;
               display: flex;
               justify-content: center;
               align-items: center;
               cursor: pointer;
-
-              .switch_icon {
-                color: ${(props) => props.theme.BodyMainColor};
-                font-size: 1.4rem;
-              }
             }
           }
 
@@ -124,7 +114,7 @@ const SwapWrapper = styled.div`
                 .tokens {
                   span {
                     font-size: 0.73rem;
-                    color: ${(props) => props.theme.BodySecondaryColor};
+                    color: ${(props) => props.theme.BodyTraceryBg};
                   }
                 }
               }
@@ -135,6 +125,8 @@ const SwapWrapper = styled.div`
             padding: 0 0.8rem;
 
             .title_section {
+              border-bottom: ${(props) => props.theme.BodyTraceryBg};
+
               .title {
                 font-size: 0.85rem;
                 font-size: 500;
@@ -193,10 +185,7 @@ const SwapWrapper = styled.div`
                   font-size: 0.8rem;
 
                   .switch {
-                    color: ${(props) => props.theme.BodyMainColor};
-                    font-size: 0.9rem;
                     transform: rotate(90deg);
-                    cursor: pointer;
                   }
                 }
               }
@@ -294,17 +283,16 @@ const SwapWrapper = styled.div`
               }
 
               .trading_timers {
-                button {
-                  border: none;
-                  background: transparent;
+                span {
                   font-weight: 600;
                   font-size: 0.8rem;
+                  cursor: pointer;
                 }
 
                 .active {
                   color: ${(props) => props.theme.BodyMainColor};
                   border: 1px solid ${(props) => props.theme.BodyMainColor};
-                  border-radius: 10px;
+                  border-radius: 6px;
                   padding: 0.2rem 0.6rem;
                 }
 
@@ -340,12 +328,6 @@ const SwapWrapper = styled.div`
                     display: flex;
                     flex-direction: row;
                     align-items: center;
-
-                    .img_section img {
-                      height: 1.7rem;
-                      width: auto;
-                      border-radius: 50%;
-                    }
 
                     .name {
                       display: flex;
@@ -472,7 +454,6 @@ const SwapWrapper = styled.div`
                       }
                       p {
                         color: ${(props) => props.theme.BodyMainColor};
-                        opacity: 0.7;
                         font-size: 0.7rem;
                       }
                     }

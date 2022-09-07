@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { BiX } from "react-icons/bi";
 import { CgMenuLeftAlt } from "react-icons/cg";
@@ -21,6 +21,19 @@ const Header = () => {
   const closeNav = () => {
     document.getElementById("mySidenav").style.width = "0";
   };
+
+  useEffect(() => {
+    const closeDropdown = (e) => {
+      if (e.path[1].tagName !== "BUTTON") {
+        setDropdown(false);
+      }
+    };
+
+    document.body.addEventListener("click", closeDropdown);
+    return () => {
+      document.body.removeEventListener("click", closeDropdown);
+    };
+  }, []);
 
   return (
     <>
@@ -70,7 +83,7 @@ const Header = () => {
 
         <div className="container navbar_component">
           <div className="row">
-            <div className="col-12 m-0 p-0">
+            <div className="col-12">
               <nav className="navbar navbar-light">
                 <CgMenuLeftAlt
                   className="navbar-icon"
@@ -112,13 +125,7 @@ const Header = () => {
                           className="dropdown_btn"
                           data-display="static"
                           aria-expanded="false"
-                          onClick={() => {
-                            if (dropdown) {
-                              setDropdown(false);
-                            } else {
-                              setDropdown(true);
-                            }
-                          }}
+                          onClick={() => setDropdown((prev) => !prev)}
                         >
                           <AiOutlineSetting className="setting" />
                         </Button>

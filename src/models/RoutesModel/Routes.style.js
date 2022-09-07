@@ -139,7 +139,7 @@ const RoutesWrapper = styled.div`
               .tokens {
                 span {
                   font-size: 0.78rem;
-                  color: ${(props) => props.theme.BodySecondaryColor};
+                  color: ${(props) => props.theme.BodyTraceryBg};
                 }
               }
             }
@@ -147,7 +147,7 @@ const RoutesWrapper = styled.div`
             .amount_section {
               p {
                 font-size: 1rem;
-                color: ${(props) => props.theme.BodySecondaryColor};
+                color: ${(props) => props.theme.BodyTraceryBg};
               }
             }
           }

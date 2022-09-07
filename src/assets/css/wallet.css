@@ -64,12 +64,12 @@
   z-index: 1000;
   display: grid;
   grid-template-rows: 1fr;
-  grid-row-gap: 10px;
-  padding: 10px 0px;
+  grid-row-gap: 0px;
+  padding: 0px 0px; /* dropdown padding */
   top: 100%;
   min-width: 150px;
   right: 0;
-  left: 5px;
+  left: 0px;
   margin: 0;
   list-style: none;
   background: #080808;
@@ -77,7 +77,7 @@
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6);
   opacity: 0;
   visibility: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid #0c0;
   transition: opacity 200ms ease, transform 200ms ease, visibility 200ms;
 }
 
@@ -96,12 +96,13 @@
   cursor: pointer;
   white-space: nowrap;
   box-sizing: border-box;
-  padding: 0.8rem 1rem !important;
+  padding: 1rem 1rem !important;
   width: 100%;
   border-radius: 6px;
   font-size: 0.9rem;
   font-weight: 600;
   color: #0c0;
+  margin: 0;
 }
 
 .wallet-adapter-dropdown-list-item .wallet_icon {

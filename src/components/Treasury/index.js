@@ -23,14 +23,22 @@ const Treasury = () => {
                     <div className="col-lg-7 col-md-7 col-sm-6 col-12">
                       <div className="overview_img">
                         <hr />
-                        <img src="/images/figma/diamond.png" alt="Loading..." />
+                        <Image
+                          src="/images/figma/diamond.png"
+                          alt="Loading..."
+                          h="0.6rem"
+                        />
                       </div>
                     </div>
                   </div>
                   <div className="overview_card d-flex flex-row">
                     <div className="bottom_borrow_img text-center">
                       <hr />
-                      <img src="/images/figma/diamond.png" alt="Loading..." />
+                      <Image
+                        src="/images/figma/diamond.png"
+                        alt="Loading..."
+                        h="0.6rem"
+                      />
                     </div>
 
                     <Card
@@ -44,25 +52,28 @@ const Treasury = () => {
                           <div className="cart">
                             <div className="pie animate no-round"></div>
                             <div className="totalSupplyPie">
-                              <img
+                              <Image
                                 src="/images/figma/ellipse.png"
                                 alt="Loading..."
+                                h="5.8rem"
                               />
                             </div>
                           </div>
 
                           <div className="miter1">
                             <p className="ml-5 pl-2">100%</p>
-                            <img
+                            <Image
                               src="/images/figma/cartLine1.png"
                               alt="Loading..."
+                              w="130px"
                             />
                           </div>
                           <div className="miter2">
                             <p className="ml-5 pl-2">100%</p>
-                            <img
+                            <Image
                               src="/images/figma/cartLine2.png"
                               alt="loading..."
+                              w="130px"
                             />
                           </div>
                         </div>
@@ -106,7 +117,7 @@ const Treasury = () => {
                                   <Image
                                     src={list.img}
                                     alt={list.name}
-                                    h="2.5rem"
+                                    h="2.3rem"
                                   />
                                 </div>
                                 <div className="details ml-3">

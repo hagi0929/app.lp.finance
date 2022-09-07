@@ -26,8 +26,6 @@ const TreasuryWrapper = styled.div`
             transform: rotate(-90deg);
             right: -10px;
             top: -4px;
-            width: auto;
-            height: 0.6rem;
           }
         }
 
@@ -65,8 +63,6 @@ const TreasuryWrapper = styled.div`
               position: absolute;
               transform: translate(-50%, 50%);
               bottom: 0px;
-              width: auto;
-              height: 0.6rem;
             }
           }
 
@@ -150,11 +146,6 @@ const TreasuryWrapper = styled.div`
                   top: 20px;
                   left: 35.5px;
                   cursor: pointer;
-
-                  img {
-                    height: 5.8rem;
-                    width: auto;
-                  }
                 }
 
                 @keyframes ani {
@@ -180,10 +171,6 @@ const TreasuryWrapper = styled.div`
                 p {
                   line-height: 20px;
                 }
-
-                img {
-                  width: 130px;
-                }
               }
 
               .miter2 {
@@ -192,10 +179,6 @@ const TreasuryWrapper = styled.div`
 
                 p {
                   line-height: 0px;
-                }
-
-                img {
-                  width: 130px;
                 }
               }
             }

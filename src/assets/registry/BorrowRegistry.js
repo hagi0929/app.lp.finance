@@ -4,7 +4,7 @@ export var DepositTokens = [
   {
     id: 1,
     img: TokenRegistry.SOL,
-    fullName: "Solana",
+    fullName: "Wrapped Solana",
     name: "SOL",
   },
   {
@@ -85,7 +85,7 @@ export var WithdrawTokens = [
   {
     id: 1,
     img: TokenRegistry.SOL,
-    fullName: "Solana",
+    fullName: "Wrapped Solana",
     name: "SOL",
   },
   {

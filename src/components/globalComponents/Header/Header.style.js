@@ -196,17 +196,18 @@ const HeaderWrapper = styled.div`
 
               .dropdown_btn {
                 background: transparent;
+                margin-left: 10px;
 
                 .setting {
                   color: ${(props) => props.theme.BodyMainColor};
                   font-size: 1.3rem;
-                  margin-left: 10px;
                 }
               }
 
               .dropdown-menu {
                 position: absolute !important;
                 background: ${(props) => props.theme.BodySecondaryBg};
+                border: 1px solid ${(props) => props.theme.BodyTraceryBg};
                 margin: 1.7rem 0 0;
                 padding: 0rem;
                 border-radius: 8px;
@@ -290,7 +291,7 @@ const HeaderWrapper = styled.div`
   @media only screen and (max-width: 1216px) {
     .navbar_component {
       nav {
-        padding: 0.2rem 0.5rem;
+        padding: 0.2rem 0rem;
 
         .navbar-brand {
           img {

@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState, memo, useCallback } from "react";
 import { useJupiter } from "@jup-ag/react-hook";
 import sortBy from "lodash/sortBy";
-import { HiSwitchVertical } from "react-icons/hi";
 import {
   getTokenAccountsByOwnerWithWrappedSol,
   nativeToUi,
@@ -16,6 +15,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import Input from "Layout/Form/Input";
 import Card from "Layout/Card";
 import Chart from "./Chart";
+import Image from "Layout/Image";
 
 const Jupiter = ({
   coinGeckoList,
@@ -353,14 +353,14 @@ const Jupiter = ({
                                   onClick={() => setShowInputTokenSelect(true)}
                                 >
                                   {inputTokenInfo?.logoURI ? (
-                                    <img
+                                    <Image
                                       src={inputTokenInfo?.logoURI}
                                       alt={inputTokenInfo?.symbol}
-                                      loading="lazy"
+                                      h="2rem"
                                     />
                                   ) : null}
 
-                                  <p className="mx-1">
+                                  <p className="mx-2">
                                     {inputTokenInfo?.symbol}
                                   </p>
                                   <i className="zmdi zmdi-chevron-down pl-1" />
@@ -400,8 +400,9 @@ const Jupiter = ({
                           <div className="row">
                             <div className="col-12 d-flex justify-content-center">
                               <div className="switch_icon_section">
-                                <HiSwitchVertical
-                                  className="switch_icon"
+                                <Image
+                                  src="/images/icons/swap.png"
+                                  alt="swap"
                                   onClick={handleSwitchMints}
                                 />
                               </div>
@@ -433,15 +434,14 @@ const Jupiter = ({
                                   onClick={() => setShowOutputTokenSelect(true)}
                                 >
                                   {outputTokenInfo?.logoURI ? (
-                                    <img
+                                    <Image
                                       src={outputTokenInfo?.logoURI}
                                       alt={outputTokenInfo?.symbol}
-                                      loading="lazy"
+                                      h="2rem"
                                     />
                                   ) : null}
 
-                                  <p className="mx-1">
-                                    {" "}
+                                  <p className="mx-2">
                                     {outputTokenInfo?.symbol}
                                   </p>
                                   <i className="zmdi zmdi-chevron-down pl-1" />
@@ -496,7 +496,7 @@ const Jupiter = ({
                           </div>
                         </div>
 
-                        {routes?.length && selectedRoute ? (
+                        {publicKey && routes?.length && selectedRoute ? (
                           <>
                             <div className="routes_section my-2">
                               <div className="row">
@@ -580,7 +580,7 @@ const Jupiter = ({
                                             type="submit"
                                             active={1}
                                             br="10px"
-                                            p="0.2rem 1rem"
+                                            p="0.2rem 0.5rem"
                                             id="btn"
                                             size="0.8rem"
                                             onClick={() =>
@@ -600,10 +600,10 @@ const Jupiter = ({
                             <div className="swap_details mt-3">
                               <div className="title_section">
                                 <div className="row">
-                                  <div className="col-4 d-flex align-items-center">
+                                  <div className="col-6 d-flex align-items-center">
                                     <p className="title">Swap Details</p>
                                   </div>
-                                  <div className="col-8 ">
+                                  <div className="col-6">
                                     <div className="settings d-flex justify-content-end align-items-center flex-row">
                                       <div
                                         className="refresh"
@@ -644,7 +644,7 @@ const Jupiter = ({
                                               1 {inputTokenInfo?.symbol} ≈{" "}
                                               {Intl.NumberFormat("en", {
                                                 minimumSignificantDigits: 1,
-                                                maximumSignificantDigits: 6,
+                                                maximumSignificantDigits: 3,
                                               }).format(
                                                 outAmountUi / formValue?.amount
                                               )}{" "}
@@ -655,15 +655,19 @@ const Jupiter = ({
                                               1 {outputTokenInfo?.symbol} ≈{" "}
                                               {Intl.NumberFormat("en", {
                                                 minimumSignificantDigits: 1,
-                                                maximumSignificantDigits: 6,
+                                                maximumSignificantDigits: 3,
                                               }).format(
                                                 formValue?.amount / outAmountUi
                                               )}{" "}
                                               {inputTokenInfo?.symbol}
                                             </>
                                           )}
-                                          <HiSwitchVertical
+                                          <Image
+                                            src="/images/icons/swap.png"
+                                            alt="swap"
                                             className="switch ml-1"
+                                            h="0.8rem"
+                                            active={1}
                                             onClick={() =>
                                               setSwapRate(!swapRate)
                                             }
@@ -715,12 +719,12 @@ const Jupiter = ({
                                     </div>
                                   </div>
                                   <div className="row my-1">
-                                    <div className="col-4">
+                                    <div className="col-5">
                                       <span className="details_title">
                                         Price Impact
                                       </span>
                                     </div>
-                                    <div className="col-8 d-flex justify-content-end flex-column">
+                                    <div className="col-7 d-flex justify-content-end flex-column">
                                       <div className="details_subtitle d-flex justify-content-end">
                                         <p>
                                           {selectedRoute?.priceImpactPct * 100 <
@@ -930,7 +934,6 @@ const Jupiter = ({
                                           <i className="zmdi zmdi-rotate-left zmdi-hc-spin-reverse"></i>
                                         </p>
                                         <span className="pl-2">
-                                          {" "}
                                           Swap Swapping
                                         </span>
                                       </div>

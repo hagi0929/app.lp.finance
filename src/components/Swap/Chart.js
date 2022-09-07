@@ -10,6 +10,7 @@ import {
 import useDimensions from "react-cool-dimensions";
 import moment from "moment";
 import { CalcFiveDigit, numFormatter } from "helper";
+import Image from "Layout/Image";
 
 const Chart = ({ inputTokenId, outputTokenId }) => {
   const [chartData, setChartData] = useState([]);
@@ -154,9 +155,9 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
     setOutputTokenInfo(data);
 
     const getOutData = {
-      img: data.image.small,
-      symbol: data.symbol.toUpperCase(),
-      name: data.name,
+      img: data?.image?.small,
+      symbol: data?.symbol?.toUpperCase(),
+      name: data?.name,
       price: CalcFiveDigit(data.market_data.current_price.usd),
       percentage: data.market_data.price_change_percentage_24h.toFixed(2),
       MarketData: [
@@ -284,36 +285,36 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
         </div>
         <div className="col-6 d-flex justify-content-end align-items-start trading_timers">
           <div className="d-flex align-items-center">
-            <button
+            <span
               onClick={() => setDaysToShow(1)}
               className={daysToShow === 1 ? "active" : "notActive"}
             >
               24H
-            </button>
-            <button
+            </span>
+            <span
               onClick={() => setDaysToShow(7)}
               className={daysToShow === 7 ? "ml-2 active " : "ml-2 notActive"}
             >
               1W
-            </button>
-            <button
+            </span>
+            <span
               onClick={() => setDaysToShow(30)}
               className={daysToShow === 30 ? "ml-2 active " : "ml-2 notActive"}
             >
               1M
-            </button>
-            <button
+            </span>
+            <span
               onClick={() => setDaysToShow(60)}
               className={daysToShow === 60 ? "ml-2 active " : "ml-2 notActive"}
             >
               2M
-            </button>
-            <button
+            </span>
+            <span
               onClick={() => setDaysToShow(180)}
               className={daysToShow === 180 ? "ml-2 active " : "ml-2 notActive"}
             >
               3M
-            </button>
+            </span>
           </div>
         </div>
       </div>
@@ -378,10 +379,11 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
                       <div className="col-lg-6 col-md-4 col-6 TokenInfo_left">
                         <div className="img_section">
                           {InputList && (
-                            <img
+                            <Image
                               src={InputList?.img}
                               alt={InputList?.name}
-                              loading="lazy"
+                              h="2rem"
+                              br="50%"
                             />
                           )}
                         </div>
@@ -468,10 +470,12 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
                       <div className="col-lg-6 col-md-4 col-6 TokenInfo_left">
                         <div className="img_section">
                           {OutputList && (
-                            <img
+                            <Image
                               src={OutputList?.img}
                               alt={OutputList?.name}
-                              loading="lazy"
+                              h="2rem"
+                              w="2rem"
+                              br="50%"
                             />
                           )}
                         </div>

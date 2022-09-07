@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 export const lightTheme = {
   BodyMainBg: "black", // body bg color ,#222
-  BodyPrimaryBg: "rgba(255, 255, 255, 0.1)", // for text, hover , bg, button
+  BodyPrimaryBg: "rgba(255, 255, 255, 0.2)", // for text, hover , bg, button
   BodySecondaryBg: "#080808", //card, button bg color,
   BodyTraceryBg: "#0f0",
   BodyMainColor: "#0c0", // text color

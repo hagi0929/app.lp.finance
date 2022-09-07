@@ -1,8 +1,3 @@
-import { FaTwitter, FaTelegramPlane } from "react-icons/fa";
-import { AiFillGithub, AiFillMediumCircle } from "react-icons/ai";
-import { GrLinkedinOption } from "react-icons/gr";
-import { FaDiscord } from "react-icons/fa";
-
 export const RpcRegistry = [
   {
     id: 1,
@@ -86,33 +81,38 @@ export const NavbarMobileRegistry = [
 export const FooterRegistry = [
   {
     id: 1,
-    icon: <FaTwitter className="foot_icon" />,
+    name: "twitter",
+    icon: "/images/media/twitter.png",
     url: "https://twitter.com/LPFinance_",
   },
   {
     id: 2,
-    icon: <FaTelegramPlane className="foot_icon" />,
+    name: "telegram",
+    icon: "/images/media/telegram.png",
     url: "https://t.me/LP_Defi_Official_group",
   },
   {
     id: 3,
-    icon: <AiFillMediumCircle className="foot_icon" />,
-    url: " https://medium.com/@LP_Finance",
+    name: "medium",
+    icon: "/images/media/medium.png",
+    url: "https://medium.com/@LP_Finance",
   },
   {
     id: 4,
-    icon: <GrLinkedinOption className="foot_icon" />,
+    name: "linkedin",
+    icon: "/images/media/linkedin.png",
     url: "https://www.linkedin.com/company/lpdefi/",
   },
-
   {
     id: 5,
-    icon: <AiFillGithub className="foot_icon" />,
+    name: "github",
+    icon: "/images/media/github.png",
     url: "https://github.com/LP-Finance-Inc",
   },
   {
     id: 6,
-    icon: <FaDiscord className="foot_icon" />,
+    name: "discord",
+    icon: "/images/media/discord.png",
     url: "https://discord.gg/ug7mstrHNW",
   },
 ];

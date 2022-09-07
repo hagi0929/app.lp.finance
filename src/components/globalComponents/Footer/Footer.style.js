@@ -24,13 +24,14 @@ const FooterWrapper = styled.div`
       ul {
         li {
           padding: 0rem 1rem;
+          display: flex;
+          align-items: center;
+
           a {
+            display: flex;
+            align-items: center;
             color: white;
             font-size: 1.7rem;
-
-            .foot_icon {
-              color: ${(props) => props.theme.BodyMainColor};
-            }
           }
         }
       }

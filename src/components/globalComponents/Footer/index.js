@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { FooterRegistry } from "assets/registry";
 import FooterWrapper from "./Footer.style";
+import Image from "Layout/Image";
 
 const Footer = () => {
   useEffect(() => {
@@ -36,7 +37,7 @@ const Footer = () => {
                               target="_blank"
                               rel="noreferrer"
                             >
-                              {items.icon}
+                              <Image src={items.icon} alt={items.name} />
                             </a>
                           </li>
                         );
