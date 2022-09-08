@@ -7,7 +7,7 @@ import Withdraw from "./Withdraw";
 import Repay from "./Repay";
 import BorrowTabWrapper from "styles/BorrowTab.style";
 
-const Tabs = ({ publicKey }) => {
+const Tabs = ({ publicKey, PriceList }) => {
   const changeRadius = () => {
     document
       .getElementById("nav-tabContent")
@@ -113,7 +113,7 @@ const Tabs = ({ publicKey }) => {
                       role="tabpanel"
                       aria-labelledby="nav-Deposit-tab"
                     >
-                      <Deposit publicKey={publicKey} />
+                      <Deposit publicKey={publicKey} PriceList={PriceList} />
                     </div>
                     <div
                       className="tab-pane fade"

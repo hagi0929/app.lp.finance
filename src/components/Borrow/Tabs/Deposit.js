@@ -6,7 +6,7 @@ import { DepositTokens } from "assets/registry/BorrowRegistry";
 import TokenModel from "models/TokenModel";
 import { TokenRegistry } from "assets/registry";
 
-const Deposit = ({ publicKey }) => {
+const Deposit = ({ publicKey, PriceList }) => {
   const [isModel, setIsModel] = useState(false);
   const [selected, setSelected] = useState({
     logoURI: TokenRegistry.SOL,
@@ -15,6 +15,15 @@ const Deposit = ({ publicKey }) => {
 
   return (
     <>
+      {isModel && (
+        <TokenModel
+          isOpen={isModel}
+          isClose={() => setIsModel(false)}
+          List={DepositTokens}
+          setSelected={setSelected}
+          PriceList={PriceList}
+        />
+      )}
       <div className="row deposit d-flex justify-content-center">
         <div className="col-lg-11 col-md-10 col-12 my-3">
           <div className="deposit_card">
@@ -82,14 +91,6 @@ const Deposit = ({ publicKey }) => {
           </div>
         </div>
       </div>
-      {isModel && (
-        <TokenModel
-          isOpen={isModel}
-          isClose={() => setIsModel(false)}
-          List={DepositTokens}
-          setSelected={setSelected}
-        />
-      )}
     </>
   );
 };

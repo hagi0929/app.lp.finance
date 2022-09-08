@@ -3,11 +3,12 @@ import Overview from "./Overview";
 import Tabs from "./Tabs";
 import BorrowWrapper from "styles/Borrow.style";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useCrypto } from "contexts/CryptoContext";
 
 const Borrow = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
-
+  const { PriceList } = useCrypto();
   return (
     <>
       <BorrowWrapper pie={100}>
@@ -23,7 +24,7 @@ const Borrow = () => {
             </div>
           </div>
           <Overview publicKey={publicKey} />
-          <Tabs publicKey={publicKey} />
+          <Tabs publicKey={publicKey} PriceList={PriceList} />
         </div>
       </BorrowWrapper>
     </>

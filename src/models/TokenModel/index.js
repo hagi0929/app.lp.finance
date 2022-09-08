@@ -2,6 +2,7 @@ import React, { useEffect, memo, useState, useMemo } from "react";
 import TokenWrapper from "./TokenModel.style";
 import Input from "Layout/Form/Input";
 import Image from "Layout/Image";
+import { CalcFiveDigit } from "helper";
 
 const generateSearchTerm = (item, searchValue) => {
   const normalizedSearchValue = searchValue.toLowerCase();
@@ -29,7 +30,7 @@ const startSearch = (items, searchValue) => {
     .map((item) => item.token);
 };
 
-const TokenModel = ({ isOpen, isClose, List, setSelected }) => {
+const TokenModel = ({ isOpen, isClose, List, setSelected, PriceList }) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -39,12 +40,24 @@ const TokenModel = ({ isOpen, isClose, List, setSelected }) => {
   }, [isOpen]);
 
   const tokenInfos = useMemo(() => {
-    if (List?.length) {
-      return List;
+    if (List?.length > 0 && PriceList?.length > 0) {
+      let newList = [];
+      for (var i = 0; i < List?.length; i++) {
+        for (var j = 0; j < PriceList?.length; j++) {
+          if (List[i].symbol === PriceList[j].symbol) {
+            newList.push({
+              ...List[i],
+              price: PriceList[j].price,
+            });
+          }
+        }
+      }
+
+      return newList;
     } else {
       return [];
     }
-  }, [List]);
+  }, [List, PriceList]);
 
   const CloseModel = () => {
     document.querySelector(".popup").classList.remove("active");
@@ -111,7 +124,7 @@ const TokenModel = ({ isOpen, isClose, List, setSelected }) => {
                                 <div className="ml-3 details_name d-flex flex-column">
                                   <p>{item.symbol}</p>
                                   <span>{item.name}</span>
-                                  <span>$ 0</span>
+                                  <span>$ {CalcFiveDigit(item.price)}</span>
                                 </div>
                               </div>
                               <div className="col-5 d-flex align-items-start justify-content-end">

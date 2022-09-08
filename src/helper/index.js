@@ -81,9 +81,15 @@ export const numFormatter = (num) => {
 
 export const CalcFiveDigit = (num) => {
   if (num !== undefined) {
-    num = num.toString();
-    num = num.slice(0, num.indexOf(".") + 6);
-    return Number(num);
+    const check = Number.isInteger(num);
+
+    if (check) {
+      return Number(num);
+    } else {
+      num = num?.toString();
+      num = num?.slice(0, num.indexOf(".") + 6);
+      return Number(num);
+    }
   } else {
     return 0;
   }

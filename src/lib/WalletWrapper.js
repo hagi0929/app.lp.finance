@@ -64,7 +64,9 @@ const WalletWrapper = ({ children }) => {
 
   return (
     <>
-      <ConnectionProvider endpoint={endpoint}>
+      <ConnectionProvider
+        endpoint={endpoint ? endpoint : process.env.REACT_APP_PUBLIC_CLUSTER}
+      >
         <WalletProvider wallets={wallets}>
           <WalletModalProvider>{children}</WalletModalProvider>
         </WalletProvider>

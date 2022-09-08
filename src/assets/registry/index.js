@@ -246,3 +246,14 @@ export const LiquidStaking = [
     name: "stSOL",
   },
 ];
+
+export var TokenPriceRegistry = [
+  "SOL",
+  "mSOL",
+  "stSOL",
+  "UXD",
+  "SRM",
+  "SLND",
+  "GMT",
+  "SAMO",
+];
