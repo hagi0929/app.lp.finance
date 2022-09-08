@@ -1,13 +1,12 @@
+// import { useWallet } from "@solana/wallet-adapter-react";
 import React, { useState, useContext, createContext, useEffect } from "react";
 import { getTokenPrice } from "utils/crypto";
-// import { useWallet } from "@solana/wallet-adapter-react";
-
+// getBalance
 export const CryptoContext = createContext();
 
 export const CryptoProvider = ({ children }) => {
   // const wallet = useWallet();
   // const { publicKey } = wallet;
-
   const [PriceList, setPriceList] = useState([]);
   // const [BalanceList, setBalanceList] = useState();
 
@@ -18,7 +17,6 @@ export const CryptoProvider = ({ children }) => {
     };
 
     handlePrice();
-
     // let PriceInterval = setInterval(async () => {
     //   const list = await getTokenPrice();
     //   setPriceList(list);
@@ -28,6 +26,15 @@ export const CryptoProvider = ({ children }) => {
     //   clearInterval(PriceInterval);
     // };
   }, []);
+
+  // useEffect(() => {
+  //   const handleBal = async () => {
+  //     const balList = await getBalance(publicKey);
+  //     console.log(balList);
+  //   };
+
+  //   handleBal();
+  // }, [publicKey]);
 
   return (
     <CryptoContext.Provider value={{ PriceList }}>

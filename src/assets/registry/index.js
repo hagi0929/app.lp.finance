@@ -257,3 +257,14 @@ export var TokenPriceRegistry = [
   "GMT",
   "SAMO",
 ];
+
+export var TokenBalRegistry = [
+  "SOL",
+  "mSOL",
+  "stSOL",
+  "UXD",
+  "SRM",
+  "SLND",
+  "GMT",
+  "SAMO",
+];

@@ -1,6 +1,41 @@
 import * as anchor from "@project-serum/anchor";
 const { PublicKey } = anchor.web3;
 
+// mint address
+// =================================
+
+export const SOLMint = new PublicKey(
+  "So11111111111111111111111111111111111111112"
+);
+
+export const mSOLMint = new PublicKey(
+  "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So"
+);
+
+export const stSOLMint = new PublicKey(
+  "7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj"
+);
+
+export const UXDMint = new PublicKey(
+  "7kbnvuGBxxj8AG9qp8Scn56muWGaRaFqxg1FsRp3PaFT"
+);
+
+export const SRMMint = new PublicKey(
+  "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt"
+);
+
+export const SLNDMint = new PublicKey(
+  "SLNDpmoWTVADgEdndyvWzroNL7zSi1dF9PC3xHGtPwp"
+);
+
+export const GMTMint = new PublicKey(
+  "7i5KKsX2weiTkry7jA4ZwSuXGhs5eJBEjY8vVxR4pfRx"
+);
+
+export const SAMOMint = new PublicKey(
+  "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU"
+);
+
 // MAINNET-BETA PYth price
 // ===================================
 export const SOL_Account = new PublicKey(
