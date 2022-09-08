@@ -65,7 +65,7 @@ const TokenWrapper = styled.div`
 
       .Coin_bottom_Section {
         .token_list {
-          max-height: 350px;
+          max-height: 300px;
           min-height: 100px;
           overflow-y: scroll;
           overflow-x: hidden;
@@ -111,7 +111,6 @@ const TokenWrapper = styled.div`
   @media only screen and (max-width: 600px) {
     .popup .popup-container {
       width: 98% !important;
-      height: 98% !important;
       max-width: auto !important;
       min-width: auto !important;
     }

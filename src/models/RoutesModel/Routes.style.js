@@ -27,7 +27,7 @@ const RoutesWrapper = styled.div`
     min-width: 360px !important;
     max-width: 360px !important;
     min-height: 100px;
-    padding: 1.5rem 0.2rem;
+    padding: 1.6rem 0.2rem;
     border-radius: 18px;
     opacity: 0.5;
     transition: all 300ms ease-in-out;
@@ -87,7 +87,7 @@ const RoutesWrapper = styled.div`
       .Token_bottom_Section {
         .route_list {
           min-height: 100px;
-          max-height: 350px;
+          max-height: 330px;
           width: 100%;
           overflow-y: scroll;
           overflow-x: hidden;
@@ -158,9 +158,9 @@ const RoutesWrapper = styled.div`
   @media only screen and (max-width: 600px) {
     .Routes_Popup .Routes-container {
       width: 98% !important;
-      height: 98% !important;
       max-width: auto !important;
       min-width: auto !important;
+      padding: 0.5rem 0.2rem;
     }
     .Routes_Popup .Routes_section {
       padding: 1rem 0.3rem;

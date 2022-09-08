@@ -64,12 +64,13 @@ const WalletWrapper = ({ children }) => {
 
   return (
     <>
-      {/* autoConnect */}
-      <ConnectionProvider endpoint={endpoint}>
-        <WalletProvider wallets={wallets}>
-          <WalletModalProvider>{children}</WalletModalProvider>
-        </WalletProvider>
-      </ConnectionProvider>
+      {endpoint && (
+        <ConnectionProvider endpoint={endpoint}>
+          <WalletProvider wallets={wallets}>
+            <WalletModalProvider>{children}</WalletModalProvider>
+          </WalletProvider>
+        </ConnectionProvider>
+      )}
     </>
   );
 };
