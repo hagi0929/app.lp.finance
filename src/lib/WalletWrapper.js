@@ -21,9 +21,9 @@ require("assets/css/wallet.css");
 
 const WalletWrapper = ({ children }) => {
   const { Cluster } = useCluster();
-  const [network, setNetwork] = useState(null);
+  const [network, setNetwork] = useState("");
 
-  const endpoint = useMemo(() => {
+  const [endpoint] = useMemo(() => {
     let ClusterEnv;
 
     if (Cluster === "QuickNode (LP Finance)") {
@@ -32,7 +32,20 @@ const WalletWrapper = ({ children }) => {
       ClusterEnv = process.env.REACT_APP_PUBLIC_CLUSTER;
     }
 
-    return ClusterEnv;
+    return [ClusterEnv];
+  }, [Cluster]);
+
+  useEffect(() => {
+    if (Cluster === "QuickNode (LP Finance)" || Cluster === "Mainnet Beta") {
+      setNetwork(WalletAdapterNetwork.Mainnet);
+    } else if (Cluster === "Testnet") {
+      setNetwork(WalletAdapterNetwork.Testnet);
+    } else if (Cluster === "Devnet") {
+      setNetwork(WalletAdapterNetwork.Devnet);
+    }
+    return () => {
+      setNetwork("");
+    };
   }, [Cluster]);
 
   const wallets = useMemo(
@@ -49,28 +62,13 @@ const WalletWrapper = ({ children }) => {
     [network]
   );
 
-  useEffect(() => {
-    if (Cluster === "QuickNode (LP Finance)" || Cluster === "Mainnet Beta") {
-      setNetwork(WalletAdapterNetwork.Mainnet);
-    } else if (Cluster === "Testnet") {
-      setNetwork(WalletAdapterNetwork.Testnet);
-    } else if (Cluster === "Devnet") {
-      setNetwork(WalletAdapterNetwork.Devnet);
-    }
-    return () => {
-      setNetwork(null);
-    };
-  }, [Cluster]);
-
   return (
     <>
-      {endpoint && (
-        <ConnectionProvider endpoint={endpoint}>
-          <WalletProvider wallets={wallets}>
-            <WalletModalProvider>{children}</WalletModalProvider>
-          </WalletProvider>
-        </ConnectionProvider>
-      )}
+      <ConnectionProvider endpoint={endpoint}>
+        <WalletProvider wallets={wallets}>
+          <WalletModalProvider>{children}</WalletModalProvider>
+        </WalletProvider>
+      </ConnectionProvider>
     </>
   );
 };
