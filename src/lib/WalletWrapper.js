@@ -50,7 +50,6 @@ const WalletWrapper = ({ children }) => {
   );
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_QUICK_NODE_CLUSTER);
     if (Cluster === "QuickNode (LP Finance)" || Cluster === "Mainnet Beta") {
       setNetwork(WalletAdapterNetwork.Mainnet);
     } else if (Cluster === "Testnet") {
