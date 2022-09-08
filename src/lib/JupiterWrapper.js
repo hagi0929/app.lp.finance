@@ -10,7 +10,7 @@ const JupiterWrapper = ({ children }) => {
     <JupiterProvider
       cluster="mainnet-beta"
       connection={connection}
-      userPublicKey={wallet.publicKey || undefined}
+      userPublicKey={wallet?.publicKey || undefined}
     >
       {children}
     </JupiterProvider>

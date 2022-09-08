@@ -1,9 +1,11 @@
 import React, { useEffect, useMemo, useState, memo } from "react";
+import { WalletModalProvider } from "lib/WalletAdapter";
+import { useCluster } from "contexts/ClusterContext";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
   ConnectionProvider,
   WalletProvider,
 } from "@solana/wallet-adapter-react";
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
   LedgerWalletAdapter,
   PhantomWalletAdapter,
@@ -14,8 +16,6 @@ import {
   SolongWalletAdapter,
   Coin98WalletAdapter,
 } from "@solana/wallet-adapter-wallets";
-import { WalletModalProvider } from "lib/WalletAdapter";
-import { useCluster } from "contexts/ClusterContext";
 
 require("assets/css/wallet.css");
 
@@ -23,7 +23,17 @@ const WalletWrapper = ({ children }) => {
   const { Cluster } = useCluster();
   const [network, setNetwork] = useState(null);
 
-  const endpoint = useMemo(() => "https://solana-api.projectserum.com", []);
+  const endpoint = useMemo(() => {
+    let ClusterEnv;
+
+    if (Cluster === "QuickNode (LP Finance)") {
+      ClusterEnv = process.env.REACT_APP_QUICK_NODE_CLUSTER;
+    } else if (Cluster === "Mainnet Beta") {
+      ClusterEnv = process.env.REACT_APP_PUBLIC_CLUSTER;
+    }
+
+    return ClusterEnv;
+  }, [Cluster]);
 
   const wallets = useMemo(
     () => [
@@ -40,11 +50,12 @@ const WalletWrapper = ({ children }) => {
   );
 
   useEffect(() => {
-    if (Cluster?.name === "Mainnet Beta") {
+    console.log(process.env.REACT_APP_QUICK_NODE_CLUSTER);
+    if (Cluster === "QuickNode (LP Finance)" || Cluster === "Mainnet Beta") {
       setNetwork(WalletAdapterNetwork.Mainnet);
-    } else if (Cluster?.name === "Testnet") {
+    } else if (Cluster === "Testnet") {
       setNetwork(WalletAdapterNetwork.Testnet);
-    } else if (Cluster?.name === "Devnet") {
+    } else if (Cluster === "Devnet") {
       setNetwork(WalletAdapterNetwork.Devnet);
     }
     return () => {
@@ -55,9 +66,7 @@ const WalletWrapper = ({ children }) => {
   return (
     <>
       {/* autoConnect */}
-      <ConnectionProvider
-        endpoint={Cluster?.endpoint ? Cluster?.endpoint : endpoint}
-      >
+      <ConnectionProvider endpoint={endpoint}>
         <WalletProvider wallets={wallets}>
           <WalletModalProvider>{children}</WalletModalProvider>
         </WalletProvider>

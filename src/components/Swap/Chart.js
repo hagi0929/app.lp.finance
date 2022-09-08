@@ -370,7 +370,7 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
                     name="toggle"
                     id="toggle1"
                   />
-                  <label for="toggle1">
+                  <label htmlFor="toggle1">
                     <div className="row TokenInfo">
                       <div className="col-lg-6 col-md-4 col-6 TokenInfo_left">
                         <div className="img_section">
@@ -461,7 +461,7 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
                     name="toggle"
                     id="toggle2"
                   />
-                  <label for="toggle2">
+                  <label htmlFor="toggle2">
                     <div className="row TokenInfo">
                       <div className="col-lg-6 col-md-4 col-6 TokenInfo_left">
                         <div className="img_section">

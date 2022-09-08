@@ -3,54 +3,25 @@ import React, { useContext, createContext, useState, useEffect } from "react";
 export const ClusterContext = createContext();
 
 export const ClusterProvider = ({ children }) => {
-  const [Cluster, setCluster] = useState({
-    name: "",
-    endpoint: "",
-  });
+  const [Cluster, setCluster] = useState("");
 
-  const changeCluster = ({ name, endpoint }) => {
-    setCluster({
-      name,
-      endpoint,
-    });
-    localStorage.setItem(
-      "Solana-Cluster",
-      JSON.stringify({
-        name,
-        endpoint,
-      })
-    );
+  const changeCluster = (endpoint) => {
+    setCluster(endpoint);
+    localStorage.setItem("web3.endpoint", endpoint);
   };
 
   useEffect(() => {
-    const getCluster = JSON.parse(localStorage.getItem("Solana-Cluster"));
+    const getCluster = localStorage.getItem("web3.endpoint");
 
     if (getCluster) {
-      const { name, endpoint } = getCluster;
-      setCluster({
-        name,
-        endpoint,
-      });
+      setCluster(getCluster);
     } else {
-      setCluster({
-        name: "Mainnet Beta",
-        endpoint: "https://solana-api.projectserum.com",
-      });
-
-      localStorage.setItem(
-        "Solana-Cluster",
-        JSON.stringify({
-          name: "Mainnet Beta",
-          endpoint: "https://solana-api.projectserum.com",
-        })
-      );
+      setCluster("QuickNode (LP Finance)");
+      localStorage.setItem("web3.endpoint", "QuickNode (LP Finance)");
     }
 
     return () => {
-      setCluster({
-        name: "",
-        endpoint: "",
-      });
+      setCluster("");
     };
   }, []);
 

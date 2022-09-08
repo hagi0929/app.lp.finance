@@ -112,7 +112,7 @@ const PSM = () => {
                             >
                               <Image
                                 src={PaySelected.logoURI}
-                                alt="SOL"
+                                alt={PaySelected.symbol}
                                 h="2rem"
                               />
                               <p className="mx-2">{PaySelected.symbol}</p>
@@ -176,7 +176,7 @@ const PSM = () => {
                             >
                               <Image
                                 src={ReceiveSelect.logoURI}
-                                alt="mSOL"
+                                alt={ReceiveSelect.symbol}
                                 h="2rem"
                               />
                               <p className="mx-2">{ReceiveSelect.symbol}</p>

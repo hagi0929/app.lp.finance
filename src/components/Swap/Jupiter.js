@@ -207,14 +207,11 @@ const Jupiter = ({
   };
 
   const [walletTokensWithInfos] = useMemo(() => {
-    const userTokens = [];
-    tokens.map((item) => {
+    var userTokens = tokens?.map((item) => {
       const found = walletTokens.find(
         (token) => token.account.mint.toBase58() === item?.address
       );
-      if (found) {
-        userTokens.push({ ...found, item });
-      }
+      return { ...found, item };
     });
     return [userTokens];
   }, [walletTokens, tokens]);
@@ -238,10 +235,11 @@ const Jupiter = ({
     );
     const data = await response.json();
 
+    // eslint-disable-next-line array-callback-return
     const feeValue = selectedRoute.marketInfos.reduce((a, c) => {
       const feeToken = tokens.find((item) => item?.address === c.lpFee?.mint);
 
-      const amount = c.lpFee?.amount[0] / Math.pow(10, feeToken.decimals);
+      const amount = c.lpFee?.amount[0] / Math.pow(10, feeToken?.decimals);
 
       if (data[c.lpFee?.mint]) {
         return a + data[c.lpFee?.mint].usd * amount;
@@ -250,6 +248,7 @@ const Jupiter = ({
         return a + 1 * amount;
       }
     }, 0);
+
     if (feeValue) {
       setFeeValue(feeValue);
     }
@@ -879,6 +878,7 @@ const Jupiter = ({
                                           );
                                         },
                                       });
+                                      console.log(errorTxid);
                                       setSwapping(false);
                                       fetchWalletTokens();
 

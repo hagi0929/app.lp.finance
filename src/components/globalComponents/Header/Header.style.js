@@ -258,6 +258,16 @@ const HeaderWrapper = styled.div`
                   }
                 }
 
+                .name {
+                  p {
+                    overflow: hidden;
+                    width: 100%;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                  }
+                }
+
                 .checked {
                   width: 100%;
                   text-align: end;
@@ -316,7 +326,14 @@ const HeaderWrapper = styled.div`
 
             .dropdown-menu {
               width: 100%;
-              min-width: 250px;
+              min-width: 270px;
+
+              .dropdown-item {
+                padding: 1rem 0.4rem;
+                .networks_card {
+                  padding: 0.5rem 0.5rem;
+                }
+              }
             }
           }
         }

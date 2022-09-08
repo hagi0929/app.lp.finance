@@ -141,12 +141,12 @@ const Header = () => {
                             <div
                               className="networks_card mt-2"
                               key={list.id}
-                              onClick={() => changeCluster(list)}
+                              onClick={() => changeCluster(list.network)}
                             >
                               <div className="name">
-                                <p>{list.name}</p>
+                                <p>{list.network}</p>
                               </div>
-                              {list.endpoint === Cluster?.endpoint && (
+                              {list.network === Cluster && (
                                 <div className="checked">
                                   <i className="zmdi zmdi-check" />
                                 </div>

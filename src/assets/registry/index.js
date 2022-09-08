@@ -1,8 +1,11 @@
 export const RpcRegistry = [
   {
     id: 1,
-    name: "Mainnet Beta",
-    endpoint: "https://solana-api.projectserum.com",
+    network: "QuickNode (LP Finance)",
+  },
+  {
+    id: 2,
+    network: "Mainnet Beta",
   },
 ];
 
@@ -228,7 +231,7 @@ export const TokenRegistry = {
   ZRX: "https://lptokenbucket.s3.amazonaws.com/73bb05b24fe2e29a2becac2dd13f9f7e",
   ENJ: "https://lptokenbucket.s3.amazonaws.com/5a6293e7ed85b850afd627c361f00657",
   USDP: "https://lptokenbucket.s3.amazonaws.com/f7492ff0e2c823bf731146c48eb1590e",
-  zSOL: "https://lptokenbucket.s3.amazonaws.com/3bbe25222b5f0f485fe1fb61003f55e8",
+  zSOL: "https://lptokenbucket.s3.amazonaws.com/a45f84604e6cc3be461017a4d6a3be5b",
 };
 
 export const LiquidStaking = [
