@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { PublicKey } from "@solana/web3.js";
 import SwapWrapper from "styles/Swap.style";
-// import { useConnection } from "@solana/wallet-adapter-react";
+import { useConnection } from "@solana/wallet-adapter-react";
 import Jupiter from "./Jupiter";
 import { SwapTokens, coinGeckoList } from "assets/registry/SwapRegistry";
 import { useSnackbar } from "contexts/SnackbarContext";
-import { getConnection } from "utils/connection";
 
 const Swap = () => {
   const { OpenSnackbar } = useSnackbar();
-  // const { connection } = useConnection();
+  const { connection } = useConnection();
   const [slippage, setSlippage] = useState(0.5);
   const [formValue, setFormValue] = useState({
     amount: null,
@@ -27,10 +26,7 @@ const Swap = () => {
               <div className="swap_section">
                 <Jupiter
                   coinGeckoList={coinGeckoList}
-                  connection={() => {
-                    var connection = getConnection();
-                    return connection;
-                  }}
+                  connection={connection}
                   tokens={SwapTokens}
                   formValue={formValue}
                   setFormValue={setFormValue}
