@@ -55,6 +55,12 @@ export const NavbarRegistry = [
     pathName: "/psm",
     href: "/psm",
   },
+  {
+    id: 6,
+    name: "Notifi",
+    pathName: "/notifi",
+    href: "/notifi",
+  },
 ];
 
 export const NavbarMobileRegistry = [

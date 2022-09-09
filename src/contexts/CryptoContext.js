@@ -42,14 +42,14 @@ export const CryptoProvider = ({ children }) => {
     };
 
     handlePrice();
-    let PriceInterval = setInterval(async () => {
-      const { PriceList, PriceListObj } = await getTokenPrice();
-      setPriceList(PriceList);
-      setPriceHandler(PriceListObj);
-    }, 60000);
+    // let PriceInterval = setInterval(async () => {
+    //   const { PriceList, PriceListObj } = await getTokenPrice();
+    //   setPriceList(PriceList);
+    //   setPriceHandler(PriceListObj);
+    // }, 60000);
 
     return () => {
-      clearInterval(PriceInterval);
+      // clearInterval(PriceInterval);
       setPriceList([]);
       setBalanceHandler({
         GMT: 0,

@@ -5,6 +5,7 @@ import Swap from "components/Swap";
 import Treasury from "components/Treasury";
 import StakeSolana from "components/StakeSolana";
 import PSM from "components/PSM";
+import Notifi from "components/Notifi";
 import Layout from "components/globalComponents/Layout";
 import WalletWrapper from "lib/WalletWrapper";
 import JupiterWrapper from "lib/JupiterWrapper";
@@ -38,6 +39,7 @@ const App = () => {
             <Route exact path="/treasury" element={<Treasury />} />
             <Route exact path="/stake" element={<StakeSolana />} />
             <Route exact path="/psm" element={<PSM />} />
+            <Route exact path="/notifi" element={<Notifi />} />
             <Route
               exact
               path="/swap"
