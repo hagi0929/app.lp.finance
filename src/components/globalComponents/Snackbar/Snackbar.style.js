@@ -110,6 +110,15 @@ const SnackbarWrapper = styled.div`
       right: 100%;
     }
   }
+
+  @media only screen and (max-width: 600px) {
+    .Snackbar {
+      max-width: 300px;
+      min-width: 300px;
+      top: 5px;
+      right: 0px;
+    }
+  }
 `;
 
 export default SnackbarWrapper;

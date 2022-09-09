@@ -37,6 +37,7 @@ export const Swapping = async (
         routeInfo: selectedRoute,
         onTransaction: async (txid, totalTxs) => {
           console.log("txid, totalTxs", txid, totalTxs);
+
           if (txCount === totalTxs) {
             errorTxid = txid;
             console.log("Confirming Transaction");
@@ -52,7 +53,6 @@ export const Swapping = async (
       });
 
       console.log("swapResult", swapResult);
-
       setSwapping(false);
       fetchWalletTokens();
 
@@ -63,6 +63,8 @@ export const Swapping = async (
             swapResult?.error?.message
           }`
         );
+
+        OpenSnackbar(true, "Error", swapResult?.error?.message);
       } else if ("txid" in swapResult) {
         const description =
           swapResult?.inputAmount && swapResult.outputAmount
@@ -73,8 +75,14 @@ export const Swapping = async (
               } ${outputTokenInfo?.symbol}`
             : "";
 
-        console.log(`Swap Successful ${swapResult.txid}
-              ${description}`);
+        OpenSnackbar(
+          true,
+          "Success",
+          `Swap Successful
+          ${swapResult.txid}
+          ${description}
+        `
+        );
 
         setFormValue((val) => ({
           ...val,
@@ -82,5 +90,9 @@ export const Swapping = async (
         }));
       }
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    setSwapping(false);
+    OpenSnackbar(true, "Success", "Swap failed!");
+  }
 };

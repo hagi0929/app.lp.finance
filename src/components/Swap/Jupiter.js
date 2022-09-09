@@ -378,7 +378,7 @@ const Jupiter = ({
                                   placeholder="0.0"
                                   value={formValue.amount || ""}
                                   onChange={(e) => {
-                                    let newValue = e.target?.value;
+                                    let newValue = e.target?.value || 0;
                                     newValue = Number.isNaN(newValue)
                                       ? 0
                                       : newValue;
@@ -499,7 +499,7 @@ const Jupiter = ({
 
                         {publicKey && routes?.length && selectedRoute ? (
                           <>
-                            <div className="routes_section my-2">
+                            <div className="routes_section my-3">
                               <div className="row">
                                 <div className="col-12">
                                   <div
@@ -859,8 +859,8 @@ const Jupiter = ({
                                       <div className="d-flex align-items-center justify-content-center">
                                         <p
                                           style={{
-                                            color: "snow",
-                                            fontSize: "1.2rem",
+                                            color: "#0f0",
+                                            fontSize: "1.3rem",
                                             display: "flex",
                                             justifyContent: "center",
                                             alignItem: "center",
