@@ -16,6 +16,7 @@ import Input from "Layout/Form/Input";
 import Card from "Layout/Card";
 import Chart from "./Chart";
 import Image from "Layout/Image";
+import { Swapping } from "interfaces/swap";
 
 const Jupiter = ({
   coinGeckoList,
@@ -25,6 +26,7 @@ const Jupiter = ({
   setFormValue,
   slippage,
   setSlippage,
+  OpenSnackbar,
 }) => {
   const { wallet, publicKey, connected, signAllTransactions, signTransaction } =
     useWallet();
@@ -828,94 +830,28 @@ const Jupiter = ({
                                   id="btn"
                                   size="1rem"
                                   className={
-                                    !connected && zeroKey !== publicKey
+                                     !connected && zeroKey !== publicKey
                                       ? "not-allowed"
                                       : null
                                   }
                                   disabled={swapDisabled}
                                   onClick={async () => {
-                                    if (
-                                      !loading &&
-                                      selectedRoute &&
-                                      connected &&
-                                      wallet &&
-                                      signAllTransactions &&
-                                      signTransaction
-                                    ) {
-                                      setSwapping(true);
-                                      let txCount = 1;
-                                      let errorTxid;
-                                      const swapResult = await exchange({
-                                        wallet: {
-                                          sendTransaction:
-                                            wallet?.adapter?.sendTransaction,
-                                          publicKey: wallet?.adapter?.publicKey,
-                                          signAllTransactions,
-                                          signTransaction,
-                                        },
-                                        routeInfo: selectedRoute,
-                                        onTransaction: async (
-                                          txid,
-                                          totalTxs
-                                        ) => {
-                                          if (txCount === totalTxs) {
-                                            errorTxid = txid;
-                                            console.log(
-                                              "Confirming Transaction"
-                                            );
-                                          }
-                                          await connection.confirmTransaction(
-                                            txid,
-                                            "confirmed"
-                                          );
-
-                                          txCount++;
-                                          return await connection.getTransaction(
-                                            txid,
-                                            {
-                                              commitment: "confirmed",
-                                            }
-                                          );
-                                        },
-                                      });
-                                      console.log(errorTxid);
-                                      setSwapping(false);
-                                      fetchWalletTokens();
-
-                                      if ("error" in swapResult) {
-                                        console.log(
-                                          `${
-                                            swapResult?.error?.name
-                                              ? swapResult.error.name
-                                              : ""
-                                          } ${swapResult?.error?.message}`
-                                        );
-                                      } else if ("txid" in swapResult) {
-                                        const description =
-                                          swapResult?.inputAmount &&
-                                          swapResult.outputAmount
-                                            ? `Swapped ${
-                                                swapResult.inputAmount /
-                                                10 **
-                                                  (inputTokenInfo?.decimals ||
-                                                    1)
-                                              } ${inputTokenInfo?.symbol} to ${
-                                                swapResult.outputAmount /
-                                                10 **
-                                                  (outputTokenInfo?.decimals ||
-                                                    1)
-                                              } ${outputTokenInfo?.symbol}`
-                                            : "";
-
-                                        console.log(`Swap Successful ${swapResult.txid}
-                                            ${description}`);
-
-                                        setFormValue((val) => ({
-                                          ...val,
-                                          amount: null,
-                                        }));
-                                      }
-                                    }
+                                    await Swapping(
+                                      loading,
+                                      selectedRoute,
+                                      connected,
+                                      wallet,
+                                      signAllTransactions,
+                                      signTransaction,
+                                      setSwapping,
+                                      connection,
+                                      exchange,
+                                      fetchWalletTokens,
+                                      inputTokenInfo,
+                                      outputTokenInfo,
+                                      setFormValue,
+                                      OpenSnackbar
+                                    );
                                   }}
                                 >
                                   {connected ? (
