@@ -2,7 +2,7 @@ import React from "react";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import Input from "Layout/Form/Input";
-import { TokenRegistry } from "assets/registry";
+import { TokenImgRegistry } from "assets/registry";
 
 const Unstake = ({ publicKey }) => {
   return (
@@ -17,7 +17,14 @@ const Unstake = ({ publicKey }) => {
               <p>Bal: 0</p>
             </div>
             <div className="max_btn ml-2">
-              <Button active={3} br="5px" p="0px 3px" id="btn" size="0.85rem">
+              <Button
+                active={3}
+                br="5px"
+                p="0px 3px"
+                id="btn"
+                size="0.85rem"
+                className="not-allowed"
+              >
                 Max
               </Button>
             </div>
@@ -33,7 +40,7 @@ const Unstake = ({ publicKey }) => {
                 id="btn"
                 className="d-flex align-items-center"
               >
-                <Image src={TokenRegistry.SOL} alt="SOL" h="2rem" />
+                <Image src={TokenImgRegistry.SOL} alt="SOL" h="2rem" />
                 <p className="mx-2">SOL</p>
               </Button>
             </div>

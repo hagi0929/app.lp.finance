@@ -4,24 +4,26 @@ import Card from "Layout/Card";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import Input from "Layout/Form/Input";
-import { TokenRegistry } from "assets/registry";
+import { TokenImgRegistry } from "assets/registry";
 import { useWallet } from "@solana/wallet-adapter-react";
 import TokenModel from "models/TokenModel";
 import { PSMRegistry } from "assets/registry/PsmRegistry";
+import { useCrypto } from "contexts/CryptoContext";
 
 const PSM = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
+  const { PriceList, BalanceList } = useCrypto();
   const [isPayModel, setIsPayModel] = useState(false);
   const [isReceiveModel, setIsReceiveModel] = useState(false);
 
   const [PaySelected, setPaySelected] = useState({
-    logoURI: TokenRegistry.zSOL,
+    logoURI: TokenImgRegistry.zSOL,
     symbol: "zSOL",
   });
 
   const [ReceiveSelect, setReceiveSelect] = useState({
-    logoURI: TokenRegistry.mSOL,
+    logoURI: TokenImgRegistry.mSOL,
     symbol: "mSOL",
   });
 
@@ -38,27 +40,6 @@ const PSM = () => {
 
   return (
     <>
-      {isPayModel && (
-        <TokenModel
-          isOpen={isPayModel}
-          isClose={() => setIsPayModel(false)}
-          List={PSMRegistry.filter((items) => {
-            return items.symbol !== ReceiveSelect.symbol;
-          })}
-          setSelected={setPaySelected}
-        />
-      )}
-      {isReceiveModel && (
-        <TokenModel
-          isOpen={setIsReceiveModel}
-          isClose={() => setIsReceiveModel(false)}
-          List={PSMRegistry.filter((items) => {
-            return items.symbol !== PaySelected.symbol;
-          })}
-          setSelected={setReceiveSelect}
-        />
-      )}
-
       <StakeWrapper>
         <div className="container PSM mb-5 mt-lg-4 mt-md-4 mt-2">
           <div className="row">
@@ -93,6 +74,7 @@ const PSM = () => {
                               p="0px 3px"
                               id="btn"
                               size="0.85rem"
+                              className="not-allowed"
                             >
                               Max
                             </Button>
@@ -226,6 +208,30 @@ const PSM = () => {
           </div>
         </div>
       </StakeWrapper>
+      {isPayModel && (
+        <TokenModel
+          isOpen={isPayModel}
+          isClose={() => setIsPayModel(false)}
+          List={PSMRegistry.filter((items) => {
+            return items.symbol !== ReceiveSelect.symbol;
+          })}
+          setSelected={setPaySelected}
+          PriceList={PriceList}
+          BalanceList={BalanceList}
+        />
+      )}
+      {isReceiveModel && (
+        <TokenModel
+          isOpen={setIsReceiveModel}
+          isClose={() => setIsReceiveModel(false)}
+          List={PSMRegistry.filter((items) => {
+            return items.symbol !== PaySelected.symbol;
+          })}
+          setSelected={setReceiveSelect}
+          PriceList={PriceList}
+          BalanceList={BalanceList}
+        />
+      )}
     </>
   );
 };

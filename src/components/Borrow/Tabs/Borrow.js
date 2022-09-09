@@ -4,12 +4,12 @@ import Button from "Layout/Button";
 import Image from "Layout/Image";
 import { BorrowTokens } from "assets/registry/BorrowRegistry";
 import TokenModel from "models/TokenModel";
-import { TokenRegistry } from "assets/registry";
+import { TokenImgRegistry } from "assets/registry";
 
-const Borrow = ({ publicKey }) => {
+const Borrow = ({ publicKey, PriceList, BalanceList }) => {
   const [isModel, setIsModel] = useState(false);
   const [selected, setSelected] = useState({
-    logoURI: TokenRegistry.zSOL,
+    logoURI: TokenImgRegistry.zSOL,
     symbol: "zSOL",
   });
 
@@ -34,7 +34,13 @@ const Borrow = ({ publicKey }) => {
                   />
 
                   <div className="max_btn d-flex align-items-center">
-                    <Button active={3} p="0.3rem 0.6rem" br="4px" size="0.8rem">
+                    <Button
+                      active={3}
+                      p="0.3rem 0.6rem"
+                      br="4px"
+                      size="0.8rem"
+                      className="not-allowed"
+                    >
                       Max
                     </Button>
                   </div>
@@ -88,6 +94,8 @@ const Borrow = ({ publicKey }) => {
           isClose={() => setIsModel(false)}
           List={BorrowTokens}
           setSelected={setSelected}
+          PriceList={PriceList}
+          BalanceList={BalanceList}
         />
       )}
     </>

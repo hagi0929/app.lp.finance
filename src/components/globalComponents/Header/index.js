@@ -6,6 +6,7 @@ import HeaderWrapper from "./Header.style";
 import { RpcRegistry } from "assets/registry";
 import { useCluster } from "contexts/ClusterContext";
 import Button from "Layout/Button";
+import Image from "Layout/Image";
 
 const Header = () => {
   const { Cluster, changeCluster } = useCluster();
@@ -105,6 +106,17 @@ const Header = () => {
                   })}
 
                   <li className="nav-item">
+                    <div className="terminal">
+                      <Image
+                        src="/images/icons/terminal.png"
+                        alt="terminal"
+                        className="mx-3"
+                        h="1.5rem"
+                      />
+                    </div>
+                  </li>
+
+                  <li className="nav-item">
                     <div className="Wallet_section">
                       <WalletMultiButton />
                     </div>
@@ -112,51 +124,63 @@ const Header = () => {
                 </ul>
 
                 <ul className="navbar-nav setting_section d-flex justify-content-center  align-items-center flex-row">
-                  <div className={dropdown ? "btn-group show" : "btn-group"}>
-                    <Button
-                      type="button"
-                      className="dropdown_btn"
-                      data-display="static"
-                      aria-expanded="false"
-                      onClick={() => setDropdown((prev) => !prev)}
-                    >
-                      <i className="zmdi zmdi-settings setting"></i>
-                    </Button>
-                    <div
-                      className={
-                        dropdown
-                          ? "dropdown-menu dropdown-menu-right show"
-                          : "dropdown-menu dropdown-menu-right"
-                      }
-                    >
-                      <div className="dropdown-item">
-                        <div className="title">
-                          <p>Settings</p>
-                        </div>
-                        <div className="title mt-3">
-                          <span>Networks -</span>
-                        </div>
-                        {RpcRegistry.map((list) => {
-                          return (
-                            <div
-                              className="networks_card mt-2"
-                              key={list.id}
-                              onClick={() => changeCluster(list.network)}
-                            >
-                              <div className="name">
-                                <p>{list.network}</p>
-                              </div>
-                              {list.network === Cluster && (
-                                <div className="checked">
-                                  <i className="zmdi zmdi-check" />
+                  <li className="nav-item">
+                    <div className="terminal">
+                      <Image
+                        src="/images/icons/terminal.png"
+                        alt="terminal"
+                        className="mr-3"
+                        h="1.5rem"
+                      />
+                    </div>
+                  </li>
+                  <li className="nav-item">
+                    <div className={dropdown ? "btn-group show" : "btn-group"}>
+                      <Button
+                        type="button"
+                        className="dropdown_btn"
+                        data-display="static"
+                        aria-expanded="false"
+                        onClick={() => setDropdown((prev) => !prev)}
+                      >
+                        <i className="zmdi zmdi-settings setting"></i>
+                      </Button>
+                      <div
+                        className={
+                          dropdown
+                            ? "dropdown-menu dropdown-menu-right show"
+                            : "dropdown-menu dropdown-menu-right"
+                        }
+                      >
+                        <div className="dropdown-item">
+                          <div className="title">
+                            <p>Settings</p>
+                          </div>
+                          <div className="title mt-3">
+                            <span>Networks -</span>
+                          </div>
+                          {RpcRegistry.map((list) => {
+                            return (
+                              <div
+                                className="networks_card mt-2"
+                                key={list.id}
+                                onClick={() => changeCluster(list.network)}
+                              >
+                                <div className="name">
+                                  <p>{list.network}</p>
                                 </div>
-                              )}
-                            </div>
-                          );
-                        })}
+                                {list.network === Cluster && (
+                                  <div className="checked">
+                                    <i className="zmdi zmdi-check" />
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </li>
                 </ul>
               </nav>
             </div>

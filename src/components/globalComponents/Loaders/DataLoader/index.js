@@ -1,19 +1,20 @@
 import React from "react";
 import DataLoaderWrapper from "./DataLoader.style";
+import Image from "Layout/Image";
 
-const DataLoader = () => {
+const DataLoader = (props) => {
   return (
-    <DataLoaderWrapper>
+    <DataLoaderWrapper {...props}>
       <div className="DataLoader_overlay">
         <div className="DataLoader">
           <div className="container-fluid">
             <div className="row">
               <div className="col-12">
                 <div className="icon_div">
-                  <img
-                    src="/images/Loaders/Loader.png"
-                    alt="Loading..."
-                    loading="lazy"
+                  <Image
+                    src="/images/Loader/Loader.png"
+                    alt="Loader"
+                    h={props?.size}
                   />
                 </div>
               </div>

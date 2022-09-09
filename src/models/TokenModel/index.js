@@ -3,6 +3,7 @@ import TokenWrapper from "./TokenModel.style";
 import Input from "Layout/Form/Input";
 import Image from "Layout/Image";
 import { CalcFiveDigit } from "helper";
+import DataLoader from "components/globalComponents/Loaders/DataLoader";
 
 const generateSearchTerm = (item, searchValue) => {
   const normalizedSearchValue = searchValue.toLowerCase();
@@ -30,7 +31,14 @@ const startSearch = (items, searchValue) => {
     .map((item) => item.token);
 };
 
-const TokenModel = ({ isOpen, isClose, List, setSelected, PriceList }) => {
+const TokenModel = ({
+  isOpen,
+  isClose,
+  List,
+  setSelected,
+  PriceList,
+  BalanceList,
+}) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -40,24 +48,31 @@ const TokenModel = ({ isOpen, isClose, List, setSelected, PriceList }) => {
   }, [isOpen]);
 
   const tokenInfos = useMemo(() => {
-    if (List?.length > 0 && PriceList?.length > 0) {
+    if (List?.length > 0 && PriceList?.length > 0 && BalanceList?.length > 0) {
       let newList = [];
       for (var i = 0; i < List?.length; i++) {
         for (var j = 0; j < PriceList?.length; j++) {
-          if (List[i].symbol === PriceList[j].symbol) {
-            newList.push({
-              ...List[i],
-              price: PriceList[j].price,
-            });
+          for (let k = 0; k < BalanceList.length; k++) {
+            if (
+              List[i].symbol === PriceList[j].symbol &&
+              List[i].symbol === BalanceList[k].symbol
+            ) {
+              newList.push({
+                ...List[i],
+                price: PriceList[j].price,
+                bal: BalanceList[k].bal,
+              });
+            }
           }
         }
       }
 
-      return newList;
+      let shortList = newList?.sort((a, b) => b.price - a.price);
+      return shortList;
     } else {
       return [];
     }
-  }, [List, PriceList]);
+  }, [BalanceList, List, PriceList]);
 
   const CloseModel = () => {
     document.querySelector(".popup").classList.remove("active");
@@ -110,35 +125,48 @@ const TokenModel = ({ isOpen, isClose, List, setSelected, PriceList }) => {
               <div className="col-12 mt-3">
                 <div className="token_list">
                   <div className="row" id="token_list">
-                    {sortedTokens?.map((item, ind) => {
-                      return (
-                        <div className="col-12" key={ind} id="tokens">
-                          <div className="details" onClick={() => Select(item)}>
-                            <div className="row">
-                              <div className="col-7 d-flex align-items-center">
-                                <Image
-                                  src={item.logoURI}
-                                  alt={item.name}
-                                  h="1.9rem"
-                                />
-                                <div className="ml-3 details_name d-flex flex-column">
-                                  <p>{item.symbol}</p>
-                                  <span>{item.name}</span>
-                                  <span>$ {CalcFiveDigit(item.price)}</span>
-                                </div>
-                              </div>
-                              <div className="col-5 d-flex align-items-start justify-content-end">
-                                <p>0.0</p>
-                                <div className="ml-2 details_name d-flex flex-column">
-                                  <span>{item.symbol}</span>
-                                  <span>$ 0</span>
+                    {sortedTokens?.length > 0 ? (
+                      <>
+                        {sortedTokens?.map((item, ind) => {
+                          return (
+                            <div className="col-12" key={ind} id="tokens">
+                              <div
+                                className="details"
+                                onClick={() => Select(item)}
+                              >
+                                <div className="row">
+                                  <div className="col-7 d-flex align-items-center">
+                                    <Image
+                                      src={item.logoURI}
+                                      alt={item.name}
+                                      h="1.9rem"
+                                    />
+                                    <div className="ml-3 details_name d-flex flex-column">
+                                      <p>{item.symbol}</p>
+                                      <span>{item.name}</span>
+                                      <span>$ {CalcFiveDigit(item.price)}</span>
+                                    </div>
+                                  </div>
+                                  <div className="col-5 d-flex align-items-start justify-content-end">
+                                    <p>{CalcFiveDigit(item.bal)}</p>
+                                    <div className="ml-2 details_name d-flex flex-column">
+                                      <span>{item.symbol}</span>
+                                      <span>
+                                        $ {CalcFiveDigit(item.price * item.bal)}
+                                      </span>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                          );
+                        })}
+                      </>
+                    ) : (
+                      <div className="col-12 d-flex justify-content-center">
+                        <DataLoader h="200px" size="2rem" />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

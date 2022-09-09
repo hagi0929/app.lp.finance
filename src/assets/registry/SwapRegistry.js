@@ -1,11 +1,11 @@
-import { TokenRegistry } from "./index";
+import { TokenImgRegistry } from "./index";
 
 export var SwapTokens = [
   {
     address: "So11111111111111111111111111111111111111112",
     chainId: 101,
     decimals: 9,
-    logoURI: TokenRegistry.SOL,
+    logoURI: TokenImgRegistry.SOL,
     name: "Wrapped SOL",
     symbol: "SOL",
     extensions: {
@@ -19,7 +19,7 @@ export var SwapTokens = [
     address: "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So",
     chainId: 101,
     decimals: 9,
-    logoURI: TokenRegistry.mSOL,
+    logoURI: TokenImgRegistry.mSOL,
     name: "Marinade staked SOL",
     symbol: "mSOL",
     extensions: {
@@ -37,7 +37,7 @@ export var SwapTokens = [
     address: "7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj",
     chainId: 101,
     decimals: 9,
-    logoURI: TokenRegistry.stSOL,
+    logoURI: TokenImgRegistry.stSOL,
     name: "Lido Staked SOL",
     symbol: "stSOL",
     extensions: {
@@ -54,7 +54,7 @@ export var SwapTokens = [
     address: "7kbnvuGBxxj8AG9qp8Scn56muWGaRaFqxg1FsRp3PaFT",
     chainId: 101,
     decimals: 6,
-    logoURI: TokenRegistry.UXD,
+    logoURI: TokenImgRegistry.UXD,
     name: "UXD Stablecoin",
     symbol: "UXD",
     tags: ["stablecoin"],
@@ -70,7 +70,7 @@ export var SwapTokens = [
     address: "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt",
     chainId: 101,
     decimals: 6,
-    logoURI: TokenRegistry.SRM,
+    logoURI: TokenImgRegistry.SRM,
     name: "Serum",
     symbol: "SRM",
     extensions: {
@@ -85,7 +85,7 @@ export var SwapTokens = [
     address: "SLNDpmoWTVADgEdndyvWzroNL7zSi1dF9PC3xHGtPwp",
     chainId: 101,
     decimals: 6,
-    logoURI: TokenRegistry.SLND,
+    logoURI: TokenImgRegistry.SLND,
     name: "Solend",
     symbol: "SLND",
     tags: ["solend", "lending"],
@@ -100,7 +100,7 @@ export var SwapTokens = [
     address: "7i5KKsX2weiTkry7jA4ZwSuXGhs5eJBEjY8vVxR4pfRx",
     chainId: 101,
     decimals: 9,
-    logoURI: TokenRegistry.GMT,
+    logoURI: TokenImgRegistry.GMT,
     name: "GMT",
     symbol: "GMT",
     extensions: {
@@ -111,7 +111,7 @@ export var SwapTokens = [
     address: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
     chainId: 101,
     decimals: 9,
-    logoURI: TokenRegistry.SAMO,
+    logoURI: TokenImgRegistry.SAMO,
     name: "Samoyed Coin",
     symbol: "SAMO",
     extensions: {

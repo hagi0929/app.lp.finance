@@ -4,12 +4,12 @@ import Button from "Layout/Button";
 import Image from "Layout/Image";
 import { RepayTokens } from "assets/registry/BorrowRegistry";
 import TokenModel from "models/TokenModel";
-import { TokenRegistry } from "assets/registry";
+import { TokenImgRegistry } from "assets/registry";
 
-const Repay = ({ publicKey }) => {
+const Repay = ({ publicKey, PriceList, BalanceList }) => {
   const [isModel, setIsModel] = useState(false);
   const [selected, setSelected] = useState({
-    logoURI: TokenRegistry.zSOL,
+    logoURI: TokenImgRegistry.zSOL,
     symbol: "zSOL",
   });
 
@@ -34,7 +34,13 @@ const Repay = ({ publicKey }) => {
                   />
 
                   <div className="max_btn d-flex align-items-center">
-                    <Button active={3} p="0.3rem 0.6rem" br="4px" size="0.8rem">
+                    <Button
+                      active={3}
+                      p="0.3rem 0.6rem"
+                      br="4px"
+                      size="0.8rem"
+                      className="not-allowed"
+                    >
                       Max
                     </Button>
                   </div>
@@ -88,6 +94,8 @@ const Repay = ({ publicKey }) => {
           isClose={() => setIsModel(false)}
           List={RepayTokens}
           setSelected={setSelected}
+          PriceList={PriceList}
+          BalanceList={BalanceList}
         />
       )}
     </>

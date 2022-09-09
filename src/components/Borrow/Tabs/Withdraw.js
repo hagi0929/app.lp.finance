@@ -4,12 +4,12 @@ import Button from "Layout/Button";
 import Image from "Layout/Image";
 import { WithdrawTokens } from "assets/registry/BorrowRegistry";
 import TokenModel from "models/TokenModel";
-import { TokenRegistry } from "assets/registry";
+import { TokenImgRegistry } from "assets/registry";
 
-const Withdraw = ({ publicKey }) => {
+const Withdraw = ({ publicKey, PriceList, BalanceList }) => {
   const [isModel, setIsModel] = useState(false);
   const [selected, setSelected] = useState({
-    logoURI: TokenRegistry.SOL,
+    logoURI: TokenImgRegistry.SOL,
     symbol: "SOL",
   });
 
@@ -34,7 +34,13 @@ const Withdraw = ({ publicKey }) => {
                   />
 
                   <div className="max_btn d-flex align-items-center">
-                    <Button active={3} p="0.3rem 0.6rem" br="4px" size="0.8rem">
+                    <Button
+                      active={3}
+                      p="0.3rem 0.6rem"
+                      br="4px"
+                      size="0.8rem"
+                      className="not-allowed"
+                    >
                       Max
                     </Button>
                   </div>
@@ -88,6 +94,8 @@ const Withdraw = ({ publicKey }) => {
           isClose={() => setIsModel(false)}
           List={WithdrawTokens}
           setSelected={setSelected}
+          PriceList={PriceList}
+          BalanceList={BalanceList}
         />
       )}
     </>

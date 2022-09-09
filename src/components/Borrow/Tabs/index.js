@@ -7,7 +7,7 @@ import Withdraw from "./Withdraw";
 import Repay from "./Repay";
 import BorrowTabWrapper from "styles/BorrowTab.style";
 
-const Tabs = ({ publicKey, PriceList }) => {
+const Tabs = ({ publicKey, PriceList, BalanceList }) => {
   const changeRadius = () => {
     document
       .getElementById("nav-tabContent")
@@ -113,7 +113,11 @@ const Tabs = ({ publicKey, PriceList }) => {
                       role="tabpanel"
                       aria-labelledby="nav-Deposit-tab"
                     >
-                      <Deposit publicKey={publicKey} PriceList={PriceList} />
+                      <Deposit
+                        publicKey={publicKey}
+                        PriceList={PriceList}
+                        BalanceList={BalanceList}
+                      />
                     </div>
                     <div
                       className="tab-pane fade"
@@ -121,7 +125,11 @@ const Tabs = ({ publicKey, PriceList }) => {
                       role="tabpanel"
                       aria-labelledby="nav-Borrow-tab"
                     >
-                      <Borrow publicKey={publicKey} />
+                      <Borrow
+                        publicKey={publicKey}
+                        PriceList={PriceList}
+                        BalanceList={BalanceList}
+                      />
                     </div>
                     <div
                       className="tab-pane fade"
@@ -129,7 +137,11 @@ const Tabs = ({ publicKey, PriceList }) => {
                       role="tabpanel"
                       aria-labelledby="nav-Withdraw-tab"
                     >
-                      <Withdraw publicKey={publicKey} />
+                      <Withdraw
+                        publicKey={publicKey}
+                        PriceList={PriceList}
+                        BalanceList={BalanceList}
+                      />
                     </div>
                     <div
                       className="tab-pane fade"
@@ -137,7 +149,11 @@ const Tabs = ({ publicKey, PriceList }) => {
                       role="tabpanel"
                       aria-labelledby="nav-Repay-tab"
                     >
-                      <Repay publicKey={publicKey} />
+                      <Repay
+                        publicKey={publicKey}
+                        PriceList={PriceList}
+                        BalanceList={BalanceList}
+                      />
                     </div>
                   </div>
                 </div>

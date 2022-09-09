@@ -4,26 +4,17 @@ import Button from "Layout/Button";
 import Image from "Layout/Image";
 import { DepositTokens } from "assets/registry/BorrowRegistry";
 import TokenModel from "models/TokenModel";
-import { TokenRegistry } from "assets/registry";
+import { TokenImgRegistry } from "assets/registry";
 
-const Deposit = ({ publicKey, PriceList }) => {
+const Deposit = ({ publicKey, PriceList, BalanceList }) => {
   const [isModel, setIsModel] = useState(false);
   const [selected, setSelected] = useState({
-    logoURI: TokenRegistry.SOL,
+    logoURI: TokenImgRegistry.SOL,
     symbol: "SOL",
   });
 
   return (
     <>
-      {isModel && (
-        <TokenModel
-          isOpen={isModel}
-          isClose={() => setIsModel(false)}
-          List={DepositTokens}
-          setSelected={setSelected}
-          PriceList={PriceList}
-        />
-      )}
       <div className="row deposit d-flex justify-content-center">
         <div className="col-lg-11 col-md-10 col-12 my-3">
           <div className="deposit_card">
@@ -43,7 +34,13 @@ const Deposit = ({ publicKey, PriceList }) => {
                   />
 
                   <div className="max_btn d-flex align-items-center">
-                    <Button active={3} p="0.3rem 0.6rem" br="4px" size="0.8rem">
+                    <Button
+                      active={3}
+                      p="0.3rem 0.6rem"
+                      br="4px"
+                      size="0.8rem"
+                      className="not-allowed"
+                    >
                       Max
                     </Button>
                   </div>
@@ -91,6 +88,16 @@ const Deposit = ({ publicKey, PriceList }) => {
           </div>
         </div>
       </div>
+      {isModel && (
+        <TokenModel
+          isOpen={isModel}
+          isClose={() => setIsModel(false)}
+          List={DepositTokens}
+          setSelected={setSelected}
+          PriceList={PriceList}
+          BalanceList={BalanceList}
+        />
+      )}
     </>
   );
 };

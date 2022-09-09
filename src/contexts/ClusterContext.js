@@ -16,8 +16,8 @@ export const ClusterProvider = ({ children }) => {
     if (getCluster) {
       setCluster(getCluster);
     } else {
-      setCluster("QuickNode (LP Finance)");
-      localStorage.setItem("web3.endpoint", "QuickNode (LP Finance)");
+      setCluster("Mainnet Beta");
+      localStorage.setItem("web3.endpoint", "Mainnet Beta");
     }
 
     return () => {

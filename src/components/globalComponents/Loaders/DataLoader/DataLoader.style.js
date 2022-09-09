@@ -2,25 +2,17 @@ import styled from "styled-components";
 
 const DataLoaderWrapper = styled.div`
   .DataLoader_overlay {
-    position: fixed;
     width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: ${(props) => props.h};
     transition: all 0.1s;
 
     .DataLoader {
-      position: relative;
-      height: auto !important;
-      width: auto !important;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       margin: auto;
-      z-index: 1;
 
       .icon_div {
         display: flex;
@@ -28,8 +20,6 @@ const DataLoaderWrapper = styled.div`
         align-items: center;
 
         img {
-          width: auto;
-          height: 2rem;
           animation: spin infinite 0.6s linear;
         }
 

@@ -1,19 +1,44 @@
-// import { useWallet } from "@solana/wallet-adapter-react";
+import { useWallet } from "@solana/wallet-adapter-react";
 import React, { useState, useContext, createContext, useEffect } from "react";
-import { getTokenPrice } from "utils/crypto";
-// getBalance
+import { getTokenPrice, getBalance } from "utils/crypto";
+import { getConnection } from "utils/connection";
+import { TokenBalRegistry } from "assets/registry";
+
 export const CryptoContext = createContext();
 
 export const CryptoProvider = ({ children }) => {
-  // const wallet = useWallet();
-  // const { publicKey } = wallet;
+  const wallet = useWallet();
+  const { publicKey } = wallet;
   const [PriceList, setPriceList] = useState([]);
-  // const [BalanceList, setBalanceList] = useState();
+  const [BalanceList, setBalanceList] = useState([]);
+  const [PriceHandler, setPriceHandler] = useState({
+    GMT: 0,
+    SAMO: 0,
+    SLND: 0,
+    SOL: 0,
+    SRM: 0,
+    UXD: 0,
+    mSOL: 0,
+    stSOL: 0,
+    zSOL: 0,
+  });
+  const [BalanceHandler, setBalanceHandler] = useState({
+    GMT: 0,
+    SAMO: 0,
+    SLND: 0,
+    SOL: 0,
+    SRM: 0,
+    UXD: 0,
+    mSOL: 0,
+    stSOL: 0,
+    zSOL: 0,
+  });
 
   useEffect(() => {
     const handlePrice = async () => {
-      const list = await getTokenPrice();
-      setPriceList(list);
+      const { PriceList, PriceListObj } = await getTokenPrice();
+      setPriceList(PriceList);
+      setPriceHandler(PriceListObj);
     };
 
     handlePrice();
@@ -21,23 +46,59 @@ export const CryptoProvider = ({ children }) => {
     //   const list = await getTokenPrice();
     //   setPriceList(list);
     // }, 5000);
-    // return () => {
-    //   setPriceList([]);
-    //   clearInterval(PriceInterval);
-    // };
+
+    return () => {
+      setPriceList([]);
+      setBalanceHandler({
+        GMT: 0,
+        SAMO: 0,
+        SLND: 0,
+        SOL: 0,
+        SRM: 0,
+        UXD: 0,
+        mSOL: 0,
+        stSOL: 0,
+      });
+      // clearInterval(PriceInterval);
+    };
   }, []);
 
-  // useEffect(() => {
-  //   const handleBal = async () => {
-  //     const balList = await getBalance(publicKey);
-  //     console.log(balList);
-  //   };
+  useEffect(() => {
+    const handleBal = async () => {
+      const connection = getConnection();
+      let BalList = [];
+      let BalListObj = {};
 
-  //   handleBal();
-  // }, [publicKey]);
+      for (let i = 0; i < TokenBalRegistry.length; i++) {
+        const element = TokenBalRegistry[i];
+        const bal = await getBalance(element, publicKey, connection);
+        BalList.push({ bal, symbol: element });
+        BalListObj = { ...BalListObj, [element]: bal };
+      }
+      setBalanceList(BalList);
+      setBalanceHandler(BalListObj);
+    };
+
+    handleBal();
+    return () => {
+      setBalanceList([]);
+      setPriceHandler({
+        GMT: 0,
+        SAMO: 0,
+        SLND: 0,
+        SOL: 0,
+        SRM: 0,
+        UXD: 0,
+        mSOL: 0,
+        stSOL: 0,
+      });
+    };
+  }, [publicKey]);
 
   return (
-    <CryptoContext.Provider value={{ PriceList }}>
+    <CryptoContext.Provider
+      value={{ PriceList, BalanceList, PriceHandler, BalanceHandler }}
+    >
       {children}
     </CryptoContext.Provider>
   );

@@ -166,6 +166,10 @@ const HeaderWrapper = styled.div`
             }
           }
 
+          .terminal {
+            cursor: pointer;
+          }
+
           .Wallet_section {
             position: relative;
             margin-left: 0.5rem;
@@ -191,104 +195,110 @@ const HeaderWrapper = styled.div`
       }
 
       .setting_section {
-        .btn-group {
-          width: 100%;
-
-          .dropdown_btn {
-            background: transparent;
-            margin-left: 15px;
-
-            .setting {
-              color: ${(props) => props.theme.BodyMainColor};
-              font-size: 1.3rem;
-            }
+        li {
+          .terminal {
+            display: none;
           }
 
-          .dropdown-menu {
-            position: absolute !important;
-            background: ${(props) => props.theme.BodySecondaryBg};
-            border: 1px solid ${(props) => props.theme.BodyTraceryBg};
-            margin: 1.7rem 0 0;
-            padding: 0rem;
-            border-radius: 8px;
-            transition: all 0.2s;
-            opacity: 1;
-            overflow: hidden;
-            transform-origin: top center;
-            transform: scale(1, 0);
-            display: block;
-            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-            width: 350px;
+          .btn-group {
+            width: 100%;
 
-            .dropdown-item {
-              padding: 1rem;
-              margin: 0rem 0rem;
-              width: 100%;
-              transition: all 0.2s;
+            .dropdown_btn {
+              background: transparent;
+              margin-left: 15px;
 
-              .title {
-                p {
-                  color: ${(props) => props.theme.BodyMainColor};
-                  font-size: 1.1rem;
-                  font-weight: 600;
-                  border-bottom: 2px solid
-                    ${(props) => props.theme.BodyMainColor};
-                  padding-bottom: 7px;
-                }
-
-                span {
-                  color: ${(props) => props.theme.BodyMainColor};
-                  font-size: 1rem;
-                }
-              }
-
-              .networks_card {
-                background: ${(props) => props.theme.BodyPrimaryBg};
-                padding: 0.5rem 1rem;
-                border-radius: 10px;
-                display: flex;
-                align-items: center;
-                cursor: pointer;
-
-                .name,
-                .checked {
-                  p,
-                  i {
-                    color: ${(props) => props.theme.BodyMainColor};
-                  }
-                }
-
-                .name {
-                  p {
-                    overflow: hidden;
-                    width: 100%;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 1;
-                    -webkit-box-orient: vertical;
-                  }
-                }
-
-                .checked {
-                  width: 100%;
-                  text-align: end;
-                }
-              }
-
-              &:hover {
-                background: none;
-              }
-              $:focus {
-                background: none;
+              .setting {
+                color: ${(props) => props.theme.BodyMainColor};
+                font-size: 1.3rem;
               }
             }
-            .dropdown-item:hover > span,
-            .dropdown-item:hover > profile_icon {
-              color: ${(props) => props.theme.BodyMainColor};
-            }
-          }
-          &.show {
+
             .dropdown-menu {
-              transform: scale(1);
+              position: absolute !important;
+              background: ${(props) => props.theme.BodySecondaryBg};
+              border: 1px solid ${(props) => props.theme.BodyTraceryBg};
+              margin: 1.7rem 0 0;
+              padding: 0rem;
+              border-radius: 8px;
+              transition: all 0.2s;
+              opacity: 1;
+              overflow: hidden;
+              transform-origin: top center;
+              transform: scale(1, 0);
+              display: block;
+              box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+              width: 350px;
+
+              .dropdown-item {
+                padding: 1rem;
+                margin: 0rem 0rem;
+                width: 100%;
+                transition: all 0.2s;
+
+                .title {
+                  p {
+                    color: ${(props) => props.theme.BodyMainColor};
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    border-bottom: 2px solid
+                      ${(props) => props.theme.BodyMainColor};
+                    padding-bottom: 7px;
+                  }
+
+                  span {
+                    color: ${(props) => props.theme.BodyMainColor};
+                    font-size: 1rem;
+                  }
+                }
+
+                .networks_card {
+                  background: ${(props) => props.theme.BodyPrimaryBg};
+                  padding: 0.5rem 1rem;
+                  border-radius: 10px;
+                  display: flex;
+                  align-items: center;
+                  cursor: pointer;
+
+                  .name,
+                  .checked {
+                    p,
+                    i {
+                      color: ${(props) => props.theme.BodyMainColor};
+                    }
+                  }
+
+                  .name {
+                    p {
+                      overflow: hidden;
+                      width: 100%;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 1;
+                      -webkit-box-orient: vertical;
+                    }
+                  }
+
+                  .checked {
+                    width: 100%;
+                    text-align: end;
+                  }
+                }
+
+                &:hover {
+                  background: none;
+                }
+                $:focus {
+                  background: none;
+                }
+              }
+              .dropdown-item:hover > span,
+              .dropdown-item:hover > profile_icon {
+                color: ${(props) => props.theme.BodyMainColor};
+              }
+            }
+            &.show {
+              .dropdown-menu {
+                transform: scale(1);
+              }
             }
           }
         }
@@ -296,7 +306,7 @@ const HeaderWrapper = styled.div`
     }
   }
 
-  @media only screen and (max-width: 930px) {
+  @media only screen and (max-width: 960px) {
     .navbar_component {
       nav {
         padding: 0.2rem 0rem;
@@ -319,19 +329,25 @@ const HeaderWrapper = styled.div`
         .setting_section {
           margin-left: auto;
 
-          .btn-group {
-            .dropdown_btn {
-              margin-left: 0px;
+          li {
+            .terminal {
+              display: flex;
             }
 
-            .dropdown-menu {
-              width: 100%;
-              min-width: 270px;
+            .btn-group {
+              .dropdown_btn {
+                margin-left: 0px;
+              }
 
-              .dropdown-item {
-                padding: 1rem 0.4rem;
-                .networks_card {
-                  padding: 0.5rem 0.5rem;
+              .dropdown-menu {
+                width: 100%;
+                min-width: 270px;
+
+                .dropdown-item {
+                  padding: 1rem 0.4rem;
+                  .networks_card {
+                    padding: 0.5rem 0.5rem;
+                  }
                 }
               }
             }
