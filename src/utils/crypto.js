@@ -54,7 +54,7 @@ export const getBalance = async (token, publicKey, connection) => {
     if (token === "SOL") {
       if (publicKey) {
         const bal = await connection.getBalance(publicKey);
-        return bal;
+        return bal / 1000000000;
       } else {
         return 0.0;
       }

@@ -43,8 +43,9 @@ export const CryptoProvider = ({ children }) => {
 
     handlePrice();
     let PriceInterval = setInterval(async () => {
-      const list = await getTokenPrice();
-      setPriceList(list);
+      const { PriceList, PriceListObj } = await getTokenPrice();
+      setPriceList(PriceList);
+      setPriceHandler(PriceListObj);
     }, 60000);
 
     return () => {
@@ -59,6 +60,7 @@ export const CryptoProvider = ({ children }) => {
         UXD: 0,
         mSOL: 0,
         stSOL: 0,
+        zSOL: 0,
       });
     };
   }, []);
@@ -75,6 +77,7 @@ export const CryptoProvider = ({ children }) => {
         BalList.push({ bal, symbol: element });
         BalListObj = { ...BalListObj, [element]: bal };
       }
+
       setBalanceList(BalList);
       setBalanceHandler(BalListObj);
     };
@@ -91,6 +94,7 @@ export const CryptoProvider = ({ children }) => {
         UXD: 0,
         mSOL: 0,
         stSOL: 0,
+        zSOL: 0,
       });
     };
   }, [publicKey]);
