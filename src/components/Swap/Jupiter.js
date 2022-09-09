@@ -377,8 +377,8 @@ const Jupiter = ({
                                   className={publicKey ? null : "not-allowed"}
                                   placeholder="0.0"
                                   value={formValue.amount || ""}
-                                  onInput={(e) => {
-                                    let newValue = e.target?.value || 0;
+                                  onChange={(e) => {
+                                    let newValue = e.target?.value;
                                     newValue = Number.isNaN(newValue)
                                       ? 0
                                       : newValue;
@@ -830,7 +830,7 @@ const Jupiter = ({
                                   id="btn"
                                   size="1rem"
                                   className={
-                                     !connected && zeroKey !== publicKey
+                                    !connected && zeroKey !== publicKey
                                       ? "not-allowed"
                                       : null
                                   }
