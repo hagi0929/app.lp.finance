@@ -1,5 +1,5 @@
 import React, { useEffect, memo, useState, useMemo } from "react";
-import TokenWrapper from "./TokenModel.style";
+import TokenWrapper from "../TokenModel/TokenModel.style";
 import Input from "Layout/Form/Input";
 import Image from "Layout/Image";
 import { CalcFiveDigit } from "helper";
@@ -7,7 +7,7 @@ import DataLoader from "components/globalComponents/Loaders/DataLoader";
 
 const generateSearchTerm = (item, searchValue) => {
   const normalizedSearchValue = searchValue.toLowerCase();
-  const values = `${item.symbol} ${item.name} ${item.address}`.toLowerCase();
+  const values = `${item.symbol} ${item.name}`.toLowerCase();
 
   const isMatchingWithSymbol =
     item.symbol.toLowerCase().indexOf(normalizedSearchValue) >= 0;
@@ -31,14 +31,7 @@ const startSearch = (items, searchValue) => {
     .map((item) => item.token);
 };
 
-const TokenModel = ({
-  isOpen,
-  isClose,
-  List,
-  setSelected,
-  PriceList,
-  BalanceList,
-}) => {
+const TokenPairModel = ({ isOpen, isClose, List, setSelected }) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -48,31 +41,12 @@ const TokenModel = ({
   }, [isOpen]);
 
   const tokenInfos = useMemo(() => {
-    if (List?.length > 0 && PriceList?.length > 0 && BalanceList?.length > 0) {
-      let newList = [];
-      for (var i = 0; i < List?.length; i++) {
-        for (var j = 0; j < PriceList?.length; j++) {
-          for (let k = 0; k < BalanceList.length; k++) {
-            if (
-              List[i].symbol === PriceList[j].symbol &&
-              List[i].symbol === BalanceList[k].symbol
-            ) {
-              newList.push({
-                ...List[i],
-                price: PriceList[j].price,
-                bal: BalanceList[k].bal,
-              });
-            }
-          }
-        }
-      }
-
-      let shortList = newList?.sort((a, b) => b.price - a.price);
-      return shortList;
+    if (List?.length > 0) {
+      return List;
     } else {
       return [];
     }
-  }, [BalanceList, List, PriceList]);
+  }, [List]);
 
   const CloseModel = () => {
     document.querySelector(".popup").classList.remove("active");
@@ -81,9 +55,18 @@ const TokenModel = ({
     }, 400);
   };
 
-  const Select = ({ logoURI, symbol }) => {
+  const Select = ({
+    pairOneImg,
+    pairTwoImg,
+    pairOneName,
+    pairTwoName,
+    symbol,
+  }) => {
     setSelected({
-      logoURI,
+      pairOneImg,
+      pairTwoImg,
+      pairOneName,
+      pairTwoName,
       symbol,
     });
     document.querySelector(".popup").classList.remove("active");
@@ -136,22 +119,32 @@ const TokenModel = ({
                               >
                                 <div className="row">
                                   <div className="col-7 d-flex align-items-center">
-                                    <Image
-                                      src={item.logoURI}
-                                      alt={item.name}
-                                      h="1.9rem"
-                                    />
-                                    <div className="ml-3 details_name d-flex flex-column">
-                                      <p>{item.symbol}</p>
-                                      <span>{item.name}</span>
-                                      <span>${CalcFiveDigit(item.price)}</span>
+                                    <div className="items d-flex align-items-center">
+                                      <Image
+                                        src={item.pairOneImg}
+                                        alt={item.pairOneName}
+                                        h="1.9rem"
+                                      />
+                                      <Image
+                                        src={item.pairTwoImg}
+                                        alt={item.pairTwoName}
+                                        h="1.9rem"
+                                        className="toggle"
+                                      />
+
+                                      <div className="pl-4 details_name d-flex flex-column">
+                                        <p>{item.symbol}</p>
+                                        <span>
+                                          ${CalcFiveDigit(item.price)}
+                                        </span>
+                                      </div>
                                     </div>
                                   </div>
                                   <div className="col-5 d-flex align-items-start justify-content-end">
                                     <p>{CalcFiveDigit(item.bal)}</p>
-                                    <div className="ml-2 details_name d-flex flex-column justify-content-end">
+                                    <div className="ml-2 details_name d-flex flex-column">
                                       <span>{item.symbol}</span>
-                                      <span className="d-flex justify-content-end">
+                                      <span className="d-flex  justify-content-end">
                                         ${CalcFiveDigit(item.price * item.bal)}
                                       </span>
                                     </div>
@@ -178,4 +171,4 @@ const TokenModel = ({
   );
 };
 
-export default memo(TokenModel);
+export default memo(TokenPairModel);

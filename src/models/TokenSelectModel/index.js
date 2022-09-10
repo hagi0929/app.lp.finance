@@ -2,6 +2,8 @@ import React, { useEffect, useState, useMemo } from "react";
 import TokenSelectWrapper from "./TokenSelect.style";
 import Input from "Layout/Form/Input";
 import Image from "Layout/Image";
+import { CalcFiveDigit } from "helper";
+import DataLoader from "components/globalComponents/Loaders/DataLoader";
 
 const generateSearchTerm = (item, searchValue) => {
   const normalizedSearchValue = searchValue.toLowerCase();
@@ -34,7 +36,8 @@ const TokenSelectModel = ({
   onClose,
   sortedTokenMints,
   onTokenSelect,
-  walletTokens,
+  PriceList,
+  BalanceList,
 }) => {
   const [search, setSearch] = useState("");
 
@@ -45,27 +48,49 @@ const TokenSelectModel = ({
   }, [isOpen]);
 
   const tokenInfos = useMemo(() => {
-    if (sortedTokenMints?.length) {
+    if (
+      sortedTokenMints?.length > 0 &&
+      PriceList?.length > 0 &&
+      BalanceList?.length > 0
+    ) {
       const filteredTokens = sortedTokenMints.filter((token) => {
         return !token?.name || !token?.symbol ? false : true;
       });
-      if (walletTokens?.length) {
-        const walletMints = walletTokens.map((tok) =>
-          tok.account.mint.toString()
-        );
-        return filteredTokens.sort(
-          (a, b) =>
-            walletMints.indexOf(b.address) - walletMints.indexOf(a.address)
-        );
-      } else {
-        return filteredTokens;
+
+      let newList = [];
+      for (var i = 0; i < filteredTokens?.length; i++) {
+        for (var j = 0; j < PriceList?.length; j++) {
+          for (let k = 0; k < BalanceList.length; k++) {
+            if (
+              filteredTokens[i].symbol === PriceList[j].symbol &&
+              filteredTokens[i].symbol === BalanceList[k].symbol
+            ) {
+              newList.push({
+                ...filteredTokens[i],
+                price: PriceList[j].price,
+                bal: BalanceList[k].bal,
+              });
+            }
+          }
+        }
       }
+
+      let shortList = newList?.sort((a, b) => b.price - a.price);
+      return shortList;
     } else {
       return [];
     }
-  }, [sortedTokenMints, walletTokens]);
+  }, [BalanceList, PriceList, sortedTokenMints]);
 
   const CloseCoinModel = () => {
+    document.querySelector(".popup").classList.remove("active");
+    setTimeout(() => {
+      onClose();
+    }, 400);
+  };
+
+  const Select = (token) => {
+    onTokenSelect(token);
     document.querySelector(".popup").classList.remove("active");
     setTimeout(() => {
       onClose();
@@ -108,31 +133,56 @@ const TokenSelectModel = ({
               <div className="col-12 mt-3">
                 <div className="token_list">
                   <div className="row" id="token_list">
-                    {sortedTokens?.map((token) => {
-                      return (
-                        <div className="col-12" key={token.address} id="tokens">
-                          <div
-                            className="details"
-                            onClick={() => onTokenSelect(token)}
-                          >
-                            <div className="row">
-                              <div className="col-10 d-flex align-items-center">
-                                <Image
-                                  src={token?.logoURI}
-                                  alt={token?.name}
-                                  h="1.9rem"
-                                />
+                    {sortedTokens?.length > 0 ? (
+                      <>
+                        {sortedTokens?.map((token) => {
+                          return (
+                            <div
+                              className="col-12"
+                              key={token.address}
+                              id="tokens"
+                            >
+                              <div
+                                className="details"
+                                onClick={() => Select(token)}
+                              >
+                                <div className="row">
+                                  <div className="col-7 d-flex align-items-center">
+                                    <Image
+                                      src={token?.logoURI}
+                                      alt={token?.name}
+                                      h="1.9rem"
+                                    />
 
-                                <div className="ml-3 details_name">
-                                  <p>{token?.symbol}</p>
-                                  <span>{token?.name}</span>
+                                    <div className="ml-3 details_name d-flex flex-column">
+                                      <p>{token?.symbol}</p>
+                                      <span>{token?.name}</span>
+                                      <span>
+                                        ${CalcFiveDigit(token?.price)}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div className="col-5 d-flex align-items-start justify-content-end">
+                                    <p>{CalcFiveDigit(token.bal)}</p>
+                                    <div className="ml-2 details_name d-flex flex-column justify-content-end">
+                                      <span>{token.symbol}</span>
+                                      <span className="d-flex justify-content-end">
+                                        $
+                                        {CalcFiveDigit(token.price * token.bal)}
+                                      </span>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                          );
+                        })}
+                      </>
+                    ) : (
+                      <div className="col-12 d-flex justify-content-center">
+                        <DataLoader h="200px" size="2rem" />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

@@ -61,7 +61,7 @@ const LPFarmingTabWrapper = styled.div`
         min-height: 115px;
         background: ${(props) => props.theme.BodySecondaryBg};
         border: 1px solid ${(props) => props.theme.BodyMainColor};
-        padding: 2rem 2rem;
+        padding: 2rem 2.5rem;
 
         .deposit,
         .withdraw {
@@ -74,6 +74,16 @@ const LPFarmingTabWrapper = styled.div`
                 position: absolute;
                 top: 10px;
                 left: 10px;
+              }
+            }
+
+            .model_btn {
+              button {
+                position: relative;
+                .toggle {
+                  position: absolute;
+                  left: 22px;
+                }
               }
             }
           }

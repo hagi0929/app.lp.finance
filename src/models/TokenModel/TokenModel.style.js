@@ -91,6 +91,15 @@ const TokenWrapper = styled.div`
             transition: 0.4s all;
             border-radius: 16px;
 
+            .items {
+              position: relative;
+
+              .toggle {
+                position: absolute;
+                left: 17px;
+              }
+            }
+
             &:hover {
               background: ${(props) => props.theme.BodyPrimaryBg};
             }

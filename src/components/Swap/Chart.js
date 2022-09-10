@@ -10,6 +10,7 @@ import {
 import moment from "moment";
 import { CalcFiveDigit, numFormatter } from "helper";
 import Image from "Layout/Image";
+import { TokenImgRegistry } from "assets/registry";
 
 const Chart = ({ inputTokenId, outputTokenId }) => {
   const [chartData, setChartData] = useState([]);
@@ -376,7 +377,7 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
                         <div className="img_section">
                           {InputList && (
                             <Image
-                              src={InputList?.img}
+                              src={TokenImgRegistry[InputList?.symbol]}
                               alt={InputList?.name}
                               h="2rem"
                               br="50%"
@@ -467,7 +468,7 @@ const Chart = ({ inputTokenId, outputTokenId }) => {
                         <div className="img_section">
                           {OutputList && (
                             <Image
-                              src={OutputList?.img}
+                              src={TokenImgRegistry[OutputList?.symbol]}
                               alt={OutputList?.name}
                               h="2rem"
                               w="2rem"

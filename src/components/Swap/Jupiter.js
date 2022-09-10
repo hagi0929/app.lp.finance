@@ -27,6 +27,8 @@ const Jupiter = ({
   slippage,
   setSlippage,
   OpenSnackbar,
+  PriceList,
+  BalanceList,
 }) => {
   const { wallet, publicKey, connected, signAllTransactions, signTransaction } =
     useWallet();
@@ -935,13 +937,14 @@ const Jupiter = ({
           onClose={() => setShowInputTokenSelect(false)}
           sortedTokenMints={sortedTokenMints}
           onTokenSelect={(token) => {
-            setShowInputTokenSelect(false);
             setFormValue((val) => ({
               ...val,
               inputMint: new PublicKey(token?.address),
             }));
           }}
           walletTokens={walletTokens}
+          PriceList={PriceList}
+          BalanceList={BalanceList}
         />
       ) : null}
       {showOutputTokenSelect ? (
@@ -950,12 +953,13 @@ const Jupiter = ({
           onClose={() => setShowOutputTokenSelect(false)}
           sortedTokenMints={outputTokenMints}
           onTokenSelect={(token) => {
-            setShowOutputTokenSelect(false);
             setFormValue((val) => ({
               ...val,
               outputMint: new PublicKey(token?.address),
             }));
           }}
+          PriceList={PriceList}
+          BalanceList={BalanceList}
         />
       ) : null}
       {showRoutesModal ? (

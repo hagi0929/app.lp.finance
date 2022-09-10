@@ -2,24 +2,27 @@ import React, { memo, useState } from "react";
 import Input from "Layout/Form/Input";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
-import { DepositTokens } from "assets/registry/BorrowRegistry";
-import TokenModel from "models/TokenModel";
+import TokenPairModel from "models/TokenPairModel";
 import { TokenImgRegistry } from "assets/registry";
+import { LPFarmingTokenRegistry } from "assets/registry/LPFarmingRegistry";
 
-const Deposit = ({ publicKey, PriceList, BalanceList }) => {
+const Deposit = ({ publicKey }) => {
   const [isModel, setIsModel] = useState(false);
   const [selected, setSelected] = useState({
-    logoURI: TokenImgRegistry.SOL,
-    symbol: "SOL",
+    pairOneImg: TokenImgRegistry.zSOL,
+    pairTwoImg: TokenImgRegistry.SOL,
+    pairOneName: "zSOL",
+    pairTwoName: "SOL",
+    symbol: "zSOL-SOL",
   });
 
   return (
     <>
       <div className="row deposit d-flex justify-content-center">
-        <div className="col-lg-11 col-md-10 col-12 my-3">
+        <div className="col-lg-12 col-md-12 col-12 my-3">
           <div className="deposit_card">
             <div className="row pt-1">
-              <div className="col-8 d-flex align-items-center">
+              <div className="col-6 d-flex align-items-center">
                 <div className="input_form d-flex align-items-center flex-row">
                   <Input
                     name="amount"
@@ -46,23 +49,30 @@ const Deposit = ({ publicKey, PriceList, BalanceList }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-4 d-flex justify-content-end align-items-center">
+              <div className="col-6 d-flex justify-content-end align-items-center">
                 <div className="model_btn">
                   <Button
                     active={2}
-                    p="0.6rem 1rem"
+                    p="0.6rem 0.3rem"
                     br="10px"
                     onClick={() => setIsModel(true)}
                   >
-                    {selected.logoURI && (
+                    {selected.pairOneImg && (
                       <Image
-                        src={selected.logoURI}
-                        alt={selected.symbol}
+                        src={selected.pairOneImg}
+                        alt={selected.pairOneName}
                         h="2rem"
                       />
                     )}
-
-                    <p className="mx-1">{selected.symbol}</p>
+                    {selected.pairTwoImg && (
+                      <Image
+                        src={selected.pairTwoImg}
+                        alt={selected.pairTwoName}
+                        h="2rem"
+                        className="toggle"
+                      />
+                    )}
+                    <p className="pl-4">{selected.symbol}</p>
                     <i className="zmdi zmdi-chevron-down pl-1" />
                   </Button>
                 </div>
@@ -89,13 +99,11 @@ const Deposit = ({ publicKey, PriceList, BalanceList }) => {
         </div>
       </div>
       {isModel && (
-        <TokenModel
+        <TokenPairModel
           isOpen={isModel}
           isClose={() => setIsModel(false)}
-          List={DepositTokens}
+          List={LPFarmingTokenRegistry}
           setSelected={setSelected}
-          PriceList={PriceList}
-          BalanceList={BalanceList}
         />
       )}
     </>

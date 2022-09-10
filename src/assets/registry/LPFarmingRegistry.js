@@ -24,3 +24,26 @@ export const LPFarmingItems = [
     Rewards: [],
   },
 ];
+
+export const LPFarmingTokenRegistry = [
+  {
+    id: 1,
+    pairOneImg: TokenImgRegistry.zSOL,
+    pairTwoImg: TokenImgRegistry.SOL,
+    pairOneName: "zSOL",
+    pairTwoName: "SOL",
+    symbol: "zSOL-SOL",
+    price: 0,
+    bal: 0,
+  },
+  {
+    id: 2,
+    pairOneImg: TokenImgRegistry.zSOL,
+    pairTwoImg: TokenImgRegistry.stSOL,
+    pairOneName: "zSOL",
+    pairTwoName: "stSOL",
+    symbol: "zSOL-stSOL",
+    price: 0,
+    bal: 0,
+  },
+];

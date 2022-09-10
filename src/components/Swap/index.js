@@ -5,11 +5,14 @@ import { useConnection } from "@solana/wallet-adapter-react";
 import Jupiter from "./Jupiter";
 import { SwapTokens, coinGeckoList } from "assets/registry/SwapRegistry";
 import { useSnackbar } from "contexts/SnackbarContext";
+import { useCrypto } from "contexts/CryptoContext";
 
 const Swap = () => {
+  const { PriceList, BalanceList } = useCrypto();
   const { OpenSnackbar } = useSnackbar();
   const { connection } = useConnection();
   const [slippage, setSlippage] = useState(0.5);
+
   const [formValue, setFormValue] = useState({
     amount: null,
     inputMint: new PublicKey("So11111111111111111111111111111111111111112"),
@@ -33,6 +36,8 @@ const Swap = () => {
                   slippage={slippage}
                   setSlippage={setSlippage}
                   OpenSnackbar={OpenSnackbar}
+                  PriceList={PriceList}
+                  BalanceList={BalanceList}
                 />
               </div>
             </div>
