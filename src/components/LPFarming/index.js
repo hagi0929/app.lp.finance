@@ -26,7 +26,13 @@ const LPFarming = () => {
             </div>
             <div className="col-12 d-flex justify-content-center mt-4">
               <div className="d-flex justify-content-center">
-                <Image src="/images/Lifinity.png" alt="Lifinity" h="1.9rem" />
+                <a
+                  href="https://lifinity.io"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Image src="/images/Lifinity.png" alt="Lifinity" h="1.9rem" />
+                </a>
               </div>
             </div>
           </div>
