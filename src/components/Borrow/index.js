@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Overview from "./Overview";
 import Tabs from "./Tabs";
 import BorrowWrapper from "styles/Borrow.style";
@@ -6,11 +6,14 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useCrypto } from "contexts/CryptoContext";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
+import NotifiModel from "models/NotifiModel";
 
 const Borrow = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
   const { PriceList, BalanceList } = useCrypto();
+  const [notifi, setNotifi] = useState(false);
+
   return (
     <>
       <BorrowWrapper pie={100}>
@@ -30,9 +33,9 @@ const Borrow = () => {
                   active={1}
                   br="0.6rem"
                   p="0.5em 2rem"
-                  className="not-allowed"
+                  onClick={() => setNotifi(true)}
                 >
-                  <Image src="/images/notifi.png" alt="notifi" h="1.5rem" />
+                  <Image src="/images/notifi.png" alt="notifi" />
                   <p className="ml-2">notifi</p>
                 </Button>
               </div>
@@ -46,6 +49,9 @@ const Borrow = () => {
           />
         </div>
       </BorrowWrapper>
+      {notifi && (
+        <NotifiModel isOpen={notifi} isClose={() => setNotifi(false)} />
+      )}
     </>
   );
 };

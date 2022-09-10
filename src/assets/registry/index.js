@@ -57,9 +57,9 @@ export const NavbarRegistry = [
   },
   {
     id: 6,
-    name: "Notifi",
-    pathName: "/notifi",
-    href: "/notifi",
+    name: "LP Farming",
+    pathName: "/lp-farming",
+    href: "/lp-farming",
   },
 ];
 
@@ -94,6 +94,12 @@ export const NavbarMobileRegistry = [
     name: "PSM",
     pathName: "/psm",
     href: "/psm",
+  },
+  {
+    id: 6,
+    name: "LP Farming",
+    pathName: "/lp-farming",
+    href: "/lp-farming",
   },
 ];
 

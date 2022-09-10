@@ -1,11 +1,15 @@
 import React from "react";
-import NotifiCardContents from "./NotifiCardContents";
-import { NotifiCard } from "@notifi-network/notifi-react-card";
+import NotifiCard from "./NotifiCard";
 import { useWallet } from "@solana/wallet-adapter-react";
+import NotifiCardContents from "./NotifiCardContents";
+import { useSnackbar } from "contexts/SnackbarContext";
+import NotifiWrapper from "./Notify.style";
 
 const Notifi = () => {
-  var _a, _b;
   const { wallet } = useWallet();
+  const { OpenSnackbar } = useSnackbar();
+
+  var _a, _b;
 
   const adapter =
     wallet === null || wallet === void 0 ? void 0 : wallet.adapter;
@@ -20,20 +24,25 @@ const Notifi = () => {
       : null;
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-12 d-flex justify-content-center">
-          <NotifiCard
-            dappAddress="3f39cgs9wPLVv4vGySNecjKtefe5MJYkFEEj3v6bPequ"
-            env="Development"
-            signer={adapter}
-            walletPublicKey={publicKey}
-          >
-            <NotifiCardContents />
-          </NotifiCard>
+    <NotifiWrapper>
+      <div className="notifi">
+        <div className="row">
+          <div className="col-12 d-flex justify-content-center">
+            <NotifiCard
+              dappAddress="3f39cgs9wPLVv4vGySNecjKtefe5MJYkFEEj3v6bPequ"
+              env="Development"
+              signer={adapter}
+              walletPublicKey={publicKey}
+            >
+              <NotifiCardContents
+                OpenSnackbar={OpenSnackbar}
+                publicKey={publicKey}
+              />
+            </NotifiCard>
+          </div>
         </div>
       </div>
-    </div>
+    </NotifiWrapper>
   );
 };
 
