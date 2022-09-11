@@ -12,9 +12,9 @@ const Table = () => {
           <table className="table table-hover">
             <thead>
               <tr>
-                {HeadersList.map((head) => {
+                {HeadersList.map((head, ind) => {
                   return (
-                    <th scope="col" key={head.id}>
+                    <th scope="col" key={ind}>
                       <p>{head}</p>
                     </th>
                   );

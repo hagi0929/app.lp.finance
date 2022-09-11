@@ -7,10 +7,14 @@ import { RpcRegistry } from "assets/registry";
 import { useCluster } from "contexts/ClusterContext";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
+import CliModel from "models/CliModel";
 
 const Header = () => {
   const { Cluster, changeCluster } = useCluster();
   const [dropdown, setDropdown] = useState(false);
+  const [cli, setCli] = useState(false);
+
+  console.log(cli);
 
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
@@ -35,6 +39,7 @@ const Header = () => {
 
   return (
     <>
+      {cli && <CliModel isOpen={cli} isClose={() => setCli(false)} />}
       <HeaderWrapper>
         <div id="mySidenav" className="sideNav mb-4">
           <div className="container-fluid">
@@ -112,6 +117,7 @@ const Header = () => {
                         alt="terminal"
                         className="mx-3"
                         h="1.5rem"
+                        onClick={() => setCli(true)}
                       />
                     </div>
                   </li>
@@ -131,6 +137,7 @@ const Header = () => {
                         alt="terminal"
                         className="mr-3"
                         h="1.5rem"
+                        onClick={() => setCli(true)}
                       />
                     </div>
                   </li>
