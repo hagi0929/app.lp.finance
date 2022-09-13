@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Borrow from "components/Borrow";
 import Swap from "components/Swap";
 import Treasury from "components/Treasury";
-import StakeSolana from "components/StakeSolana";
+// import StakeSolana from "components/StakeSolana";
 import PSM from "components/PSM";
 import LPFarming from "components/LPFarming";
 import Layout from "components/globalComponents/Layout";
@@ -37,7 +37,7 @@ const App = () => {
           <Routes>
             <Route exact path="/" element={<Borrow />} />
             <Route exact path="/treasury" element={<Treasury />} />
-            <Route exact path="/stake" element={<StakeSolana />} />
+            {/* <Route exact path="/stake" element={<StakeSolana />} /> */}
             <Route exact path="/psm" element={<PSM />} />
             <Route exact path="/lp-farming" element={<LPFarming />} />
             <Route

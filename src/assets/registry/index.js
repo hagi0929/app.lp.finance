@@ -43,12 +43,12 @@ export const NavbarRegistry = [
     pathName: "/treasury",
     href: "/treasury",
   },
-  {
-    id: 4,
-    name: "Stake",
-    pathName: "/stake",
-    href: "/stake",
-  },
+  // {
+  //   id: 4,
+  //   name: "Stake",
+  //   pathName: "/stake",
+  //   href: "/stake",
+  // },
   {
     id: 5,
     name: "PSM",
@@ -83,12 +83,12 @@ export const NavbarMobileRegistry = [
     pathName: "/treasury",
     href: "/treasury",
   },
-  {
-    id: 4,
-    name: "Stake",
-    pathName: "/stake",
-    href: "/stake",
-  },
+  // {
+  //   id: 4,
+  //   name: "Stake",
+  //   pathName: "/stake",
+  //   href: "/stake",
+  // },
   {
     id: 5,
     name: "PSM",
