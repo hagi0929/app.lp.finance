@@ -7,7 +7,6 @@ export const lightTheme = {
   BodyTraceryBg: "#0f0",
   BodyMainColor: "#0c0", // text color
   BodySecondaryColor: "rgba(255, 255, 255, 0.8)",
-  BodyTraceryColor: "",
   BodyTextColor: "white", // text color
   BodyMainLine: "#3c3c3c",
 };
