@@ -40,7 +40,6 @@ const MainModel = ({ isOpen, isClose }) => {
                         test.lp.finance
                       </a>{" "}
                       for devnet application. For more questions, reach out to
-                      Thank you.
                     </p>
                     <p className="my-3">
                       <a
