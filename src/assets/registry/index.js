@@ -30,37 +30,37 @@ export const NavbarRegistry = [
     pathName: "/",
     href: "/",
   },
-
   {
     id: 2,
-    name: "Swap",
-    pathName: "/swap",
-    href: "/swap",
+    name: "PSM",
+    pathName: "/psm",
+    href: "/psm",
   },
   {
     id: 3,
+    name: "LP Farming",
+    pathName: "/lp-farming",
+    href: "/lp-farming",
+  },
+  {
+    id: 4,
     name: "Treasury",
     pathName: "/treasury",
     href: "/treasury",
   },
+  {
+    id: 5,
+    name: "Swap",
+    pathName: "/swap",
+    href: "/swap",
+  },
+
   // {
   //   id: 4,
   //   name: "Stake",
   //   pathName: "/stake",
   //   href: "/stake",
   // },
-  {
-    id: 5,
-    name: "PSM",
-    pathName: "/psm",
-    href: "/psm",
-  },
-  {
-    id: 6,
-    name: "LP Farming",
-    pathName: "/lp-farming",
-    href: "/lp-farming",
-  },
 ];
 
 export const NavbarMobileRegistry = [
@@ -70,37 +70,37 @@ export const NavbarMobileRegistry = [
     pathName: "/",
     href: "/",
   },
-
   {
     id: 2,
-    name: "Swap",
-    pathName: "/swap",
-    href: "/swap",
+    name: "PSM",
+    pathName: "/psm",
+    href: "/psm",
   },
   {
     id: 3,
+    name: "LP Farming",
+    pathName: "/lp-farming",
+    href: "/lp-farming",
+  },
+  {
+    id: 4,
     name: "Treasury",
     pathName: "/treasury",
     href: "/treasury",
   },
+  {
+    id: 5,
+    name: "Swap",
+    pathName: "/swap",
+    href: "/swap",
+  },
+
   // {
   //   id: 4,
   //   name: "Stake",
   //   pathName: "/stake",
   //   href: "/stake",
   // },
-  {
-    id: 5,
-    name: "PSM",
-    pathName: "/psm",
-    href: "/psm",
-  },
-  {
-    id: 6,
-    name: "LP Farming",
-    pathName: "/lp-farming",
-    href: "/lp-farming",
-  },
 ];
 
 export const FooterRegistry = [
