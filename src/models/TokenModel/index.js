@@ -147,10 +147,14 @@ const TokenModel = ({
                                       <span>${CalcFiveDigit(item.price)}</span>
                                     </div>
                                   </div>
-                                  <div className="col-5 d-flex align-items-start justify-content-end">
-                                    <p>{CalcFiveDigit(item.bal)}</p>
-                                    <div className="ml-2 details_name d-flex flex-column justify-content-end">
-                                      <span>{item.symbol}</span>
+                                  <div className="col-5">
+                                    <div className="d-flex align-items-start justify-content-end">
+                                      <p>{CalcFiveDigit(item.bal)}</p>
+                                      <span className="pl-1">
+                                        {item.symbol}
+                                      </span>
+                                    </div>
+                                    <div className="details_name d-flex justify-content-end">
                                       <span className="d-flex justify-content-end">
                                         ${CalcFiveDigit(item.price * item.bal)}
                                       </span>

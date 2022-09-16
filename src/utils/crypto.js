@@ -1,3 +1,4 @@
+import * as anchor from "@project-serum/anchor";
 import axios from "axios";
 import api from "api";
 import { TokenPriceRegistry } from "assets/registry";
@@ -11,7 +12,6 @@ import {
   GMTMint,
   SAMOMint,
 } from "constants/global";
-import * as anchor from "@project-serum/anchor";
 
 export const getTokenPrice = async () => {
   try {

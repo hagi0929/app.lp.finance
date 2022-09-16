@@ -21,6 +21,10 @@ export const RpcRegistry = [
     id: 2,
     network: "QuickNode (LP Finance)",
   },
+  {
+    id: 3,
+    network: "Devnet",
+  },
 ];
 
 export const NavbarRegistry = [

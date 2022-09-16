@@ -1,7 +1,7 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import React, { useState, useContext, createContext, useEffect } from "react";
 import { getTokenPrice, getBalance } from "utils/crypto";
-import { getConnection } from "utils/connection";
+import { getConnection } from "utils/contract";
 import { TokenBalRegistry } from "assets/registry";
 
 export const CryptoContext = createContext();

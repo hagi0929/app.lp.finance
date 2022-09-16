@@ -1,11 +1,6 @@
 import React, { useEffect, useMemo, useState, memo, useCallback } from "react";
 import { useJupiter } from "@jup-ag/react-hook";
 import sortBy from "lodash/sortBy";
-import {
-  getTokenAccountsByOwnerWithWrappedSol,
-  nativeToUi,
-  zeroKey,
-} from "@blockworks-foundation/mango-client";
 import { PublicKey } from "@solana/web3.js";
 import TokenSelectModel from "models/TokenSelectModel";
 import RoutesModel from "models/RoutesModel";
@@ -16,7 +11,12 @@ import Input from "Layout/Form/Input";
 import Card from "Layout/Card";
 import Chart from "./Chart";
 import Image from "Layout/Image";
-import { Swapping } from "interfaces/swap";
+import { Swapping } from "lp-program/swap";
+import {
+  getTokenAccountsByOwnerWithWrappedSol,
+  nativeToUi,
+  zeroKey,
+} from "@blockworks-foundation/mango-client";
 
 const Jupiter = ({
   coinGeckoList,

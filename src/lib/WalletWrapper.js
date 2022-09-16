@@ -30,6 +30,8 @@ const WalletWrapper = ({ children }) => {
       ClusterEnv = process.env.REACT_APP_QUICK_NODE_CLUSTER;
     } else if (Cluster === "Mainnet Beta") {
       ClusterEnv = process.env.REACT_APP_PUBLIC_CLUSTER;
+    } else if (Cluster === "Devnet") {
+      ClusterEnv = process.env.REACT_APP_DEVNET_CLUSTER;
     }
 
     return [ClusterEnv];
