@@ -1,0 +1,2055 @@
+{
+  "version": "0.1.0",
+  "name": "lpfinance",
+  "instructions": [
+    {
+      "name": "initialize",
+      "accounts": [
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "feeAccount",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updateFeeAccount",
+      "accounts": [
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "feeAccount",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "setPdaMintAuthority",
+      "accounts": [
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "zsolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "createCtokenInfosAccount",
+      "accounts": [
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "addTokenInfo",
+      "accounts": [
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "programAuthority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "borrowableMaxLtv",
+          "type": "u16"
+        },
+        {
+          "name": "liquidatableMaxLtv",
+          "type": "u16"
+        },
+        {
+          "name": "isActive",
+          "type": "bool"
+        },
+        {
+          "name": "depositCap",
+          "type": "u64"
+        },
+        {
+          "name": "name",
+          "type": {
+            "defined": "CollateralTokenName"
+          }
+        },
+        {
+          "name": "switchboardAccPub",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "addSolTokenInfo",
+      "accounts": [
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "borrowableMaxLtv",
+          "type": "u16"
+        },
+        {
+          "name": "liquidatableMaxLtv",
+          "type": "u16"
+        },
+        {
+          "name": "isActive",
+          "type": "bool"
+        },
+        {
+          "name": "depositCap",
+          "type": "u64"
+        },
+        {
+          "name": "switchboardAccPub",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updateCtokenInfoValues",
+      "accounts": [
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "borrowableMaxLtv",
+          "type": "u16"
+        },
+        {
+          "name": "liquidatableMaxLtv",
+          "type": "u16"
+        },
+        {
+          "name": "depositCap",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "updateCtokenStatus",
+      "accounts": [
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "isActive",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "updateCtokenSwitchboardOracle",
+      "accounts": [
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "switchboardAccPub",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updateCtokenSwitchboardV1Oracle",
+      "accounts": [
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "switchboardAccPubV1",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updateCtokenPythOracle",
+      "accounts": [
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "pythAccPub",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "initUserAccount",
+      "accounts": [
+        {
+          "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deleteUserAccount",
+      "accounts": [
+        {
+          "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deposit",
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardAcc",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "token",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "cbsAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "feeAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "depositSol",
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "solAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "feeAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "borrow",
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "zsolMintAuthorityPda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "zsolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userZsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolZsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSrm",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardMsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardStsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardUxd",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSamo",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "programPda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userCollateralAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "cbsCollateralAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSrm",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardMsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardStsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardUxd",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSamo",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardDest",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdrawSol",
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "solAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSrm",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardMsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardStsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardUxd",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSamo",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "repayZsol",
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "zsolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userZsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "repayWithCtoken",
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "collateralToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userCollateralAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "trvcCollateralAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardDest",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initTrvc",
+      "accounts": [
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "msolMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "stsolMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "msolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "stsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "mintZsol",
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "zsolMintAuthority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "collateralToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "zsolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userCollateralAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userZsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "trvcCollateralAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSrc",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "burnZsol",
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "zsolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userZsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "collateralToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "feeAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userCollateralAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "trvcCollateralAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardDest",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "burnAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "checkLiquidatable",
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSrm",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardMsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardStsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardUxd",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSamo",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "returns": "bool"
+    },
+    {
+      "name": "initLiquidatorAccount",
+      "accounts": [
+        {
+          "name": "liquidatorAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "liquidator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deleteLiquidatorAccount",
+      "accounts": [
+        {
+          "name": "liquidatorAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "liquidateStart",
+      "accounts": [
+        {
+          "name": "checkLiquidation",
+          "accounts": [
+            {
+              "name": "owner",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "userAccount",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "switchboardSrm",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "switchboardSol",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "switchboardMsol",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "switchboardStsol",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "switchboardUxd",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "switchboardSamo",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "ctokenInfoAccounts",
+              "isMut": false,
+              "isSigner": false
+            }
+          ]
+        },
+        {
+          "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "runLiquidateStep1",
+      "accounts": [
+        {
+          "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "cbsMsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "cbsStsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "trvcStsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "cbsPda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "state",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "msolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "liqPoolSolLegPda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "liqPoolMsolLeg",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "liqPoolMsolLegAuthority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "reservePda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "transferFrom",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintTo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "msolMintAuthority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "marinadeProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "runLiquidateStep2",
+      "accounts": [
+        {
+          "name": "liquidator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "msolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userMsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "trvcMsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userCtokenAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "cbsCtokenAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardCtoken",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardMsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "cbsPda",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "liquidatorAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "redeemLiquidatorReward",
+      "accounts": [
+        {
+          "name": "liquidator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "msolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userMsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "trvcMsolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "liquidatorAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Config",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "publicKey"
+          },
+          {
+            "name": "feeAccount",
+            "type": "publicKey"
+          },
+          {
+            "name": "depositedAmounts",
+            "type": {
+              "array": [
+                "u64",
+                15
+              ]
+            }
+          },
+          {
+            "name": "borrowedZsolAmount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CTokenInfoAccounts",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "publicKey"
+          },
+          {
+            "name": "totalCount",
+            "type": "u8"
+          },
+          {
+            "name": "ctokenInfos",
+            "type": {
+              "array": [
+                {
+                  "defined": "CTokenInfo"
+                },
+                15
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "LiquidatorAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "publicKey"
+          },
+          {
+            "name": "depositedMsolAmount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TypelessRepaymentVault",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "msolAmount",
+            "type": "u64"
+          },
+          {
+            "name": "stsolAmount",
+            "type": "u64"
+          },
+          {
+            "name": "zsolAmount",
+            "type": "u64"
+          },
+          {
+            "name": "msolAta",
+            "type": "publicKey"
+          },
+          {
+            "name": "stsolAta",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "publicKey"
+          },
+          {
+            "name": "stepNum",
+            "type": "u8"
+          },
+          {
+            "name": "depositedAmounts",
+            "type": {
+              "array": [
+                "u64",
+                15
+              ]
+            }
+          },
+          {
+            "name": "borrowedZsolAmount",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "CTokenInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "infoIndex",
+            "type": "u8"
+          },
+          {
+            "name": "name",
+            "type": {
+              "defined": "CollateralTokenName"
+            }
+          },
+          {
+            "name": "tokenMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "tokenAta",
+            "type": "publicKey"
+          },
+          {
+            "name": "pythAccPub",
+            "type": "publicKey"
+          },
+          {
+            "name": "switchboardAccPubV1",
+            "type": "publicKey"
+          },
+          {
+            "name": "switchboardAccPub",
+            "type": "publicKey"
+          },
+          {
+            "name": "borrowableMaxLtv",
+            "type": "u16"
+          },
+          {
+            "name": "liquidatableMaxLtv",
+            "type": "u16"
+          },
+          {
+            "name": "tokenDecimal",
+            "type": "u8"
+          },
+          {
+            "name": "isActive",
+            "type": "bool"
+          },
+          {
+            "name": "depositCap",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CollateralTokenName",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "SOL"
+          },
+          {
+            "name": "MSOL"
+          },
+          {
+            "name": "STSOL"
+          },
+          {
+            "name": "UXD"
+          },
+          {
+            "name": "SRM"
+          },
+          {
+            "name": "SAMO"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InsufficientUserAmount",
+      "msg": "Insufficient Amount From User Account"
+    },
+    {
+      "code": 6001,
+      "name": "InsufficientAmount",
+      "msg": "CBS: Insufficient Amount"
+    },
+    {
+      "code": 6002,
+      "name": "BorrowFailed",
+      "msg": "Borrow Failed"
+    },
+    {
+      "code": 6003,
+      "name": "BorrowExceed",
+      "msg": "Borrow: over MAX LTV"
+    },
+    {
+      "code": 6004,
+      "name": "LTVAlreadyExceed",
+      "msg": "LTV Already Exceed"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidAmount",
+      "msg": "Invalid Amount"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidToken",
+      "msg": "Invalid Token"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidOwner",
+      "msg": "Invalid Owner"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidCBSOwner",
+      "msg": "Invalid CBS Owner"
+    },
+    {
+      "code": 6009,
+      "name": "ProgressInLiquidate",
+      "msg": "In Liquidating"
+    },
+    {
+      "code": 6010,
+      "name": "RepayFinished",
+      "msg": "Repay finished for the selected token"
+    },
+    {
+      "code": 6011,
+      "name": "InvalidSwitchboardPrice",
+      "msg": "Invalid switchboard price"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidLiquidateNum",
+      "msg": "Invalid step num for liquidate"
+    },
+    {
+      "code": 6013,
+      "name": "LiquidateNormalTokens",
+      "msg": "Liquidate normal token before lpsol"
+    },
+    {
+      "code": 6014,
+      "name": "LiquidateLpSOLTokens",
+      "msg": "Liquidate LpSOL token before LpFI"
+    },
+    {
+      "code": 6015,
+      "name": "InvalidPoolCreator",
+      "msg": "You have no right to create pool info"
+    },
+    {
+      "code": 6016,
+      "name": "WithdrawExceedLTV",
+      "msg": "Withdraw: overflow Max LTV"
+    },
+    {
+      "code": 6017,
+      "name": "MintStopped",
+      "msg": "Mint stopped with big depeg"
+    },
+    {
+      "code": 6018,
+      "name": "ProgramPaused",
+      "msg": "Program paused"
+    },
+    {
+      "code": 6019,
+      "name": "InvalidCollateralToken",
+      "msg": "Invalid Collateral Token"
+    },
+    {
+      "code": 6020,
+      "name": "InvalidATA",
+      "msg": "Invalid ATA"
+    },
+    {
+      "code": 6021,
+      "name": "InvalidFeeATA",
+      "msg": "Invalid Fee Account"
+    },
+    {
+      "code": 6022,
+      "name": "InvalidTokenPoolInfo",
+      "msg": "Invalid Token Info Account"
+    },
+    {
+      "code": 6023,
+      "name": "StaleFeed",
+      "msg": "Switchboard feed has not been updated in 5 minutes"
+    },
+    {
+      "code": 6024,
+      "name": "InvalidTRVTokenMint",
+      "msg": "Invalid Token Info Account"
+    },
+    {
+      "code": 6025,
+      "name": "TokenNotRegistered",
+      "msg": "This token has not been registered"
+    },
+    {
+      "code": 6026,
+      "name": "TokenAlreadyRegistered",
+      "msg": "This token has already been registered"
+    },
+    {
+      "code": 6027,
+      "name": "TokenInBlackList",
+      "msg": "This token has been added blacklist"
+    },
+    {
+      "code": 6028,
+      "name": "InvalidSwitchboardAccount",
+      "msg": "Invalid switchboard account"
+    },
+    {
+      "code": 6029,
+      "name": "InvalidProgramId",
+      "msg": "Invalid program id. For using program from another account please update id in the code"
+    },
+    {
+      "code": 6030,
+      "name": "UnexpectedAccount",
+      "msg": "Unexpected account"
+    },
+    {
+      "code": 6031,
+      "name": "AccountInUse",
+      "msg": "This account is in use."
+    },
+    {
+      "code": 6032,
+      "name": "InvalidAddress",
+      "msg": "Invalid Address."
+    },
+    {
+      "code": 6033,
+      "name": "InvalidArgument",
+      "msg": "Invalid Argument."
+    },
+    {
+      "code": 6034,
+      "name": "SameValue",
+      "msg": "Same Value."
+    },
+    {
+      "code": 6035,
+      "name": "InvalidAccountData",
+      "msg": "An account's data contents was invalid"
+    },
+    {
+      "code": 6036,
+      "name": "RequiredMinDeposit",
+      "msg": "The deposit amount should be less than minimum required amount"
+    },
+    {
+      "code": 6037,
+      "name": "OverflowDepositCap",
+      "msg": "The deposit amount should be less than the deposit cap"
+    },
+    {
+      "code": 6038,
+      "name": "RepayOverflow",
+      "msg": "The repay amount is overflowed"
+    },
+    {
+      "code": 6039,
+      "name": "NotReadyForLiquidation",
+      "msg": "The liquidation has not been ready yet"
+    },
+    {
+      "code": 6040,
+      "name": "ThisTokenLiquidated",
+      "msg": "This token already liquidated"
+    },
+    {
+      "code": 6041,
+      "name": "MathOverflow",
+      "msg": "Math operation overflow"
+    },
+    {
+      "code": 6042,
+      "name": "InvalidOracleConfig",
+      "msg": "Input oracle config is invalid"
+    }
+  ],
+  "metadata": {
+    "address": "ZrS54Q1bSLBEi33xcARPmvGyQohALmeD6uAVMHMdg8J"
+  }
+}

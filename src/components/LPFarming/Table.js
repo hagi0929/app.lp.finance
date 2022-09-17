@@ -6,7 +6,7 @@ const HeadersList = ["Pools", "Total Staked", "Reward APR"];
 
 const Table = () => {
   return (
-    <div className="row mt-3 LPFarming_table_section pb-3">
+    <div className="row mt-4 LPFarming_table_section pb-3">
       <div className="col-12">
         <div className="table_card">
           <table className="table table-hover">

@@ -1,17 +1,71 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useMemo, useEffect } from "react";
 import Input from "Layout/Form/Input";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import { DepositTokens } from "assets/registry/BorrowRegistry";
 import TokenModel from "models/TokenModel";
 import { TokenImgRegistry } from "assets/registry";
+import { deposit_cbs } from "lp-program/borrow";
+import { blockInvalidChar } from "helper";
 
-const Deposit = ({ publicKey, PriceList, BalanceList }) => {
+const Deposit = ({
+  publicKey,
+  PriceList,
+  BalanceList,
+  BalanceHandler,
+  wallet,
+}) => {
   const [isModel, setIsModel] = useState(false);
+  const [message, setMessage] = useState("Deposit");
+  const [amount, setAmount] = useState("");
+  const [Required, setRequired] = useState(false);
+
   const [selected, setSelected] = useState({
     logoURI: TokenImgRegistry.SOL,
     symbol: "SOL",
+    balance: 0,
   });
+
+  useMemo(() => {
+    setSelected({ ...selected, balance: BalanceHandler.SOL });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [BalanceHandler]);
+
+  const handleAmount = (e) => {
+    setAmount(e.target.value);
+
+    if (e.target.value) {
+      if (e.target.value <= selected.balance) {
+        setMessage("Deposit");
+        setRequired(true);
+      } else {
+        setMessage("Insufficient Balance");
+        setRequired(false);
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
+
+  const handleProgram = async () => {
+    if (amount > 0) {
+      if (Required && publicKey) {
+        await deposit_cbs(wallet, selected.symbol, amount);
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
+
+  useEffect(() => {
+    setMessage("Deposit");
+    setAmount("");
+    setRequired(false);
+
+    return () => {};
+  }, [selected]);
 
   return (
     <>
@@ -28,6 +82,9 @@ const Deposit = ({ publicKey, PriceList, BalanceList }) => {
                     className={publicKey ? null : "not-allowed"}
                     placeholder="0.0"
                     disabled={publicKey ? false : true}
+                    value={amount}
+                    onChange={handleAmount}
+                    onKeyDown={blockInvalidChar}
                     active={2}
                     p="0.7rem 0rem 0.7rem 3.5rem"
                     br="10px"
@@ -80,8 +137,9 @@ const Deposit = ({ publicKey, PriceList, BalanceList }) => {
                   p="0.6rem 2rem"
                   br="6px"
                   className="not-allowed"
+                  onClick={() => handleProgram()}
                 >
-                  {!publicKey ? "Connect wallet" : "Deposit"}
+                  {!publicKey ? "Connect wallet" : message}
                 </Button>
               </div>
             </div>

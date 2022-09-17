@@ -110,7 +110,7 @@ const Treasury = () => {
                           {LiquidStaking.map((list, ind) => {
                             return (
                               <div
-                                className="col-lg-4 col-md-6 col-12 card_section d-flex flex-row pt-4"
+                                className="col-lg-5 col-md-6 col-12 card_section d-flex flex-row pt-4"
                                 key={ind}
                               >
                                 <div className="img_section">

@@ -14,8 +14,6 @@ const Header = () => {
   const [dropdown, setDropdown] = useState(false);
   const [cli, setCli] = useState(false);
 
-  console.log(cli);
-
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
   };

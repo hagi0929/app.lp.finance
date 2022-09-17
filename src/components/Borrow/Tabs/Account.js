@@ -36,7 +36,7 @@ var AccountTable = [
 const Account = () => {
   return (
     <>
-      <div className="row d-flex justify-content-center borrow_Account mt-lg-0 mt-5">
+      <div className="row d-flex justify-content-center borrow_Account mt-lg-0 mt-4">
         <div className="col-lg-10 col-md-10 col-12">
           <div className="row my-2">
             <div className="col-lg-6 col-md-5 col-sm-6 col-12">

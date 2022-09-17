@@ -11,7 +11,7 @@ import NotifiModel from "models/NotifiModel";
 const Borrow = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const { PriceList, BalanceList } = useCrypto();
+  const { PriceList, BalanceList, BalanceHandler } = useCrypto();
   const [notifi, setNotifi] = useState(false);
 
   return (
@@ -43,9 +43,13 @@ const Borrow = () => {
           </div>
           <Overview publicKey={publicKey} />
           <Tabs
-            publicKey={publicKey}
-            PriceList={PriceList}
-            BalanceList={BalanceList}
+            {...{
+              wallet,
+              publicKey,
+              PriceList,
+              BalanceList,
+              BalanceHandler,
+            }}
           />
         </div>
       </BorrowWrapper>

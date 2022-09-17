@@ -4,7 +4,7 @@ import LPFarmingWrapper from "styles/LPFarming.style";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useCrypto } from "contexts/CryptoContext";
 import Table from "./Table";
-import Image from "Layout/Image";
+// import Image from "Layout/Image";
 
 const LPFarming = () => {
   const wallet = useWallet();
@@ -24,7 +24,7 @@ const LPFarming = () => {
                 <p>Provide Liquidity to earn rewards</p>
               </div>
             </div>
-            <div className="col-12 d-flex justify-content-center mt-4">
+            {/* <div className="col-12 d-flex justify-content-center mt-4">
               <div className="d-flex justify-content-center">
                 <a
                   href="https://lifinity.io"
@@ -34,7 +34,7 @@ const LPFarming = () => {
                   <Image src="/images/Lifinity.png" alt="Lifinity" h="1.9rem" />
                 </a>
               </div>
-            </div>
+            </div> */}
           </div>
           <Table />
           <Tabs

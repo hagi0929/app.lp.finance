@@ -1,17 +1,70 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, useMemo, useEffect } from "react";
 import Input from "Layout/Form/Input";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import { WithdrawTokens } from "assets/registry/BorrowRegistry";
 import TokenModel from "models/TokenModel";
 import { TokenImgRegistry } from "assets/registry";
+import { withdraw_cbs } from "lp-program/borrow";
+import { blockInvalidChar } from "helper";
 
-const Withdraw = ({ publicKey, PriceList, BalanceList }) => {
+const Withdraw = ({
+  publicKey,
+  PriceList,
+  BalanceList,
+  BalanceHandler,
+  wallet,
+}) => {
   const [isModel, setIsModel] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [message, setMessage] = useState("Withdraw");
+  const [Required, setRequired] = useState(false);
   const [selected, setSelected] = useState({
     logoURI: TokenImgRegistry.SOL,
     symbol: "SOL",
+    balance: 0,
   });
+
+  useMemo(() => {
+    setSelected({ ...selected, balance: BalanceHandler.SOL });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [BalanceHandler]);
+
+  const handleAmount = (e) => {
+    setAmount(e.target.value);
+
+    if (e.target.value) {
+      if (e.target.value <= selected.balance) {
+        setMessage("Withdraw");
+        setRequired(true);
+      } else {
+        setMessage("Insufficient Balance");
+        setRequired(false);
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
+
+  const handleProgram = async () => {
+    if (amount > 0) {
+      if (Required && publicKey) {
+        await withdraw_cbs(wallet, selected.symbol, amount);
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
+
+  useEffect(() => {
+    setMessage("Withdraw");
+    setAmount("");
+    setRequired(false);
+
+    return () => {};
+  }, [selected]);
 
   return (
     <>
@@ -29,6 +82,9 @@ const Withdraw = ({ publicKey, PriceList, BalanceList }) => {
                     placeholder="0.0"
                     disabled={publicKey ? false : true}
                     active={2}
+                    value={amount}
+                    onChange={handleAmount}
+                    onKeyDown={blockInvalidChar}
                     p="0.7rem 0rem 0.7rem 3.5rem"
                     br="10px"
                   />
@@ -80,8 +136,9 @@ const Withdraw = ({ publicKey, PriceList, BalanceList }) => {
                   p="0.6rem 2rem"
                   br="6px"
                   className="not-allowed"
+                  onClick={() => handleProgram()}
                 >
-                  {!publicKey ? "Connect wallet" : "Withdraw"}
+                  {!publicKey ? "Connect wallet" : message}
                 </Button>
               </div>
             </div>

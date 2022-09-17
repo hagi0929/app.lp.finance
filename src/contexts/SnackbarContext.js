@@ -8,9 +8,14 @@ export const SnackbarProvider = ({ children }) => {
   const [SnackbarType, setSnackbarType] = useState("");
 
   const OpenSnackbar = (isOpen, type, message) => {
-    setIsOpenSnackbar(isOpen);
-    setSnackbarType(type);
-    setSnackbarMess(message);
+    if (isOpenSnackbar) {
+      setSnackbarType(type);
+      setSnackbarMess(message);
+    } else {
+      setIsOpenSnackbar(isOpen);
+      setSnackbarType(type);
+      setSnackbarMess(message);
+    }
   };
 
   const CloseSnackbar = () => {

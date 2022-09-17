@@ -5,7 +5,7 @@ import Button from "Layout/Button";
 const Overview = () => {
   return (
     <>
-      <div className="row py-lg-5 py-my-5 py-sm-3 py-3 d-flex justify-content-center borrow_overview">
+      <div className="row py-4  d-flex justify-content-center borrow_overview">
         <div className="col-lg-11 col-md-11 col-12">
           <div className="row py-2">
             <div className="col-lg-4 col-md-4 col-sm-6 col-12">
@@ -80,23 +80,27 @@ const Overview = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-8 col-12 borrow_card_right mt-lg-0 mt-md-0 mt-4">
+                <div className="col-lg-4 col-md-8 col-12 borrow_card_right mt-lg-0 mt-md-0 mt-4">
                   <div className="list_section p-lg-3 p-md-2">
                     <table>
                       <tbody>
                         <tr>
-                          <td>TVL : </td>
-                          <td className="list_section_right">$0</td>
+                          <td>TVL</td>
+                          <td className="list_section_right">: $0</td>
                         </tr>
                         <tr>
-                          <td> Net LTV :</td>
-                          <td className="list_section_right">0%</td>
+                          <td> Net LTV</td>
+                          <td className="list_section_right">: 0%</td>
+                        </tr>
+                        <tr>
+                          <td> Stability Fee</td>
+                          <td className="list_section_right">: 1.5%</td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-8 col-12 mt-lg-0 mt-md-0 mt-4">
+                <div className="col-lg-2 col-md-8 col-12 mt-lg-0 mt-md-0 mt-4">
                   <div className="mr-2">
                     <Button
                       active={1}

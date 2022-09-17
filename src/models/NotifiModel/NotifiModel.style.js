@@ -67,7 +67,7 @@ const NotifiWrapper = styled.div`
   }
   @media only screen and (max-width: 600px) {
     .popup .popup-container {
-      width: 98% !important;
+      width: 95% !important;
       max-width: auto !important;
       min-width: auto !important;
       padding: 1rem 1.5rem;

@@ -1,5 +1,6 @@
 import * as anchor from "@project-serum/anchor";
 import { getProgram, getATAPublicKey } from "utils/contract";
+import lpfinance_idl from "idls/lpfinance.json";
 import {
   SEED_PDA,
   SEED_SOL,
@@ -79,14 +80,14 @@ const getSwitchboardAccount = (token) => {
 // deposit function for csb
 // ==============================================
 
-export const deposit_cbs = async (wallet, token, amount) => {
+export const deposit_cbs = async (wallet, symbol, amount) => {
   try {
-    const program = getProgram(wallet);
+    const program = getProgram(wallet, lpfinance_idl);
 
     const user_wallet = wallet.publicKey;
 
-    const tokenMint = getMint(token);
-    const switchboardAccount = getSwitchboardAccount(token);
+    const tokenMint = getMint(symbol);
+    const switchboardAccount = getSwitchboardAccount(symbol);
 
     const configData = await program.account.config.fetch(config);
     const feeAccount = configData.feeAccount;
@@ -98,7 +99,7 @@ export const deposit_cbs = async (wallet, token, amount) => {
 
     let PDA;
 
-    if (token !== "SOL") {
+    if (symbol !== "SOL") {
       PDA = await PublicKey.findProgramAddress(
         [Buffer.from(SEED_PDA)],
         program.programId
@@ -113,7 +114,7 @@ export const deposit_cbs = async (wallet, token, amount) => {
     let userAta;
     let feeAta;
     let cbsAta;
-    if (token !== "SOL") {
+    if (symbol !== "SOL") {
       userAta = await getATAPublicKey(tokenMint, user_wallet);
       feeAta = await getATAPublicKey(tokenMint, feeAccount);
       cbsAta = await getATAPublicKey(tokenMint, PDA[0]);
@@ -144,7 +145,7 @@ export const deposit_cbs = async (wallet, token, amount) => {
       const deposit_wei = convert_to_wei(amount);
       const deposit_amount = new anchor.BN(deposit_wei);
 
-      if (token !== "SOL") {
+      if (symbol !== "SOL") {
         await program.methods
           .deposit(deposit_amount)
           .accounts({
@@ -188,7 +189,7 @@ export const deposit_cbs = async (wallet, token, amount) => {
 // ==============================================
 export const borrow_cbs = async (wallet, token, amount) => {
   try {
-    const program = getProgram(wallet);
+    const program = getProgram(wallet, lpfinance_idl);
 
     const user_wallet = wallet.publicKey;
 
@@ -261,7 +262,7 @@ export const borrow_cbs = async (wallet, token, amount) => {
 // ==============================================
 export const withdraw_cbs = async (wallet, token, amount) => {
   try {
-    const program = getProgram(wallet);
+    const program = getProgram(wallet, lpfinance_idl);
 
     const user_wallet = wallet.publicKey;
 
@@ -367,7 +368,7 @@ export const withdraw_cbs = async (wallet, token, amount) => {
 // ==============================================
 export const repay_cbs = async (wallet, token, amount) => {
   try {
-    const program = getProgram(wallet);
+    const program = getProgram(wallet, lpfinance_idl);
 
     const user_wallet = wallet.publicKey;
 

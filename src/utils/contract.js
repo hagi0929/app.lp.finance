@@ -40,11 +40,11 @@ export const getProvider = (wallet) => {
   return provider;
 };
 
-export const getProgram = (wallet, address, idl) => {
+export const getProgram = (wallet, idl) => {
   const provider = getProvider(wallet);
   anchor.setProvider(provider);
 
-  const programId = new PublicKey(address);
+  const programId = new PublicKey(idl.metadata.address);
   const program = new anchor.Program(idl, programId);
   return program;
 };

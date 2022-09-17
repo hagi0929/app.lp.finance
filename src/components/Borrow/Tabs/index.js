@@ -7,7 +7,13 @@ import Withdraw from "./Withdraw";
 import Repay from "./Repay";
 import BorrowTabWrapper from "styles/BorrowTab.style";
 
-const Tabs = ({ publicKey, PriceList, BalanceList }) => {
+const Tabs = ({
+  publicKey,
+  PriceList,
+  BalanceList,
+  BalanceHandler,
+  wallet,
+}) => {
   const changeRadius = () => {
     document
       .getElementById("nav-tabContent")
@@ -74,7 +80,7 @@ const Tabs = ({ publicKey, PriceList, BalanceList }) => {
   return (
     <>
       <BorrowTabWrapper pieLTV={0}>
-        <div className="row my-lg-5 my-md-5 my-sm-4 my-5 pb-lg-4 pb-md-4 pb-sm-3 pb-3 pt-lg-2 pt-md-2 pt-sm-2 pt-0 borrow_tab_section d-flex justify-content-center">
+        <div className="row mt-lg-5 mt-md-5 mt-3 mb-lg-5 mb-md-5 mb-5 borrow_tab_section d-flex justify-content-center">
           <div className="col-lg-6 col-md-10 col-12">
             <div className="row d-flex justify-content-center">
               <div className="col-lg-11 col-12">
@@ -114,9 +120,13 @@ const Tabs = ({ publicKey, PriceList, BalanceList }) => {
                       aria-labelledby="nav-Deposit-tab"
                     >
                       <Deposit
-                        publicKey={publicKey}
-                        PriceList={PriceList}
-                        BalanceList={BalanceList}
+                        {...{
+                          wallet,
+                          publicKey,
+                          PriceList,
+                          BalanceList,
+                          BalanceHandler,
+                        }}
                       />
                     </div>
                     <div
@@ -126,9 +136,13 @@ const Tabs = ({ publicKey, PriceList, BalanceList }) => {
                       aria-labelledby="nav-Borrow-tab"
                     >
                       <Borrow
-                        publicKey={publicKey}
-                        PriceList={PriceList}
-                        BalanceList={BalanceList}
+                        {...{
+                          wallet,
+                          publicKey,
+                          PriceList,
+                          BalanceList,
+                          BalanceHandler,
+                        }}
                       />
                     </div>
                     <div
@@ -138,9 +152,13 @@ const Tabs = ({ publicKey, PriceList, BalanceList }) => {
                       aria-labelledby="nav-Withdraw-tab"
                     >
                       <Withdraw
-                        publicKey={publicKey}
-                        PriceList={PriceList}
-                        BalanceList={BalanceList}
+                        {...{
+                          wallet,
+                          publicKey,
+                          PriceList,
+                          BalanceList,
+                          BalanceHandler,
+                        }}
                       />
                     </div>
                     <div
@@ -150,9 +168,13 @@ const Tabs = ({ publicKey, PriceList, BalanceList }) => {
                       aria-labelledby="nav-Repay-tab"
                     >
                       <Repay
-                        publicKey={publicKey}
-                        PriceList={PriceList}
-                        BalanceList={BalanceList}
+                        {...{
+                          wallet,
+                          publicKey,
+                          PriceList,
+                          BalanceList,
+                          BalanceHandler,
+                        }}
                       />
                     </div>
                   </div>
