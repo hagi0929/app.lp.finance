@@ -13,6 +13,7 @@ const Tabs = ({
   BalanceList,
   BalanceHandler,
   wallet,
+  OpenContractSnackbar,
 }) => {
   const changeRadius = () => {
     document
@@ -126,6 +127,7 @@ const Tabs = ({
                           PriceList,
                           BalanceList,
                           BalanceHandler,
+                          OpenContractSnackbar,
                         }}
                       />
                     </div>
@@ -142,6 +144,7 @@ const Tabs = ({
                           PriceList,
                           BalanceList,
                           BalanceHandler,
+                          OpenContractSnackbar,
                         }}
                       />
                     </div>
@@ -158,6 +161,7 @@ const Tabs = ({
                           PriceList,
                           BalanceList,
                           BalanceHandler,
+                          OpenContractSnackbar,
                         }}
                       />
                     </div>
@@ -174,6 +178,7 @@ const Tabs = ({
                           PriceList,
                           BalanceList,
                           BalanceHandler,
+                          OpenContractSnackbar,
                         }}
                       />
                     </div>

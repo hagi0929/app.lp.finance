@@ -82,32 +82,6 @@ export var SwapTokens = [
     },
   },
   {
-    address: "SLNDpmoWTVADgEdndyvWzroNL7zSi1dF9PC3xHGtPwp",
-    chainId: 101,
-    decimals: 6,
-    logoURI: TokenImgRegistry.SLND,
-    name: "Solend",
-    symbol: "SLND",
-    tags: ["solend", "lending"],
-    extensions: {
-      coingeckoId: "solend",
-      serumV3Usdc: "F9y9NM83kBMzBmMvNT18mkcFuNAPhNRhx7pnz9EDWwfv",
-      twitter: "https://twitter.com/solendprotocol",
-      website: "https://solend.fi",
-    },
-  },
-  {
-    address: "7i5KKsX2weiTkry7jA4ZwSuXGhs5eJBEjY8vVxR4pfRx",
-    chainId: 101,
-    decimals: 9,
-    logoURI: TokenImgRegistry.GMT,
-    name: "GMT",
-    symbol: "GMT",
-    extensions: {
-      website: "https://stepn.com/",
-    },
-  },
-  {
     address: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
     chainId: 101,
     decimals: 9,
@@ -147,16 +121,6 @@ export const coinGeckoList = [
     id: "serum",
     name: "Serum",
     symbol: "srm",
-  },
-  {
-    id: "solend",
-    name: "Solend",
-    symbol: "slnd",
-  },
-  {
-    id: "gmt-token",
-    name: "GMT",
-    symbol: "gmt",
   },
   {
     id: "samoyedcoin",

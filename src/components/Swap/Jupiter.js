@@ -12,6 +12,7 @@ import Card from "Layout/Card";
 import Chart from "./Chart";
 import Image from "Layout/Image";
 import { Swapping } from "lp-program/swap";
+import { CalcFiveDigit } from "helper";
 import {
   getTokenAccountsByOwnerWithWrappedSol,
   nativeToUi,
@@ -190,6 +191,7 @@ const Jupiter = ({
 
   const inputWalletBalance = () => {
     if (walletTokens.length) {
+      console.log(walletTokens.length);
       const walletToken = walletTokens.filter((t) => {
         return t.account.mint.toString() === inputTokenInfo?.address;
       });
@@ -199,6 +201,7 @@ const Jupiter = ({
 
     return 0.0;
   };
+
   const outputWalletBalance = () => {
     if (walletTokens.length) {
       const walletToken = walletTokens.filter((t) => {
@@ -323,7 +326,9 @@ const Jupiter = ({
                             </div>
                             <div className="col-8 d-flex justify-content-end align-items-center flex-row">
                               <div className="balance">
-                                <p>Bal: {inputWalletBalance()}</p>
+                                <p>
+                                  Bal: {CalcFiveDigit(inputWalletBalance())}
+                                </p>
                               </div>
                               <div className="max_btn ml-2">
                                 <Button
@@ -421,7 +426,9 @@ const Jupiter = ({
                             </div>
                             <div className="col-8 d-flex justify-content-end align-items-center flex-row">
                               <div className="balance">
-                                <p>Bal: {outputWalletBalance()}</p>
+                                <p>
+                                  Bal: {CalcFiveDigit(outputWalletBalance())}
+                                </p>
                               </div>
                             </div>
                           </div>

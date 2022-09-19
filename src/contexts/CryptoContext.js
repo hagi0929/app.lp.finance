@@ -12,9 +12,7 @@ export const CryptoProvider = ({ children }) => {
   const [PriceList, setPriceList] = useState([]);
   const [BalanceList, setBalanceList] = useState([]);
   const [PriceHandler, setPriceHandler] = useState({
-    GMT: 0,
     SAMO: 0,
-    SLND: 0,
     SOL: 0,
     SRM: 0,
     UXD: 0,
@@ -23,9 +21,7 @@ export const CryptoProvider = ({ children }) => {
     zSOL: 0,
   });
   const [BalanceHandler, setBalanceHandler] = useState({
-    GMT: 0,
     SAMO: 0,
-    SLND: 0,
     SOL: 0,
     SRM: 0,
     UXD: 0,
@@ -34,27 +30,40 @@ export const CryptoProvider = ({ children }) => {
     zSOL: 0,
   });
 
-  useEffect(() => {
-    const handlePrice = async () => {
-      const { PriceList, PriceListObj } = await getTokenPrice();
-      setPriceList(PriceList);
-      setPriceHandler(PriceListObj);
-    };
+  const storePrice = async () => {
+    const { PriceList, PriceListObj } = await getTokenPrice();
+    setPriceList(PriceList);
+    setPriceHandler(PriceListObj);
+  };
 
-    handlePrice();
+  const storeBal = async () => {
+    const connection = getConnection();
+    let BalList = [];
+    let BalListObj = {};
+
+    for (let i = 0; i < TokenBalRegistry.length; i++) {
+      const element = TokenBalRegistry[i];
+      const bal = await getBalance(element, publicKey, connection);
+      BalList.push({ bal, symbol: element });
+      BalListObj = { ...BalListObj, [element]: bal };
+    }
+
+    setBalanceList(BalList);
+    setBalanceHandler(BalListObj);
+  };
+
+  useEffect(() => {
+    storePrice();
+
     let PriceInterval = setInterval(async () => {
-      const { PriceList, PriceListObj } = await getTokenPrice();
-      setPriceList(PriceList);
-      setPriceHandler(PriceListObj);
+      storePrice();
     }, 60000);
 
     return () => {
       clearInterval(PriceInterval);
       setPriceList([]);
       setBalanceHandler({
-        GMT: 0,
         SAMO: 0,
-        SLND: 0,
         SOL: 0,
         SRM: 0,
         UXD: 0,
@@ -66,29 +75,12 @@ export const CryptoProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const handleBal = async () => {
-      const connection = getConnection();
-      let BalList = [];
-      let BalListObj = {};
+    storeBal();
 
-      for (let i = 0; i < TokenBalRegistry.length; i++) {
-        const element = TokenBalRegistry[i];
-        const bal = await getBalance(element, publicKey, connection);
-        BalList.push({ bal, symbol: element });
-        BalListObj = { ...BalListObj, [element]: bal };
-      }
-
-      setBalanceList(BalList);
-      setBalanceHandler(BalListObj);
-    };
-
-    handleBal();
     return () => {
       setBalanceList([]);
       setPriceHandler({
-        GMT: 0,
         SAMO: 0,
-        SLND: 0,
         SOL: 0,
         SRM: 0,
         UXD: 0,
@@ -97,11 +89,19 @@ export const CryptoProvider = ({ children }) => {
         zSOL: 0,
       });
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publicKey]);
 
   return (
     <CryptoContext.Provider
-      value={{ PriceList, BalanceList, PriceHandler, BalanceHandler }}
+      value={{
+        PriceList,
+        BalanceList,
+        PriceHandler,
+        BalanceHandler,
+        storePrice,
+        storeBal,
+      }}
     >
       {children}
     </CryptoContext.Provider>

@@ -2,16 +2,7 @@ import * as anchor from "@project-serum/anchor";
 import axios from "axios";
 import api from "api";
 import { TokenPriceRegistry } from "assets/registry";
-import {
-  SOLMint,
-  mSOLMint,
-  stSOLMint,
-  UXDMint,
-  SRMMint,
-  SLNDMint,
-  GMTMint,
-  SAMOMint,
-} from "constants/global";
+import { getMint } from "constants/global";
 
 export const getTokenPrice = async () => {
   try {
@@ -59,24 +50,7 @@ export const getBalance = async (token, publicKey, connection) => {
         return 0.0;
       }
     } else {
-      let mintAddress = "";
-      if (token === "SOL" || token === "zSOL") {
-        mintAddress = SOLMint;
-      } else if (token === "mSOL") {
-        mintAddress = mSOLMint;
-      } else if (token === "stSOL") {
-        mintAddress = stSOLMint;
-      } else if (token === "UXD") {
-        mintAddress = UXDMint;
-      } else if (token === "SRM") {
-        mintAddress = SRMMint;
-      } else if (token === "SLND") {
-        mintAddress = SLNDMint;
-      } else if (token === "GMT") {
-        mintAddress = GMTMint;
-      } else if (token === "SAMO") {
-        mintAddress = SAMOMint;
-      }
+      const mintAddress = getMint(token);
 
       const res = await connection.getTokenAccountsByOwner(publicKey, {
         mint: mintAddress,

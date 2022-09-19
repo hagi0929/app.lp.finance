@@ -4,24 +4,13 @@ import lpfinance_idl from "idls/lpfinance.json";
 import {
   SEED_TRV_PDA,
   SEED_ZSOL_MINT_AUTHORITY_PDA,
-  SOLMint,
-  mSOLMint,
-  stSOLMint,
-  UXDMint,
-  SRMMint,
-  SLNDMint,
-  GMTMint,
-  SAMOMint,
   zSOL_MINT,
   config,
   switchboardSolAccount,
-  switchboardMsolAccount,
-  switchboardSrmAccount,
-  switchboardStsolAccount,
-  switchboardSamoAccount,
-  switchboardUxdAccount,
   cTokenInfoAccounts,
   convert_to_wei,
+  getMint,
+  getSwitchboardAccount,
 } from "constants/global";
 import {
   TOKEN_PROGRAM_ID,
@@ -29,51 +18,6 @@ import {
 } from "@solana/spl-token";
 
 const { PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } = anchor.web3;
-
-const getMint = (token) => {
-  let mint;
-
-  if (token === "SOL") {
-    mint = SOLMint;
-  } else if (token === "mSOL") {
-    mint = mSOLMint;
-  } else if (token === "stSOL") {
-    mint = stSOLMint;
-  } else if (token === "UXD") {
-    mint = UXDMint;
-  } else if (token === "SRM") {
-    mint = SRMMint;
-  } else if (token === "SLND") {
-    mint = SLNDMint;
-  } else if (token === "GMT") {
-    mint = GMTMint;
-  } else if (token === "SAMO") {
-    mint = SAMOMint;
-  } else if (token === "zSOL") {
-    mint = zSOL_MINT;
-  }
-
-  return mint;
-};
-
-const getSwitchboardAccount = (token) => {
-  let Account;
-
-  if (token === "SOL" || token === "zSOL") {
-    Account = switchboardSolAccount;
-  } else if (token === "mSOL") {
-    Account = switchboardMsolAccount;
-  } else if (token === "stSOL") {
-    Account = switchboardStsolAccount;
-  } else if (token === "UXD") {
-    Account = switchboardUxdAccount;
-  } else if (token === "SRM") {
-    Account = switchboardSrmAccount;
-  } else if (token === "SAMO") {
-    Account = switchboardSamoAccount;
-  }
-  return Account;
-};
 
 // burn_zSOL function for PSM
 // ==============================================

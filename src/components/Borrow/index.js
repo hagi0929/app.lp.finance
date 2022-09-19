@@ -7,11 +7,15 @@ import { useCrypto } from "contexts/CryptoContext";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import NotifiModel from "models/NotifiModel";
+import { useContractSnackbar } from "contexts/ContractSnackbarContext";
 
 const Borrow = () => {
+  const { PriceList, BalanceList, BalanceHandler } = useCrypto();
+  const { OpenContractSnackbar } = useContractSnackbar();
+
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const { PriceList, BalanceList, BalanceHandler } = useCrypto();
+
   const [notifi, setNotifi] = useState(false);
 
   return (
@@ -49,6 +53,7 @@ const Borrow = () => {
               PriceList,
               BalanceList,
               BalanceHandler,
+              OpenContractSnackbar,
             }}
           />
         </div>

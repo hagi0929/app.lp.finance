@@ -7,14 +7,14 @@ const ContractContractSnackbarWrapper = styled.div`
     width: 100%;
     height: 100%;
     overflow: hidden;
-    transform: translateX(calc(100% + 30px));
+    transform: translateY(calc(100% + 30px));
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
     z-index: 0;
 
     .ContractSnackbar_content {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      bottom: 10px;
+      left: 10px;
       display: flex;
       flex-direction: column;
       max-width: 380px;
@@ -118,7 +118,7 @@ const ContractContractSnackbarWrapper = styled.div`
   }
 
   .ContractSnackbar.show {
-    transform: translateX(0%);
+    transform: translateY(0%);
     z-index: 1000;
   }
 
@@ -135,10 +135,10 @@ const ContractContractSnackbarWrapper = styled.div`
   @media only screen and (max-width: 600px) {
     .ContractSnackbar {
       .ContractSnackbar_content {
-        max-width: 300px;
-        min-width: 300px;
-        top: 5px;
-        right: 5px;
+        max-width: 97%;
+        min-width: 97%;
+        bottom: 5px;
+        left: 5px;
       }
     }
   }

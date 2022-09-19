@@ -29,31 +29,23 @@ export const SOLMint = new PublicKey(
 );
 
 export const mSOLMint = new PublicKey(
-  "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So"
+  "CGm3Nihs61EVk3iiDg9eCov3PCYDkLtaMRXyHw4dkd91"
 );
 
 export const stSOLMint = new PublicKey(
-  "7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj"
+  "FjNXKDtDWzo9usb6YdWNUxRwKyGWrF2aTLWydYzjtSU4"
 );
 
 export const UXDMint = new PublicKey(
-  "7kbnvuGBxxj8AG9qp8Scn56muWGaRaFqxg1FsRp3PaFT"
+  "EN2CV9nCnH9nBF9GyGYG9B3haNriNBkrPo8jF4c6mzUi"
 );
 
 export const SRMMint = new PublicKey(
-  "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt"
-);
-
-export const SLNDMint = new PublicKey(
-  "SLNDpmoWTVADgEdndyvWzroNL7zSi1dF9PC3xHGtPwp"
-);
-
-export const GMTMint = new PublicKey(
-  "7i5KKsX2weiTkry7jA4ZwSuXGhs5eJBEjY8vVxR4pfRx"
+  "3KNSn9AUMUpYzGkN7K8FZaidiBZqVbz8bGtJh8SVFSJq"
 );
 
 export const SAMOMint = new PublicKey(
-  "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU"
+  "5rUhzmWf8pyhJvjYfbQ8xPJJHDJgkeZBUDWN7rd48Hux"
 );
 
 export const zSOL_MINT = new PublicKey(
@@ -82,15 +74,6 @@ export const UXD_Account = new PublicKey(
 export const SRM_Account = new PublicKey(
   "3NBReDRTLKMQEKiLD5tGcx4kXbTf88b7f2xLS9UuGjym"
 );
-
-export const SLND_Account = new PublicKey(
-  "HkGEau5xY1e8REXUFbwvWWvyJGywkgiAZZFpryyraWqJ"
-);
-
-export const GMT_Account = new PublicKey(
-  "DZYZkJcFJThN9nZy4nK3hrHra1LaWeiyoZ9SMdLFEFpY"
-);
-
 // need this
 export const SAMO_Account = new PublicKey(
   "DZYZkJcFJThN9nZy4nK3hrHra1LaWeiyoZ9SMdLFEFpY"
@@ -143,3 +126,44 @@ export const MSOL_MINT_AUTHORITY = new PublicKey(
 export const MARINADE_PROGRAM = new PublicKey(
   "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD"
 );
+
+export const getMint = (token) => {
+  let mint;
+
+  if (token === "SOL") {
+    mint = SOLMint;
+  } else if (token === "mSOL") {
+    mint = mSOLMint;
+  } else if (token === "stSOL") {
+    mint = stSOLMint;
+  } else if (token === "UXD") {
+    mint = UXDMint;
+  } else if (token === "SRM") {
+    mint = SRMMint;
+  } else if (token === "SAMO") {
+    mint = SAMOMint;
+  } else if (token === "zSOL") {
+    mint = zSOL_MINT;
+  }
+
+  return mint;
+};
+
+export const getSwitchboardAccount = (token) => {
+  let Account;
+
+  if (token === "SOL" || token === "zSOL") {
+    Account = switchboardSolAccount;
+  } else if (token === "mSOL") {
+    Account = switchboardMsolAccount;
+  } else if (token === "stSOL") {
+    Account = switchboardStsolAccount;
+  } else if (token === "UXD") {
+    Account = switchboardUxdAccount;
+  } else if (token === "SRM") {
+    Account = switchboardSrmAccount;
+  } else if (token === "SAMO") {
+    Account = switchboardSamoAccount;
+  }
+  return Account;
+};

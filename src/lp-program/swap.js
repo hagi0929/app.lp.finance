@@ -25,7 +25,7 @@ export const Swapping = async (
     ) {
       setSwapping(true);
       let txCount = 1;
-      let errorTxid;
+      // let errorTxid;
 
       const swapResult = await exchange({
         wallet: {
@@ -39,7 +39,7 @@ export const Swapping = async (
           console.log("txid, totalTxs", txid, totalTxs);
 
           if (txCount === totalTxs) {
-            errorTxid = txid;
+            // errorTxid = txid;
             console.log("Confirming Transaction");
             OpenSnackbar(true, "Info", "Confirming Transaction");
           }

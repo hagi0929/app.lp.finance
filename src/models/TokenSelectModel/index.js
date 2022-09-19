@@ -165,7 +165,9 @@ const TokenSelectModel = ({
                                   <div className="col-5">
                                     <div className="d-flex align-items-start justify-content-end">
                                       <p>{CalcFiveDigit(token.bal)}</p>
-                                      <span>{token.symbol}</span>
+                                      <span className="pl-1">
+                                        {token.symbol}
+                                      </span>
                                     </div>
                                     <div className="ml-2 details_name d-flex flex-column justify-content-end">
                                       <span className="d-flex justify-content-end">

@@ -5,9 +5,7 @@ export const TokenImgRegistry = {
   stSOL:
     "https://lptokenbucket.s3.amazonaws.com/c8e60e5099ff1a97c766ca39dac5fe71",
   SRM: "https://lptokenbucket.s3.amazonaws.com/ff00f3aa48cd2273dd1429a00b4b566d",
-  GMT: "https://lptokenbucket.s3.amazonaws.com/b9a0803c08edc7405ca9f9bf8916e071",
   UXD: "https://lptokenbucket.s3.amazonaws.com/8760a253c75f91ce069c1094350092a2",
-  SLND: "https://lptokenbucket.s3.amazonaws.com/45cefd161098cadb5e5da5580462930f",
   SAMO: "https://lptokenbucket.s3.amazonaws.com/c85a303ff798379f58f11fc8841a9fc1",
   zSOL: "https://lptokenbucket.s3.amazonaws.com/30bd9d88075d07b6a14086c63e9ac124",
 };
@@ -166,8 +164,6 @@ export var TokenPriceRegistry = [
   "stSOL",
   "UXD",
   "SRM",
-  "SLND",
-  "GMT",
   "SAMO",
 ];
 
@@ -178,7 +174,5 @@ export var TokenBalRegistry = [
   "stSOL",
   "UXD",
   "SRM",
-  "SLND",
-  "GMT",
   "SAMO",
 ];

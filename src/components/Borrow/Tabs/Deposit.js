@@ -14,6 +14,7 @@ const Deposit = ({
   BalanceList,
   BalanceHandler,
   wallet,
+  OpenContractSnackbar,
 }) => {
   const [isModel, setIsModel] = useState(false);
   const [message, setMessage] = useState("Deposit");
@@ -51,7 +52,15 @@ const Deposit = ({
   const handleProgram = async () => {
     if (amount > 0) {
       if (Required && publicKey) {
-        await deposit_cbs(wallet, selected.symbol, amount);
+        await deposit_cbs(
+          wallet,
+          selected.symbol,
+          amount,
+          setMessage,
+          setRequired,
+          setAmount,
+          OpenContractSnackbar
+        );
       }
     } else {
       setMessage("Enter an amount");
@@ -63,8 +72,6 @@ const Deposit = ({
     setMessage("Deposit");
     setAmount("");
     setRequired(false);
-
-    return () => {};
   }, [selected]);
 
   return (
@@ -136,7 +143,7 @@ const Deposit = ({
                   active={1}
                   p="0.6rem 2rem"
                   br="6px"
-                  className="not-allowed"
+                  className={!publicKey ? "not-allowed" : null}
                   onClick={() => handleProgram()}
                 >
                   {!publicKey ? "Connect wallet" : message}

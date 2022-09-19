@@ -6,15 +6,6 @@ import {
   SEED_SOL,
   SEED_TRV_PDA,
   SEED_ZSOL_MINT_AUTHORITY_PDA,
-  SOLMint,
-  mSOLMint,
-  stSOLMint,
-  UXDMint,
-  SRMMint,
-  SLNDMint,
-  GMTMint,
-  SAMOMint,
-  zSOL_MINT,
   config,
   switchboardSolAccount,
   switchboardMsolAccount,
@@ -24,6 +15,8 @@ import {
   switchboardUxdAccount,
   cTokenInfoAccounts,
   convert_to_wei,
+  getMint,
+  getSwitchboardAccount,
 } from "constants/global";
 import {
   TOKEN_PROGRAM_ID,
@@ -32,56 +25,21 @@ import {
 
 const { PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } = anchor.web3;
 
-const getMint = (token) => {
-  let mint;
-
-  if (token === "SOL") {
-    mint = SOLMint;
-  } else if (token === "mSOL") {
-    mint = mSOLMint;
-  } else if (token === "stSOL") {
-    mint = stSOLMint;
-  } else if (token === "UXD") {
-    mint = UXDMint;
-  } else if (token === "SRM") {
-    mint = SRMMint;
-  } else if (token === "SLND") {
-    mint = SLNDMint;
-  } else if (token === "GMT") {
-    mint = GMTMint;
-  } else if (token === "SAMO") {
-    mint = SAMOMint;
-  } else if (token === "zSOL") {
-    mint = zSOL_MINT;
-  }
-
-  return mint;
-};
-
-const getSwitchboardAccount = (token) => {
-  let Account;
-
-  if (token === "SOL" || token === "zSOL") {
-    Account = switchboardSolAccount;
-  } else if (token === "mSOL") {
-    Account = switchboardMsolAccount;
-  } else if (token === "stSOL") {
-    Account = switchboardStsolAccount;
-  } else if (token === "UXD") {
-    Account = switchboardUxdAccount;
-  } else if (token === "SRM") {
-    Account = switchboardSrmAccount;
-  } else if (token === "SAMO") {
-    Account = switchboardSamoAccount;
-  }
-  return Account;
-};
-
 // deposit function for csb
 // ==============================================
 
-export const deposit_cbs = async (wallet, symbol, amount) => {
+export const deposit_cbs = async (
+  wallet,
+  symbol,
+  amount,
+  setMessage,
+  setRequired,
+  setAmount,
+  OpenContractSnackbar
+) => {
   try {
+    OpenContractSnackbar(true, "Progressing", "Start Deposit...");
+
     const program = getProgram(wallet, lpfinance_idl);
 
     const user_wallet = wallet.publicKey;
@@ -163,6 +121,16 @@ export const deposit_cbs = async (wallet, symbol, amount) => {
             rent: SYSVAR_RENT_PUBKEY,
           })
           .rpc();
+
+        OpenContractSnackbar(
+          true,
+          "Success",
+          `Successfully deposited ${amount} ${symbol}.`
+        );
+
+        setMessage("Enter an amount");
+        setRequired(false);
+        setAmount("");
       } else {
         // deposit_sol
         await program.methods
@@ -180,9 +148,21 @@ export const deposit_cbs = async (wallet, symbol, amount) => {
             rent: SYSVAR_RENT_PUBKEY,
           })
           .rpc();
+
+        OpenContractSnackbar(
+          true,
+          "Success",
+          `Successfully deposited ${amount} ${symbol}.`
+        );
+
+        setMessage("Enter an amount");
+        setRequired(false);
+        setAmount("");
       }
     }
-  } catch (error) {}
+  } catch (error) {
+    OpenContractSnackbar(true, "Error", `Deposit failed. Please try again.`);
+  }
 };
 
 // borrow function for csb

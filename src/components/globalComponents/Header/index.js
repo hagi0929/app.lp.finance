@@ -8,9 +8,11 @@ import { useCluster } from "contexts/ClusterContext";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import CliModel from "models/CliModel";
+import { useCrypto } from "contexts/CryptoContext";
 
 const Header = () => {
   const { Cluster, changeCluster } = useCluster();
+  const { storePrice, storeBal } = useCrypto();
   const [dropdown, setDropdown] = useState(false);
   const [cli, setCli] = useState(false);
 
@@ -169,7 +171,11 @@ const Header = () => {
                               <div
                                 className="networks_card mt-2"
                                 key={list.id}
-                                onClick={() => changeCluster(list.network)}
+                                onClick={() => {
+                                  changeCluster(list.network);
+                                  storePrice();
+                                  storeBal();
+                                }}
                               >
                                 <div className="name">
                                   <p>{list.network}</p>
