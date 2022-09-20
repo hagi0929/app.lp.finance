@@ -158,7 +158,7 @@ const BorrowWrapper = styled.div`
               .totalSupplyPie {
                 position: absolute;
                 display: inline-block;
-                top: 20px;
+                top: 19.6px;
                 left: 35.3px;
                 cursor: pointer;
 
