@@ -14,12 +14,12 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x206"
+      "sizes": "192x192"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x549"
+      "sizes": "512x512"
     }
   ],
   "related_applications": [{

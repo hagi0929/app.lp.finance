@@ -1,0 +1,8 @@
+https://app.lp.finance
+https://app.lp.finance/borrow
+https://app.lp.finance/psm
+https://app.lp.finance/lp-farming
+https://app.lp.finance/treasury
+https://app.lp.finance/swap
+https://app.lp.finance/urllist.txt
+https://app.lp.finance/robots.txt
