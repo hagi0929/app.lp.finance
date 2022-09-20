@@ -13,6 +13,7 @@ import Chart from "./Chart";
 import Image from "Layout/Image";
 import { Swapping } from "lp-program/swap";
 import { CalcFiveDigit } from "helper";
+import WalletButton from "components/globalComponents/WalletButton";
 import {
   getTokenAccountsByOwnerWithWrappedSol,
   nativeToUi,
@@ -191,7 +192,6 @@ const Jupiter = ({
 
   const inputWalletBalance = () => {
     if (walletTokens.length) {
-      console.log(walletTokens.length);
       const walletToken = walletTokens.filter((t) => {
         return t.account.mint.toString() === inputTokenInfo?.address;
       });
@@ -831,40 +831,41 @@ const Jupiter = ({
                         <div className="swap_button_section mt-5">
                           <div className="row">
                             <div className="col-12">
-                              <div className="swap_btn">
-                                <Button
-                                  active={1}
-                                  br="50px"
-                                  p="0.5rem 1rem"
-                                  id="btn"
-                                  size="1rem"
-                                  className={
-                                    !connected && zeroKey !== publicKey
-                                      ? "not-allowed"
-                                      : null
-                                  }
-                                  disabled={swapDisabled}
-                                  onClick={async () => {
-                                    await Swapping(
-                                      loading,
-                                      selectedRoute,
-                                      connected,
-                                      wallet,
-                                      signAllTransactions,
-                                      signTransaction,
-                                      setSwapping,
-                                      connection,
-                                      exchange,
-                                      fetchWalletTokens,
-                                      inputTokenInfo,
-                                      outputTokenInfo,
-                                      setFormValue,
-                                      OpenSnackbar
-                                    );
-                                  }}
-                                >
-                                  {connected ? (
-                                    swapping ? (
+                              {!publicKey ? (
+                                <WalletButton br="50px" fw="400" active={1} />
+                              ) : (
+                                <div className="swap_btn">
+                                  <Button
+                                    active={1}
+                                    br="50px"
+                                    p="0.6rem 1rem"
+                                    id="btn"
+                                    className={
+                                      !connected && zeroKey !== publicKey
+                                        ? "not-allowed"
+                                        : null
+                                    }
+                                    disabled={swapDisabled}
+                                    onClick={async () => {
+                                      await Swapping(
+                                        loading,
+                                        selectedRoute,
+                                        connected,
+                                        wallet,
+                                        signAllTransactions,
+                                        signTransaction,
+                                        setSwapping,
+                                        connection,
+                                        exchange,
+                                        fetchWalletTokens,
+                                        inputTokenInfo,
+                                        outputTokenInfo,
+                                        setFormValue,
+                                        OpenSnackbar
+                                      );
+                                    }}
+                                  >
+                                    {swapping ? (
                                       <div className="d-flex align-items-center justify-content-center">
                                         <p
                                           style={{
@@ -884,12 +885,10 @@ const Jupiter = ({
                                       </div>
                                     ) : (
                                       "Swap"
-                                    )
-                                  ) : (
-                                    "Connect Wallet"
-                                  )}
-                                </Button>
-                              </div>
+                                    )}
+                                  </Button>
+                                </div>
+                              )}
                             </div>
                           </div>
                         </div>

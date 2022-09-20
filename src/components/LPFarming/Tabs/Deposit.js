@@ -5,6 +5,7 @@ import Image from "Layout/Image";
 import TokenPairModel from "models/TokenPairModel";
 import { TokenImgRegistry } from "assets/registry";
 import { LPFarmingTokenRegistry } from "assets/registry/LPFarmingRegistry";
+import WalletButton from "components/globalComponents/WalletButton";
 
 const Deposit = ({ publicKey }) => {
   const [isModel, setIsModel] = useState(false);
@@ -84,16 +85,20 @@ const Deposit = ({ publicKey }) => {
         <div className="col-12 details mt-2">
           <div className="row d-flex justify-content-center">
             <div className="col-12 d-flex justify-content-center mt-3">
-              <div className="btn_section">
-                <Button
-                  active={1}
-                  p="0.6rem 2rem"
-                  br="6px"
-                  className="not-allowed"
-                >
-                  {!publicKey ? "Connect wallet" : "Deposit"}
-                </Button>
-              </div>
+              {!publicKey ? (
+                <WalletButton br="10px" fw="400" active={1} />
+              ) : (
+                <div className="btn_section">
+                  <Button
+                    active={1}
+                    p="0.6rem 2rem"
+                    br="10px"
+                    className="not-allowed"
+                  >
+                    Deposit
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>

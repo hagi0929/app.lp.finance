@@ -5,6 +5,7 @@ import { directMessageConfiguration } from "utils";
 import Input from "Layout/Form/Input";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
+import WalletButton from "components/globalComponents/WalletButton";
 
 const ALERT_NAME = "LP_FINANCE_NOTIFI";
 const ALERT_CONFIGURATION = directMessageConfiguration({
@@ -32,8 +33,9 @@ const NotifiCardContents = ({ OpenSnackbar, publicKey }) => {
           <div className="col-12 form_filed mt-3">
             <Input
               active={2}
-              p="0.5rem 1rem"
+              p="0.7rem 1rem"
               br="8px"
+              size="0.92rem"
               disabled={loading}
               name="notifi-email"
               autoComplete="off"
@@ -46,9 +48,9 @@ const NotifiCardContents = ({ OpenSnackbar, publicKey }) => {
             />
           </div>
 
-          <div className="col-12 mt-2 form_filed d-flex align-items-center">
+          <div className="col-12 form_filed d-flex align-items-center">
             <div className="pl-3 d-flex align-items-center">
-              <p className="pt-2">Notification alerts</p>
+              <p className="check_title">Notification alerts</p>
               <input
                 disabled={loading}
                 type="checkbox"
@@ -60,47 +62,45 @@ const NotifiCardContents = ({ OpenSnackbar, publicKey }) => {
               />
             </div>
           </div>
-          <div className="col-12 mt-4 form_filed">
-            <Button
-              active={1}
-              p="0.5rem 1rem"
-              br="50px"
-              disabled={loading}
-              type="submit"
-              onClick={async () => {
-                if (enabled && publicKey) {
-                  await subscribe(OpenSnackbar);
+          <div className="col-12 mt-4 pt-2 form_filed">
+            {!publicKey ? (
+              <WalletButton br="50px" fw="400" active={1} />
+            ) : (
+              <Button
+                active={1}
+                p="0.5rem 1rem"
+                br="50px"
+                disabled={loading}
+                type="submit"
+                onClick={async () => {
+                  if (enabled && publicKey && email) {
+                    await subscribe(OpenSnackbar);
+                  }
+                }}
+                className={
+                  publicKey ? (loading ? "not-allowed" : null) : "not-allowed"
                 }
-              }}
-              className={
-                publicKey ? (loading ? "not-allowed" : null) : "not-allowed"
-              }
-            >
-              {publicKey ? (
-                <>
-                  {loading ? (
-                    <div className="d-flex align-items-center justify-content-center">
-                      <p
-                        style={{
-                          color: "#0f0",
-                          fontSize: "1.5rem",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItem: "center",
-                          marginTop: "0px",
-                        }}
-                      >
-                        <i className="zmdi zmdi-rotate-left zmdi-hc-spin-reverse"></i>
-                      </p>
-                    </div>
-                  ) : (
-                    "Subscribe"
-                  )}
-                </>
-              ) : (
-                "Connect Wallet"
-              )}
-            </Button>
+              >
+                {loading ? (
+                  <div className="d-flex align-items-center justify-content-center">
+                    <p
+                      style={{
+                        color: "#0f0",
+                        fontSize: "1.5rem",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItem: "center",
+                        marginTop: "0px",
+                      }}
+                    >
+                      <i className="zmdi zmdi-rotate-left zmdi-hc-spin-reverse"></i>
+                    </p>
+                  </div>
+                ) : (
+                  "Subscribe"
+                )}
+              </Button>
+            )}
           </div>
           <div className="col-12 mt-3 notify_footer">
             <div className="d-flex align-items-center justify-content-center">

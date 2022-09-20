@@ -12,6 +12,7 @@ import { useCrypto } from "contexts/CryptoContext";
 import { useEffect } from "react";
 import { burn_zSOL, mint_zSOL } from "lp-program/psm";
 import { blockInvalidChar } from "helper";
+import WalletButton from "components/globalComponents/WalletButton";
 
 const PSM = () => {
   const wallet = useWallet();
@@ -150,12 +151,12 @@ const PSM = () => {
               </div>
             </div>
 
-            <div className="col-12 PSM_section mt-4">
+            <div className="col-12 PSM_section mt-2">
               <div className="row d-flex justify-content-center">
                 <div className="col-lg-5 col-md-6 col-12">
                   <Card
                     active={1}
-                    p="2rem 2rem 1rem 2rem"
+                    p="1.5rem 2rem"
                     br="18px"
                     className="PSM_card"
                   >
@@ -188,7 +189,7 @@ const PSM = () => {
                             <Button
                               active={2}
                               br="10px"
-                              p="0.6rem 1rem"
+                              p="0.7rem 1rem"
                               id="btn"
                               className="d-flex align-items-center"
                               onClick={() => setIsPayModel(true)}
@@ -199,6 +200,7 @@ const PSM = () => {
                                 h="2rem"
                               />
                               <p className="mx-2">{PaySelected.symbol}</p>
+                              <i className="zmdi zmdi-chevron-down" />
                             </Button>
                           </div>
                         </div>
@@ -255,7 +257,7 @@ const PSM = () => {
                             <Button
                               active={2}
                               br="10px"
-                              p="0.6rem 1rem"
+                              p="0.7rem 1rem"
                               id="btn"
                               className="d-flex align-items-center"
                               onClick={() => setIsReceiveModel(true)}
@@ -266,6 +268,7 @@ const PSM = () => {
                                 h="2rem"
                               />
                               <p className="mx-2">{ReceiveSelect.symbol}</p>
+                              <i className="zmdi zmdi-chevron-down" />
                             </Button>
                           </div>
                         </div>
@@ -290,20 +293,24 @@ const PSM = () => {
                       </div>
                     </div>
 
-                    <div className="PSM_btn_section mt-4">
+                    <div className="PSM_btn_section mt-5">
                       <div className="row">
                         <div className="col-12">
-                          <Button
-                            active={1}
-                            br="50px"
-                            p="0.6rem 1rem"
-                            id="btn"
-                            size="1.1rem"
-                            className="not-allowed"
-                            onClick={() => handleProgram()}
-                          >
-                            {!publicKey ? "Connect wallet" : message}
-                          </Button>
+                          {!publicKey ? (
+                            <WalletButton br="50px" fw="400" active={1} />
+                          ) : (
+                            <Button
+                              active={1}
+                              br="50px"
+                              p="0.6rem 1rem"
+                              id="btn"
+                              size="1.1rem"
+                              className="not-allowed"
+                              onClick={() => handleProgram()}
+                            >
+                              {message}
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </div>

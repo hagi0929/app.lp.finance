@@ -28,7 +28,7 @@ const ContractSnackbar = () => {
   useEffect(() => {
     if (
       isOpenContractSnackbar === true &&
-      ContractSnackbarType !== "Progressing"
+      ContractSnackbarType !== "Processing"
     ) {
       const toast = document.querySelector(".ContractSnackbar");
       const progress = document.querySelector(".progress_bar");
@@ -38,11 +38,11 @@ const ContractSnackbar = () => {
         toast.classList.remove("show");
         progress.classList.remove("active");
         CloseContractSnackbar();
-      }, 10000);
+      }, 7000);
       return () => clearTimeout(timer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ContractSnackbarType !== "Progressing"]);
+  }, [ContractSnackbarType !== "Processing"]);
 
   return (
     <>
@@ -53,10 +53,10 @@ const ContractSnackbar = () => {
               <div className="ContractSnackbar_content">
                 <div className="status_section">
                   <div className="status">
-                    {ContractSnackbarType === "Progressing" && (
+                    {ContractSnackbarType === "Processing" && (
                       <img
                         src="/images/Loader/Loader.png"
-                        alt="progressing"
+                        alt="Processing"
                         loading="lazy"
                       />
                     )}
@@ -73,7 +73,7 @@ const ContractSnackbar = () => {
                       {ContractSnackbarType}
                     </span>
                   </div>
-                  {ContractSnackbarType !== "Progressing" && (
+                  {ContractSnackbarType !== "Processing" && (
                     <div className="close_ContractSnackbar">
                       <i
                         className="zmdi zmdi-close"

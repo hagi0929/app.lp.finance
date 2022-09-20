@@ -56,53 +56,6 @@ export const NavbarRegistry = [
     pathName: "/swap",
     href: "/swap",
   },
-
-  // {
-  //   id: 4,
-  //   name: "Stake",
-  //   pathName: "/stake",
-  //   href: "/stake",
-  // },
-];
-
-export const NavbarMobileRegistry = [
-  {
-    id: 1,
-    name: "Borrow",
-    pathName: "/",
-    href: "/",
-  },
-  {
-    id: 2,
-    name: "PSM",
-    pathName: "/psm",
-    href: "/psm",
-  },
-  {
-    id: 3,
-    name: "LP Farming",
-    pathName: "/lp-farming",
-    href: "/lp-farming",
-  },
-  {
-    id: 4,
-    name: "Treasury",
-    pathName: "/treasury",
-    href: "/treasury",
-  },
-  {
-    id: 5,
-    name: "Swap",
-    pathName: "/swap",
-    href: "/swap",
-  },
-
-  // {
-  //   id: 4,
-  //   name: "Stake",
-  //   pathName: "/stake",
-  //   href: "/stake",
-  // },
 ];
 
 export const FooterRegistry = [

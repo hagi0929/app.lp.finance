@@ -16,6 +16,7 @@ const SnackbarWrapper = styled.div`
     overflow: hidden;
     transform: translateX(calc(100% + 30px));
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+    z-index: 0;
 
     .Snackbar_content {
       display: flex;
@@ -98,7 +99,7 @@ const SnackbarWrapper = styled.div`
 
   .Snackbar.active {
     transform: translateX(0%);
-    z-index: 1000;
+    z-index: 1100;
   }
 
   .Snackbar .Snackbar_content .progress_bar.active:before {

@@ -35,7 +35,7 @@ const Borrow = () => {
               <div>
                 <Button
                   active={1}
-                  br="0.6rem"
+                  br="10px"
                   p="0.5em 2rem"
                   onClick={() => setNotifi(true)}
                 >

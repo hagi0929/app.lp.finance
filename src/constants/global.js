@@ -167,3 +167,22 @@ export const getSwitchboardAccount = (token) => {
   }
   return Account;
 };
+
+export const CollateralTokenName = {
+  SOL: 0,
+  MSOL: 1,
+  STSOL: 2,
+  UXD: 3,
+  SRM: 4,
+  SAMO: 5,
+};
+
+export const getCollateralTokenName = async (idx) => {
+  if (CollateralTokenName.SOL === idx) return "SOL";
+  else if (CollateralTokenName.MSOL === idx) return "MSOL";
+  else if (CollateralTokenName.STSOL === idx) return "STSOL";
+  else if (CollateralTokenName.UXD === idx) return "UXD";
+  else if (CollateralTokenName.SRM === idx) return "SRM";
+  else if (CollateralTokenName.SAMO === idx) return "SAMO";
+  return undefined;
+};

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { NavbarRegistry, NavbarMobileRegistry } from "assets/registry";
-import { WalletMultiButton } from "lib/WalletAdapter";
+import { Link, useLocation } from "react-router-dom";
+import { NavbarRegistry } from "assets/registry";
 import HeaderWrapper from "./Header.style";
 import { RpcRegistry } from "assets/registry";
 import { useCluster } from "contexts/ClusterContext";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
+import WalletButton from "../WalletButton";
 import CliModel from "models/CliModel";
 import { useCrypto } from "contexts/CryptoContext";
 
 const Header = () => {
   const { Cluster, changeCluster } = useCluster();
   const { storePrice, storeBal } = useCrypto();
+  const location = useLocation();
   const [dropdown, setDropdown] = useState(false);
   const [cli, setCli] = useState(false);
 
@@ -61,16 +62,12 @@ const Header = () => {
             <div className="row">
               <div className="col-12 d-flex justify-content-start">
                 <ul className="mt-5 ml-3 pl-1">
-                  {NavbarMobileRegistry.map((nav) => {
+                  {NavbarRegistry.map((nav) => {
                     return (
                       <li key={nav.id}>
-                        {nav.name === "Setting" ? (
-                          <p>{nav.name}</p>
-                        ) : (
-                          <NavLink to={nav.href} onClick={closeNav}>
-                            {nav.name}
-                          </NavLink>
-                        )}
+                        <Link to={nav.href} onClick={closeNav}>
+                          {nav.name}
+                        </Link>
                       </li>
                     );
                   })}
@@ -79,7 +76,7 @@ const Header = () => {
             </div>
 
             <div className="Wallet">
-              <WalletMultiButton />
+              <WalletButton br="50px" p="0rem 2rem" />
             </div>
           </div>
         </div>
@@ -90,22 +87,24 @@ const Header = () => {
               <nav className="navbar navbar-light">
                 <i className="zmdi zmdi-menu navbar-icon" onClick={openNav} />
 
-                <NavLink to="/" className="navbar-brand mb-2 ml-3">
+                <Link to="/" className="navbar-brand mb-2 ml-3">
                   <img src="/images/Logo.png" alt="Loading..." />
-                </NavLink>
+                </Link>
 
                 <ul className="navbar-nav left_ui_block ml-auto d-flex justify-content-center  align-items-center flex-row">
                   {NavbarRegistry.map((nav) => {
                     return (
                       <li className="nav-item" key={nav.id}>
-                        <NavLink
-                          exact="true"
+                        <Link
                           to={nav.href}
-                          className="nav-link"
-                          activeclassname="active"
+                          className={
+                            location.pathname === nav.href
+                              ? "nav-link active"
+                              : "nav-link"
+                          }
                         >
                           {nav.name}
-                        </NavLink>
+                        </Link>
                       </li>
                     );
                   })}
@@ -124,7 +123,7 @@ const Header = () => {
 
                   <li className="nav-item">
                     <div className="Wallet_section">
-                      <WalletMultiButton />
+                      <WalletButton br="50px" />
                     </div>
                   </li>
                 </ul>

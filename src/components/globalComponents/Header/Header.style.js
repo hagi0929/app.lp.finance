@@ -49,23 +49,6 @@ const HeaderWrapper = styled.div`
 
     .Wallet {
       position: relative;
-
-      button {
-        background: ${(props) => props.theme.BodySecondaryBg};
-        border: 1px solid ${(props) => props.theme.BodyMainColor};
-        color: ${(props) => props.theme.BodyMainColor};
-        font-style: normal;
-        font-weight: 600;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1rem;
-        height: 48px;
-        width: 220px;
-        padding: 0.5rem 2rem;
-        border-radius: 50px;
-      }
     }
   }
 
@@ -173,23 +156,6 @@ const HeaderWrapper = styled.div`
           .Wallet_section {
             position: relative;
             margin-left: 0.5rem;
-
-            button {
-              background: ${(props) => props.theme.BodySecondaryBg};
-              border: 1px solid ${(props) => props.theme.BodyMainColor};
-              color: ${(props) => props.theme.BodyMainColor};
-              font-style: normal;
-              font-weight: 600;
-              cursor: pointer;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 1rem;
-              height: 48px;
-              padding: 0.5rem 0rem;
-              border-radius: 50px;
-              width: 180px;
-            }
           }
         }
       }

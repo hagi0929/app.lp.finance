@@ -1,8 +1,10 @@
 import React, { memo } from "react";
 import Card from "Layout/Card";
 import Button from "Layout/Button";
+import { useSnackbar } from "contexts/SnackbarContext";
 
 const Overview = () => {
+  const { OpenSnackbar } = useSnackbar();
   return (
     <>
       <div className="row py-4  d-flex justify-content-center borrow_overview">
@@ -104,9 +106,10 @@ const Overview = () => {
                   <div className="mr-2">
                     <Button
                       active={1}
-                      br="6px"
+                      br="10px"
                       p="0.6rem 1rem"
                       className="not-allowed"
+                      onClick={() => OpenSnackbar(true, "Error", "error")}
                     >
                       Data
                     </Button>

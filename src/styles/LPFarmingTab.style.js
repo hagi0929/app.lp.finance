@@ -220,6 +220,10 @@ const LPFarmingTabWrapper = styled.div`
   @media only screen and (max-width: 600px) {
     .LPFarming_tab_section {
       .tabs_card {
+        .tab-content {
+          padding: 2.5rem 0.5rem;
+        }
+
         .nav,
         .nav-tabs {
           .nav-link {

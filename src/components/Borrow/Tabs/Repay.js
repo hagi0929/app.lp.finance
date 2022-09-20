@@ -7,6 +7,7 @@ import TokenModel from "models/TokenModel";
 import { TokenImgRegistry } from "assets/registry";
 import { repay_cbs } from "lp-program/borrow";
 import { blockInvalidChar } from "helper";
+import WalletButton from "components/globalComponents/WalletButton";
 
 const Repay = ({
   publicKey,
@@ -130,17 +131,21 @@ const Repay = ({
         <div className="col-12 details mt-2">
           <div className="row d-flex justify-content-center">
             <div className="col-12 d-flex justify-content-center mt-3">
-              <div className="btn_section">
-                <Button
-                  active={1}
-                  p="0.6rem 2rem"
-                  br="6px"
-                  className="not-allowed"
-                  onClick={() => handleProgram()}
-                >
-                  {!publicKey ? "Connect wallet" : message}
-                </Button>
-              </div>
+              {!publicKey ? (
+                <WalletButton br="10px" fw="400" active={1} />
+              ) : (
+                <div className="btn_section">
+                  <Button
+                    active={1}
+                    p="0.6rem 2rem"
+                    br="10px"
+                    className="not-allowed"
+                    onClick={() => handleProgram()}
+                  >
+                    {message}
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>

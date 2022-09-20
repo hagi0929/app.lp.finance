@@ -34,18 +34,6 @@ const ButtonWrapper = styled.button`
   `}
 
   ${(props) =>
-    props.active === 2 &&
-    `
-    color:#0c0;
-    background: none;
-   
-    &:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    
-  `}
-  
-  ${(props) =>
     props.active === 3 &&
     `
       color:#0c0;
@@ -53,6 +41,18 @@ const ButtonWrapper = styled.button`
     }
     
   `}
+
+  @media only screen and (max-width: 600px) {
+    ${(props) =>
+      props.active === 2 &&
+      `
+      padding: 0rem;
+
+      &:hover {
+        background: none !important;
+      }
+    `}
+  }
 `;
 
 export default ButtonWrapper;

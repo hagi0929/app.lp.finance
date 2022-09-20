@@ -7,7 +7,6 @@ const NotifiWrapper = styled.div`
     left: 0px;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(5px);
     background: rgba(0, 0, 0, 0.8);
     transition: top 0ms ease-in-out 200ms;
     z-index: 1000;

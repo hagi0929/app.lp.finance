@@ -46,6 +46,10 @@ const NotifiWrapper = styled.div`
           padding: 0rem 0.2rem 0rem 0.2rem;
         }
 
+        .check_title {
+          padding-top: 13px;
+        }
+
         p {
           color: ${(props) => props.theme.BodyMainColor};
           font-size: 0.8rem;

@@ -19,7 +19,7 @@ const ContractContractSnackbarWrapper = styled.div`
       flex-direction: column;
       max-width: 380px;
       min-width: 380px;
-      background: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.2);
       padding: 1rem;
       border-radius: 8px;
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -62,7 +62,7 @@ const ContractContractSnackbarWrapper = styled.div`
           }
 
           .Success,
-          .Progressing {
+          .Processing {
             color: #0c0;
           }
           .Info {
@@ -119,11 +119,11 @@ const ContractContractSnackbarWrapper = styled.div`
 
   .ContractSnackbar.show {
     transform: translateY(0%);
-    z-index: 1000;
+    z-index: 1100;
   }
 
   .ContractSnackbar .ContractSnackbar_content .progress_bar.active:before {
-    animation: progress 10s linear forwards;
+    animation: progress 7s linear forwards;
   }
 
   @keyframes progress {

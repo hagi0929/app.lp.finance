@@ -38,7 +38,7 @@ export const deposit_cbs = async (
   OpenContractSnackbar
 ) => {
   try {
-    OpenContractSnackbar(true, "Progressing", "Start Deposit...");
+    OpenContractSnackbar(true, "Processing", "Start Deposit...");
 
     const program = getProgram(wallet, lpfinance_idl);
 
