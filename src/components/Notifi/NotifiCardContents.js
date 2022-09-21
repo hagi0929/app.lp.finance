@@ -31,10 +31,11 @@ const NotifiCardContents = ({ OpenSnackbar, publicKey }) => {
       <div className="col-lg-11 col-12 form_card">
         <div className="row">
           <div className="col-12 form_filed mt-3">
+            <i className="zmdi zmdi-email" />
             <Input
               active={2}
-              p="0.7rem 1rem"
-              br="8px"
+              p="0.7rem 0.5rem 0.7rem 2.5rem"
+              br="10px"
               size="0.92rem"
               disabled={loading}
               name="notifi-email"
@@ -62,14 +63,14 @@ const NotifiCardContents = ({ OpenSnackbar, publicKey }) => {
               />
             </div>
           </div>
-          <div className="col-12 mt-4 pt-2 form_filed">
+          <div className="col-12 mt-4 pt-2">
             {!publicKey ? (
-              <WalletButton br="50px" fw="400" active={1} />
+              <WalletButton br="10px" fw="400" active={1} />
             ) : (
               <Button
                 active={1}
                 p="0.5rem 1rem"
-                br="50px"
+                br="10px"
                 disabled={loading}
                 type="submit"
                 onClick={async () => {
@@ -102,24 +103,29 @@ const NotifiCardContents = ({ OpenSnackbar, publicKey }) => {
               </Button>
             )}
           </div>
-          <div className="col-12 mt-3 notify_footer">
-            <div className="d-flex align-items-center justify-content-center">
-              <p>Powered by</p>
-              <Image
-                src="/images/notifi.png"
-                loading="notifi"
-                className="pl-2"
-              />
-              <p className="mx-2">notifi</p>
-              <span>
-                <a
-                  href="https://notifi.network/faqs"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Learn more
-                </a>
-              </span>
+
+          <div className="col-12 mt-4">
+            <div className="row notify_footer pt-2">
+              <div className="col-8 d-flex align-items-center">
+                <p>Powered by</p>
+                <Image
+                  src="/images/notifi.png"
+                  loading="notifi"
+                  className="px-2"
+                />
+                <p>notifi</p>
+              </div>
+              <div className="col-4 d-flex align-items-center justify-content-end">
+                <span>
+                  <a
+                    href="https://notifi.network/faqs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Learn more
+                  </a>
+                </span>
+              </div>
             </div>
           </div>
         </div>

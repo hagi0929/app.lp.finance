@@ -57,7 +57,7 @@ const MainModel = ({ isOpen, isClose }) => {
                     <div className="col-10">
                       <Button
                         active={1}
-                        br="10px"
+                        br="0px"
                         p="0.5rem"
                         onClick={() => CloseModel()}
                       >

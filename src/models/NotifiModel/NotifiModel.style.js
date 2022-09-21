@@ -25,7 +25,7 @@ const NotifiWrapper = styled.div`
     transform: translate(-50%, -50%) scale(0);
     max-width: 380px !important;
     min-width: 380px !important;
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
     border-radius: 18px;
     opacity: 0.5;
     transition: all 300ms ease-in-out;
@@ -45,17 +45,20 @@ const NotifiWrapper = styled.div`
       width: 100% !important;
 
       .Notifi_top_Section {
-        .title_section {
-          position: relative;
+        display: flex;
+        align-items: center;
+
+        .title {
           p {
             font-size: 1.3rem;
             color: ${(props) => props.theme.BodyMainColor};
             font-weight: bold;
           }
+        }
+        .close {
+          width: ;
+
           i {
-            position: absolute;
-            right: 0px;
-            top: -10px;
             color: ${(props) => props.theme.BodyMainColor};
             font-size: 1.3rem;
             cursor: pointer;

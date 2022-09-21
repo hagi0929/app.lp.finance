@@ -34,11 +34,13 @@ var __rest =
 export const WalletMultiButton = (_a) => {
   var { children } = _a,
     props = __rest(_a, ["children"]);
+
   const { publicKey, wallet, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
   const [copied, setCopied] = useState(false);
   const [active, setActive] = useState(false);
   const ref = useRef(null);
+
   const base58 = useMemo(
     () =>
       publicKey === null || publicKey === void 0
@@ -51,6 +53,7 @@ export const WalletMultiButton = (_a) => {
     if (!wallet || !base58) return null;
     return base58.slice(0, 4) + ".." + base58.slice(-4);
   }, [children, wallet, base58]);
+
   const copyAddress = useCallback(async () => {
     if (base58) {
       await navigator.clipboard.writeText(base58);
@@ -58,12 +61,15 @@ export const WalletMultiButton = (_a) => {
       setTimeout(() => setCopied(false), 400);
     }
   }, [base58]);
+
   const openDropdown = useCallback(() => {
     setActive(true);
   }, []);
+
   const closeDropdown = useCallback(() => {
     setActive(false);
   }, []);
+
   const openModal = useCallback(() => {
     setVisible(true);
     closeDropdown();
@@ -91,12 +97,14 @@ export const WalletMultiButton = (_a) => {
       Object.assign({}, props),
       children
     );
+
   if (!base58)
     return React.createElement(
       WalletConnectButton,
       Object.assign({}, props),
       children
     );
+
   return React.createElement(
     "div",
     { className: "wallet-adapter-dropdown" },
