@@ -69,6 +69,7 @@ const SnackbarWrapper = styled.div`
 
       .message_section {
         margin-top: 15px;
+        padding-left: 29px;
 
         span {
           color: #0c0;
