@@ -39,7 +39,7 @@ const Borrow = () => {
                   p="0.5em 2rem"
                   onClick={() => setNotifi(true)}
                 >
-                  <Image src="/images/notifi.png" alt="notifi" />
+                  <Image src="/images/notifi.png" alt="notifi" h="22px" />
                   <p className="ml-2">notifi</p>
                 </Button>
               </div>

@@ -111,7 +111,8 @@ const NotifiCardContents = ({ OpenSnackbar, publicKey }) => {
                 <Image
                   src="/images/notifi.png"
                   loading="notifi"
-                  className="px-2"
+                  className="mx-2"
+                  h="22px"
                 />
                 <p>notifi</p>
               </div>

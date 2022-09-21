@@ -65,13 +65,13 @@ const Overview = () => {
                     <div className="col-lg-6 col-md-6 col-sm-6 col-12 d-flex justify-content-center">
                       <div className="row py-lg-0 py-md-0 py-3 ">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-6 mt-lg-3 mt-md-3 mt-0">
-                          <div className="cart_details ml-3">
+                          <div className="cart_details">
                             <p>Total Supply</p>
                             <span>$0</span>
                           </div>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-6">
-                          <div className="cart_details ml-3 mt-lg-4 mt-md-0 pt-lg-3 mt-md-3 mt-0">
+                          <div className="cart_details mt-lg-4 mt-md-0 pt-lg-3 mt-md-3 mt-0">
                             <p>Total Borrowed</p>
                             <span>$0</span>
                           </div>
