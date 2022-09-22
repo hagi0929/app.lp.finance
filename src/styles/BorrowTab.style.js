@@ -141,7 +141,7 @@ const BorrowTabWrapper = styled.div`
 
       .Account_card {
         .chart_miters {
-          border: 1px solid ${(props) => props.theme.BodyMainColor};
+          border: 1px solid ${(props) => props.theme.BodyTraceryBg};
           height: 0.8rem;
           position: relative;
           width: 100%;
@@ -161,7 +161,7 @@ const BorrowTabWrapper = styled.div`
             display: inline-block;
             height: 100%;
             width: 2%;
-            background: #e3319c;
+            background: ${(props) => props.theme.BodyMainColor};
             right: 15px;
             cursor: pointer;
           }
@@ -171,7 +171,7 @@ const BorrowTabWrapper = styled.div`
             display: inline-block;
             height: 100%;
             width: 2%;
-            background: #41bbe5;
+            background: ${(props) => props.theme.BodyMainColor};
             right: 48px;
             cursor: pointer;
           }
