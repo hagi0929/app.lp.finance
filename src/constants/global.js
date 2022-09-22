@@ -7,6 +7,12 @@ export const convert_to_wei = (val) =>
 export const convert_to_dy_wei = (val, con) =>
   parseInt(parseFloat(val) * con).toString();
 
+// TypelessRepay
+export const TYPE_LESS_DISCOUNT_RATE = 0.9995;
+export const TRVC_SWAP_FEE = 0.9995;
+export const zSOL_DECIMAL = 9;
+export const SOL_DECIMAL = 9;
+
 export const SEED_PDA = "lpfinance";
 export const SEED_TOKEN = "lpfinance-token";
 export const SEED_SOL = "lpfinance-sol";
@@ -15,11 +21,15 @@ export const SEED_TRV_PDA = "typeless_repayment_vault";
 export const SEED_LIQUIDATOR = "typeless_repayment_vault";
 
 export const config = new PublicKey(
-  "7FRwzBQ1WV3TANtZdtaHqdTQq2aYWYdENBZ2SHq4p26K"
+  "5gaw1XAoU6Ynu76GPPQ6WN1YRxWrwh13yxxgeVqMbGuC"
 );
 
 export const cTokenInfoAccounts = new PublicKey(
-  "2GrT8rh9UM7p46TLwvbnWfBkgBhNQ8JbDpxff2UnSvep"
+  "6mMbMUE881zKscsvKAACuPkf1Ezwy3yLwHCAxgbBNrq4"
+);
+
+export const zSOL_MINT_AUTHORITY = new PublicKey(
+  "8qTM9XXTrDG8gQooEUw6EUWhijijew4f1zdYAsMEGo6Z"
 );
 
 // Mint config
@@ -49,7 +59,7 @@ export const SAMOMint = new PublicKey(
 );
 
 export const zSOL_MINT = new PublicKey(
-  "5bipQ6XDX2JJEKzZWndVrz7Qbo5wagButEZyr8A8rv6J"
+  "3vwVSHkx6Wh212mvRoyzK4g969QAhmLeBmyiHaEuFkyg"
 );
 
 // MAINNET-BETA PYth price config
@@ -87,16 +97,16 @@ export const switchboardSolAccount = new PublicKey(
 ); // Right
 
 export const switchboardMsolAccount = new PublicKey(
-  "9a6RNx3tCu1TSs6TBSfV2XRXEPEZXQ6WB7jRojZRvyeZ"
+  "67xNRwcqQMzghgDjTB4Vr7YbBWH1iimeYpTK8ampm5xs"
 );
 export const switchboardSrmAccount = new PublicKey(
   "992moaMQKs32GKZ9dxi8keyM2bUmbrwBZpK4p2K6X5Vs"
 );
 export const switchboardStsolAccount = new PublicKey(
-  "2LwhbcswZekofMNRtDRMukZJNSRUiKYMFbqtBwqjDfke"
+  "HGMXgS2LbzotxsRvmG4wuRWaJ6xn6c6hLfXgo9THVKp8"
 );
 export const switchboardSamoAccount = new PublicKey(
-  "2LwhbcswZekofMNRtDRMukZJNSRUiKYMFbqtBwqjDfke"
+  "529QhfiesSavTZfMhvKKm5nwrHfdwfjzqC13CE4CfqRE"
 );
 export const switchboardUxdAccount = new PublicKey(
   "BV9mGAy5MJLYWJT5HF74izYKjF9CmL4BqkswfTu9gW2w"
@@ -113,19 +123,109 @@ export const LIQ_POOL_SOL_LEG_PDA = new PublicKey(
 export const LIQ_POOL_MSOL_LEG = new PublicKey(
   "7GgPYjS5Dza89wV6FpZ23kUJRG5vbQ1GM25ezspYFSoE"
 );
-export const LIQ_POOL_MSOL_LEG_AUTHORITY = new PublicKey(
-  "EyaSjUtSgo9aRD1f8LWXwdvkpDTmXAW54yoSHZRF14WL"
-);
+
 export const RESERVE_PDA = new PublicKey(
   "Du3Ysj1wKbxPKkuPPnvzQLQh8oMSVifs3jGZjJWXFmHN"
 );
 
-export const MSOL_MINT_AUTHORITY = new PublicKey(
-  "3JLPCS1qM2zRw3Dp6V4hZnYHd4toMNPkNesXdX9tg6KM"
-);
 export const MARINADE_PROGRAM = new PublicKey(
   "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD"
 );
+
+export const LIQ_POOL_MSOL_LEG_AUTHORITY = new PublicKey(
+  "EyaSjUtSgo9aRD1f8LWXwdvkpDTmXAW54yoSHZRF14WL"
+);
+
+export const mSOL_MINT_AUTHORITY = new PublicKey(
+  "3JLPCS1qM2zRw3Dp6V4hZnYHd4toMNPkNesXdX9tg6KM"
+);
+
+export const cTOKEN_INFOS = [
+  // 0 SOL
+  {
+    token: SOLMint,
+    decimal: 9,
+    borrowable_max_ltv: 90,
+    liquidatable_max_ltv: 95,
+    is_active: true,
+    deposit_cap: new anchor.BN("0"),
+    name: '{"sol":{}}',
+    switchboard_acc_pub: switchboardSolAccount,
+    symbol: "SOL",
+  },
+  // 1
+  {
+    token: mSOLMint,
+    decimal: 9,
+    borrowable_max_ltv: 90,
+    liquidatable_max_ltv: 95,
+    is_active: true,
+    deposit_cap: new anchor.BN("0"),
+    name: '{"msol":{}}',
+    switchboard_acc_pub: switchboardMsolAccount,
+    symbol: "mSOL",
+  },
+  // 2
+  {
+    token: stSOLMint,
+    decimal: 9,
+    borrowable_max_ltv: 90,
+    liquidatable_max_ltv: 95,
+    is_active: true,
+    deposit_cap: new anchor.BN("0"),
+    name: '{"stsol":{}}',
+    switchboard_acc_pub: switchboardStsolAccount,
+    symbol: "stSOL",
+  },
+  // 3
+  {
+    token: SAMOMint,
+    decimal: 9,
+    borrowable_max_ltv: 65,
+    liquidatable_max_ltv: 75,
+    is_active: true,
+    deposit_cap: new anchor.BN("3000000"),
+    name: '{"samo":{}}',
+    switchboard_acc_pub: switchboardSamoAccount,
+    symbol: "SAMO",
+  },
+  // 4
+  {
+    token: UXDMint,
+    decimal: 9,
+    borrowable_max_ltv: 75,
+    liquidatable_max_ltv: 85,
+    is_active: true,
+    deposit_cap: new anchor.BN("800000"),
+    name: '{"uxd":{}}',
+    switchboard_acc_pub: switchboardUxdAccount,
+    symbol: "UXD",
+  },
+];
+
+export const getCTokenInfo = (token) => {
+  for (let i = 0; i < cTOKEN_INFOS.length; i++) {
+    const ctokenInfo = cTOKEN_INFOS[i];
+    if (
+      ctokenInfo.token.toString().toLocaleLowerCase() ===
+      token.toString().toLocaleLowerCase()
+    ) {
+      return ctokenInfo;
+    }
+  }
+  return undefined;
+};
+
+export const getCollateralTokenSymbol = (name) => {
+  const name_str = JSON.stringify(name);
+  for (let i = 0; i < cTOKEN_INFOS.length; i++) {
+    const cTokenInfo = cTOKEN_INFOS[i];
+    if (cTokenInfo.name === name_str) {
+      return cTokenInfo.symbol;
+    }
+  }
+  return undefined;
+};
 
 export const getMint = (token) => {
   let mint;

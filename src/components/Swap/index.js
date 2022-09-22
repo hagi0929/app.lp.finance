@@ -6,6 +6,7 @@ import Jupiter from "./Jupiter";
 import { SwapTokens, coinGeckoList } from "assets/registry/SwapRegistry";
 import { useSnackbar } from "contexts/SnackbarContext";
 import { useCrypto } from "contexts/CryptoContext";
+import JupiterWrapper from "lib/JupiterWrapper";
 
 const Swap = () => {
   const { PriceList, BalanceList } = useCrypto();
@@ -21,30 +22,32 @@ const Swap = () => {
   });
 
   return (
-    <SwapWrapper>
-      <div className="container mt-3 mb-5">
-        <div className="swap">
-          <div className="row">
-            <div className="col-12">
-              <div className="swap_section">
-                <Jupiter
-                  coinGeckoList={coinGeckoList}
-                  connection={connection}
-                  tokens={SwapTokens}
-                  formValue={formValue}
-                  setFormValue={setFormValue}
-                  slippage={slippage}
-                  setSlippage={setSlippage}
-                  OpenSnackbar={OpenSnackbar}
-                  PriceList={PriceList}
-                  BalanceList={BalanceList}
-                />
+    <JupiterWrapper>
+      <SwapWrapper>
+        <div className="container mt-3 mb-5">
+          <div className="swap">
+            <div className="row">
+              <div className="col-12">
+                <div className="swap_section">
+                  <Jupiter
+                    coinGeckoList={coinGeckoList}
+                    connection={connection}
+                    tokens={SwapTokens}
+                    formValue={formValue}
+                    setFormValue={setFormValue}
+                    slippage={slippage}
+                    setSlippage={setSlippage}
+                    OpenSnackbar={OpenSnackbar}
+                    PriceList={PriceList}
+                    BalanceList={BalanceList}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </SwapWrapper>
+      </SwapWrapper>
+    </JupiterWrapper>
   );
 };
 

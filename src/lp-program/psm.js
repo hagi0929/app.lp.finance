@@ -1,6 +1,5 @@
 import * as anchor from "@project-serum/anchor";
 import { getProgram, getATAPublicKey } from "utils/contract";
-import lpfinance_idl from "idls/lpfinance.json";
 import {
   SEED_TRV_PDA,
   SEED_ZSOL_MINT_AUTHORITY_PDA,
@@ -23,7 +22,7 @@ const { PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } = anchor.web3;
 // ==============================================
 export const burn_zSOL = async (wallet, tokenB, amount) => {
   try {
-    const program = getProgram(wallet, lpfinance_idl);
+    const program = getProgram(wallet, "lpIdl");
 
     const user_wallet = wallet.publicKey;
 
@@ -72,7 +71,7 @@ export const burn_zSOL = async (wallet, tokenB, amount) => {
 // ==============================================
 export const mint_zSOL = async (wallet, tokenA, amount) => {
   try {
-    const program = getProgram(wallet, lpfinance_idl);
+    const program = getProgram(wallet, "lpIdl");
 
     const user_wallet = wallet.publicKey;
 

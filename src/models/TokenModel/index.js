@@ -81,12 +81,14 @@ const TokenModel = ({
     }, 400);
   };
 
-  const Select = ({ logoURI, symbol, bal }) => {
+  const Select = ({ logoURI, symbol, bal, price }) => {
     setSelected({
       logoURI,
       symbol,
       balance: bal,
+      price,
     });
+
     document.querySelector(".popup").classList.remove("active");
     setTimeout(() => {
       isClose();

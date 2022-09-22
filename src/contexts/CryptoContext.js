@@ -62,7 +62,7 @@ export const CryptoProvider = ({ children }) => {
     return () => {
       clearInterval(PriceInterval);
       setPriceList([]);
-      setBalanceHandler({
+      setPriceHandler({
         SAMO: 0,
         SOL: 0,
         SRM: 0,
@@ -79,7 +79,7 @@ export const CryptoProvider = ({ children }) => {
 
     return () => {
       setBalanceList([]);
-      setPriceHandler({
+      setBalanceHandler({
         SAMO: 0,
         SOL: 0,
         SRM: 0,

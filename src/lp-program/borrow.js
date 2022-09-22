@@ -1,6 +1,11 @@
 import * as anchor from "@project-serum/anchor";
-import { getProgram, getATAPublicKey } from "utils/contract";
-import lpfinance_idl from "idls/lpfinance.json";
+import {
+  getProgram,
+  getATAPublicKey,
+  getConnection,
+  convert_to_wei_value,
+  convert_to_wei_value_with_decimal,
+} from "utils/contract";
 import {
   SEED_PDA,
   SEED_SOL,
@@ -9,14 +14,14 @@ import {
   config,
   switchboardSolAccount,
   switchboardMsolAccount,
-  switchboardSrmAccount,
   switchboardStsolAccount,
   switchboardSamoAccount,
   switchboardUxdAccount,
   cTokenInfoAccounts,
-  convert_to_wei,
   getMint,
   getSwitchboardAccount,
+  zSOL_DECIMAL,
+  SOL_DECIMAL,
 } from "constants/global";
 import {
   TOKEN_PROGRAM_ID,
@@ -27,7 +32,6 @@ const { PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } = anchor.web3;
 
 // deposit function for csb
 // ==============================================
-
 export const deposit_cbs = async (
   wallet,
   symbol,
@@ -40,7 +44,9 @@ export const deposit_cbs = async (
   try {
     OpenContractSnackbar(true, "Processing", "Start Deposit...");
 
-    const program = getProgram(wallet, lpfinance_idl);
+    const connection = getConnection();
+
+    const program = getProgram(wallet, "lpIdl");
 
     const user_wallet = wallet.publicKey;
 
@@ -78,110 +84,103 @@ export const deposit_cbs = async (
       cbsAta = await getATAPublicKey(tokenMint, PDA[0]);
     }
 
-    let accountData;
+    const userAccountInfo = await connection.getAccountInfo(userAccountPDA[0]);
 
-    try {
-      accountData = await program.account.userAccount.fetch(userAccountPDA);
-    } catch (err) {
+    if (userAccountInfo === null || userAccountInfo.data.length === 0) {
       await program.methods
         .initUserAccount()
         .accounts({
           userAccount: userAccountPDA[0],
           userAuthority: user_wallet,
+          systemProgram: anchor.web3.SystemProgram.programId,
+          rent: SYSVAR_RENT_PUBKEY,
+        })
+        .rpc();
+    }
+
+    if (symbol !== "SOL") {
+      await program.methods
+        .deposit(convert_to_wei_value(tokenMint, amount))
+        .accounts({
+          userAccount: userAccountPDA[0],
+          config,
+          switchboardAcc: switchboardAccount,
+          token: tokenMint,
+          userAta: userAta,
+          cbsAta,
+          feeAta,
+          ctokenInfoAccounts: cTokenInfoAccounts,
+          userAuthority: user_wallet,
           systemProgram: SystemProgram.programId,
+          tokenProgram: TOKEN_PROGRAM_ID,
           rent: SYSVAR_RENT_PUBKEY,
         })
         .rpc();
 
-      accountData = await program.account.userAccount.fetch(userAccountPDA);
-    }
+      OpenContractSnackbar(
+        true,
+        "Success",
+        `Successfully deposited ${amount} ${symbol}.`
+      );
 
-    if (
-      accountData &&
-      accountData.owner.toBase58() === user_wallet.toBase58()
-    ) {
-      const deposit_wei = convert_to_wei(amount);
-      const deposit_amount = new anchor.BN(deposit_wei);
+      setMessage("Enter an amount");
+      setRequired(false);
+      setAmount("");
+    } else {
+      await program.methods
+        .depositSol(convert_to_wei_value_with_decimal(amount, SOL_DECIMAL))
+        .accounts({
+          userAuthority: user_wallet,
+          solAccount: PDA[0],
+          feeAccount,
+          ctokenInfoAccounts: cTokenInfoAccounts,
+          switchboardSol: switchboardAccount,
+          config,
+          userAccount: userAccountPDA[0],
+          systemProgram: SystemProgram.programId,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          rent: SYSVAR_RENT_PUBKEY,
+        })
+        .rpc();
 
-      if (symbol !== "SOL") {
-        await program.methods
-          .deposit(deposit_amount)
-          .accounts({
-            userAccount: userAccountPDA[0],
-            config,
-            switchboardAcc: switchboardAccount,
-            token: tokenMint,
-            userAta: userAta,
-            cbsAta,
-            feeAta,
-            ctokenInfoAccounts: cTokenInfoAccounts,
-            userAuthority: user_wallet,
-            systemProgram: SystemProgram.programId,
-            tokenProgram: TOKEN_PROGRAM_ID,
-            rent: SYSVAR_RENT_PUBKEY,
-          })
-          .rpc();
+      OpenContractSnackbar(
+        true,
+        "Success",
+        `Successfully deposited ${amount} ${symbol}.`
+      );
 
-        OpenContractSnackbar(
-          true,
-          "Success",
-          `Successfully deposited ${amount} ${symbol}.`
-        );
-
-        setMessage("Enter an amount");
-        setRequired(false);
-        setAmount("");
-      } else {
-        // deposit_sol
-        await program.methods
-          .depositSol(deposit_amount)
-          .accounts({
-            userAuthority: user_wallet,
-            solAccount: PDA[0],
-            feeAccount,
-            ctokenInfoAccounts: cTokenInfoAccounts,
-            switchboardSol: switchboardAccount,
-            config,
-            userAccount: userAccountPDA[0],
-            systemProgram: SystemProgram.programId,
-            tokenProgram: TOKEN_PROGRAM_ID,
-            rent: SYSVAR_RENT_PUBKEY,
-          })
-          .rpc();
-
-        OpenContractSnackbar(
-          true,
-          "Success",
-          `Successfully deposited ${amount} ${symbol}.`
-        );
-
-        setMessage("Enter an amount");
-        setRequired(false);
-        setAmount("");
-      }
+      setMessage("Enter an amount");
+      setRequired(false);
+      setAmount("");
     }
   } catch (error) {
+    console.log(error);
     OpenContractSnackbar(true, "Error", `Deposit failed. Please try again.`);
   }
 };
 
 // borrow function for csb
 // ==============================================
-export const borrow_cbs = async (wallet, token, amount) => {
+export const borrow_cbs = async (
+  wallet,
+  symbol,
+  amount,
+  setMessage,
+  setRequired,
+  setAmount,
+  OpenContractSnackbar
+) => {
   try {
-    const program = getProgram(wallet, lpfinance_idl);
+    OpenContractSnackbar(true, "Processing", "Start Borrow...");
+
+    const program = getProgram(wallet, "lpIdl");
 
     const user_wallet = wallet.publicKey;
 
-    const tokenMint = getMint(token);
+    const tokenMint = getMint(symbol);
 
     const userAccountPDA = await PublicKey.findProgramAddress(
       [Buffer.from(SEED_PDA), Buffer.from(user_wallet.toBuffer())],
-      program.programId
-    );
-
-    const PDA = await PublicKey.findProgramAddress(
-      [Buffer.from(SEED_PDA)],
       program.programId
     );
 
@@ -191,62 +190,62 @@ export const borrow_cbs = async (wallet, token, amount) => {
     );
 
     const userZsolAta = await getATAPublicKey(tokenMint, user_wallet);
-    const poolZsolAta = await getATAPublicKey(tokenMint, PDA[0]);
 
-    let accountData;
+    await program.methods
+      .borrow(convert_to_wei_value_with_decimal(amount, zSOL_DECIMAL))
+      .accounts({
+        userAuthority: user_wallet,
+        userAccount: userAccountPDA[0],
+        zsolMintAuthorityPda: zsolMintAuthorityPda[0],
+        config,
+        zsolMint: tokenMint,
+        userZsolAta,
+        switchboardSol: switchboardSolAccount,
+        switchboardMsol: switchboardMsolAccount,
+        switchboardStsol: switchboardStsolAccount,
+        switchboardUxd: switchboardUxdAccount,
+        switchboardSamo: switchboardSamoAccount,
+        ctokenInfoAccounts: cTokenInfoAccounts,
+        systemProgram: SystemProgram.programId,
+        tokenProgram: TOKEN_PROGRAM_ID,
+        associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+        rent: SYSVAR_RENT_PUBKEY,
+      })
+      .rpc();
 
-    try {
-      accountData = await program.account.userAccount.fetch(userAccountPDA);
-    } catch (err) {
-      accountData = null;
-      console.log(err);
-      return;
-    }
+    OpenContractSnackbar(
+      true,
+      "Success",
+      `Successfully borrowed ${amount} ${symbol}.`
+    );
 
-    if (
-      accountData &&
-      accountData.owner.toBase58() === user_wallet.toBase58()
-    ) {
-      const borrow_wei = convert_to_wei(amount);
-      const borrow_amount = new anchor.BN(borrow_wei);
-
-      // borrow
-      await program.methods
-        .borrow(borrow_amount)
-        .accounts({
-          userAuthority: user_wallet,
-          userAccount: userAccountPDA[0],
-          zsolMintAuthorityPda: zsolMintAuthorityPda[0],
-          config,
-          zsolMint: tokenMint,
-          userZsolAta,
-          poolZsolAta,
-          switchboardSrm: switchboardSrmAccount,
-          switchboardSol: switchboardSolAccount,
-          switchboardMsol: switchboardMsolAccount,
-          switchboardStsol: switchboardStsolAccount,
-          switchboardUxd: switchboardUxdAccount,
-          switchboardSamo: switchboardSamoAccount,
-          ctokenInfoAccounts: cTokenInfoAccounts,
-          systemProgram: SystemProgram.programId,
-          tokenProgram: TOKEN_PROGRAM_ID,
-          associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
-          rent: SYSVAR_RENT_PUBKEY,
-        })
-        .rpc();
-    }
-  } catch (error) {}
+    setMessage("Enter an amount");
+    setRequired(false);
+    setAmount("");
+  } catch (error) {
+    OpenContractSnackbar(true, "Error", `Borrow failed. Please try again.`);
+  }
 };
 
 // withdraw function for csb
 // ==============================================
-export const withdraw_cbs = async (wallet, token, amount) => {
+export const withdraw_cbs = async (
+  wallet,
+  symbol,
+  amount,
+  setMessage,
+  setRequired,
+  setAmount,
+  OpenContractSnackbar
+) => {
   try {
-    const program = getProgram(wallet, lpfinance_idl);
+    OpenContractSnackbar(true, "Processing", "Start Withdraw...");
+
+    const program = getProgram(wallet, "lpIdl");
 
     const user_wallet = wallet.publicKey;
 
-    const tokenMint = getMint(token);
+    const tokenMint = getMint(symbol);
 
     const userAccountPDA = await PublicKey.findProgramAddress(
       [Buffer.from(SEED_PDA), Buffer.from(user_wallet.toBuffer())],
@@ -255,7 +254,7 @@ export const withdraw_cbs = async (wallet, token, amount) => {
 
     let PDA;
 
-    if (token !== "SOL") {
+    if (symbol !== "SOL") {
       PDA = await PublicKey.findProgramAddress(
         [Buffer.from(SEED_PDA)],
         program.programId
@@ -271,88 +270,101 @@ export const withdraw_cbs = async (wallet, token, amount) => {
     let userCollateralAta;
     let cbsCollateralAta;
 
-    if (token !== "SOL") {
-      switchboardDest = getSwitchboardAccount(tokenMint);
+    if (symbol !== "SOL") {
+      switchboardDest = getSwitchboardAccount(symbol);
       userCollateralAta = await getATAPublicKey(tokenMint, user_wallet);
       cbsCollateralAta = await getATAPublicKey(tokenMint, PDA[0]);
     }
 
-    let accountData;
+    if (symbol !== "SOL") {
+      await program.methods
+        .withdraw(convert_to_wei_value(tokenMint, amount))
+        .accounts({
+          userAuthority: user_wallet,
+          userAccount: userAccountPDA[0],
+          programPda: PDA[0],
+          config,
+          tokenMint: tokenMint,
+          userCollateralAta,
+          cbsCollateralAta,
+          switchboardSol: switchboardSolAccount,
+          switchboardMsol: switchboardMsolAccount,
+          switchboardStsol: switchboardStsolAccount,
+          switchboardUxd: switchboardUxdAccount,
+          switchboardSamo: switchboardSamoAccount,
+          switchboardDest: switchboardDest,
+          ctokenInfoAccounts: cTokenInfoAccounts,
+          systemProgram: SystemProgram.programId,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+          rent: SYSVAR_RENT_PUBKEY,
+        })
+        .rpc();
 
-    try {
-      accountData = await program.account.userAccount.fetch(userAccountPDA);
-    } catch (err) {
-      accountData = null;
-      console.log(err);
-      return;
+      OpenContractSnackbar(
+        true,
+        "Success",
+        `Successfully Withdrew ${amount} ${symbol}.`
+      );
+
+      setMessage("Enter an amount");
+      setRequired(false);
+      setAmount("");
+    } else {
+      await program.methods
+        .withdrawSol(convert_to_wei_value_with_decimal(amount, SOL_DECIMAL))
+        .accounts({
+          userAuthority: user_wallet,
+          userAccount: userAccountPDA[0],
+          solAccount: PDA[0],
+          config,
+          switchboardSol: switchboardSolAccount,
+          switchboardMsol: switchboardMsolAccount,
+          switchboardStsol: switchboardStsolAccount,
+          switchboardUxd: switchboardUxdAccount,
+          switchboardSamo: switchboardSamoAccount,
+          ctokenInfoAccounts: cTokenInfoAccounts,
+          systemProgram: SystemProgram.programId,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          rent: SYSVAR_RENT_PUBKEY,
+        })
+        .rpc();
+
+      OpenContractSnackbar(
+        true,
+        "Success",
+        `Successfully Withdrew ${amount} ${symbol}.`
+      );
+
+      setMessage("Enter an amount");
+      setRequired(false);
+      setAmount("");
     }
-
-    if (
-      accountData &&
-      accountData.owner.toBase58() === user_wallet.toBase58()
-    ) {
-      const withdraw_wei = convert_to_wei(amount);
-      const withdraw_amount = new anchor.BN(withdraw_wei);
-
-      if (token !== "SOL") {
-        await program.methods
-          .withdraw(withdraw_amount)
-          .accounts({
-            userAuthority: user_wallet,
-            userAccount: userAccountPDA[0],
-            programPda: PDA[0],
-            config,
-            tokenMint: tokenMint,
-            userCollateralAta,
-            cbsCollateralAta,
-            switchboardSrm: switchboardSrmAccount,
-            switchboardSol: switchboardSolAccount,
-            switchboardMsol: switchboardMsolAccount,
-            switchboardStsol: switchboardStsolAccount,
-            switchboardUxd: switchboardUxdAccount,
-            switchboardSamo: switchboardSamoAccount,
-            switchboardDest: switchboardDest,
-            ctokenInfoAccounts: cTokenInfoAccounts,
-            systemProgram: SystemProgram.programId,
-            tokenProgram: TOKEN_PROGRAM_ID,
-            associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
-            rent: SYSVAR_RENT_PUBKEY,
-          })
-          .rpc();
-      } else {
-        await program.methods
-          .withdrawSol(withdraw_amount)
-          .accounts({
-            userAuthority: user_wallet,
-            userAccount: userAccountPDA[0],
-            solAccount: PDA[0],
-            config,
-            switchboardSrm: switchboardSrmAccount,
-            switchboardSol: switchboardSolAccount,
-            switchboardMsol: switchboardMsolAccount,
-            switchboardStsol: switchboardStsolAccount,
-            switchboardUxd: switchboardUxdAccount,
-            switchboardSamo: switchboardSamoAccount,
-            ctokenInfoAccounts: cTokenInfoAccounts,
-            systemProgram: SystemProgram.programId,
-            tokenProgram: TOKEN_PROGRAM_ID,
-            rent: SYSVAR_RENT_PUBKEY,
-          })
-          .rpc();
-      }
-    }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    OpenContractSnackbar(true, "Error", `Withdraw failed. Please try again.`);
+  }
 };
 
 // repay function for csb
 // ==============================================
-export const repay_cbs = async (wallet, token, amount) => {
+export const repay_cbs = async (
+  wallet,
+  symbol,
+  amount,
+  setMessage,
+  setRequired,
+  setAmount,
+  OpenContractSnackbar
+) => {
   try {
-    const program = getProgram(wallet, lpfinance_idl);
+    OpenContractSnackbar(true, "Processing", "Start Repayment...");
+
+    const program = getProgram(wallet, "lpIdl");
 
     const user_wallet = wallet.publicKey;
 
-    const tokenMint = getMint(token);
+    const tokenMint = getMint(symbol);
 
     const userAccountPDA = await PublicKey.findProgramAddress(
       [Buffer.from(SEED_PDA), Buffer.from(user_wallet.toBuffer())],
@@ -367,66 +379,71 @@ export const repay_cbs = async (wallet, token, amount) => {
     let switchboardDest;
     let trvcCollateralAta;
 
-    if (token !== "zSOL") {
-      switchboardDest = getSwitchboardAccount(tokenMint);
+    if (symbol !== "zSOL") {
+      switchboardDest = getSwitchboardAccount(symbol);
       trvcCollateralAta = await getATAPublicKey(tokenMint, PDA[0]);
     }
 
     const userCollateralAta = await getATAPublicKey(tokenMint, user_wallet);
 
-    let accountData;
+    if (symbol !== "zSOL") {
+      await program.methods
+        .repayWithCtoken(convert_to_wei_value(tokenMint, amount))
+        .accounts({
+          userAuthority: user_wallet,
+          userAccount: userAccountPDA[0],
+          config,
+          trvcAccount: PDA[0],
+          ctokenInfoAccounts: cTokenInfoAccounts,
+          collateralToken: tokenMint,
+          userCollateralAta,
+          trvcCollateralAta,
+          switchboardSol: switchboardSolAccount,
+          switchboardDest: switchboardDest,
+          systemProgram: SystemProgram.programId,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          rent: SYSVAR_RENT_PUBKEY,
+        })
+        .rpc();
 
-    try {
-      accountData = await program.account.userAccount.fetch(userAccountPDA);
-    } catch (err) {
-      accountData = null;
-      console.log(err);
-      return;
+      OpenContractSnackbar(
+        true,
+        "Success",
+        `Successfully Withdrew ${amount} ${symbol}.`
+      );
+
+      setMessage("Enter an amount");
+      setRequired(false);
+      setAmount("");
+    } else {
+      // repay_zsol
+      await program.methods
+        .repayZsol(convert_to_wei_value_with_decimal(amount, zSOL_DECIMAL))
+        .accounts({
+          userAuthority: user_wallet,
+          userAccount: userAccountPDA[0],
+          config,
+          trvcAccount: PDA[0],
+          zsolMint: tokenMint,
+          userZsolAta: userCollateralAta,
+          systemProgram: SystemProgram.programId,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          rent: SYSVAR_RENT_PUBKEY,
+        })
+        .rpc();
+
+      OpenContractSnackbar(
+        true,
+        "Success",
+        `Successfully Repayment ${amount} ${symbol}.`
+      );
+
+      setMessage("Enter an amount");
+      setRequired(false);
+      setAmount("");
     }
-
-    if (
-      accountData &&
-      accountData.owner.toBase58() === user_wallet.toBase58()
-    ) {
-      const repay_wei = convert_to_wei(amount);
-      const repay_amount = new anchor.BN(repay_wei);
-
-      if (token !== "zSOL") {
-        await program.methods
-          .repayWithCtoken(repay_amount)
-          .accounts({
-            userAuthority: user_wallet,
-            userAccount: userAccountPDA[0],
-            config,
-            trvcAccount: PDA[0],
-            ctokenInfoAccounts: cTokenInfoAccounts,
-            collateralToken: tokenMint,
-            userCollateralAta,
-            trvcCollateralAta,
-            switchboardSol: switchboardSolAccount,
-            switchboardDest: switchboardDest,
-            systemProgram: anchor.web3.SystemProgram.programId,
-            tokenProgram: TOKEN_PROGRAM_ID,
-            rent: SYSVAR_RENT_PUBKEY,
-          })
-          .rpc();
-      } else {
-        // repay_zsol
-        await program.methods
-          .repayZsol(repay_amount)
-          .accounts({
-            userAuthority: user_wallet,
-            userAccount: userAccountPDA[0],
-            config,
-            trvcAccount: PDA[0],
-            zsolMint: tokenMint,
-            userZsolAta: userCollateralAta,
-            systemProgram: SystemProgram.programId,
-            tokenProgram: TOKEN_PROGRAM_ID,
-            rent: SYSVAR_RENT_PUBKEY,
-          })
-          .rpc();
-      }
-    }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    OpenContractSnackbar(true, "Error", `Repayment failed. Please try again.`);
+  }
 };

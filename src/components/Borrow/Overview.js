@@ -1,8 +1,9 @@
 import React, { memo } from "react";
 import Card from "Layout/Card";
 import Button from "Layout/Button";
+import { numFormatter, calc } from "helper";
 
-const Overview = () => {
+const Overview = ({ TotalSupply, TotalBorrowed, NET_LTV, TVL }) => {
   return (
     <>
       <div className="row py-4  d-flex justify-content-center borrow_overview">
@@ -55,7 +56,7 @@ const Overview = () => {
                         />
                       </div>
                       <div className="miter2">
-                        <p className="ml-4 pl-2">100%</p>
+                        <p className="ml-4 pl-2">{calc(NET_LTV)}%</p>
                         <img
                           src="/images/figma/cartLine2.png"
                           alt="loading..."
@@ -67,13 +68,13 @@ const Overview = () => {
                         <div className="col-lg-12 col-md-12 col-sm-12 col-6 mt-lg-3 mt-md-3 mt-0">
                           <div className="cart_details">
                             <p>Total Supply</p>
-                            <span>$0</span>
+                            <span>${numFormatter(TotalSupply)}</span>
                           </div>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-6">
                           <div className="cart_details mt-lg-4 mt-md-0 pt-lg-3 mt-md-3 mt-0">
                             <p>Total Borrowed</p>
-                            <span>$0</span>
+                            <span>${numFormatter(TotalBorrowed)}</span>
                           </div>
                         </div>
                       </div>
@@ -86,11 +87,15 @@ const Overview = () => {
                       <tbody>
                         <tr>
                           <td>TVL</td>
-                          <td className="list_section_right">: $0</td>
+                          <td className="list_section_right">
+                            : ${numFormatter(TVL)}
+                          </td>
                         </tr>
                         <tr>
                           <td> Net LTV</td>
-                          <td className="list_section_right">: 0%</td>
+                          <td className="list_section_right">
+                            : {calc(NET_LTV)}%
+                          </td>
                         </tr>
                         <tr>
                           <td> Stability Fee</td>

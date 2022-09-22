@@ -74,6 +74,14 @@ const BorrowTabWrapper = styled.div`
                 left: 10px;
               }
             }
+
+            .min_amount {
+              padding: 5px 0px 0px 12px;
+              p {
+                color: ${(props) => props.theme.BodyMainColor};
+                font-size: 0.8rem;
+              }
+            }
           }
         }
       }

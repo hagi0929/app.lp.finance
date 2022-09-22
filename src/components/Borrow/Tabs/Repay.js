@@ -15,6 +15,7 @@ const Repay = ({
   BalanceList,
   BalanceHandler,
   wallet,
+  OpenContractSnackbar,
 }) => {
   const [isModel, setIsModel] = useState(false);
   const [amount, setAmount] = useState("");
@@ -34,14 +35,9 @@ const Repay = ({
   const handleAmount = (e) => {
     setAmount(e.target.value);
 
-    if (e.target.value) {
-      if (e.target.value <= selected.balance) {
-        setMessage("Repay");
-        setRequired(true);
-      } else {
-        setMessage("Insufficient Balance");
-        setRequired(false);
-      }
+    if (e.target.value > 0) {
+      setMessage("Repay");
+      setRequired(true);
     } else {
       setMessage("Enter an amount");
       setRequired(false);
@@ -51,7 +47,15 @@ const Repay = ({
   const handleProgram = async () => {
     if (amount > 0) {
       if (Required && publicKey) {
-        await repay_cbs(wallet, selected.symbol, amount);
+        await repay_cbs(
+          wallet,
+          selected.symbol,
+          amount,
+          setMessage,
+          setRequired,
+          setAmount,
+          OpenContractSnackbar
+        );
       }
     } else {
       setMessage("Enter an amount");
@@ -63,8 +67,6 @@ const Repay = ({
     setMessage("Repay");
     setAmount("");
     setRequired(false);
-
-    return () => {};
   }, [selected]);
 
   return (
@@ -139,7 +141,8 @@ const Repay = ({
                     active={1}
                     p="0.6rem 2rem"
                     br="10px"
-                    className="not-allowed"
+                    className={!publicKey ? "not-allowed" : null}
+                    disabled={!publicKey ? true : false}
                     onClick={() => handleProgram()}
                   >
                     {message}

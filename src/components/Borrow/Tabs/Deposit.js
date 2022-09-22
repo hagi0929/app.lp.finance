@@ -8,6 +8,7 @@ import { TokenImgRegistry } from "assets/registry";
 import { deposit_cbs } from "lp-program/borrow";
 import { blockInvalidChar } from "helper";
 import WalletButton from "components/globalComponents/WalletButton";
+import { CalcFiveDigit } from "helper";
 
 const Deposit = ({
   publicKey,
@@ -16,6 +17,7 @@ const Deposit = ({
   BalanceHandler,
   wallet,
   OpenContractSnackbar,
+  PriceHandler,
 }) => {
   const [isModel, setIsModel] = useState(false);
   const [message, setMessage] = useState("Deposit");
@@ -26,20 +28,37 @@ const Deposit = ({
     logoURI: TokenImgRegistry.SOL,
     symbol: "SOL",
     balance: 0,
+    price: 0,
   });
 
   useMemo(() => {
-    setSelected({ ...selected, balance: BalanceHandler.SOL });
+    setSelected({
+      ...selected,
+      balance: BalanceHandler.SOL,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BalanceHandler]);
+
+  useMemo(() => {
+    setSelected({
+      ...selected,
+      price: PriceHandler.SOL,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [PriceHandler]);
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
 
     if (e.target.value) {
       if (e.target.value <= selected.balance) {
-        setMessage("Deposit");
-        setRequired(true);
+        if (e.target.value >= CalcFiveDigit(10 / selected.price)) {
+          setMessage("Deposit");
+          setRequired(true);
+        } else {
+          setMessage("Required minimum amount");
+          setRequired(false);
+        }
       } else {
         setMessage("Insufficient Balance");
         setRequired(false);
@@ -91,7 +110,7 @@ const Deposit = ({
                     placeholder="0.0"
                     disabled={publicKey ? false : true}
                     value={amount}
-                    onChange={handleAmount}
+                    onChange={(e) => handleAmount(e)}
                     onKeyDown={blockInvalidChar}
                     active={2}
                     p="0.7rem 0rem 0.7rem 3.5rem"
@@ -133,6 +152,13 @@ const Deposit = ({
                 </div>
               </div>
             </div>
+            <div className="row min_amount">
+              <div className="col-12">
+                {selected.price !== 0 && (
+                  <p>Minimum amount- {CalcFiveDigit(10 / selected.price)}</p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -147,6 +173,7 @@ const Deposit = ({
                     active={1}
                     p="0.6rem 2rem"
                     br="10px"
+                    disabled={!publicKey ? true : false}
                     className={!publicKey ? "not-allowed" : null}
                     onClick={() => handleProgram()}
                   >

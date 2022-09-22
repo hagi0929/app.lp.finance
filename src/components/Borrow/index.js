@@ -8,19 +8,34 @@ import Button from "Layout/Button";
 import Image from "Layout/Image";
 import NotifiModel from "models/NotifiModel";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
+import { useCbs } from "contexts/CbsContext";
+import { useEffect } from "react";
 
 const Borrow = () => {
-  const { PriceList, BalanceList, BalanceHandler } = useCrypto();
-  const { OpenContractSnackbar } = useContractSnackbar();
-
   const wallet = useWallet();
   const { publicKey } = wallet;
+  const { PriceList, PriceHandler, BalanceList, BalanceHandler, storeBal } =
+    useCrypto();
+  const { OpenContractSnackbar, ContractSnackbarType } = useContractSnackbar();
+  const { cbsInfo, handleCbsInfo } = useCbs();
 
   const [notifi, setNotifi] = useState(false);
 
+  const handleRefreshCbs = () => {
+    storeBal();
+    handleCbsInfo();
+  };
+
+  useEffect(() => {
+    if (ContractSnackbarType === "Success") {
+      handleRefreshCbs();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ContractSnackbarType]);
+
   return (
     <>
-      <BorrowWrapper pie={100}>
+      <BorrowWrapper pie={cbsInfo.NET_LTV}>
         <div className="container borrow">
           <div className="row mt-4">
             <div className="col-12 d-flex justify-content-center flex-column">
@@ -45,7 +60,12 @@ const Borrow = () => {
               </div>
             </div>
           </div>
-          <Overview publicKey={publicKey} />
+          <Overview
+            {...{
+              ...cbsInfo,
+              publicKey,
+            }}
+          />
           <Tabs
             {...{
               wallet,
@@ -54,6 +74,7 @@ const Borrow = () => {
               BalanceList,
               BalanceHandler,
               OpenContractSnackbar,
+              PriceHandler,
             }}
           />
         </div>
