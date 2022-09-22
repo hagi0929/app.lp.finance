@@ -9,10 +9,12 @@ import Image from "Layout/Image";
 import WalletButton from "../WalletButton";
 import CliModel from "models/CliModel";
 import { useCrypto } from "contexts/CryptoContext";
+import { useCbs } from "contexts/CbsContext";
 
 const Header = () => {
   const { Cluster, changeCluster } = useCluster();
   const { storePrice, storeBal } = useCrypto();
+  const { handleCbsInfo } = useCbs();
   const location = useLocation();
   const [dropdown, setDropdown] = useState(false);
   const [cli, setCli] = useState(false);
@@ -174,6 +176,7 @@ const Header = () => {
                                   changeCluster(list.network);
                                   storePrice();
                                   storeBal();
+                                  handleCbsInfo();
                                 }}
                               >
                                 <div className="name">

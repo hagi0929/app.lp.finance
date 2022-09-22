@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Overview from "./Overview";
 import Tabs from "./Tabs";
 import BorrowWrapper from "styles/Borrow.style";
@@ -9,16 +9,14 @@ import Image from "Layout/Image";
 import NotifiModel from "models/NotifiModel";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
 import { useCbs } from "contexts/CbsContext";
-import { useEffect } from "react";
 
 const Borrow = () => {
-  const wallet = useWallet();
-  const { publicKey } = wallet;
   const { PriceList, PriceHandler, BalanceList, BalanceHandler, storeBal } =
     useCrypto();
   const { OpenContractSnackbar, ContractSnackbarType } = useContractSnackbar();
-  const { cbsInfo, handleCbsInfo } = useCbs();
-
+  const { cbsInfo, handleCbsInfo, cbsUserInfo, handleCbsUserInfo } = useCbs();
+  const wallet = useWallet();
+  const { publicKey } = wallet;
   const [notifi, setNotifi] = useState(false);
 
   const handleRefreshCbs = () => {
@@ -29,6 +27,7 @@ const Borrow = () => {
   useEffect(() => {
     if (ContractSnackbarType === "Success") {
       handleRefreshCbs();
+      handleCbsUserInfo();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ContractSnackbarType]);
@@ -75,6 +74,7 @@ const Borrow = () => {
               BalanceHandler,
               OpenContractSnackbar,
               PriceHandler,
+              cbsUserInfo,
             }}
           />
         </div>

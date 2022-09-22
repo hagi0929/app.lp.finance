@@ -151,7 +151,7 @@ const BorrowTabWrapper = styled.div`
             display: inline-block;
             height: 100%;
             width: ${(props) => props.pieLTV}%;
-            background: #884b99;
+            background: ${(props) => props.theme.BodyMainColor};
             left: 0;
             cursor: pointer;
           }
@@ -181,8 +181,10 @@ const BorrowTabWrapper = styled.div`
           .pie3 .pie3_tooltip {
             visibility: hidden;
             min-width: 150px;
-            background: ${(props) => props.theme.BodySecondaryBg};
+            background: ${(props) => props.theme.BodyPrimaryBg};
+            border: 1px solid ${(props) => props.theme.BodyMainColor};
             color: ${(props) => props.theme.BodyMainColor};
+            backdrop-filter: blur(2px);
             text-align: center;
             border-radius: 6px;
             padding: 0.5rem 0.5rem;
@@ -192,9 +194,20 @@ const BorrowTabWrapper = styled.div`
             left: 50%;
             font-size: 0.8rem;
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-            margin-left: -60px;
+
             opacity: 0;
             transition: opacity 0.5s;
+          }
+
+          .pie1 .pie1_tooltip {
+            margin-left: -60px;
+          }
+
+          .pie2 .pie2_tooltip {
+            margin-left: -75px;
+          }
+          .pie3 .pie3_tooltip {
+            margin-left: -75px;
           }
 
           .pie1 .pie1_tooltip::after,
@@ -207,7 +220,8 @@ const BorrowTabWrapper = styled.div`
             margin-bottom: 10px;
             border-width: 5px;
             border-style: solid;
-            border-color: #009dd9 transparent transparent transparent;
+            border-color: ${(props) => props.theme.BodyPrimaryBg} transparent
+              transparent transparent;
           }
 
           .pie1 .pie1_tooltip::after {
@@ -215,11 +229,11 @@ const BorrowTabWrapper = styled.div`
           }
 
           .pie2 .pie2_tooltip::after {
-            margin-left: -20px;
+            margin-left: -5px;
           }
 
           .pie3 .pie3_tooltip::after {
-            margin-left: -20px;
+            margin-left: -5px;
           }
 
           .pie1:hover .pie1_tooltip,
@@ -251,28 +265,22 @@ const BorrowTabWrapper = styled.div`
             }
 
             .right {
-              span {
+              span,
+              p {
                 color: ${(props) => props.theme.BodyMainColor};
+
+                span {
+                  font-size: 0.9rem;
+                }
               }
 
-              .Collateral_list {
-                .Collateral_list_details {
-                  img {
-                    height: 1, 7rem;
-                    width: 1.7rem;
-                  }
-                }
-                .Collateral_list_Price,
-                .Collateral_list_APY {
-                  p {
-                    font-size: 0.8rem;
+              span {
+                font-size: 0.8rem;
+              }
 
-                    img {
-                      height: 1rem;
-                      width: auto;
-                    }
-                  }
-                }
+              img {
+                height: 2rem;
+                width: 2rem;
               }
             }
           }

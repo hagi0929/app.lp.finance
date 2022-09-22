@@ -1,59 +1,32 @@
-import * as anchor from "@project-serum/anchor";
-import { getProgram, getConnection, getNetwork } from "../contract";
+import { loadSwitchboardProgram } from "@switchboard-xyz/switchboard-v2";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import {
-  AggregatorAccount,
-  loadSwitchboardProgram,
-} from "@switchboard-xyz/switchboard-v2";
+  getProgram,
+  getConnection,
+  getNetwork,
+  getSwitchboardPrice,
+  getTokenValue,
+  convert_from_wei_value,
+  getATAPublicKey,
+  tokenBalance,
+  convert_from_wei_value_with_decimal,
+} from "../contract";
 import {
   SEED_PDA,
   cTokenInfoAccounts,
-  getCollateralTokenName,
   switchboardSolAccount,
-  SRMMint,
   zSOL_MINT,
   TYPE_LESS_DISCOUNT_RATE,
+  getCollateralTokenSymbol,
+  mSOLMint,
+  zSOL_DECIMAL,
 } from "constants/global";
 
-import { Keypair, PublicKey } from "@solana/web3.js";
-
-export const tokenBalance = async (connection, tokenMint) => {
-  const accountInfo = await connection.getTokenAccountBalance(tokenMint);
-  return accountInfo.value.uiAmount;
-};
-
-const getSwitchboardPrice = async (program, switchboardFeed) => {
-  const aggregator = new AggregatorAccount({
-    program,
-    publicKey: switchboardFeed,
-  });
-  const result = await aggregator.getLatestValue();
-  console.log(`Switchboard Result: ${result}`);
-  return result;
-};
-
-// Get given token's info
-const getTokenValue = async (
-  program,
-  amount,
-  decimal,
-  switchboardFeed,
-  maxBorrowRate
-) => {
-  const tokenPrice = await getSwitchboardPrice(program, switchboardFeed);
-  const amountBg = new anchor.BN(amount);
-  const decimalBg = new anchor.BN("10").pow(new anchor.BN(decimal));
-  const priceBg = new anchor.BN(tokenPrice.toString());
-  const borrowRate = new anchor.BN(maxBorrowRate).div(new anchor.BN(100.0));
-  const tokenValue = priceBg.mul(amountBg).div(decimalBg);
-  const borrowableValue = tokenValue.mul(borrowRate);
-  return [tokenValue, borrowableValue];
-};
-
 // Get tokenInfo index for the specific token
-const getCtokenInfoIndex = (ctokenInfos, destToken, totalCount) => {
+const getCTokenInfoIndex = (cTokenInfos, destToken, totalCount) => {
   for (let i = 0; i < totalCount; i++) {
-    const ctokenInfo = ctokenInfos[i];
-    if (ctokenInfo.tokenMint === destToken) {
+    const cTokenInfo = cTokenInfos[i];
+    if (cTokenInfo.tokenMint.equals(destToken)) {
       return i;
     }
   }
@@ -64,43 +37,45 @@ const getCtokenInfoIndex = (ctokenInfos, destToken, totalCount) => {
 const getCollateralsValue = async (
   switchboardProgram,
   configData,
-  ctokenInfos,
+  cTokenInfos,
   totalCount
 ) => {
   try {
     const deposited_amounts = configData.depositedAmounts;
-    let total_deposited_value = new anchor.BN(0);
-    let total_borrowable_value = new anchor.BN(0);
+
+    let total_deposited_value = Number(0);
+    let total_borrowed_value = Number(0);
 
     let collateral_infos = [];
 
     for (let i = 0; i < totalCount; i++) {
-      const ctokenInfo = ctokenInfos[i];
-      const idx = ctokenInfo.infoIndex;
-      const is_active = ctokenInfo.isActive;
+      const cTokenInfo = cTokenInfos[i];
+      const idx = cTokenInfo.infoIndex;
+      const is_active = cTokenInfo.isActive;
 
       if (is_active === false) continue;
-      const name = getCollateralTokenName(ctokenInfo.name);
+      const name = getCollateralTokenSymbol(cTokenInfo.name);
+
       if (name === undefined) {
-        console.log("Undefined token: ", ctokenInfo);
         throw new Error("Undefined token");
       }
+      const switchboard_acc_pub = cTokenInfo.switchboardAccPub;
+      const decimal = cTokenInfo.tokenDecimal;
+      const borrow_rate = cTokenInfo.borrowableMaxLtv;
 
-      const switchboard_acc_pub = ctokenInfo.switchboardAccPub;
-      const decimal = ctokenInfo.decimal;
-      const borrow_rate = ctokenInfo.borrowableMaxLtv;
-
-      const [deposited_value, borrowable_value] = await getTokenValue(
+      const deposited_value = await getTokenValue(
         switchboardProgram,
         deposited_amounts[idx],
         decimal,
-        switchboard_acc_pub,
-        borrow_rate
+        switchboard_acc_pub
       );
 
-      const amountBg = new anchor.BN(deposited_amounts[idx]);
-      const decimalBg = new anchor.BN("10").pow(new anchor.BN(decimal));
-      const token_amount = amountBg.div(decimalBg);
+      const borrowRate = borrow_rate / 100;
+      const borrowedValue = deposited_value * Number(borrowRate);
+
+      const amountNumber = Number(deposited_amounts[idx].toString());
+      const decimalPow = Math.pow(10, decimal);
+      const token_amount = amountNumber / decimalPow;
 
       let collateral_info = {
         idx,
@@ -110,20 +85,20 @@ const getCollateralsValue = async (
       };
 
       collateral_infos.push(collateral_info);
-      total_deposited_value = total_deposited_value.add(deposited_value);
-      total_borrowable_value = total_borrowable_value.add(borrowable_value);
+      total_deposited_value = total_deposited_value + deposited_value;
+      total_borrowed_value = total_borrowed_value + borrowedValue;
     }
 
     return {
       total_deposited_value,
-      total_borrowable_value,
+      total_borrowed_value,
       collateral_infos,
     };
   } catch (err) {
     console.log(err);
     return {
-      total_deposited_value: new anchor.BN(0),
-      total_borrowable_value: new anchor.BN(0),
+      total_deposited_value: Number(0),
+      total_borrowed_value: Number(0),
       collateral_infos: [],
     };
   }
@@ -137,52 +112,46 @@ const getBorrowedValue = async (switchboardProgram, configData) => {
       switchboardProgram,
       borrowed_amount,
       9,
-      switchboardSolAccount,
-      100
+      switchboardSolAccount
     );
-    return getSolPrice[0];
+    return getSolPrice;
   } catch (err) {
     console.log(err);
-    return new anchor.BN("0");
+    return Number(0);
   }
 };
 
-// Get max depositable amount for the specific token
+// Get max deposited amount
 const getMaxDepositAmount = (
   userData,
-  ctokenInfos,
-  ctokenIndex,
+  cTokenInfos,
+  cTokenIndex,
   user_token_balance
 ) => {
   try {
-    const ctokenInfo = ctokenInfos[ctokenIndex];
-    const userDepositedAmount = userData.deposited_amounts[ctokenIndex];
-
-    const deposit_cap = ctokenInfo.depositCap;
-    let max_amount = new anchor.BN(0);
-
-    if (
-      new anchor.BN(deposit_cap).eq(max_amount) ||
-      new anchor.BN(deposit_cap).gt(new anchor.BN(user_token_balance))
-    ) {
-      max_amount = user_token_balance;
-    } else {
-      max_amount = deposit_cap;
-    }
-
-    return new anchor.BN(max_amount).sub(userDepositedAmount);
+    const cTokenInfo = cTokenInfos[cTokenIndex];
+    const userDepositedAmount = convert_from_wei_value(
+      cTokenInfo.tokenMint,
+      userData.depositedAmounts[cTokenIndex]
+    );
+    const deposit_cap = cTokenInfo.depositCap;
+    let max_amount = convert_from_wei_value(cTokenInfo.tokenMint, deposit_cap);
+    if (max_amount === 0) return user_token_balance;
+    return Math.min(max_amount - userDepositedAmount, user_token_balance);
   } catch (err) {
-    return undefined;
+    return 0;
   }
 };
 
 export const fetch_user_infos = async (wallet) => {
   try {
-    const user_wallet = wallet.publicKey;
-    const destToken = SRMMint;
+    const network = getNetwork();
     const connection = getConnection();
     const program = getProgram(wallet, "lpIdl");
-    const network = getNetwork();
+
+    const destToken = mSOLMint;
+
+    const user_wallet = wallet.publicKey;
 
     const switchboardProgram = await loadSwitchboardProgram(
       network,
@@ -197,122 +166,140 @@ export const fetch_user_infos = async (wallet) => {
 
     const userData = await program.account.userAccount.fetch(userAccountPDA[0]);
 
-    // ------------------- Collaterals Info ---------------
-    // -- Token Infos
-    const ctoken_info_accounts_data =
+    // ------Collaterals Info -----------------------
+    const cToken_info_accounts_data =
       await program.account.cTokenInfoAccounts.fetch(cTokenInfoAccounts);
 
-    const ctokenInfos = ctoken_info_accounts_data.ctokenInfos;
-    const totalCount = ctoken_info_accounts_data.totalCount;
+    const cTokenInfos = cToken_info_accounts_data.ctokenInfos;
+    const totalCount = cToken_info_accounts_data.totalCount;
 
-    const { total_deposited_value, total_borrowable_value, collateral_infos } =
+    // ===== get User Account info ======
+    const { total_deposited_value, total_borrowed_value, collateral_infos } =
       await getCollateralsValue(
         switchboardProgram,
         userData,
-        ctokenInfos,
+        cTokenInfos,
         totalCount
       );
 
-    // ================ User Account info =================>
-    // Total deposited collateral value
-    console.log(`Total deposited collateral Value: ${total_deposited_value}`);
-
-    // Each collateral deposited info
-    console.log(
-      `Each Collateral's value array: ${collateral_infos.toString()}`
-    );
-
-    // BorrowLimit
-    console.log(`Total borrowable Value: ${total_borrowable_value}`);
-
     // Borrowed Value
     const borrowed_value = await getBorrowedValue(switchboardProgram, userData);
-    console.log(`Borrowed Value: ${borrowed_value}`);
-
-    const PercentStandard = new anchor.BN(100);
+    const PercentStandard = Number(100);
 
     // LTV
-    const LTV = borrowed_value.mul(PercentStandard).div(total_deposited_value);
-    console.log(`LTV is; ${LTV}`);
+    const LTV = (borrowed_value * PercentStandard) / total_deposited_value;
 
-    // Borrow Threshold Value
-    const BorrowThreshold = total_borrowable_value
-      .mul(PercentStandard)
-      .div(total_deposited_value);
-    console.log(`Liquidation Threshold: ${BorrowThreshold}`);
+    // Borrow Threshold
+    const LiquidationThreshold =
+      (total_borrowed_value * PercentStandard) / total_deposited_value;
 
-    // =============== Fetch MAX AMOUNT =============>
-
-    // -- Max Borrowable amount
-    const MaxBorrowableValue = total_borrowable_value.sub(borrowed_value);
-
+    // ------- Fetch MAX AMOUNT -------------------
+    // Max Borrowed amount
+    const MaxBorrowedValue = total_borrowed_value - borrowed_value;
     const zSOL_price = await getSwitchboardPrice(
       switchboardProgram,
       switchboardSolAccount
     );
-    const zsolPriceBN = new anchor.BN(zSOL_price.toString());
-    const MaxBorrowableAmount = MaxBorrowableValue.div(zsolPriceBN);
-    console.log(`Max borrowable zSOL amount ${MaxBorrowableAmount}`);
+    const MaxBorrowedAmount = MaxBorrowedValue / zSOL_price;
 
     // -- Max withdraw amount
-    const borrowable_value = total_borrowable_value.sub(borrowed_value);
-    const ctokenIndex = getCtokenInfoIndex(ctokenInfos, destToken, totalCount);
-    const borrow_rate = ctokenInfos[ctokenIndex].borrowableMaxLtv;
-    const borrowRateBN = new anchor.BN(borrow_rate.toString());
-    const withdrawableAmount = borrowable_value
-      .mul(PercentStandard)
-      .div(borrowRateBN);
-    const depositedAmount = userData.depositedAmounts[ctokenIndex];
-
-    const MaxWithdrawableAmount = anchor.BN.min(
-      withdrawableAmount,
-      depositedAmount
+    const borrowed_val = total_borrowed_value - borrowed_value;
+    const cTokenIndex = getCTokenInfoIndex(cTokenInfos, destToken, totalCount);
+    const borrow_rate = cTokenInfos[cTokenIndex].borrowableMaxLtv;
+    const withdrawableAmount =
+      (borrowed_val * PercentStandard) / Number(borrow_rate);
+    const depositedAmountWei = userData.depositedAmounts[cTokenIndex];
+    const depositedAmount = convert_from_wei_value(
+      destToken,
+      depositedAmountWei
     );
-    console.log(`Max withdrawable amount: ${MaxWithdrawableAmount}`);
+    const MaxWithdrawAmount = Math.min(withdrawableAmount, depositedAmount);
 
-    //---- Max Depositable Amount
-    const user_token_balance = tokenBalance(connection, destToken);
-
-    const max_depositable_amount = await getMaxDepositAmount(
+    // cal Max Deposited Amount
+    const user_ata = await getATAPublicKey(destToken, user_wallet);
+    const user_token_balance = await tokenBalance(connection, user_ata);
+    const MaxDepositedAmount = await getMaxDepositAmount(
       userData,
-      ctokenInfos,
-      ctokenIndex,
+      cTokenInfos,
+      cTokenIndex,
       user_token_balance
     );
-    console.log(`Max depositable amount is ${max_depositable_amount}`);
 
-    //--- Max Repay amount
-    // - mSOL: Amount = ((loanAmount * solPrice) / mSolPrice) * 0.999
-    // - stSOL: Amount = ((loanAmount * solPrice) / stSolPrice) * 0.999
-    const loanZSOLAmount = userData.borrowedZsolAmount;
-
+    //Max Repay amount
+    const loan_zSOLAmountWei = userData.borrowedZsolAmount;
+    const loan_zSOLAmount = convert_from_wei_value_with_decimal(
+      loan_zSOLAmountWei,
+      zSOL_DECIMAL
+    );
     const solPrice = await getSwitchboardPrice(
       switchboardProgram,
       switchboardSolAccount
     );
-
-    const sol_price_BN = new anchor.BN(solPrice.toString());
-
     const dest_token_switchboard_pub =
-      ctokenInfos[ctokenIndex].switchboardAccPub;
+      cTokenInfos[cTokenIndex].switchboardAccPub;
 
     const dest_token_price = await getSwitchboardPrice(
       switchboardProgram,
       dest_token_switchboard_pub
     );
 
-    const dest_token_price_BN = new anchor.BN(dest_token_price.toString());
-    const TYPE_LESS_DISCOUNT_RATE_BN = new anchor.BN(TYPE_LESS_DISCOUNT_RATE);
+    let MaxRepayAmount;
 
     if (destToken.equals(zSOL_MINT)) {
-      const max_repay_amount = userData.borrowedZsolAmount;
-      console.log(`Max Repay amount: ${max_repay_amount}`);
+      MaxRepayAmount = userData.borrowedZsolAmount;
     } else {
-      const max_repay_amount = loanZSOLAmount
-        .mul(sol_price_BN)
-        .mul(TYPE_LESS_DISCOUNT_RATE_BN)
-        .div(dest_token_price_BN);
-      console.log(`Max Repay amount: ${max_repay_amount}`);
+      MaxRepayAmount =
+        (loan_zSOLAmount * solPrice * TYPE_LESS_DISCOUNT_RATE) /
+        dest_token_price;
     }
-  } catch (error) {}
+
+    // console.log(
+    //   "TotalDeposited",
+    //   total_deposited_value,
+    //   "CollateralInfos:",
+    //   collateral_infos,
+    //   "TotalBorrowed:",
+    //   borrowed_value,
+    //   "BorrowLimit:",
+    //   total_borrowed_value,
+    //   "LTV",
+    //   LTV,
+    //   "BorrowThreshold",
+    //   BorrowThreshold,
+    //   "MaxBorrowedAmount",
+    //   MaxBorrowedAmount,
+    //   "MaxWithdrawAmount",
+    //   MaxWithdrawAmount,
+    //   "MaxDepositedAmount",
+    //   MaxDepositedAmount,
+    //   "MaxRepayAmount",
+    //   MaxRepayAmount
+    // );
+
+    return {
+      TotalDeposited: total_deposited_value,
+      CollateralInfos: collateral_infos,
+      TotalBorrowed: borrowed_value,
+      BorrowLimit: total_borrowed_value,
+      LTV,
+      LiquidationThreshold,
+      MaxBorrowedAmount,
+      MaxWithdrawAmount,
+      MaxDepositedAmount,
+      MaxRepayAmount,
+    };
+  } catch (error) {
+    return {
+      TotalDeposited: 0,
+      CollateralInfos: [],
+      TotalBorrowed: 0,
+      BorrowLimit: 0,
+      LTV: 0,
+      LiquidationThreshold: 0,
+      MaxBorrowedAmount: 0,
+      MaxWithdrawAmount: 0,
+      MaxDepositedAmount: 0,
+      MaxRepayAmount: 0,
+    };
+  }
 };

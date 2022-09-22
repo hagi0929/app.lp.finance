@@ -102,7 +102,6 @@ export const convert_from_wei_value = (token_mint, wei_value) => {
   const cToken_info = getCTokenInfo(token_mint);
   const decimal = cToken_info.decimal;
   const decimalBN = new anchor.BN("10").pow(new anchor.BN(decimal));
-  console.log(wei_value.toString());
   return wei_value.div(decimalBN);
 };
 
@@ -129,4 +128,15 @@ export const getTokenValue = async (
   const tokenValue = (tokenPrice * Number(amount)) / Number(decimalPow);
 
   return Number(tokenValue);
+};
+
+export const tokenBalance = async (connection, ata) => {
+  const accountInfo = await connection.getTokenAccountBalance(ata);
+  return accountInfo.value.uiAmount;
+};
+
+export const convert_from_wei_value_with_decimal = (wei_value, decimal) => {
+  const decimalBN = Math.pow(10, decimal);
+  const val = Number(wei_value) / Number(decimalBN);
+  return val;
 };

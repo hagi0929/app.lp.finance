@@ -15,6 +15,7 @@ const Tabs = ({
   wallet,
   OpenContractSnackbar,
   PriceHandler,
+  cbsUserInfo,
 }) => {
   const changeRadius = () => {
     document
@@ -81,7 +82,7 @@ const Tabs = ({
 
   return (
     <>
-      <BorrowTabWrapper pieLTV={0}>
+      <BorrowTabWrapper pieLTV={cbsUserInfo.LTV}>
         <div className="row mt-lg-5 mt-md-5 mt-3 mb-lg-5 mb-md-5 mb-5 borrow_tab_section d-flex justify-content-center">
           <div className="col-lg-6 col-md-10 col-12">
             <div className="row d-flex justify-content-center">
@@ -193,7 +194,7 @@ const Tabs = ({
             </div>
           </div>
           <div className="col-lg-6 col-12">
-            <Account />
+            <Account {...{ ...cbsUserInfo, publicKey }} />
           </div>
         </div>
       </BorrowTabWrapper>
