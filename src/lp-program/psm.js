@@ -45,7 +45,7 @@ export const burn_zSOL = async (
     const token_dest = getMint(tokenB);
 
     const configData = await program.account.config.fetch(config);
-    const feeAccount = configData.feeAccount;
+    const getFeeAccount = configData.feeAccount;
 
     const PDA = await PublicKey.findProgramAddress(
       [Buffer.from(SEED_TRV_PDA)],
@@ -56,7 +56,7 @@ export const burn_zSOL = async (
     const userCollateralAta = await getATAPublicKey(token_dest, user_wallet);
     const userZsolAta = await getATAPublicKey(zSOL_MINT, user_wallet);
     const trvcCollateralAta = await getATAPublicKey(token_dest, PDA[0]);
-    const feeAta = await getATAPublicKey(token_dest, feeAccount);
+    const feeAta = await getATAPublicKey(token_dest, getFeeAccount);
 
     await program.methods
       .burnZsol(convert_to_wei_value_with_decimal(amount, zSOL_DECIMAL))
@@ -103,6 +103,7 @@ export const burn_zSOL = async (
 export const mint_zSOL = async (
   wallet,
   tokenA,
+  tokenB,
   amount,
   setMessage,
   setAmount,
@@ -110,7 +111,7 @@ export const mint_zSOL = async (
   OpenContractSnackbar
 ) => {
   try {
-    OpenContractSnackbar(true, "Processing", `Start mint ${tokenA}...`);
+    OpenContractSnackbar(true, "Processing", `Start mint ${tokenB}...`);
 
     const program = getProgram(wallet, "lpIdl");
 
@@ -157,7 +158,7 @@ export const mint_zSOL = async (
     OpenContractSnackbar(
       true,
       "Success",
-      `Successfully Mint ${amount} ${tokenA}.`
+      `Successfully Mint ${amount} ${tokenB}.`
     );
 
     setMessage("Enter an amount");
@@ -168,7 +169,7 @@ export const mint_zSOL = async (
     OpenContractSnackbar(
       true,
       "Error",
-      `Failed Mint ${tokenA}. Please try again.`
+      `Failed Mint ${tokenB}. Please try again.`
     );
   }
 };

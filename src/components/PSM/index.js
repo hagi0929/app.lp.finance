@@ -42,8 +42,14 @@ const PSM = () => {
   });
 
   useMemo(() => {
-    setPaySelected({ ...PaySelected, balance: BalanceHandler?.zSOL });
-    setReceiveSelect({ ...ReceiveSelect, balance: BalanceHandler?.mSOL });
+    setPaySelected({
+      ...PaySelected,
+      balance: BalanceHandler[PaySelected.symbol],
+    });
+    setReceiveSelect({
+      ...ReceiveSelect,
+      balance: BalanceHandler[ReceiveSelect.symbol],
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BalanceHandler]);
 
@@ -106,6 +112,7 @@ const PSM = () => {
           await mint_zSOL(
             wallet,
             PaySelected.symbol,
+            ReceiveSelect.symbol,
             amount,
             setMessage,
             setAmount,
