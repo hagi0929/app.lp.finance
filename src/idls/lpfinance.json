@@ -604,6 +604,10 @@
         {
           "name": "amount",
           "type": "u64"
+        },
+        {
+          "name": "isMax",
+          "type": "bool"
         }
       ]
     },
@@ -705,6 +709,10 @@
         {
           "name": "amount",
           "type": "u64"
+        },
+        {
+          "name": "isMax",
+          "type": "bool"
         }
       ]
     },
@@ -781,6 +789,10 @@
         {
           "name": "amount",
           "type": "u64"
+        },
+        {
+          "name": "isMax",
+          "type": "bool"
         }
       ]
     },
@@ -837,6 +849,10 @@
         {
           "name": "amount",
           "type": "u64"
+        },
+        {
+          "name": "isMax",
+          "type": "bool"
         }
       ]
     },
@@ -913,6 +929,10 @@
         {
           "name": "amount",
           "type": "u64"
+        },
+        {
+          "name": "isMax",
+          "type": "bool"
         }
       ]
     },
@@ -1634,6 +1654,10 @@
           },
           {
             "name": "stsolAta",
+            "type": "publicKey"
+          },
+          {
+            "name": "adminPub",
             "type": "publicKey"
           }
         ]

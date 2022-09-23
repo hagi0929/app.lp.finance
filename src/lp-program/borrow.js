@@ -179,6 +179,8 @@ export const borrow_cbs = async (
 
     const tokenMint = getMint(symbol);
 
+    const is_max = false;
+
     const userAccountPDA = await PublicKey.findProgramAddress(
       [Buffer.from(SEED_PDA), Buffer.from(user_wallet.toBuffer())],
       program.programId
@@ -192,7 +194,7 @@ export const borrow_cbs = async (
     const userZsolAta = await getATAPublicKey(tokenMint, user_wallet);
 
     await program.methods
-      .borrow(convert_to_wei_value_with_decimal(amount, zSOL_DECIMAL))
+      .borrow(convert_to_wei_value_with_decimal(amount, zSOL_DECIMAL), is_max)
       .accounts({
         userAuthority: user_wallet,
         userAccount: userAccountPDA[0],
@@ -247,6 +249,8 @@ export const withdraw_cbs = async (
 
     const tokenMint = getMint(symbol);
 
+    const is_max = false;
+
     const userAccountPDA = await PublicKey.findProgramAddress(
       [Buffer.from(SEED_PDA), Buffer.from(user_wallet.toBuffer())],
       program.programId
@@ -278,7 +282,7 @@ export const withdraw_cbs = async (
 
     if (symbol !== "SOL") {
       await program.methods
-        .withdraw(convert_to_wei_value(tokenMint, amount))
+        .withdraw(convert_to_wei_value(tokenMint, amount), is_max)
         .accounts({
           userAuthority: user_wallet,
           userAccount: userAccountPDA[0],
@@ -312,7 +316,10 @@ export const withdraw_cbs = async (
       setAmount("");
     } else {
       await program.methods
-        .withdrawSol(convert_to_wei_value_with_decimal(amount, SOL_DECIMAL))
+        .withdrawSol(
+          convert_to_wei_value_with_decimal(amount, SOL_DECIMAL),
+          is_max
+        )
         .accounts({
           userAuthority: user_wallet,
           userAccount: userAccountPDA[0],
@@ -366,6 +373,8 @@ export const repay_cbs = async (
 
     const tokenMint = getMint(symbol);
 
+    const is_max = false;
+
     const userAccountPDA = await PublicKey.findProgramAddress(
       [Buffer.from(SEED_PDA), Buffer.from(user_wallet.toBuffer())],
       program.programId
@@ -388,7 +397,7 @@ export const repay_cbs = async (
 
     if (symbol !== "zSOL") {
       await program.methods
-        .repayWithCtoken(convert_to_wei_value(tokenMint, amount))
+        .repayWithCtoken(convert_to_wei_value(tokenMint, amount), is_max)
         .accounts({
           userAuthority: user_wallet,
           userAccount: userAccountPDA[0],
@@ -418,7 +427,10 @@ export const repay_cbs = async (
     } else {
       // repay_zsol
       await program.methods
-        .repayZsol(convert_to_wei_value_with_decimal(amount, zSOL_DECIMAL))
+        .repayZsol(
+          convert_to_wei_value_with_decimal(amount, zSOL_DECIMAL),
+          is_max
+        )
         .accounts({
           userAuthority: user_wallet,
           userAccount: userAccountPDA[0],

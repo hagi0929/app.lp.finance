@@ -18,8 +18,8 @@ import {
   zSOL_MINT,
   TYPE_LESS_DISCOUNT_RATE,
   getCollateralTokenSymbol,
-  mSOLMint,
   zSOL_DECIMAL,
+  getMint,
 } from "constants/global";
 
 // Get tokenInfo index for the specific token
@@ -149,8 +149,6 @@ export const fetch_user_infos = async (wallet) => {
     const connection = getConnection();
     const program = getProgram(wallet, "lpIdl");
 
-    const destToken = mSOLMint;
-
     const user_wallet = wallet.publicKey;
 
     const switchboardProgram = await loadSwitchboardProgram(
@@ -185,6 +183,15 @@ export const fetch_user_infos = async (wallet) => {
     // Borrowed Value
     const borrowed_value = await getBorrowedValue(switchboardProgram, userData);
     const PercentStandard = Number(100);
+    const zSOLAmount = userData.borrowedZsolAmount;
+    const borrow_infos = [
+      {
+        idx: 1,
+        amount: zSOLAmount,
+        value: borrowed_value,
+        name: "zSOL",
+      },
+    ];
 
     // LTV
     const LTV = (borrowed_value * PercentStandard) / total_deposited_value;
@@ -193,113 +200,155 @@ export const fetch_user_infos = async (wallet) => {
     const LiquidationThreshold =
       (total_borrowed_value * PercentStandard) / total_deposited_value;
 
-    // ------- Fetch MAX AMOUNT -------------------
-    // Max Borrowed amount
-    const MaxBorrowedValue = total_borrowed_value - borrowed_value;
-    const zSOL_price = await getSwitchboardPrice(
-      switchboardProgram,
-      switchboardSolAccount
-    );
-    const MaxBorrowedAmount = MaxBorrowedValue / zSOL_price;
-
-    // -- Max withdraw amount
-    const borrowed_val = total_borrowed_value - borrowed_value;
-    const cTokenIndex = getCTokenInfoIndex(cTokenInfos, destToken, totalCount);
-    const borrow_rate = cTokenInfos[cTokenIndex].borrowableMaxLtv;
-    const withdrawableAmount =
-      (borrowed_val * PercentStandard) / Number(borrow_rate);
-    const depositedAmountWei = userData.depositedAmounts[cTokenIndex];
-    const depositedAmount = convert_from_wei_value(
-      destToken,
-      depositedAmountWei
-    );
-    const MaxWithdrawAmount = Math.min(withdrawableAmount, depositedAmount);
-
-    // cal Max Deposited Amount
-    const user_ata = await getATAPublicKey(destToken, user_wallet);
-    const user_token_balance = await tokenBalance(connection, user_ata);
-    const MaxDepositedAmount = await getMaxDepositAmount(
-      userData,
-      cTokenInfos,
-      cTokenIndex,
-      user_token_balance
-    );
-
-    //Max Repay amount
-    const loan_zSOLAmountWei = userData.borrowedZsolAmount;
-    const loan_zSOLAmount = convert_from_wei_value_with_decimal(
-      loan_zSOLAmountWei,
-      zSOL_DECIMAL
-    );
-    const solPrice = await getSwitchboardPrice(
-      switchboardProgram,
-      switchboardSolAccount
-    );
-    const dest_token_switchboard_pub =
-      cTokenInfos[cTokenIndex].switchboardAccPub;
-
-    const dest_token_price = await getSwitchboardPrice(
-      switchboardProgram,
-      dest_token_switchboard_pub
-    );
-
-    let MaxRepayAmount;
-
-    if (destToken.equals(zSOL_MINT)) {
-      MaxRepayAmount = userData.borrowedZsolAmount;
-    } else {
-      MaxRepayAmount =
-        (loan_zSOLAmount * solPrice * TYPE_LESS_DISCOUNT_RATE) /
-        dest_token_price;
-    }
-
-    // console.log(
-    //   "TotalDeposited",
-    //   total_deposited_value,
-    //   "CollateralInfos:",
-    //   collateral_infos,
-    //   "TotalBorrowed:",
-    //   borrowed_value,
-    //   "BorrowLimit:",
-    //   total_borrowed_value,
-    //   "LTV",
-    //   LTV,
-    //   "BorrowThreshold",
-    //   BorrowThreshold,
-    //   "MaxBorrowedAmount",
-    //   MaxBorrowedAmount,
-    //   "MaxWithdrawAmount",
-    //   MaxWithdrawAmount,
-    //   "MaxDepositedAmount",
-    //   MaxDepositedAmount,
-    //   "MaxRepayAmount",
-    //   MaxRepayAmount
-    // );
-
     return {
       TotalDeposited: total_deposited_value,
       CollateralInfos: collateral_infos,
       TotalBorrowed: borrowed_value,
+      BorrowedInfos: borrow_infos,
       BorrowLimit: total_borrowed_value,
       LTV,
       LiquidationThreshold,
-      MaxBorrowedAmount,
-      MaxWithdrawAmount,
-      MaxDepositedAmount,
-      MaxRepayAmount,
     };
   } catch (error) {
     return {
       TotalDeposited: 0,
       CollateralInfos: [],
       TotalBorrowed: 0,
+      BorrowedInfos: [],
       BorrowLimit: 0,
       LTV: 0,
       LiquidationThreshold: 0,
-      MaxBorrowedAmount: 0,
-      MaxWithdrawAmount: 0,
-      MaxDepositedAmount: 0,
-      MaxRepayAmount: 0,
     };
+  }
+};
+
+export const calculateMaxAmount = async (wallet, symbol, type) => {
+  try {
+    const network = getNetwork();
+    const connection = getConnection();
+    const program = getProgram(wallet, "lpIdl");
+
+    const destToken = getMint(symbol);
+
+    const user_wallet = wallet.publicKey;
+
+    if (user_wallet) {
+      const switchboardProgram = await loadSwitchboardProgram(
+        network,
+        connection,
+        Keypair.fromSeed(new Uint8Array(32).fill(1))
+      );
+
+      const userAccountPDA = await PublicKey.findProgramAddress(
+        [Buffer.from(SEED_PDA), Buffer.from(user_wallet.toBuffer())],
+        program.programId
+      );
+
+      const userData = await program.account.userAccount.fetch(
+        userAccountPDA[0]
+      );
+
+      const cToken_info_accounts_data =
+        await program.account.cTokenInfoAccounts.fetch(cTokenInfoAccounts);
+
+      const cTokenInfos = cToken_info_accounts_data.ctokenInfos;
+      const totalCount = cToken_info_accounts_data.totalCount;
+
+      const cTokenIndex = getCTokenInfoIndex(
+        cTokenInfos,
+        destToken,
+        totalCount
+      );
+
+      const { total_borrowed_value } = await getCollateralsValue(
+        switchboardProgram,
+        userData,
+        cTokenInfos,
+        totalCount
+      );
+      const borrowed_value = await getBorrowedValue(
+        switchboardProgram,
+        userData
+      );
+      const PercentStandard = Number(100);
+
+      //=====calculate max value for symbol==========
+      let MaxAmount;
+
+      if (type === "Deposit") {
+        // cal Max Deposited Amount
+        const user_ata = await getATAPublicKey(destToken, user_wallet);
+        const user_token_balance = await tokenBalance(connection, user_ata);
+        const MaxDepositedAmount = await getMaxDepositAmount(
+          userData,
+          cTokenInfos,
+          cTokenIndex,
+          user_token_balance
+        );
+        MaxAmount = MaxDepositedAmount;
+      } else if (type === "Borrow") {
+        // Max Borrowed amount
+        const MaxBorrowedValue = total_borrowed_value - borrowed_value;
+        const zSOL_price = await getSwitchboardPrice(
+          switchboardProgram,
+          switchboardSolAccount
+        );
+
+        const MaxBorrowedAmount = MaxBorrowedValue / zSOL_price;
+        MaxAmount = MaxBorrowedAmount;
+      } else if (type === "Withdraw") {
+        // -- Max withdraw amount
+        const borrowed_val = total_borrowed_value - borrowed_value;
+        const borrow_rate = cTokenInfos[cTokenIndex].borrowableMaxLtv;
+        const withdrawableAmount =
+          (borrowed_val * PercentStandard) / Number(borrow_rate);
+        const depositedAmountWei = userData.depositedAmounts[cTokenIndex];
+        const depositedAmount = convert_from_wei_value(
+          destToken,
+          depositedAmountWei
+        );
+        const MaxWithdrawAmount = Math.min(withdrawableAmount, depositedAmount);
+        MaxAmount = MaxWithdrawAmount;
+      } else if (type === "Repay") {
+        //Max Repay amount
+        const loan_zSOLAmountWei = userData.borrowedZsolAmount;
+        const loan_zSOLAmount = convert_from_wei_value_with_decimal(
+          loan_zSOLAmountWei,
+          zSOL_DECIMAL
+        );
+        const solPrice = await getSwitchboardPrice(
+          switchboardProgram,
+          switchboardSolAccount
+        );
+        const dest_token_switchboard_pub =
+          cTokenInfos[cTokenIndex].switchboardAccPub;
+
+        const dest_token_price = await getSwitchboardPrice(
+          switchboardProgram,
+          dest_token_switchboard_pub
+        );
+
+        let repay_amount;
+
+        if (destToken.equals(zSOL_MINT)) {
+          repay_amount = userData.borrowedZsolAmount;
+        } else {
+          repay_amount =
+            (loan_zSOLAmount * solPrice * TYPE_LESS_DISCOUNT_RATE) /
+            dest_token_price;
+        }
+        MaxAmount = repay_amount;
+      }
+
+      if (MaxAmount >= 0) {
+        return MaxAmount;
+      } else {
+        return 0;
+      }
+    } else {
+      return 0;
+    }
+  } catch (error) {
+    return 0;
   }
 };

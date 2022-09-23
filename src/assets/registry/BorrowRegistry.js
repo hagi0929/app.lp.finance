@@ -34,14 +34,6 @@ export var DepositTokens = [
     symbol: "UXD",
   },
   {
-    address: "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt",
-    chainId: 101,
-    decimals: 6,
-    logoURI: TokenImgRegistry.SRM,
-    name: "Serum",
-    symbol: "SRM",
-  },
-  {
     address: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
     chainId: 101,
     decimals: 9,
@@ -121,14 +113,6 @@ export var WithdrawTokens = [
     logoURI: TokenImgRegistry.UXD,
     name: "UXD Stablecoin",
     symbol: "UXD",
-  },
-  {
-    address: "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt",
-    chainId: 101,
-    decimals: 6,
-    logoURI: TokenImgRegistry.SRM,
-    name: "Serum",
-    symbol: "SRM",
   },
   {
     address: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",

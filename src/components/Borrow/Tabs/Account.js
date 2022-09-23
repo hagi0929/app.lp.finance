@@ -9,6 +9,7 @@ const Account = ({
   BorrowLimit,
   LiquidationThreshold,
   LTV,
+  BorrowedInfos,
   CollateralInfos,
   publicKey,
 }) => {
@@ -20,15 +21,16 @@ const Account = ({
         id: 1,
         title: "Collateral",
         value: "$0",
-        CollateralInfos,
+        infos: CollateralInfos,
         TotalDeposited: `$${numFormatter(TotalDeposited)}`,
         css: "3px solid rgba(255, 255, 255, 0.2)",
       },
       {
         id: 2,
         title: "Borrowed",
-        TotalBorrowed: `$${numFormatter(TotalBorrowed)}`,
         value: "$0",
+        infos: BorrowedInfos,
+        TotalBorrowed: `$${numFormatter(TotalBorrowed)}`,
         css: "3px solid rgba(255, 255, 255, 0.2)",
       },
       {
@@ -53,7 +55,14 @@ const Account = ({
     setList(AccountTable);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [TotalDeposited, TotalBorrowed, BorrowLimit, LiquidationThreshold, LTV]);
+  }, [
+    TotalDeposited,
+    TotalBorrowed,
+    BorrowLimit,
+    LiquidationThreshold,
+    LTV,
+    BorrowedInfos,
+  ]);
 
   return (
     <>
@@ -120,11 +129,11 @@ const Account = ({
                           </p>
                         </td>
                         <td className="right text-right">
-                          {ind === 0 ? (
+                          {ind === 0 || ind === 1 ? (
                             <>
-                              {val.CollateralInfos.length > 0 ? (
+                              {val.infos.length > 0 ? (
                                 <>
-                                  {val.CollateralInfos.map((list, index) => {
+                                  {val.infos.map((list, index) => {
                                     if (list.amount) {
                                       return (
                                         <label key={list.idx}>

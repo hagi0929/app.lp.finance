@@ -50,10 +50,6 @@ export const UXDMint = new PublicKey(
   "EN2CV9nCnH9nBF9GyGYG9B3haNriNBkrPo8jF4c6mzUi"
 );
 
-export const SRMMint = new PublicKey(
-  "3KNSn9AUMUpYzGkN7K8FZaidiBZqVbz8bGtJh8SVFSJq"
-);
-
 export const SAMOMint = new PublicKey(
   "5rUhzmWf8pyhJvjYfbQ8xPJJHDJgkeZBUDWN7rd48Hux"
 );
@@ -80,10 +76,6 @@ export const stSOL_Account = new PublicKey(
 export const UXD_Account = new PublicKey(
   "Bt1hEbY62aMriY1SyQqbeZbm8VmSbQVGBFzSzMuVNWzN"
 );
-
-export const SRM_Account = new PublicKey(
-  "3NBReDRTLKMQEKiLD5tGcx4kXbTf88b7f2xLS9UuGjym"
-);
 // need this
 export const SAMO_Account = new PublicKey(
   "DZYZkJcFJThN9nZy4nK3hrHra1LaWeiyoZ9SMdLFEFpY"
@@ -99,9 +91,7 @@ export const switchboardSolAccount = new PublicKey(
 export const switchboardMsolAccount = new PublicKey(
   "67xNRwcqQMzghgDjTB4Vr7YbBWH1iimeYpTK8ampm5xs"
 );
-export const switchboardSrmAccount = new PublicKey(
-  "992moaMQKs32GKZ9dxi8keyM2bUmbrwBZpK4p2K6X5Vs"
-);
+
 export const switchboardStsolAccount = new PublicKey(
   "HGMXgS2LbzotxsRvmG4wuRWaJ6xn6c6hLfXgo9THVKp8"
 );
@@ -238,8 +228,6 @@ export const getMint = (token) => {
     mint = stSOLMint;
   } else if (token === "UXD") {
     mint = UXDMint;
-  } else if (token === "SRM") {
-    mint = SRMMint;
   } else if (token === "SAMO") {
     mint = SAMOMint;
   } else if (token === "zSOL") {
@@ -260,8 +248,6 @@ export const getSwitchboardAccount = (token) => {
     Account = switchboardStsolAccount;
   } else if (token === "UXD") {
     Account = switchboardUxdAccount;
-  } else if (token === "SRM") {
-    Account = switchboardSrmAccount;
   } else if (token === "SAMO") {
     Account = switchboardSamoAccount;
   }
@@ -273,7 +259,6 @@ export const CollateralTokenName = {
   MSOL: 1,
   STSOL: 2,
   UXD: 3,
-  SRM: 4,
   SAMO: 5,
 };
 
@@ -282,7 +267,6 @@ export const getCollateralTokenName = async (idx) => {
   else if (CollateralTokenName.MSOL === idx) return "MSOL";
   else if (CollateralTokenName.STSOL === idx) return "STSOL";
   else if (CollateralTokenName.UXD === idx) return "UXD";
-  else if (CollateralTokenName.SRM === idx) return "SRM";
   else if (CollateralTokenName.SAMO === idx) return "SAMO";
   return undefined;
 };

@@ -8,6 +8,8 @@ import { TokenImgRegistry } from "assets/registry";
 import { repay_cbs } from "lp-program/borrow";
 import { blockInvalidChar } from "helper";
 import WalletButton from "components/globalComponents/WalletButton";
+import { calculateMaxAmount } from "utils/lp-protocol/get_user_info";
+import { CalcFiveDigit } from "helper";
 
 const Repay = ({
   publicKey,
@@ -17,20 +19,27 @@ const Repay = ({
   wallet,
   OpenContractSnackbar,
 }) => {
-  const [isModel, setIsModel] = useState(false);
-  const [amount, setAmount] = useState("");
-  const [message, setMessage] = useState("Repay");
-  const [Required, setRequired] = useState(false);
   const [selected, setSelected] = useState({
     logoURI: TokenImgRegistry.zSOL,
     symbol: "zSOL",
     balance: 0,
   });
+  const [isModel, setIsModel] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [message, setMessage] = useState("Repay");
+  const [Required, setRequired] = useState(false);
+  const [MaxLoading, setMaxLoading] = useState(false);
 
   useMemo(() => {
     setSelected({ ...selected, balance: BalanceHandler.zSOL });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BalanceHandler]);
+
+  useEffect(() => {
+    setMessage("Repay");
+    setAmount("");
+    setRequired(false);
+  }, [selected]);
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
@@ -44,30 +53,55 @@ const Repay = ({
     }
   };
 
+  const CalculateMax = async () => {
+    setMaxLoading(true);
+    const getMaxAmount = await calculateMaxAmount(
+      wallet,
+      selected.symbol,
+      "Repay"
+    );
+    if (getMaxAmount) {
+      setAmount(CalcFiveDigit(getMaxAmount));
+      setMaxLoading(false);
+      setMessage("Repay");
+      setRequired(true);
+    } else {
+      setAmount(0);
+      setMaxLoading(false);
+    }
+  };
+
   const handleProgram = async () => {
     if (amount > 0) {
       if (Required && publicKey) {
-        await repay_cbs(
+        setMaxLoading(true);
+        const getMaxAmount = await calculateMaxAmount(
           wallet,
           selected.symbol,
-          amount,
-          setMessage,
-          setRequired,
-          setAmount,
-          OpenContractSnackbar
+          "Repay"
         );
+        if (amount <= getMaxAmount) {
+          setMaxLoading(false);
+          await repay_cbs(
+            wallet,
+            selected.symbol,
+            amount,
+            setMessage,
+            setRequired,
+            setAmount,
+            OpenContractSnackbar
+          );
+        } else {
+          setMaxLoading(false);
+          setMessage("Repay amount exceeded");
+          setRequired(false);
+        }
       }
     } else {
       setMessage("Enter an amount");
       setRequired(false);
     }
   };
-
-  useEffect(() => {
-    setMessage("Repay");
-    setAmount("");
-    setRequired(false);
-  }, [selected]);
 
   return (
     <>
@@ -81,13 +115,19 @@ const Repay = ({
                     name="amount"
                     id="amount"
                     type="number"
-                    className={publicKey ? null : "not-allowed"}
                     placeholder="0.0"
-                    disabled={publicKey ? false : true}
                     value={amount}
                     onChange={handleAmount}
                     onKeyDown={blockInvalidChar}
                     active={2}
+                    disabled={!publicKey ? true : MaxLoading ? true : false}
+                    className={
+                      !publicKey
+                        ? "not-allowed"
+                        : MaxLoading
+                        ? "not-allowed"
+                        : null
+                    }
                     p="0.7rem 0rem 0.7rem 3.5rem"
                     br="10px"
                   />
@@ -98,7 +138,15 @@ const Repay = ({
                       p="0.3rem 0.6rem"
                       br="4px"
                       size="0.8rem"
-                      className="not-allowed"
+                      disabled={!publicKey ? true : MaxLoading ? true : false}
+                      className={
+                        !publicKey
+                          ? "not-allowed"
+                          : MaxLoading
+                          ? "not-allowed"
+                          : null
+                      }
+                      onClick={CalculateMax}
                     >
                       Max
                     </Button>
@@ -141,8 +189,14 @@ const Repay = ({
                     active={1}
                     p="0.6rem 2rem"
                     br="10px"
-                    className={!publicKey ? "not-allowed" : null}
-                    disabled={!publicKey ? true : false}
+                    disabled={!publicKey ? true : MaxLoading ? true : false}
+                    className={
+                      !publicKey
+                        ? "not-allowed"
+                        : MaxLoading
+                        ? "not-allowed"
+                        : null
+                    }
                     onClick={() => handleProgram()}
                   >
                     {message}

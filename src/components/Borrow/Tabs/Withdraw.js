@@ -8,6 +8,8 @@ import { TokenImgRegistry } from "assets/registry";
 import { withdraw_cbs } from "lp-program/borrow";
 import { blockInvalidChar } from "helper";
 import WalletButton from "components/globalComponents/WalletButton";
+import { calculateMaxAmount } from "utils/lp-protocol/get_user_info";
+import { CalcFiveDigit } from "helper";
 
 const Withdraw = ({
   publicKey,
@@ -17,24 +19,30 @@ const Withdraw = ({
   wallet,
   OpenContractSnackbar,
 }) => {
-  const [isModel, setIsModel] = useState(false);
-  const [amount, setAmount] = useState("");
-  const [message, setMessage] = useState("Withdraw");
-  const [Required, setRequired] = useState(false);
   const [selected, setSelected] = useState({
     logoURI: TokenImgRegistry.SOL,
     symbol: "SOL",
     balance: 0,
   });
+  const [isModel, setIsModel] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [message, setMessage] = useState("Withdraw");
+  const [Required, setRequired] = useState(false);
+  const [MaxLoading, setMaxLoading] = useState(false);
 
   useMemo(() => {
     setSelected({ ...selected, balance: BalanceHandler.SOL });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BalanceHandler]);
 
+  useEffect(() => {
+    setMessage("Withdraw");
+    setAmount("");
+    setRequired(false);
+  }, [selected]);
+
   const handleAmount = (e) => {
     setAmount(e.target.value);
-
     if (e.target.value > 0) {
       setMessage("Withdraw");
       setRequired(true);
@@ -44,30 +52,55 @@ const Withdraw = ({
     }
   };
 
+  const CalculateMax = async () => {
+    setMaxLoading(true);
+    const getMaxAmount = await calculateMaxAmount(
+      wallet,
+      selected.symbol,
+      "Withdraw"
+    );
+    if (getMaxAmount) {
+      setAmount(CalcFiveDigit(getMaxAmount));
+      setMaxLoading(false);
+      setMessage("Withdraw");
+      setRequired(true);
+    } else {
+      setAmount(0);
+      setMaxLoading(false);
+    }
+  };
+
   const handleProgram = async () => {
     if (amount > 0) {
       if (Required && publicKey) {
-        await withdraw_cbs(
+        setMaxLoading(true);
+        const getMaxAmount = await calculateMaxAmount(
           wallet,
           selected.symbol,
-          amount,
-          setMessage,
-          setRequired,
-          setAmount,
-          OpenContractSnackbar
+          "Withdraw"
         );
+        if (amount <= getMaxAmount) {
+          setMaxLoading(false);
+          await withdraw_cbs(
+            wallet,
+            selected.symbol,
+            amount,
+            setMessage,
+            setRequired,
+            setAmount,
+            OpenContractSnackbar
+          );
+        } else {
+          setMaxLoading(false);
+          setMessage("Withdraw amount exceeded");
+          setRequired(false);
+        }
       }
     } else {
       setMessage("Enter an amount");
       setRequired(false);
     }
   };
-
-  useEffect(() => {
-    setMessage("Withdraw");
-    setAmount("");
-    setRequired(false);
-  }, [selected]);
 
   return (
     <>
@@ -81,13 +114,19 @@ const Withdraw = ({
                     name="amount"
                     id="amount"
                     type="number"
-                    className={publicKey ? null : "not-allowed"}
                     placeholder="0.0"
-                    disabled={publicKey ? false : true}
                     active={2}
                     value={amount}
                     onChange={handleAmount}
                     onKeyDown={blockInvalidChar}
+                    disabled={!publicKey ? true : MaxLoading ? true : false}
+                    className={
+                      !publicKey
+                        ? "not-allowed"
+                        : MaxLoading
+                        ? "not-allowed"
+                        : null
+                    }
                     p="0.7rem 0rem 0.7rem 3.5rem"
                     br="10px"
                   />
@@ -98,7 +137,15 @@ const Withdraw = ({
                       p="0.3rem 0.6rem"
                       br="4px"
                       size="0.8rem"
-                      className="not-allowed"
+                      disabled={!publicKey ? true : MaxLoading ? true : false}
+                      className={
+                        !publicKey
+                          ? "not-allowed"
+                          : MaxLoading
+                          ? "not-allowed"
+                          : null
+                      }
+                      onClick={CalculateMax}
                     >
                       Max
                     </Button>
@@ -141,8 +188,14 @@ const Withdraw = ({
                     active={1}
                     p="0.6rem 2rem"
                     br="10px"
-                    disabled={!publicKey ? true : false}
-                    className={!publicKey ? "not-allowed" : null}
+                    disabled={!publicKey ? true : MaxLoading ? true : false}
+                    className={
+                      !publicKey
+                        ? "not-allowed"
+                        : MaxLoading
+                        ? "not-allowed"
+                        : null
+                    }
                     onClick={() => handleProgram()}
                   >
                     {message}

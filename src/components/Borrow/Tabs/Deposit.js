@@ -9,6 +9,7 @@ import { deposit_cbs } from "lp-program/borrow";
 import { blockInvalidChar } from "helper";
 import WalletButton from "components/globalComponents/WalletButton";
 import { CalcFiveDigit } from "helper";
+import { calculateMaxAmount } from "utils/lp-protocol/get_user_info";
 
 const Deposit = ({
   publicKey,
@@ -19,17 +20,17 @@ const Deposit = ({
   OpenContractSnackbar,
   PriceHandler,
 }) => {
-  const [isModel, setIsModel] = useState(false);
-  const [message, setMessage] = useState("Deposit");
-  const [amount, setAmount] = useState("");
-  const [Required, setRequired] = useState(false);
-
   const [selected, setSelected] = useState({
     logoURI: TokenImgRegistry.SOL,
     symbol: "SOL",
     balance: 0,
     price: 0,
   });
+  const [isModel, setIsModel] = useState(false);
+  const [message, setMessage] = useState("Deposit");
+  const [amount, setAmount] = useState("");
+  const [MaxLoading, setMaxLoading] = useState(false);
+  const [Required, setRequired] = useState(false);
 
   useMemo(() => {
     setSelected({
@@ -46,6 +47,12 @@ const Deposit = ({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [PriceHandler]);
+
+  useEffect(() => {
+    setMessage("Deposit");
+    setAmount("");
+    setRequired(false);
+  }, [selected]);
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
@@ -69,6 +76,22 @@ const Deposit = ({
     }
   };
 
+  const CalculateMax = async () => {
+    setMaxLoading(true);
+    const getMaxAmount = await calculateMaxAmount(
+      wallet,
+      selected.symbol,
+      "Deposit"
+    );
+    if (getMaxAmount) {
+      setAmount(CalcFiveDigit(getMaxAmount));
+      setMaxLoading(false);
+    } else {
+      setAmount(0);
+      setMaxLoading(false);
+    }
+  };
+
   const handleProgram = async () => {
     if (amount > 0) {
       if (Required && publicKey) {
@@ -88,12 +111,6 @@ const Deposit = ({
     }
   };
 
-  useEffect(() => {
-    setMessage("Deposit");
-    setAmount("");
-    setRequired(false);
-  }, [selected]);
-
   return (
     <>
       <div className="row deposit d-flex justify-content-center">
@@ -106,13 +123,19 @@ const Deposit = ({
                     name="amount"
                     id="amount"
                     type="number"
-                    className={publicKey ? null : "not-allowed"}
                     placeholder="0.0"
-                    disabled={publicKey ? false : true}
                     value={amount}
                     onChange={(e) => handleAmount(e)}
                     onKeyDown={blockInvalidChar}
                     active={2}
+                    disabled={!publicKey ? true : MaxLoading ? true : false}
+                    className={
+                      !publicKey
+                        ? "not-allowed"
+                        : MaxLoading
+                        ? "not-allowed"
+                        : null
+                    }
                     p="0.7rem 0rem 0.7rem 3.5rem"
                     br="10px"
                   />
@@ -123,7 +146,15 @@ const Deposit = ({
                       p="0.3rem 0.6rem"
                       br="4px"
                       size="0.8rem"
-                      className="not-allowed"
+                      disabled={!publicKey ? true : MaxLoading ? true : false}
+                      className={
+                        !publicKey
+                          ? "not-allowed"
+                          : MaxLoading
+                          ? "not-allowed"
+                          : null
+                      }
+                      onClick={CalculateMax}
                     >
                       Max
                     </Button>
@@ -173,8 +204,14 @@ const Deposit = ({
                     active={1}
                     p="0.6rem 2rem"
                     br="10px"
-                    disabled={!publicKey ? true : false}
-                    className={!publicKey ? "not-allowed" : null}
+                    disabled={!publicKey ? true : MaxLoading ? true : false}
+                    className={
+                      !publicKey
+                        ? "not-allowed"
+                        : MaxLoading
+                        ? "not-allowed"
+                        : null
+                    }
                     onClick={() => handleProgram()}
                   >
                     {message}

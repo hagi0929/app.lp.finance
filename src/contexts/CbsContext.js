@@ -21,13 +21,10 @@ export const CbsProvider = ({ children }) => {
     TotalDeposited: 0,
     CollateralInfos: [],
     TotalBorrowed: 0,
+    BorrowedInfos: [],
     BorrowLimit: 0,
     LTV: 0,
     LiquidationThreshold: 0,
-    MaxBorrowedAmount: 0,
-    MaxWithdrawAmount: 0,
-    MaxDepositedAmount: 0,
-    MaxRepayAmount: 0,
   });
 
   const handleCbsInfo = async () => {
@@ -48,26 +45,20 @@ export const CbsProvider = ({ children }) => {
       TotalDeposited,
       CollateralInfos,
       TotalBorrowed,
+      BorrowedInfos,
       BorrowLimit,
       LTV,
       LiquidationThreshold,
-      MaxBorrowedAmount,
-      MaxWithdrawAmount,
-      MaxDepositedAmount,
-      MaxRepayAmount,
     } = await fetch_user_infos(wallet);
 
     setCbsUserInfo({
       TotalDeposited,
       CollateralInfos,
       TotalBorrowed,
+      BorrowedInfos,
       BorrowLimit,
       LTV,
       LiquidationThreshold,
-      MaxBorrowedAmount,
-      MaxWithdrawAmount,
-      MaxDepositedAmount,
-      MaxRepayAmount,
     });
   };
 
@@ -98,13 +89,10 @@ export const CbsProvider = ({ children }) => {
         TotalDeposited: 0,
         CollateralInfos: [],
         TotalBorrowed: 0,
+        BorrowedInfos: [],
         BorrowLimit: 0,
         LTV: 0,
         LiquidationThreshold: 0,
-        MaxBorrowedAmount: 0,
-        MaxWithdrawAmount: 0,
-        MaxDepositedAmount: 0,
-        MaxRepayAmount: 0,
       });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

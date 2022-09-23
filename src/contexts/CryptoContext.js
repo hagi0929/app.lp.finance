@@ -14,7 +14,6 @@ export const CryptoProvider = ({ children }) => {
   const [PriceHandler, setPriceHandler] = useState({
     SAMO: 0,
     SOL: 0,
-    SRM: 0,
     UXD: 0,
     mSOL: 0,
     stSOL: 0,
@@ -23,7 +22,6 @@ export const CryptoProvider = ({ children }) => {
   const [BalanceHandler, setBalanceHandler] = useState({
     SAMO: 0,
     SOL: 0,
-    SRM: 0,
     UXD: 0,
     mSOL: 0,
     stSOL: 0,
@@ -65,7 +63,6 @@ export const CryptoProvider = ({ children }) => {
       setPriceHandler({
         SAMO: 0,
         SOL: 0,
-        SRM: 0,
         UXD: 0,
         mSOL: 0,
         stSOL: 0,
@@ -82,7 +79,6 @@ export const CryptoProvider = ({ children }) => {
       setBalanceHandler({
         SAMO: 0,
         SOL: 0,
-        SRM: 0,
         UXD: 0,
         mSOL: 0,
         stSOL: 0,

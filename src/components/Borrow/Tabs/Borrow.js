@@ -8,6 +8,8 @@ import { TokenImgRegistry } from "assets/registry";
 import { borrow_cbs } from "lp-program/borrow";
 import { blockInvalidChar } from "helper";
 import WalletButton from "components/globalComponents/WalletButton";
+import { calculateMaxAmount } from "utils/lp-protocol/get_user_info";
+import { CalcFiveDigit } from "helper";
 
 const Borrow = ({
   publicKey,
@@ -17,45 +19,37 @@ const Borrow = ({
   wallet,
   OpenContractSnackbar,
 }) => {
-  const [isModel, setIsModel] = useState(false);
-  const [amount, setAmount] = useState("");
-  const [message, setMessage] = useState("Borrow");
-  const [Required, setRequired] = useState(false);
   const [selected, setSelected] = useState({
     logoURI: TokenImgRegistry.zSOL,
     symbol: "zSOL",
     balance: 0,
   });
+  const [isModel, setIsModel] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [message, setMessage] = useState("Borrow");
+  const [Required, setRequired] = useState(false);
+  const [MaxLoading, setMaxLoading] = useState(false);
 
   useMemo(() => {
     setSelected({ ...selected, balance: BalanceHandler.zSOL });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BalanceHandler]);
 
+  useEffect(() => {
+    setMessage("Borrow");
+    setAmount("");
+    setRequired(false);
+  }, [selected]);
+
   const handleAmount = (e) => {
     setAmount(e.target.value);
-
     if (e.target.value > 0) {
-      setMessage("Borrow");
-      setRequired(true);
-    } else {
-      setMessage("Enter an amount");
-      setRequired(false);
-    }
-  };
-
-  const handleProgram = async () => {
-    if (amount > 0) {
-      if (Required && publicKey) {
-        await borrow_cbs(
-          wallet,
-          selected.symbol,
-          amount,
-          setMessage,
-          setRequired,
-          setAmount,
-          OpenContractSnackbar
-        );
+      if (e.target.value <= 100) {
+        setMessage("Borrow");
+        setRequired(true);
+      } else {
+        setMessage("Amount should be less then 100");
+        setRequired(false);
       }
     } else {
       setMessage("Enter an amount");
@@ -63,11 +57,55 @@ const Borrow = ({
     }
   };
 
-  useEffect(() => {
-    setMessage("Borrow");
-    setAmount("");
-    setRequired(false);
-  }, [selected]);
+  const CalculateMax = async () => {
+    setMaxLoading(true);
+    const getMaxAmount = await calculateMaxAmount(
+      wallet,
+      selected.symbol,
+      "Borrow"
+    );
+    if (getMaxAmount) {
+      setAmount(CalcFiveDigit(getMaxAmount));
+      setMaxLoading(false);
+      setMessage("Borrow");
+      setRequired(true);
+    } else {
+      setAmount(0);
+      setMaxLoading(false);
+    }
+  };
+
+  const handleProgram = async () => {
+    if (amount > 0) {
+      if (Required && publicKey) {
+        setMaxLoading(true);
+        const getMaxAmount = await calculateMaxAmount(
+          wallet,
+          selected.symbol,
+          "Borrow"
+        );
+        if (amount <= getMaxAmount) {
+          setMaxLoading(false);
+          await borrow_cbs(
+            wallet,
+            selected.symbol,
+            amount,
+            setMessage,
+            setRequired,
+            setAmount,
+            OpenContractSnackbar
+          );
+        } else {
+          setMaxLoading(false);
+          setMessage("Borrow amount exceeded");
+          setRequired(false);
+        }
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
 
   return (
     <>
@@ -81,13 +119,19 @@ const Borrow = ({
                     name="amount"
                     id="amount"
                     type="number"
-                    className={publicKey ? null : "not-allowed"}
                     placeholder="0.0"
-                    disabled={publicKey ? false : true}
                     value={amount}
                     onChange={handleAmount}
                     onKeyDown={blockInvalidChar}
                     active={2}
+                    disabled={!publicKey ? true : MaxLoading ? true : false}
+                    className={
+                      !publicKey
+                        ? "not-allowed"
+                        : MaxLoading
+                        ? "not-allowed"
+                        : null
+                    }
                     p="0.7rem 0rem 0.7rem 3.5rem"
                     br="10px"
                   />
@@ -98,7 +142,15 @@ const Borrow = ({
                       p="0.3rem 0.6rem"
                       br="4px"
                       size="0.8rem"
-                      className="not-allowed"
+                      disabled={!publicKey ? true : MaxLoading ? true : false}
+                      className={
+                        !publicKey
+                          ? "not-allowed"
+                          : MaxLoading
+                          ? "not-allowed"
+                          : null
+                      }
+                      onClick={CalculateMax}
                     >
                       Max
                     </Button>
@@ -141,8 +193,14 @@ const Borrow = ({
                     active={1}
                     p="0.6rem 2rem"
                     br="10px"
-                    disabled={!publicKey ? true : false}
-                    className={!publicKey ? "not-allowed" : null}
+                    disabled={!publicKey ? true : MaxLoading ? true : false}
+                    className={
+                      !publicKey
+                        ? "not-allowed"
+                        : MaxLoading
+                        ? "not-allowed"
+                        : null
+                    }
                     onClick={() => handleProgram()}
                   >
                     {message}

@@ -67,21 +67,6 @@ export var SwapTokens = [
     },
   },
   {
-    address: "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt",
-    chainId: 101,
-    decimals: 6,
-    logoURI: TokenImgRegistry.SRM,
-    name: "Serum",
-    symbol: "SRM",
-    extensions: {
-      coingeckoId: "serum",
-      serumV3Usdc: "ByRys5tuUWDgL73G8JBAEfkdFf8JWBzPBDHsBVQ5vbQA",
-      serumV3Usdt: "AtNnsY1AyRERWJ8xCskfz38YdvruWVJQUVXgScC1iPb",
-      waterfallbot: "https://bit.ly/SRMwaterfall",
-      website: "https://projectserum.com/",
-    },
-  },
-  {
     address: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
     chainId: 101,
     decimals: 9,
@@ -116,11 +101,6 @@ export const coinGeckoList = [
     id: "uxd-stablecoin",
     name: "UXD Stablecoin",
     symbol: "uxd",
-  },
-  {
-    id: "serum",
-    name: "Serum",
-    symbol: "srm",
   },
   {
     id: "samoyedcoin",
