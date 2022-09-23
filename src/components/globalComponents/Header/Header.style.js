@@ -115,7 +115,7 @@ const HeaderWrapper = styled.div`
 
           .active {
             position: relative;
-            color: ${(props) => props.theme.BodyMainColor} !important;
+            color: ${(props) => props.theme.BodyTraceryBg} !important;
             font-weight: 500;
             font-size: 1rem;
             text-align: center;
@@ -132,7 +132,7 @@ const HeaderWrapper = styled.div`
               width: 100%;
               height: 2px;
               opacity: 1;
-              background: ${(props) => props.theme.BodyMainColor};
+              background: ${(props) => props.theme.BodyTraceryBg};
               transition: 450ms all;
             }
           }

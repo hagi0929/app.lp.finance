@@ -2,12 +2,16 @@ import React from "react";
 import TreasuryWrapper from "styles/Treasury.style";
 import Card from "Layout/Card";
 import Image from "Layout/Image";
-import { LiquidStaking } from "assets/registry";
+import { TokenImgRegistry } from "assets/registry";
 import Chart from "./Chart";
+import { useCbs } from "contexts/CbsContext";
+import { numFormatter, calc } from "helper";
 
 const Treasury = () => {
+  const { treasuryInfo, cbsInfo } = useCbs();
+
   return (
-    <TreasuryWrapper pie={100}>
+    <TreasuryWrapper pie={cbsInfo.NET_LTV}>
       <div className="container Treasury">
         <div className="row">
           <div className="col-12 mt-lg-5 mt-md-4 mt-2">
@@ -69,7 +73,9 @@ const Treasury = () => {
                             />
                           </div>
                           <div className="miter2">
-                            <p className="ml-5 pl-2">100%</p>
+                            <p className="ml-5 pl-2">
+                              {calc(cbsInfo.NET_LTV)}%
+                            </p>
                             <Image
                               src="/images/figma/cartLine2.png"
                               alt="loading..."
@@ -81,12 +87,16 @@ const Treasury = () => {
                           <div className="row">
                             <div className="col-lg-12 col-6 cart_details">
                               <p>Total Supply</p>
-                              <span>$0</span>
+                              <span>
+                                ${numFormatter(treasuryInfo.TotalSupply)}
+                              </span>
                             </div>
 
                             <div className="col-lg-12 col-6 cart_details mt-lg-4 mt-md-0 pt-lg-3 mt-md-3 mt-0">
                               <p>Total Borrowed</p>
-                              <span>$0</span>
+                              <span>
+                                ${numFormatter(treasuryInfo.TotalBorrowed)}
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -107,7 +117,7 @@ const Treasury = () => {
                     <div className="col-12">
                       <Card active={1} br="18px" p="2rem 1.5rem">
                         <div className="row">
-                          {LiquidStaking.map((list, ind) => {
+                          {treasuryInfo?.LiquidStakingInfos.map((list, ind) => {
                             return (
                               <div
                                 className="col-lg-5 col-md-6 col-12 card_section d-flex flex-row pt-4"
@@ -115,7 +125,7 @@ const Treasury = () => {
                               >
                                 <div className="img_section">
                                   <Image
-                                    src={list.img}
+                                    src={TokenImgRegistry[list.name]}
                                     alt={list.name}
                                     h="2.3rem"
                                   />
@@ -123,7 +133,9 @@ const Treasury = () => {
                                 <div className="details ml-3">
                                   <div className="balance">
                                     <p>Total Balance</p>
-                                    <span>0 {list.name} (≈$0)</span>
+                                    <span>
+                                      {list.TotalBalance} {list.name} (≈$0)
+                                    </span>
                                   </div>
                                   <div className="Earnings mt-2">
                                     <p>Estimated Treasury Earnings (12M)</p>

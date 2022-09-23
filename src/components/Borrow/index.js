@@ -14,7 +14,14 @@ const Borrow = () => {
   const { PriceList, PriceHandler, BalanceList, BalanceHandler, storeBal } =
     useCrypto();
   const { OpenContractSnackbar, ContractSnackbarType } = useContractSnackbar();
-  const { cbsInfo, handleCbsInfo, cbsUserInfo, handleCbsUserInfo } = useCbs();
+  const {
+    cbsInfo,
+    handleCbsInfo,
+    cbsUserInfo,
+    handleCbsUserInfo,
+    handleTreasuryInfo,
+  } = useCbs();
+
   const wallet = useWallet();
   const { publicKey } = wallet;
   const [notifi, setNotifi] = useState(false);
@@ -22,12 +29,13 @@ const Borrow = () => {
   const handleRefreshCbs = () => {
     storeBal();
     handleCbsInfo();
+    handleCbsUserInfo();
+    handleTreasuryInfo();
   };
 
   useEffect(() => {
     if (ContractSnackbarType === "Success") {
       handleRefreshCbs();
-      handleCbsUserInfo();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ContractSnackbarType]);

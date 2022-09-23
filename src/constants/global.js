@@ -217,6 +217,19 @@ export const getCollateralTokenSymbol = (name) => {
   return undefined;
 };
 
+export const getOracleAccount = (token) => {
+  for (let i = 0; i < cTOKEN_INFOS.length; i++) {
+    const cTokenInfo = cTOKEN_INFOS[i];
+    if (
+      cTokenInfo.token.toString().toLocaleLowerCase() ===
+      token.toString().toLocaleLowerCase()
+    ) {
+      return cTokenInfo.switchboard_acc_pub;
+    }
+  }
+  return undefined;
+};
+
 export const getMint = (token) => {
   let mint;
 

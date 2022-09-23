@@ -1,5 +1,11 @@
 import * as anchor from "@project-serum/anchor";
-import { getProgram, getATAPublicKey } from "utils/contract";
+
+import {
+  getProgram,
+  getATAPublicKey,
+  convert_to_wei_value,
+  convert_to_wei_value_with_decimal,
+} from "utils/contract";
 import {
   SEED_TRV_PDA,
   SEED_ZSOL_MINT_AUTHORITY_PDA,
@@ -7,8 +13,8 @@ import {
   config,
   switchboardSolAccount,
   cTokenInfoAccounts,
-  convert_to_wei,
   getMint,
+  zSOL_DECIMAL,
   getSwitchboardAccount,
 } from "constants/global";
 import {
@@ -20,8 +26,18 @@ const { PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } = anchor.web3;
 
 // burn_zSOL function for PSM
 // ==============================================
-export const burn_zSOL = async (wallet, tokenB, amount) => {
+export const burn_zSOL = async (
+  wallet,
+  tokenB,
+  amount,
+  setMessage,
+  setAmount,
+  setRequired,
+  OpenContractSnackbar
+) => {
   try {
+    OpenContractSnackbar(true, "Processing", `Start mint ${tokenB}...`);
+
     const program = getProgram(wallet, "lpIdl");
 
     const user_wallet = wallet.publicKey;
@@ -36,16 +52,14 @@ export const burn_zSOL = async (wallet, tokenB, amount) => {
       program.programId
     );
 
-    const switchboardDest = getSwitchboardAccount(token_dest);
+    const switchboardDest = getSwitchboardAccount(tokenB);
     const userCollateralAta = await getATAPublicKey(token_dest, user_wallet);
     const userZsolAta = await getATAPublicKey(zSOL_MINT, user_wallet);
     const trvcCollateralAta = await getATAPublicKey(token_dest, PDA[0]);
-
-    const burn_zSOL_wei = convert_to_wei(amount);
-    const burn_amount = new anchor.BN(burn_zSOL_wei);
+    const feeAta = await getATAPublicKey(token_dest, feeAccount);
 
     await program.methods
-      .burnZsol(burn_amount)
+      .burnZsol(convert_to_wei_value_with_decimal(amount, zSOL_DECIMAL))
       .accounts({
         userAuthority: user_wallet,
         trvcAccount: PDA[0],
@@ -55,7 +69,7 @@ export const burn_zSOL = async (wallet, tokenB, amount) => {
         collateralToken: token_dest, // variables
         userCollateralAta: userCollateralAta,
         trvcCollateralAta,
-        feeAccount,
+        feeAccount: feeAta,
         switchboardSol: switchboardSolAccount,
         switchboardDest: switchboardDest,
         systemProgram: SystemProgram.programId,
@@ -64,13 +78,40 @@ export const burn_zSOL = async (wallet, tokenB, amount) => {
         rent: SYSVAR_RENT_PUBKEY,
       })
       .rpc();
-  } catch (error) {}
+
+    OpenContractSnackbar(
+      true,
+      "Success",
+      `Successfully Mint ${amount} ${tokenB}.`
+    );
+
+    setMessage("Enter an amount");
+    setRequired(false);
+    setAmount("");
+  } catch (error) {
+    console.log(error);
+    OpenContractSnackbar(
+      true,
+      "Error",
+      `Failed Mint ${tokenB}. Please try again.`
+    );
+  }
 };
 
 // mint zSOL function for PSM
 // ==============================================
-export const mint_zSOL = async (wallet, tokenA, amount) => {
+export const mint_zSOL = async (
+  wallet,
+  tokenA,
+  amount,
+  setMessage,
+  setAmount,
+  setRequired,
+  OpenContractSnackbar
+) => {
   try {
+    OpenContractSnackbar(true, "Processing", `Start mint ${tokenA}...`);
+
     const program = getProgram(wallet, "lpIdl");
 
     const user_wallet = wallet.publicKey;
@@ -87,16 +128,13 @@ export const mint_zSOL = async (wallet, tokenA, amount) => {
       program.programId
     );
 
-    const switchboardSrc = getSwitchboardAccount(token_src);
+    const switchboardSrc = getSwitchboardAccount(tokenA);
     const userCollateralAta = await getATAPublicKey(token_src, user_wallet);
     const userZsolAta = await getATAPublicKey(zSOL_MINT, user_wallet);
     const trvcCollateralAta = await getATAPublicKey(token_src, PDA[0]);
 
-    const mint_zSOL_wei = convert_to_wei(amount);
-    const mint_amount = new anchor.BN(mint_zSOL_wei);
-
     await program.methods
-      .mintZsol(mint_amount)
+      .mintZsol(convert_to_wei_value(token_src, amount))
       .accounts({
         trvcAccount: PDA[0],
         zsolMintAuthority: zSOL_MINT_PDA[0],
@@ -115,5 +153,22 @@ export const mint_zSOL = async (wallet, tokenA, amount) => {
         rent: SYSVAR_RENT_PUBKEY,
       })
       .rpc();
-  } catch (error) {}
+
+    OpenContractSnackbar(
+      true,
+      "Success",
+      `Successfully Mint ${amount} ${tokenA}.`
+    );
+
+    setMessage("Enter an amount");
+    setRequired(false);
+    setAmount("");
+  } catch (error) {
+    console.log(error);
+    OpenContractSnackbar(
+      true,
+      "Error",
+      `Failed Mint ${tokenA}. Please try again.`
+    );
+  }
 };

@@ -39,7 +39,7 @@ const BorrowWrapper = styled.div`
     .borrow_overview {
       .overview_title {
         p {
-          color: ${(props) => props.theme.BodyTraceryBg};
+          color: ${(props) => props.theme.BodyMainColor};
           font-size: 1.6rem;
           font-weight: 900;
           font-style: normal;

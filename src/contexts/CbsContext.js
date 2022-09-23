@@ -2,6 +2,7 @@ import React, { useContext, createContext, useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { fetch_cbs_infos } from "utils/lp-protocol/get_cbs_info";
 import { fetch_user_infos } from "utils/lp-protocol/get_user_info";
+import { fetch_treasury_info } from "utils/treasury/get_treasury_info";
 import { useEffect } from "react";
 
 export const CbsContext = createContext();
@@ -15,6 +16,12 @@ export const CbsProvider = ({ children }) => {
     TotalBorrowed: 0,
     NET_LTV: 0,
     TVL: 0,
+  });
+
+  const [treasuryInfo, setTreasuryInfo] = useState({
+    TotalSupply: 0,
+    TotalBorrowed: 0,
+    LiquidStakingInfos: [],
   });
 
   const [cbsUserInfo, setCbsUserInfo] = useState({
@@ -62,9 +69,21 @@ export const CbsProvider = ({ children }) => {
     });
   };
 
+  const handleTreasuryInfo = async () => {
+    const { TotalSupply, TotalBorrowed, LiquidStakingInfos } =
+      await fetch_treasury_info(wallet);
+
+    setTreasuryInfo({
+      TotalSupply,
+      TotalBorrowed,
+      LiquidStakingInfos,
+    });
+  };
+
   useEffect(() => {
     if (wallet) {
       handleCbsInfo();
+      handleTreasuryInfo();
     }
 
     return () => {
@@ -74,6 +93,12 @@ export const CbsProvider = ({ children }) => {
         TotalBorrowed: 0,
         NET_LTV: 0,
         TVL: 0,
+      });
+
+      setTreasuryInfo({
+        TotalSupply: 0,
+        TotalBorrowed: 0,
+        LiquidStakingInfos: [],
       });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -100,7 +125,14 @@ export const CbsProvider = ({ children }) => {
 
   return (
     <CbsContext.Provider
-      value={{ cbsInfo, handleCbsInfo, cbsUserInfo, handleCbsUserInfo }}
+      value={{
+        cbsInfo,
+        handleCbsInfo,
+        cbsUserInfo,
+        handleCbsUserInfo,
+        handleTreasuryInfo,
+        treasuryInfo,
+      }}
     >
       {children}
     </CbsContext.Provider>

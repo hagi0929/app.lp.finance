@@ -14,7 +14,7 @@ import { useCbs } from "contexts/CbsContext";
 const Header = () => {
   const { Cluster, changeCluster } = useCluster();
   const { storePrice, storeBal } = useCrypto();
-  const { handleCbsInfo } = useCbs();
+  const { handleCbsInfo, handleCbsUserInfo, handleTreasuryInfo } = useCbs();
   const location = useLocation();
   const [dropdown, setDropdown] = useState(false);
   const [cli, setCli] = useState(false);
@@ -177,6 +177,8 @@ const Header = () => {
                                   storePrice();
                                   storeBal();
                                   handleCbsInfo();
+                                  handleCbsUserInfo();
+                                  handleTreasuryInfo();
                                 }}
                               >
                                 <div className="name">

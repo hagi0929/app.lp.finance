@@ -11,17 +11,22 @@ import { PSMRegistry } from "assets/registry/PsmRegistry";
 import { useCrypto } from "contexts/CryptoContext";
 import { useEffect } from "react";
 import { burn_zSOL, mint_zSOL } from "lp-program/psm";
-import { blockInvalidChar } from "helper";
+import { blockInvalidChar, CalcFiveDigit } from "helper";
 import WalletButton from "components/globalComponents/WalletButton";
+import { fetch_psm_rate } from "utils/psm/get_psm_rate";
+import { useContractSnackbar } from "contexts/ContractSnackbarContext";
 
 const PSM = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
   const { PriceList, BalanceList, BalanceHandler } = useCrypto();
+  const { OpenContractSnackbar } = useContractSnackbar();
   const [isPayModel, setIsPayModel] = useState(false);
   const [message, setMessage] = useState("Mint mSOL");
   const [amount, setAmount] = useState("");
+  const [PSM_Rate, setPSM_Rate] = useState("");
   const [Required, setRequired] = useState(false);
+  const [MaxLoading, setMaxLoading] = useState(false);
   const [isReceiveModel, setIsReceiveModel] = useState(false);
 
   const [PaySelected, setPaySelected] = useState({
@@ -42,7 +47,24 @@ const PSM = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BalanceHandler]);
 
-  const handleAmount = (e) => {
+  const handlePsmRate = async () => {
+    setMaxLoading(true);
+    const PSM_rate = await fetch_psm_rate(
+      PaySelected.symbol,
+      ReceiveSelect.symbol,
+      PaySelected.balance,
+      amount
+    );
+    if (PSM_rate) {
+      setPSM_Rate(PSM_rate);
+      setMaxLoading(false);
+    } else {
+      setPSM_Rate("");
+      setMaxLoading(false);
+    }
+  };
+
+  const handleAmount = async (e) => {
     setAmount(e.target.value);
 
     if (e.target.value) {
@@ -60,6 +82,8 @@ const PSM = () => {
   };
 
   const HandleSwitch = () => {
+    setAmount(CalcFiveDigit(PSM_Rate));
+    setPSM_Rate(CalcFiveDigit(amount));
     setPaySelected({
       logoURI: ReceiveSelect.logoURI,
       symbol: ReceiveSelect.symbol,
@@ -79,12 +103,28 @@ const PSM = () => {
           (PaySelected.symbol === "mSOL" && ReceiveSelect.symbol === "zSOL") ||
           (PaySelected.symbol === "stSOL" && ReceiveSelect.symbol === "zSOL")
         ) {
-          await mint_zSOL(wallet, PaySelected.symbol, amount);
+          await mint_zSOL(
+            wallet,
+            PaySelected.symbol,
+            amount,
+            setMessage,
+            setAmount,
+            setRequired,
+            OpenContractSnackbar
+          );
         } else if (
           (PaySelected.symbol === "zSOL" && ReceiveSelect.symbol === "mSOL") ||
           (PaySelected.symbol === "zSOL" && ReceiveSelect.symbol === "stSOL")
         ) {
-          await burn_zSOL(wallet, ReceiveSelect.symbol, amount);
+          await burn_zSOL(
+            wallet,
+            ReceiveSelect.symbol,
+            amount,
+            setMessage,
+            setAmount,
+            setRequired,
+            OpenContractSnackbar
+          );
         }
       }
     } else {
@@ -94,6 +134,10 @@ const PSM = () => {
   };
 
   useEffect(() => {
+    if (publicKey && amount > 0) {
+      handlePsmRate();
+    }
+
     if (PaySelected.symbol === "stSOL" || PaySelected.symbol === "mSOL") {
       setReceiveSelect({
         logoURI: TokenImgRegistry?.zSOL,
@@ -105,6 +149,9 @@ const PSM = () => {
   }, [PaySelected]);
 
   useEffect(() => {
+    if (publicKey && amount > 0) {
+      handlePsmRate();
+    }
     if (ReceiveSelect.symbol === "stSOL" || ReceiveSelect.symbol === "mSOL") {
       setPaySelected({
         logoURI: TokenImgRegistry?.zSOL,
@@ -115,33 +162,15 @@ const PSM = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ReceiveSelect]);
 
+  useEffect(() => {
+    if (publicKey && amount > 0) {
+      handlePsmRate();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [amount]);
+
   return (
     <>
-      {isPayModel && (
-        <TokenModel
-          isOpen={isPayModel}
-          isClose={() => setIsPayModel(false)}
-          List={PSMRegistry.filter((items) => {
-            return items.symbol !== ReceiveSelect.symbol;
-          })}
-          setSelected={setPaySelected}
-          PriceList={PriceList}
-          BalanceList={BalanceList}
-        />
-      )}
-      {isReceiveModel && (
-        <TokenModel
-          isOpen={setIsReceiveModel}
-          isClose={() => setIsReceiveModel(false)}
-          List={PSMRegistry.filter((items) => {
-            return items.symbol !== PaySelected.symbol;
-          })}
-          setSelected={setReceiveSelect}
-          PriceList={PriceList}
-          BalanceList={BalanceList}
-        />
-      )}
-
       <StakeWrapper>
         <div className="container PSM mb-5 mt-lg-4 mt-md-4 mt-2">
           <div className="row">
@@ -176,7 +205,19 @@ const PSM = () => {
                               p="0px 3px"
                               id="btn"
                               size="0.85rem"
-                              className="not-allowed"
+                              disabled={
+                                !publicKey ? true : MaxLoading ? true : false
+                              }
+                              className={
+                                !publicKey
+                                  ? "not-allowed"
+                                  : MaxLoading
+                                  ? "not-allowed"
+                                  : null
+                              }
+                              onClick={() => {
+                                setAmount(PaySelected.balance);
+                              }}
                             >
                               Max
                             </Button>
@@ -210,13 +251,13 @@ const PSM = () => {
                               name="amount"
                               id="amount"
                               type="number"
-                              className={publicKey ? null : "not-allowed"}
                               placeholder="0.0"
-                              disabled={publicKey ? false : true}
                               active={1}
                               value={amount}
                               onChange={handleAmount}
                               onKeyDown={blockInvalidChar}
+                              disabled={!publicKey ? true : false}
+                              className={!publicKey ? "not-allowed" : null}
                               p="0.8rem 1rem"
                               br="10px"
                               size="1.2rem"
@@ -280,11 +321,11 @@ const PSM = () => {
                               className="not-allowed"
                               placeholder="0.0"
                               type="number"
-                              value={amount}
+                              value={CalcFiveDigit(PSM_Rate)}
                               pattern="[0-9]*"
-                              disabled
                               active={1}
                               p="0.6rem 1rem"
+                              disabled={true}
                               br="10px"
                               size="1.2rem"
                             />
@@ -305,7 +346,16 @@ const PSM = () => {
                               p="0.6rem 1rem"
                               id="btn"
                               size="1.1rem"
-                              className="not-allowed"
+                              disabled={
+                                !publicKey ? true : MaxLoading ? true : false
+                              }
+                              className={
+                                !publicKey
+                                  ? "not-allowed"
+                                  : MaxLoading
+                                  ? "not-allowed"
+                                  : null
+                              }
                               onClick={() => handleProgram()}
                             >
                               {message}
@@ -321,6 +371,30 @@ const PSM = () => {
           </div>
         </div>
       </StakeWrapper>
+      {isPayModel && (
+        <TokenModel
+          isOpen={isPayModel}
+          isClose={() => setIsPayModel(false)}
+          List={PSMRegistry.filter((items) => {
+            return items.symbol !== ReceiveSelect.symbol;
+          })}
+          setSelected={setPaySelected}
+          PriceList={PriceList}
+          BalanceList={BalanceList}
+        />
+      )}
+      {isReceiveModel && (
+        <TokenModel
+          isOpen={setIsReceiveModel}
+          isClose={() => setIsReceiveModel(false)}
+          List={PSMRegistry.filter((items) => {
+            return items.symbol !== PaySelected.symbol;
+          })}
+          setSelected={setReceiveSelect}
+          PriceList={PriceList}
+          BalanceList={BalanceList}
+        />
+      )}
     </>
   );
 };

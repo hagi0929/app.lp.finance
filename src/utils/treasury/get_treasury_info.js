@@ -1,6 +1,9 @@
-import * as anchor from "@project-serum/anchor";
 import { getProgram, getConnection, getNetwork } from "../contract";
-import { convert_from_wei_value, getSwitchboardPrice } from "../contract";
+import {
+  convert_from_wei_value,
+  getSwitchboardPrice,
+  convert_from_wei_value_with_decimal,
+} from "../contract";
 import { loadSwitchboardProgram } from "@switchboard-xyz/switchboard-v2";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import {
@@ -8,6 +11,9 @@ import {
   SEED_TRV_PDA,
   switchboardMsolAccount,
   switchboardStsolAccount,
+  mSOLMint,
+  stSOLMint,
+  zSOL_DECIMAL,
 } from "constants/global";
 
 export const fetch_treasury_info = async (wallet) => {
@@ -34,42 +40,72 @@ export const fetch_treasury_info = async (wallet) => {
     const stSOL_amount_wei = TreasuryAccountData.stsolAmount;
     const zSOL_amount_wei = TreasuryAccountData.zsolAmount;
 
-    const mSOL_Price = await getSwitchboardPrice(
+    const mSOL_price = await getSwitchboardPrice(
       switchboardProgram,
       switchboardMsolAccount
     );
-
-    const stSOL_Price = await getSwitchboardPrice(
+    const stSOL_price = await getSwitchboardPrice(
       switchboardProgram,
       switchboardStsolAccount
     );
-    const zSOL_Price = await getSwitchboardPrice(
+    const zSOL_price = await getSwitchboardPrice(
       switchboardProgram,
       switchboardSolAccount
     );
 
-    const mSOL_price_bn = new anchor.BN(mSOL_Price.toNumber());
-    const stSOL_price_bn = new anchor.BN(stSOL_Price.toNumber());
-    const zSOL_price_bn = new anchor.BN(zSOL_Price.toNumber());
+    //mSOL
+    const mSOL_amount = parseFloat(
+      convert_from_wei_value(mSOLMint, mSOL_amount_wei).toString()
+    );
+    const mSOL_value = mSOL_amount * mSOL_price;
 
-    const mSOL_wei_value = mSOL_amount_wei.mul(mSOL_price_bn);
-    const stSOL_wei_value = stSOL_amount_wei.mul(stSOL_price_bn);
-    const zSOL_wei_value = zSOL_amount_wei.mul(zSOL_price_bn);
+    //stSOL
+    const stSOL_amount = parseFloat(
+      convert_from_wei_value(stSOLMint, stSOL_amount_wei).toString()
+    );
+    const stSOL_value = stSOL_amount * stSOL_price;
 
-    // Collateral values ---->
-    // mSOL total balance
-    const mSOL_value = convert_from_wei_value("mSOL", mSOL_wei_value);
-    // stSOL total balance
-    const stSOL_value = convert_from_wei_value("stSOL", stSOL_wei_value);
-    // Borrowed values
-    const zSOL_value = convert_from_wei_value("zSOL", zSOL_wei_value);
+    //zSOL
+    const zSOL_amount = convert_from_wei_value_with_decimal(
+      zSOL_amount_wei,
+      zSOL_DECIMAL
+    );
+    const zSOL_value = zSOL_amount * zSOL_price;
 
-    // Total supply
-    const total_supply = mSOL_value.add(stSOL_value);
-    console.log(`Total supply: ${total_supply}`);
+    // calculate infos
+    const TotalSupply = mSOL_value + stSOL_value;
+    const TotalBorrowed = zSOL_value;
 
-    // Total borrowed
-    const total_borrowed = zSOL_value;
-    console.log(`Total borrowed: ${total_borrowed}`);
-  } catch (error) {}
+    const LiquidStakingInfos = [
+      {
+        name: "mSOL",
+        TotalBalance: mSOL_amount,
+      },
+      {
+        name: "stSOL",
+        TotalBalance: stSOL_amount,
+      },
+    ];
+
+    return {
+      TotalSupply,
+      TotalBorrowed,
+      LiquidStakingInfos,
+    };
+  } catch (error) {
+    return {
+      TotalSupply: 0,
+      TotalBorrowed: 0,
+      LiquidStakingInfos: [
+        {
+          name: "mSOL",
+          TotalBalance: 0,
+        },
+        {
+          name: "stSOL",
+          TotalBalance: 0,
+        },
+      ],
+    };
+  }
 };
