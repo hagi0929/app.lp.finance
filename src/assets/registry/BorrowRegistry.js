@@ -1,8 +1,9 @@
 import { TokenImgRegistry } from "./index";
+import { MintAddress } from "constants/global";
 
 export var DepositTokens = [
   {
-    address: "So11111111111111111111111111111111111111112",
+    address: MintAddress.SOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.SOL,
@@ -10,7 +11,7 @@ export var DepositTokens = [
     symbol: "SOL",
   },
   {
-    address: "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So",
+    address: MintAddress.mSOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.mSOL,
@@ -18,7 +19,7 @@ export var DepositTokens = [
     symbol: "mSOL",
   },
   {
-    address: "7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj",
+    address: MintAddress.stSOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.stSOL,
@@ -26,7 +27,7 @@ export var DepositTokens = [
     symbol: "stSOL",
   },
   {
-    address: "7kbnvuGBxxj8AG9qp8Scn56muWGaRaFqxg1FsRp3PaFT",
+    address: MintAddress.UXD,
     chainId: 101,
     decimals: 6,
     logoURI: TokenImgRegistry.UXD,
@@ -34,7 +35,7 @@ export var DepositTokens = [
     symbol: "UXD",
   },
   {
-    address: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+    address: MintAddress.SAMO,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.SAMO,
@@ -45,7 +46,7 @@ export var DepositTokens = [
 
 export var BorrowTokens = [
   {
-    address: "So11111111111111111111111111111111111111112",
+    address: MintAddress.zSOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.zSOL,
@@ -56,7 +57,7 @@ export var BorrowTokens = [
 
 export var RepayTokens = [
   {
-    address: "So11111111111111111111111111111111111111112",
+    address: MintAddress.zSOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.zSOL,
@@ -64,7 +65,7 @@ export var RepayTokens = [
     symbol: "zSOL",
   },
   {
-    address: "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So",
+    address: MintAddress.mSOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.mSOL,
@@ -72,7 +73,7 @@ export var RepayTokens = [
     symbol: "mSOL",
   },
   {
-    address: "7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj",
+    address: MintAddress.stSOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.stSOL,
@@ -83,7 +84,7 @@ export var RepayTokens = [
 
 export var WithdrawTokens = [
   {
-    address: "So11111111111111111111111111111111111111112",
+    address: MintAddress.SOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.SOL,
@@ -91,7 +92,7 @@ export var WithdrawTokens = [
     symbol: "SOL",
   },
   {
-    address: "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So",
+    address: MintAddress.mSOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.mSOL,
@@ -99,7 +100,7 @@ export var WithdrawTokens = [
     symbol: "mSOL",
   },
   {
-    address: "7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj",
+    address: MintAddress.stSOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.stSOL,
@@ -107,7 +108,7 @@ export var WithdrawTokens = [
     symbol: "stSOL",
   },
   {
-    address: "7kbnvuGBxxj8AG9qp8Scn56muWGaRaFqxg1FsRp3PaFT",
+    address: MintAddress.UXD,
     chainId: 101,
     decimals: 6,
     logoURI: TokenImgRegistry.UXD,
@@ -115,7 +116,7 @@ export var WithdrawTokens = [
     symbol: "UXD",
   },
   {
-    address: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+    address: MintAddress.SAMO,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.SAMO,

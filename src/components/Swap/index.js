@@ -7,6 +7,7 @@ import { SwapTokens, coinGeckoList } from "assets/registry/SwapRegistry";
 import { useSnackbar } from "contexts/SnackbarContext";
 import { useCrypto } from "contexts/CryptoContext";
 import JupiterWrapper from "lib/JupiterWrapper";
+import { MintAddress } from "constants/global";
 
 const Swap = () => {
   const { PriceList, BalanceList } = useCrypto();
@@ -16,8 +17,8 @@ const Swap = () => {
 
   const [formValue, setFormValue] = useState({
     amount: null,
-    inputMint: new PublicKey("So11111111111111111111111111111111111111112"),
-    outputMint: new PublicKey("mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So"),
+    inputMint: new PublicKey(MintAddress.SOL),
+    outputMint: new PublicKey(MintAddress.mSOL),
     slippage,
   });
 

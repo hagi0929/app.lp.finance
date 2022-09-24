@@ -1,7 +1,7 @@
 import { TokenImgRegistry } from "./index";
 import { MintAddress } from "constants/global";
 
-export var PSMRegistry = [
+export var BorrowTokens = [
   {
     address: MintAddress.zSOL,
     chainId: 101,
@@ -10,6 +10,9 @@ export var PSMRegistry = [
     name: "zSOL",
     symbol: "zSOL",
   },
+];
+
+export var WithdrawTokens = [
   {
     address: MintAddress.mSOL,
     chainId: 101,

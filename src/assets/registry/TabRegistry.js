@@ -7,7 +7,6 @@ export const AuctionTabsRegistry = [
     ariaControls: "nav-Deposit",
     ariaSelected: true,
   },
-
   {
     id: "nav-Withdraw-tab",
     name: "Withdraw",
@@ -145,6 +144,25 @@ export const LPFarmingTabsApi = [
     ariaSelected: true,
   },
 
+  {
+    id: "nav-Withdraw-tab",
+    name: "Withdraw",
+    class: "nav-link",
+    href: "#nav-Withdraw",
+    ariaControls: "nav-Withdraw",
+    ariaSelected: false,
+  },
+];
+
+export const TreasuryTabsRegistry = [
+  {
+    id: "nav-Borrow-tab",
+    name: "Borrow",
+    class: "nav-link active",
+    href: "#nav-Borrow",
+    ariaControls: "nav-Borrow",
+    ariaSelected: true,
+  },
   {
     id: "nav-Withdraw-tab",
     name: "Withdraw",

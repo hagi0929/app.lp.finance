@@ -1,8 +1,9 @@
 import { TokenImgRegistry } from "./index";
+import { MintAddress } from "constants/global";
 
 export var SwapTokens = [
   {
-    address: "So11111111111111111111111111111111111111112",
+    address: MintAddress.SOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.SOL,
@@ -16,7 +17,7 @@ export var SwapTokens = [
     },
   },
   {
-    address: "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So",
+    address: MintAddress.mSOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.mSOL,
@@ -34,7 +35,7 @@ export var SwapTokens = [
     },
   },
   {
-    address: "7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj",
+    address: MintAddress.stSOL,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.stSOL,
@@ -51,7 +52,7 @@ export var SwapTokens = [
     },
   },
   {
-    address: "7kbnvuGBxxj8AG9qp8Scn56muWGaRaFqxg1FsRp3PaFT",
+    address: MintAddress.UXD,
     chainId: 101,
     decimals: 6,
     logoURI: TokenImgRegistry.UXD,
@@ -67,7 +68,7 @@ export var SwapTokens = [
     },
   },
   {
-    address: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+    address: MintAddress.SAMO,
     chainId: 101,
     decimals: 9,
     logoURI: TokenImgRegistry.SAMO,

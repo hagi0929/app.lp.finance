@@ -34,6 +34,15 @@ export const zSOL_MINT_AUTHORITY = new PublicKey(
 
 // Mint config
 // =================================
+export const MintAddress = {
+  SOL: "So11111111111111111111111111111111111111112",
+  mSOL: "CGm3Nihs61EVk3iiDg9eCov3PCYDkLtaMRXyHw4dkd91",
+  stSOL: "FjNXKDtDWzo9usb6YdWNUxRwKyGWrF2aTLWydYzjtSU4",
+  UXD: "EN2CV9nCnH9nBF9GyGYG9B3haNriNBkrPo8jF4c6mzUi",
+  SAMO: "5rUhzmWf8pyhJvjYfbQ8xPJJHDJgkeZBUDWN7rd48Hux",
+  zSOL: "3vwVSHkx6Wh212mvRoyzK4g969QAhmLeBmyiHaEuFkyg",
+};
+
 export const SOLMint = new PublicKey(
   "So11111111111111111111111111111111111111112"
 );

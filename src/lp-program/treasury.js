@@ -9,12 +9,12 @@ import {
   SEED_TRV_PDA,
   SEED_ZSOL_MINT_AUTHORITY_PDA,
   zSOL_MINT,
-  config,
   switchboardSolAccount,
   cTokenInfoAccounts,
   getMint,
   zSOL_DECIMAL,
-  getSwitchboardAccount,
+  switchboardMsolAccount,
+  switchboardStsolAccount,
 } from "constants/global";
 import {
   TOKEN_PROGRAM_ID,
@@ -23,136 +23,50 @@ import {
 
 const { PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } = anchor.web3;
 
-// burn_zSOL function for PSM
+// borrow function for admin treasury
 // ==============================================
-export const burn_zSOL = async (
+export const borrow_zSOL = async (
   wallet,
-  tokenB,
+  symbol,
   amount,
   setMessage,
-  setAmount,
   setRequired,
+  setAmount,
   OpenContractSnackbar
 ) => {
-  let mess;
-  if (tokenB === "mSOL" || tokenB === "stSOL") {
-    mess = `get`;
-  } else {
-    mess = `mint`;
-  }
   try {
-    OpenContractSnackbar(true, "Processing", `Start ${mess} ${tokenB}...`);
+    OpenContractSnackbar(true, "Processing", "Start Borrow...");
 
     const program = getProgram(wallet, "lpIdl");
 
     const user_wallet = wallet.publicKey;
-
-    const token_dest = getMint(tokenB);
-
-    const configData = await program.account.config.fetch(config);
-    const getFeeAccount = configData.feeAccount;
 
     const PDA = await PublicKey.findProgramAddress(
       [Buffer.from(SEED_TRV_PDA)],
       program.programId
     );
 
-    const switchboardDest = getSwitchboardAccount(tokenB);
-    const userCollateralAta = await getATAPublicKey(token_dest, user_wallet);
-    const userZsolAta = await getATAPublicKey(zSOL_MINT, user_wallet);
-    const trvcCollateralAta = await getATAPublicKey(token_dest, PDA[0]);
-    const feeAta = await getATAPublicKey(token_dest, getFeeAccount);
-
-    await program.methods
-      .burnZsol(convert_to_wei_value_with_decimal(amount, zSOL_DECIMAL))
-      .accounts({
-        userAuthority: user_wallet,
-        trvcAccount: PDA[0],
-        zsolMint: zSOL_MINT,
-        userZsolAta,
-        ctokenInfoAccounts: cTokenInfoAccounts,
-        collateralToken: token_dest, // variables
-        userCollateralAta: userCollateralAta,
-        trvcCollateralAta,
-        feeAccount: feeAta,
-        switchboardSol: switchboardSolAccount,
-        switchboardDest: switchboardDest,
-        systemProgram: SystemProgram.programId,
-        associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
-        tokenProgram: TOKEN_PROGRAM_ID,
-        rent: SYSVAR_RENT_PUBKEY,
-      })
-      .rpc();
-
-    OpenContractSnackbar(
-      true,
-      "Success",
-      `Successfully ${mess} ${amount} ${tokenB}.`
-    );
-
-    setMessage("Enter an amount");
-    setRequired(false);
-    setAmount("");
-  } catch (error) {
-    console.log(error);
-    OpenContractSnackbar(
-      true,
-      "Error",
-      `Failed ${mess} ${tokenB}. Please try again.`
-    );
-  }
-};
-
-// mint zSOL function for PSM
-// ==============================================
-export const mint_zSOL = async (
-  wallet,
-  tokenA,
-  tokenB,
-  amount,
-  setMessage,
-  setAmount,
-  setRequired,
-  OpenContractSnackbar
-) => {
-  try {
-    OpenContractSnackbar(true, "Processing", `Start mint ${tokenB}...`);
-
-    const program = getProgram(wallet, "lpIdl");
-
-    const user_wallet = wallet.publicKey;
-
-    const token_src = getMint(tokenA);
-
-    const PDA = await PublicKey.findProgramAddress(
-      [Buffer.from(SEED_TRV_PDA)],
-      program.programId
-    );
-
-    const zSOL_MINT_PDA = await PublicKey.findProgramAddress(
+    const ZSOL_MINT_PDA = await PublicKey.findProgramAddress(
       [Buffer.from(SEED_ZSOL_MINT_AUTHORITY_PDA)],
       program.programId
     );
 
-    const switchboardSrc = getSwitchboardAccount(tokenA);
-    const userCollateralAta = await getATAPublicKey(token_src, user_wallet);
     const userZsolAta = await getATAPublicKey(zSOL_MINT, user_wallet);
-    const trvcCollateralAta = await getATAPublicKey(token_src, PDA[0]);
 
     await program.methods
-      .mintZsol(convert_to_wei_value(token_src, amount))
+      .borrowZsolFromTrvc(
+        convert_to_wei_value_with_decimal(amount, zSOL_DECIMAL)
+      )
       .accounts({
         trvcAccount: PDA[0],
-        zsolMintAuthority: zSOL_MINT_PDA[0],
+        zsolMintAuthority: ZSOL_MINT_PDA[0],
         ctokenInfoAccounts: cTokenInfoAccounts,
-        collateralToken: token_src,
-        userCollateralAta: userCollateralAta,
         zsolMint: zSOL_MINT,
-        userZsolAta,
-        trvcCollateralAta,
+        userAta: userZsolAta,
         userAuthority: user_wallet,
         switchboardSol: switchboardSolAccount,
-        switchboardSrc: switchboardSrc,
+        switchboardMsol: switchboardMsolAccount,
+        switchboardStsol: switchboardStsolAccount,
         systemProgram: SystemProgram.programId,
         associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
         tokenProgram: TOKEN_PROGRAM_ID,
@@ -163,7 +77,68 @@ export const mint_zSOL = async (
     OpenContractSnackbar(
       true,
       "Success",
-      `Successfully Mint ${amount} ${tokenB}.`
+      `Successfully borrowed ${amount} ${symbol}.`
+    );
+    setMessage("Enter an amount");
+    setRequired(false);
+    setAmount("");
+  } catch (error) {
+    console.log(error);
+    OpenContractSnackbar(true, "Error", `Borrow failed. Please try again.`);
+  }
+};
+
+// withdraw function for admin treasury
+// ==============================================
+export const withdraw_collaterals = async (
+  wallet,
+  symbol,
+  amount,
+  setMessage,
+  setRequired,
+  setAmount,
+  OpenContractSnackbar
+) => {
+  try {
+    OpenContractSnackbar(true, "Processing", "Start Withdraw...");
+
+    const program = getProgram(wallet, "lpIdl");
+
+    const user_wallet = wallet.publicKey;
+
+    const token_mint = getMint(symbol);
+
+    const PDA = await PublicKey.findProgramAddress(
+      [Buffer.from(SEED_TRV_PDA)],
+      program.programId
+    );
+
+    const userCollateralAta = await getATAPublicKey(token_mint, user_wallet);
+    const trvcCollateralAta = await getATAPublicKey(token_mint, PDA[0]);
+
+    await program.methods
+      .withdrawFromTrvc(convert_to_wei_value(token_mint, amount))
+      .accounts({
+        userAuthority: user_wallet,
+        trvcAccount: PDA[0],
+        ctokenInfoAccounts: cTokenInfoAccounts,
+        tokenMint: token_mint,
+        userAta: userCollateralAta,
+        trvcAta: trvcCollateralAta,
+        switchboardSol: switchboardSolAccount,
+        switchboardMsol: switchboardMsolAccount,
+        switchboardStsol: switchboardStsolAccount,
+        systemProgram: SystemProgram.programId,
+        associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+        tokenProgram: TOKEN_PROGRAM_ID,
+        rent: SYSVAR_RENT_PUBKEY,
+      })
+      .rpc();
+
+    OpenContractSnackbar(
+      true,
+      "Success",
+      `Successfully Withdrew ${amount} ${symbol}.`
     );
 
     setMessage("Enter an amount");
@@ -171,10 +146,6 @@ export const mint_zSOL = async (
     setAmount("");
   } catch (error) {
     console.log(error);
-    OpenContractSnackbar(
-      true,
-      "Error",
-      `Failed Mint ${tokenB}. Please try again.`
-    );
+    OpenContractSnackbar(true, "Error", `Withdraw failed. Please try again.`);
   }
 };

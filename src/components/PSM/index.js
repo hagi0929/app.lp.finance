@@ -1,20 +1,19 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import StakeWrapper from "styles/PSM.style";
-import Card from "Layout/Card";
-import Button from "Layout/Button";
-import Image from "Layout/Image";
-import Input from "Layout/Form/Input";
 import { TokenImgRegistry } from "assets/registry";
 import { useWallet } from "@solana/wallet-adapter-react";
 import TokenModel from "models/TokenModel";
 import { PSMRegistry } from "assets/registry/PsmRegistry";
 import { useCrypto } from "contexts/CryptoContext";
-import { useEffect } from "react";
 import { burn_zSOL, mint_zSOL } from "lp-program/psm";
 import { blockInvalidChar, CalcFiveDigit } from "helper";
 import WalletButton from "components/globalComponents/WalletButton";
 import { fetch_psm_rate } from "utils/psm/get_psm_rate";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
+import Card from "Layout/Card";
+import Button from "Layout/Button";
+import Image from "Layout/Image";
+import Input from "Layout/Form/Input";
 
 const PSM = () => {
   const wallet = useWallet();
@@ -22,7 +21,7 @@ const PSM = () => {
   const { PriceList, BalanceList, BalanceHandler } = useCrypto();
   const { OpenContractSnackbar } = useContractSnackbar();
   const [isPayModel, setIsPayModel] = useState(false);
-  const [message, setMessage] = useState("Mint mSOL");
+  const [message, setMessage] = useState("Get mSOL");
   const [amount, setAmount] = useState("");
   const [PSM_Rate, setPSM_Rate] = useState("");
   const [Required, setRequired] = useState(false);
@@ -76,7 +75,16 @@ const PSM = () => {
 
     if (e.target.value) {
       if (e.target.value <= PaySelected.balance) {
-        setMessage(`Mint ${ReceiveSelect.symbol}`);
+        let mess;
+        if (
+          ReceiveSelect.symbol === "mSOL" ||
+          ReceiveSelect.symbol === "stSOL"
+        ) {
+          mess = `Get ${ReceiveSelect.symbol}`;
+        } else {
+          mess = `Mint ${ReceiveSelect.symbol}`;
+        }
+        setMessage(mess);
         setRequired(true);
       } else {
         setMessage("Insufficient Balance");
@@ -209,7 +217,7 @@ const PSM = () => {
                         </div>
                         <div className="col-8 d-flex justify-content-end align-items-center flex-row">
                           <div className="balance">
-                            <p>Bal: {PaySelected.balance}</p>
+                            <p>Bal: {CalcFiveDigit(PaySelected.balance)}</p>
                           </div>
                           <div className="max_btn ml-2">
                             <Button
@@ -301,7 +309,7 @@ const PSM = () => {
                         </div>
                         <div className="col-8 d-flex justify-content-end align-items-center flex-row">
                           <div className="balance">
-                            <p>Bal: {ReceiveSelect.balance}</p>
+                            <p>Bal: {CalcFiveDigit(ReceiveSelect.balance)}</p>
                           </div>
                         </div>
                       </div>
