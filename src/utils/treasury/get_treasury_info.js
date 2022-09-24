@@ -53,22 +53,16 @@ export const fetch_treasury_info = async (wallet) => {
       switchboardSolAccount
     );
 
-    //mSOL
     const mSOL_amount = parseFloat(
       convert_from_wei_value(mSOLMint, mSOL_amount_wei).toString()
     );
     const mSOL_value = mSOL_amount * mSOL_price;
 
-    console.log("Msol: ", mSOL_price.toString(), mSOL_amount_wei.toString(), mSOL_value);
-
-    //stSOL
     const stSOL_amount = parseFloat(
       convert_from_wei_value(stSOLMint, stSOL_amount_wei).toString()
     );
     const stSOL_value = stSOL_amount * stSOL_price;
-    console.log("stsol: ", stSOL_amount, stSOL_value);
 
-    //zSOL
     const zSOL_amount = convert_from_wei_value_with_decimal(
       zSOL_amount_wei,
       zSOL_DECIMAL
@@ -82,11 +76,13 @@ export const fetch_treasury_info = async (wallet) => {
     const LiquidStakingInfos = [
       {
         name: "mSOL",
-        TotalBalance: mSOL_amount,
+        balance: mSOL_amount,
+        value: mSOL_value,
       },
       {
         name: "stSOL",
-        TotalBalance: stSOL_amount,
+        balance: stSOL_amount,
+        value: stSOL_value,
       },
     ];
 
@@ -102,11 +98,13 @@ export const fetch_treasury_info = async (wallet) => {
       LiquidStakingInfos: [
         {
           name: "mSOL",
-          TotalBalance: 0,
+          balance: 0,
+          value: 0,
         },
         {
           name: "stSOL",
-          TotalBalance: 0,
+          balance: 0,
+          value: 0,
         },
       ],
     };

@@ -1,10 +1,7 @@
 import { loadSwitchboardProgram } from "@switchboard-xyz/switchboard-v2";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import {
-  Keypair,
-  //  PublicKey
-} from "@solana/web3.js";
-import {
-  // getProgram,
+  getProgram,
   getConnection,
   getNetwork,
   getSwitchboardPrice,
@@ -15,44 +12,44 @@ import {
   TRVC_SWAP_FEE,
   getOracleAccount,
   getMint,
-  // mSOLMint,
-  // SEED_TRV_PDA,
+  mSOLMint,
+  SEED_TRV_PDA,
 } from "constants/global";
 
-// const getMaxInputAmount = async (
-//   input_token,
-//   output_token,
-//   token_balance,
-//   Treasury_data,
-//   switchboardProgram
-// ) => {
-//   const sol_price = await getSwitchboardPrice(
-//     switchboardProgram,
-//     switchboardSolAccount
-//   );
+const getMaxInputAmount = async (
+  input_token,
+  output_token,
+  token_balance,
+  Treasury_data,
+  switchboardProgram
+) => {
+  const sol_price = await getSwitchboardPrice(
+    switchboardProgram,
+    switchboardSolAccount
+  );
 
-//   const mSOL_amount = Treasury_data.msolAmount;
-//   const stSOL_amount = Treasury_data.stsolAmount;
+  const mSOL_amount = Treasury_data.msolAmount;
+  const stSOL_amount = Treasury_data.stsolAmount;
 
-//   if (input_token.equals(zSOL_MINT)) {
-//     const switchboard_dest = getOracleAccount(output_token);
-//     const dest_price = await getSwitchboardPrice(
-//       switchboardProgram,
-//       switchboard_dest
-//     );
+  if (input_token.equals(zSOL_MINT)) {
+    const switchboard_dest = getOracleAccount(output_token);
+    const dest_price = await getSwitchboardPrice(
+      switchboardProgram,
+      switchboard_dest
+    );
 
-//     const max_output_amount = output_token.equals(mSOLMint)
-//       ? mSOL_amount
-//       : stSOL_amount;
+    const max_output_amount = output_token.equals(mSOLMint)
+      ? mSOL_amount
+      : stSOL_amount;
 
-//     const max_input_amount =
-//       (Number(max_output_amount) * dest_price) / sol_price / TRVC_SWAP_FEE;
+    const max_input_amount =
+      (Number(max_output_amount) * dest_price) / sol_price / TRVC_SWAP_FEE;
 
-//     return Math.min(token_balance, max_input_amount);
-//   } else {
-//     return token_balance;
-//   }
-// };
+    return Math.min(token_balance, max_input_amount);
+  } else {
+    return token_balance;
+  }
+};
 
 const getSwapRate = async (
   input_token,
@@ -94,21 +91,13 @@ const getSwapRate = async (
   }
 };
 
-export const fetch_psm_rate = async (
-  wallet,
-  symbolA,
-  symbolB,
-  amount,
-  balance
-) => {
+export const fetch_psm_rate = async (symbolA, symbolB, amount) => {
   try {
     if (!amount) {
       return 0;
-    } else if (amount <= balance) {
+    } else {
       const input_token = getMint(symbolA);
       const output_token = getMint(symbolB);
-
-      // const program = getProgram(wallet, "lpIdl");
 
       const network = getNetwork();
       const connection = getConnection();
@@ -119,23 +108,6 @@ export const fetch_psm_rate = async (
         Keypair.fromSeed(new Uint8Array(32).fill(1))
       );
 
-      // const TreasuryPDA = await PublicKey.findProgramAddress(
-      //   [Buffer.from(SEED_TRV_PDA)],
-      //   program.programId
-      // );
-
-      // const TreasuryAccountData =
-      //   await program.account.typelessRepaymentVault.fetch(TreasuryPDA[0]);
-
-      // const max_input_amount = await getMaxInputAmount(
-      //   input_token,
-      //   output_token,
-      //   balance,
-      //   TreasuryAccountData,
-      //   switchboardProgram
-      // );
-      // console.log(`MAX input amount ${max_input_amount}`);
-
       const output_amount = await getSwapRate(
         input_token,
         amount,
@@ -143,14 +115,51 @@ export const fetch_psm_rate = async (
         switchboardProgram
       );
 
-      // console.log(`Output amount is ${output_amount}`);
-
       return output_amount;
+    }
+  } catch (error) {
+    return 0;
+  }
+};
+
+export const getMxAmount = async (wallet, symbolA, symbolB, balance) => {
+  try {
+    if (balance > 0) {
+      const input_token = getMint(symbolA);
+      const output_token = getMint(symbolB);
+
+      const program = getProgram(wallet, "lpIdl");
+
+      const network = getNetwork();
+      const connection = getConnection();
+
+      const switchboardProgram = await loadSwitchboardProgram(
+        network,
+        connection,
+        Keypair.fromSeed(new Uint8Array(32).fill(1))
+      );
+
+      const TreasuryPDA = await PublicKey.findProgramAddress(
+        [Buffer.from(SEED_TRV_PDA)],
+        program.programId
+      );
+
+      const TreasuryAccountData =
+        await program.account.typelessRepaymentVault.fetch(TreasuryPDA[0]);
+
+      const max_input_amount = await getMaxInputAmount(
+        input_token,
+        output_token,
+        balance,
+        TreasuryAccountData,
+        switchboardProgram
+      );
+
+      return max_input_amount;
     } else {
       return 0;
     }
   } catch (error) {
-    console.log(error);
     return 0;
   }
 };

@@ -2,10 +2,27 @@ import React, { memo } from "react";
 import Card from "Layout/Card";
 import Button from "Layout/Button";
 import { numFormatter, calc } from "helper";
+// import CbsPieChartModel from "models/CbsPieChartModel";
 
-const Overview = ({ TotalSupply, TotalBorrowed, NET_LTV, TVL }) => {
+const Overview = ({
+  TotalSupply,
+  TotalBorrowed,
+  NET_LTV,
+  TVL,
+  collateral_infos,
+}) => {
+  // const [model, setModel] = useState();
+
   return (
     <>
+      {/* {model && (
+        <CbsPieChartModel
+          isOpen={model}
+          isClose={() => setModel(false)}
+          List={collateral_infos}
+        />
+      )} */}
+
       <div className="row py-4  d-flex justify-content-center borrow_overview">
         <div className="col-lg-11 col-md-11 col-12">
           <div className="row py-2">
@@ -44,6 +61,7 @@ const Overview = ({ TotalSupply, TotalBorrowed, NET_LTV, TVL }) => {
                           <img
                             src="/images/figma/ellipse.png"
                             alt="Loading..."
+                            // onClick={() => setModel(true)}
                           />
                         </div>
                       </div>

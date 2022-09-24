@@ -5,11 +5,12 @@ import Image from "Layout/Image";
 import { TokenImgRegistry } from "assets/registry";
 import Chart from "./Chart";
 import { useCbs } from "contexts/CbsContext";
-import { numFormatter, calc } from "helper";
+import { numFormatter, calc, CalcFiveDigit } from "helper";
 import Tabs from "./Tabs";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useCrypto } from "contexts/CryptoContext";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
+import DataLoader from "components/globalComponents/Loaders/DataLoader";
 
 const Treasury = () => {
   const { PriceList, PriceHandler, BalanceList, BalanceHandler } = useCrypto();
@@ -22,7 +23,7 @@ const Treasury = () => {
   useMemo(() => {
     if (
       publicKey &&
-      publicKey?.toBase58() === "AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD" // "4y4wMTVz2FuTisGjcRYDnDYDPhfgpucUhH4p2CNwTdBF"
+      publicKey?.toBase58() === "4y4wMTVz2FuTisGjcRYDnDYDPhfgpucUhH4p2CNwTdBF"
     ) {
       setIsAdmin(true);
     } else {
@@ -167,36 +168,50 @@ const Treasury = () => {
                     <div className={isAdmin ? "col-lg-11 col-12" : "col-12"}>
                       <Card active={1} br="18px" p="2rem 1.5rem">
                         <div className="row">
-                          {treasuryInfo?.LiquidStakingInfos.map((list, ind) => {
-                            return (
-                              <div
-                                className={`${
-                                  isAdmin ? "col-12" : "col-lg-5 col-12"
-                                } card_section d-flex flex-row pt-4`}
-                                key={ind}
-                              >
-                                <div className="img_section">
-                                  <Image
-                                    src={TokenImgRegistry[list.name]}
-                                    alt={list.name}
-                                    h="2.3rem"
-                                  />
-                                </div>
-                                <div className="details ml-3">
-                                  <div className="balance">
-                                    <p>Total Balance</p>
-                                    <span>
-                                      {list.TotalBalance} {list.name} (≈$0)
-                                    </span>
-                                  </div>
-                                  <div className="Earnings mt-2">
-                                    <p>Estimated Treasury Earnings (12M)</p>
-                                    <span>0 {list.name} (≈$0)</span>
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          })}
+                          {treasuryInfo?.LiquidStakingInfos.length === 0 ? (
+                            <div className="col-12">
+                              <DataLoader size="2rem" h="100px" />
+                            </div>
+                          ) : (
+                            <>
+                              {treasuryInfo?.LiquidStakingInfos.map(
+                                (list, ind) => {
+                                  return (
+                                    <div
+                                      className={`${
+                                        isAdmin ? "col-12" : "col-lg-5 col-12"
+                                      } card_section d-flex flex-row pt-4`}
+                                      key={ind}
+                                    >
+                                      <div className="img_section">
+                                        <Image
+                                          src={TokenImgRegistry[list.name]}
+                                          alt={list.name}
+                                          h="2.3rem"
+                                        />
+                                      </div>
+                                      <div className="details ml-3">
+                                        <div className="balance">
+                                          <p>Total Balance</p>
+                                          <span>
+                                            {CalcFiveDigit(list.balance)}{" "}
+                                            {list.name} (≈$
+                                            {numFormatter(list.value)})
+                                          </span>
+                                        </div>
+                                        <div className="Earnings mt-2">
+                                          <p>
+                                            Estimated Treasury Earnings (12M)
+                                          </p>
+                                          <span>0 {list.name} (≈$0)</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  );
+                                }
+                              )}
+                            </>
+                          )}
                         </div>
                       </Card>
                     </div>

@@ -8,7 +8,7 @@ import { useCrypto } from "contexts/CryptoContext";
 import { burn_zSOL, mint_zSOL } from "lp-program/psm";
 import { blockInvalidChar, CalcFiveDigit } from "helper";
 import WalletButton from "components/globalComponents/WalletButton";
-import { fetch_psm_rate } from "utils/psm/get_psm_rate";
+import { fetch_psm_rate, getMxAmount } from "utils/psm/get_psm_rate";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
 import Card from "Layout/Card";
 import Button from "Layout/Button";
@@ -25,6 +25,7 @@ const PSM = () => {
   const [amount, setAmount] = useState("");
   const [PSM_Rate, setPSM_Rate] = useState("");
   const [Required, setRequired] = useState(false);
+  const [RateLoading, setRateLoading] = useState(false);
   const [MaxLoading, setMaxLoading] = useState(false);
   const [isReceiveModel, setIsReceiveModel] = useState(false);
 
@@ -53,20 +54,36 @@ const PSM = () => {
   }, [BalanceHandler]);
 
   const handlePsmRate = async () => {
-    setMaxLoading(true);
+    setRateLoading(true);
     const PSM_rate = await fetch_psm_rate(
-      wallet,
       PaySelected.symbol,
       ReceiveSelect.symbol,
       amount,
       PaySelected.balance
     );
     if (PSM_rate) {
-      setPSM_Rate(PSM_rate);
-      setMaxLoading(false);
+      setPSM_Rate(CalcFiveDigit(PSM_rate));
+      setRateLoading(false);
     } else {
       setPSM_Rate("");
+      setRateLoading(false);
+    }
+  };
+
+  const handleMaxAmount = async () => {
+    setMaxLoading(true);
+    const max = await getMxAmount(
+      wallet,
+      PaySelected.symbol,
+      ReceiveSelect.symbol,
+      PaySelected.balance
+    );
+    if (max) {
+      setAmount(max);
       setMaxLoading(false);
+    } else {
+      setMaxLoading(false);
+      setAmount("");
     }
   };
 
@@ -114,33 +131,50 @@ const PSM = () => {
   const handleProgram = async () => {
     if (amount > 0) {
       if (Required && publicKey) {
-        if (
-          (PaySelected.symbol === "mSOL" && ReceiveSelect.symbol === "zSOL") ||
-          (PaySelected.symbol === "stSOL" && ReceiveSelect.symbol === "zSOL")
-        ) {
-          await mint_zSOL(
-            wallet,
-            PaySelected.symbol,
-            ReceiveSelect.symbol,
-            amount,
-            setMessage,
-            setAmount,
-            setRequired,
-            OpenContractSnackbar
-          );
-        } else if (
-          (PaySelected.symbol === "zSOL" && ReceiveSelect.symbol === "mSOL") ||
-          (PaySelected.symbol === "zSOL" && ReceiveSelect.symbol === "stSOL")
-        ) {
-          await burn_zSOL(
-            wallet,
-            ReceiveSelect.symbol,
-            amount,
-            setMessage,
-            setAmount,
-            setRequired,
-            OpenContractSnackbar
-          );
+        setMaxLoading(true);
+        const max = await getMxAmount(
+          wallet,
+          PaySelected.symbol,
+          ReceiveSelect.symbol,
+          PaySelected.balance
+        );
+
+        if (amount <= max) {
+          setMaxLoading(false);
+          if (
+            (PaySelected.symbol === "mSOL" &&
+              ReceiveSelect.symbol === "zSOL") ||
+            (PaySelected.symbol === "stSOL" && ReceiveSelect.symbol === "zSOL")
+          ) {
+            await mint_zSOL(
+              wallet,
+              PaySelected.symbol,
+              ReceiveSelect.symbol,
+              amount,
+              setMessage,
+              setAmount,
+              setRequired,
+              OpenContractSnackbar
+            );
+          } else if (
+            (PaySelected.symbol === "zSOL" &&
+              ReceiveSelect.symbol === "mSOL") ||
+            (PaySelected.symbol === "zSOL" && ReceiveSelect.symbol === "stSOL")
+          ) {
+            await burn_zSOL(
+              wallet,
+              ReceiveSelect.symbol,
+              amount,
+              setMessage,
+              setAmount,
+              setRequired,
+              OpenContractSnackbar
+            );
+          }
+        } else {
+          setMaxLoading(false);
+          setMessage("Exceed max input amount");
+          setRequired(false);
         }
       }
     } else {
@@ -174,7 +208,11 @@ const PSM = () => {
         symbol: "zSOL",
         balance: BalanceHandler?.zSOL,
       });
+      setMessage(`Get ${ReceiveSelect.symbol}`);
+    } else {
+      setMessage(`Mint ${ReceiveSelect.symbol}`);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ReceiveSelect]);
 
@@ -236,9 +274,7 @@ const PSM = () => {
                                   ? "not-allowed"
                                   : null
                               }
-                              onClick={() => {
-                                setAmount(PaySelected.balance);
-                              }}
+                              onClick={handleMaxAmount}
                             >
                               Max
                             </Button>
@@ -277,8 +313,16 @@ const PSM = () => {
                               value={amount}
                               onChange={handleAmount}
                               onKeyDown={blockInvalidChar}
-                              disabled={!publicKey ? true : false}
-                              className={!publicKey ? "not-allowed" : null}
+                              disabled={
+                                !publicKey ? true : MaxLoading ? true : false
+                              }
+                              className={
+                                !publicKey
+                                  ? "not-allowed"
+                                  : MaxLoading
+                                  ? "not-allowed"
+                                  : null
+                              }
                               p="0.8rem 1rem"
                               br="10px"
                               size="1.2rem"
@@ -370,10 +414,18 @@ const PSM = () => {
                               id="btn"
                               size="1.1rem"
                               disabled={
-                                !publicKey ? true : MaxLoading ? true : false
+                                !publicKey
+                                  ? true
+                                  : RateLoading
+                                  ? true
+                                  : MaxLoading
+                                  ? true
+                                  : false
                               }
                               className={
                                 !publicKey
+                                  ? "not-allowed"
+                                  : RateLoading
                                   ? "not-allowed"
                                   : MaxLoading
                                   ? "not-allowed"
