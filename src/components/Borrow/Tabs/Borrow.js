@@ -31,7 +31,7 @@ const Borrow = ({
   const [MaxLoading, setMaxLoading] = useState(false);
 
   useMemo(() => {
-    setSelected({ ...selected, balance: BalanceHandler.zSOL });
+    setSelected({ ...selected, balance: BalanceHandler[selected.symbol] });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BalanceHandler]);
 

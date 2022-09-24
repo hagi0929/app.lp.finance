@@ -96,19 +96,6 @@ export const FooterRegistry = [
   },
 ];
 
-// export const LiquidStaking = [
-//   {
-//     id: 1,
-//     img: TokenImgRegistry.mSOL,
-//     name: "mSOL",
-//   },
-//   {
-//     id: 2,
-//     img: TokenImgRegistry.stSOL,
-//     name: "stSOL",
-//   },
-// ];
-
 export var TokenPriceRegistry = ["SOL", "zSOL", "mSOL", "stSOL", "UXD", "SAMO"];
 
 export var TokenBalRegistry = ["SOL", "mSOL", "zSOL", "stSOL", "UXD", "SAMO"];

@@ -31,7 +31,7 @@ const Withdraw = ({
   const [MaxLoading, setMaxLoading] = useState(false);
 
   useMemo(() => {
-    setSelected({ ...selected, balance: BalanceHandler.SOL });
+    setSelected({ ...selected, balance: BalanceHandler[selected.symbol] });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BalanceHandler]);
 

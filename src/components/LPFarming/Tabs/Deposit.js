@@ -11,10 +11,10 @@ const Deposit = ({ publicKey }) => {
   const [isModel, setIsModel] = useState(false);
   const [selected, setSelected] = useState({
     pairOneImg: TokenImgRegistry.zSOL,
-    pairTwoImg: TokenImgRegistry.SOL,
+    pairTwoImg: TokenImgRegistry.stSOL,
     pairOneName: "zSOL",
-    pairTwoName: "SOL",
-    symbol: "zSOL-SOL",
+    pairTwoName: "stSOL",
+    symbol: "zSOL-stSOL",
   });
 
   return (

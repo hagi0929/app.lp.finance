@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Overview from "./Overview";
 import Tabs from "./Tabs";
 import BorrowWrapper from "styles/Borrow.style";
@@ -11,34 +11,12 @@ import { useContractSnackbar } from "contexts/ContractSnackbarContext";
 import { useCbs } from "contexts/CbsContext";
 
 const Borrow = () => {
-  const { PriceList, PriceHandler, BalanceList, BalanceHandler, storeBal } =
-    useCrypto();
-  const { OpenContractSnackbar, ContractSnackbarType } = useContractSnackbar();
-  const {
-    cbsInfo,
-    handleCbsInfo,
-    cbsUserInfo,
-    handleCbsUserInfo,
-    handleTreasuryInfo,
-  } = useCbs();
-
+  const { PriceList, PriceHandler, BalanceList, BalanceHandler } = useCrypto();
+  const { OpenContractSnackbar } = useContractSnackbar();
+  const { cbsInfo, cbsUserInfo } = useCbs();
+  const [notifi, setNotifi] = useState(false);
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const [notifi, setNotifi] = useState(false);
-
-  const handleRefreshCbs = () => {
-    storeBal();
-    handleCbsInfo();
-    handleCbsUserInfo();
-    handleTreasuryInfo();
-  };
-
-  useEffect(() => {
-    if (ContractSnackbarType === "Success") {
-      handleRefreshCbs();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ContractSnackbarType]);
 
   return (
     <>

@@ -17,8 +17,8 @@ export const SEED_PDA = "lpfinance";
 export const SEED_TOKEN = "lpfinance-token";
 export const SEED_SOL = "lpfinance-sol";
 export const SEED_ZSOL_MINT_AUTHORITY_PDA = "zsol_mint";
-export const SEED_TRV_PDA = "typeless_repayment_vault";
-export const SEED_LIQUIDATOR = "typeless_repayment_vault";
+export const SEED_TRV_PDA = "typeless_repayment_vault2";
+export const SEED_LIQUIDATOR = "lpfinance-liquidator";
 
 export const config = new PublicKey(
   "5gaw1XAoU6Ynu76GPPQ6WN1YRxWrwh13yxxgeVqMbGuC"

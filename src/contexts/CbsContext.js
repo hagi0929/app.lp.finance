@@ -18,12 +18,6 @@ export const CbsProvider = ({ children }) => {
     TVL: 0,
   });
 
-  const [treasuryInfo, setTreasuryInfo] = useState({
-    TotalSupply: 0,
-    TotalBorrowed: 0,
-    LiquidStakingInfos: [],
-  });
-
   const [cbsUserInfo, setCbsUserInfo] = useState({
     TotalDeposited: 0,
     CollateralInfos: [],
@@ -32,6 +26,12 @@ export const CbsProvider = ({ children }) => {
     BorrowLimit: 0,
     LTV: 0,
     LiquidationThreshold: 0,
+  });
+
+  const [treasuryInfo, setTreasuryInfo] = useState({
+    TotalSupply: 0,
+    TotalBorrowed: 0,
+    LiquidStakingInfos: [],
   });
 
   const handleCbsInfo = async () => {

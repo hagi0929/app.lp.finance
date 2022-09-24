@@ -56,10 +56,11 @@ const PSM = () => {
   const handlePsmRate = async () => {
     setMaxLoading(true);
     const PSM_rate = await fetch_psm_rate(
+      // wallet,
       PaySelected.symbol,
       ReceiveSelect.symbol,
-      PaySelected.balance,
-      amount
+      amount,
+      PaySelected.balance
     );
     if (PSM_rate) {
       setPSM_Rate(PSM_rate);
@@ -170,9 +171,14 @@ const PSM = () => {
   }, [ReceiveSelect]);
 
   useEffect(() => {
-    if (publicKey && amount > 0) {
-      handlePsmRate();
+    if (!(amount > 0) && publicKey) {
+      setPSM_Rate("");
+      return;
     }
+    handlePsmRate();
+    return () => {
+      setPSM_Rate("");
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount]);
 
@@ -328,7 +334,9 @@ const PSM = () => {
                               className="not-allowed"
                               placeholder="0.0"
                               type="number"
-                              value={CalcFiveDigit(PSM_Rate)}
+                              value={
+                                !PSM_Rate ? PSM_Rate : CalcFiveDigit(PSM_Rate)
+                              }
                               pattern="[0-9]*"
                               active={1}
                               p="0.6rem 1rem"

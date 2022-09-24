@@ -10,11 +10,13 @@ import WalletButton from "../WalletButton";
 import CliModel from "models/CliModel";
 import { useCrypto } from "contexts/CryptoContext";
 import { useCbs } from "contexts/CbsContext";
+import { useContractSnackbar } from "contexts/ContractSnackbarContext";
 
 const Header = () => {
   const { Cluster, changeCluster } = useCluster();
   const { storePrice, storeBal } = useCrypto();
   const { handleCbsInfo, handleCbsUserInfo, handleTreasuryInfo } = useCbs();
+  const { ContractSnackbarType } = useContractSnackbar();
   const location = useLocation();
   const [dropdown, setDropdown] = useState(false);
   const [cli, setCli] = useState(false);
@@ -27,13 +29,26 @@ const Header = () => {
     document.getElementById("mySidenav").style.width = "0";
   };
 
+  const handleRefreshData = () => {
+    storeBal();
+    handleCbsInfo();
+    handleCbsUserInfo();
+    handleTreasuryInfo();
+  };
+
+  useEffect(() => {
+    if (ContractSnackbarType === "Success") {
+      handleRefreshData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ContractSnackbarType]);
+
   useEffect(() => {
     const closeDropdown = (e) => {
       if (e.path[1].tagName !== "BUTTON") {
         setDropdown(false);
       }
     };
-
     document.body.addEventListener("click", closeDropdown);
     return () => {
       document.body.removeEventListener("click", closeDropdown);

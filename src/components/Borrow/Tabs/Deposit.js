@@ -35,7 +35,7 @@ const Deposit = ({
   useMemo(() => {
     setSelected({
       ...selected,
-      balance: BalanceHandler.SOL,
+      balance: BalanceHandler[selected.symbol],
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BalanceHandler]);
@@ -43,7 +43,7 @@ const Deposit = ({
   useMemo(() => {
     setSelected({
       ...selected,
-      price: PriceHandler.SOL,
+      price: PriceHandler[selected.symbol],
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [PriceHandler]);

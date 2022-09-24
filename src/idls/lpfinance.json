@@ -4,6 +4,9 @@
   "instructions": [
     {
       "name": "initialize",
+      "docs": [
+        "Create program config and set admin"
+      ],
       "accounts": [
         {
           "name": "admin",
@@ -35,6 +38,9 @@
     },
     {
       "name": "updateFeeAccount",
+      "docs": [
+        "Update fee_account address"
+      ],
       "accounts": [
         {
           "name": "admin",
@@ -56,6 +62,9 @@
     },
     {
       "name": "setPdaMintAuthority",
+      "docs": [
+        "Set Token's Mint_authority to PDA"
+      ],
       "accounts": [
         {
           "name": "creator",
@@ -92,6 +101,9 @@
     },
     {
       "name": "createCtokenInfosAccount",
+      "docs": [
+        "Create token info list"
+      ],
       "accounts": [
         {
           "name": "creator",
@@ -118,6 +130,9 @@
     },
     {
       "name": "addTokenInfo",
+      "docs": [
+        "Add Collateral Token Info into list"
+      ],
       "accounts": [
         {
           "name": "creator",
@@ -995,10 +1010,208 @@
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "trvcAdmin",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updateTrvcAdmin",
+      "accounts": [
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "trvcAdmin",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "withdrawFromTrvc",
+      "docs": [
+        "Only TRVC admin is able to withdraw collateral tokens from TRVC ATA."
+      ],
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "TRVC state account"
+          ]
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "trvcAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardMsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardStsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "borrowZsolFromTrvc",
+      "docs": [
+        "Only TRVC admin is able to borrow zSOL from TRVC ATA."
+      ],
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "TRVC state account"
+          ]
+        },
+        {
+          "name": "zsolMintAuthority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "zsolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardMsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardStsol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardSol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
     },
     {
       "name": "mintZsol",
+      "docs": [
+        "Deposit collaterals and mint zSOL"
+      ],
       "accounts": [
         {
           "name": "userAuthority",
@@ -1085,6 +1298,9 @@
     },
     {
       "name": "burnZsol",
+      "docs": [
+        "Burn zSOL and withdraw collaterals"
+      ],
       "accounts": [
         {
           "name": "userAuthority",
@@ -1814,176 +2030,186 @@
     },
     {
       "code": 6008,
+      "name": "InvalidDeployer",
+      "msg": "Invalid Deployer"
+    },
+    {
+      "code": 6009,
       "name": "InvalidCBSOwner",
       "msg": "Invalid CBS Owner"
     },
     {
-      "code": 6009,
+      "code": 6010,
+      "name": "InvalidTRVCOwner",
+      "msg": "Invalid TRVC Owner"
+    },
+    {
+      "code": 6011,
       "name": "ProgressInLiquidate",
       "msg": "In Liquidating"
     },
     {
-      "code": 6010,
+      "code": 6012,
       "name": "RepayFinished",
       "msg": "Repay finished for the selected token"
     },
     {
-      "code": 6011,
+      "code": 6013,
       "name": "InvalidSwitchboardPrice",
       "msg": "Invalid switchboard price"
     },
     {
-      "code": 6012,
+      "code": 6014,
       "name": "InvalidLiquidateNum",
       "msg": "Invalid step num for liquidate"
     },
     {
-      "code": 6013,
+      "code": 6015,
       "name": "LiquidateNormalTokens",
       "msg": "Liquidate normal token before lpsol"
     },
     {
-      "code": 6014,
+      "code": 6016,
       "name": "LiquidateLpSOLTokens",
       "msg": "Liquidate LpSOL token before LpFI"
     },
     {
-      "code": 6015,
+      "code": 6017,
       "name": "InvalidPoolCreator",
       "msg": "You have no right to create pool info"
     },
     {
-      "code": 6016,
+      "code": 6018,
       "name": "WithdrawExceedLTV",
       "msg": "Withdraw: overflow Max LTV"
     },
     {
-      "code": 6017,
+      "code": 6019,
       "name": "MintStopped",
       "msg": "Mint stopped with big depeg"
     },
     {
-      "code": 6018,
+      "code": 6020,
       "name": "ProgramPaused",
       "msg": "Program paused"
     },
     {
-      "code": 6019,
+      "code": 6021,
       "name": "InvalidCollateralToken",
       "msg": "Invalid Collateral Token"
     },
     {
-      "code": 6020,
+      "code": 6022,
       "name": "InvalidATA",
       "msg": "Invalid ATA"
     },
     {
-      "code": 6021,
+      "code": 6023,
       "name": "InvalidFeeATA",
       "msg": "Invalid Fee Account"
     },
     {
-      "code": 6022,
+      "code": 6024,
       "name": "InvalidTokenPoolInfo",
       "msg": "Invalid Token Info Account"
     },
     {
-      "code": 6023,
+      "code": 6025,
       "name": "StaleFeed",
       "msg": "Switchboard feed has not been updated in 5 minutes"
     },
     {
-      "code": 6024,
+      "code": 6026,
       "name": "InvalidTRVTokenMint",
       "msg": "Invalid Token Info Account"
     },
     {
-      "code": 6025,
+      "code": 6027,
       "name": "TokenNotRegistered",
       "msg": "This token has not been registered"
     },
     {
-      "code": 6026,
+      "code": 6028,
       "name": "TokenAlreadyRegistered",
       "msg": "This token has already been registered"
     },
     {
-      "code": 6027,
+      "code": 6029,
       "name": "TokenInBlackList",
       "msg": "This token has been added blacklist"
     },
     {
-      "code": 6028,
+      "code": 6030,
       "name": "InvalidSwitchboardAccount",
       "msg": "Invalid switchboard account"
     },
     {
-      "code": 6029,
+      "code": 6031,
       "name": "InvalidProgramId",
       "msg": "Invalid program id. For using program from another account please update id in the code"
     },
     {
-      "code": 6030,
+      "code": 6032,
       "name": "UnexpectedAccount",
       "msg": "Unexpected account"
     },
     {
-      "code": 6031,
+      "code": 6033,
       "name": "AccountInUse",
       "msg": "This account is in use."
     },
     {
-      "code": 6032,
+      "code": 6034,
       "name": "InvalidAddress",
       "msg": "Invalid Address."
     },
     {
-      "code": 6033,
+      "code": 6035,
       "name": "InvalidArgument",
       "msg": "Invalid Argument."
     },
     {
-      "code": 6034,
+      "code": 6036,
       "name": "SameValue",
       "msg": "Same Value."
     },
     {
-      "code": 6035,
+      "code": 6037,
       "name": "InvalidAccountData",
       "msg": "An account's data contents was invalid"
     },
     {
-      "code": 6036,
+      "code": 6038,
       "name": "RequiredMinDeposit",
       "msg": "The deposit amount should be less than minimum required amount"
     },
     {
-      "code": 6037,
+      "code": 6039,
       "name": "OverflowDepositCap",
       "msg": "The deposit amount should be less than the deposit cap"
     },
     {
-      "code": 6038,
+      "code": 6040,
       "name": "RepayOverflow",
       "msg": "The repay amount is overflowed"
     },
     {
-      "code": 6039,
+      "code": 6041,
       "name": "NotReadyForLiquidation",
       "msg": "The liquidation has not been ready yet"
     },
     {
-      "code": 6040,
+      "code": 6042,
       "name": "ThisTokenLiquidated",
       "msg": "This token already liquidated"
     },
     {
-      "code": 6041,
+      "code": 6043,
       "name": "MathOverflow",
       "msg": "Math operation overflow"
     },
     {
-      "code": 6042,
+      "code": 6044,
       "name": "InvalidOracleConfig",
       "msg": "Input oracle config is invalid"
     }
