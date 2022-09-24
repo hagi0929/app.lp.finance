@@ -56,7 +56,7 @@ const PSM = () => {
   const handlePsmRate = async () => {
     setMaxLoading(true);
     const PSM_rate = await fetch_psm_rate(
-      // wallet,
+      wallet,
       PaySelected.symbol,
       ReceiveSelect.symbol,
       amount,
