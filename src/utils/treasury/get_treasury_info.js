@@ -59,11 +59,14 @@ export const fetch_treasury_info = async (wallet) => {
     );
     const mSOL_value = mSOL_amount * mSOL_price;
 
+    console.log("Msol: ", mSOL_price.toString(), mSOL_amount_wei.toString(), mSOL_value);
+
     //stSOL
     const stSOL_amount = parseFloat(
       convert_from_wei_value(stSOLMint, stSOL_amount_wei).toString()
     );
     const stSOL_value = stSOL_amount * stSOL_price;
+    console.log("stsol: ", stSOL_amount, stSOL_value);
 
     //zSOL
     const zSOL_amount = convert_from_wei_value_with_decimal(
