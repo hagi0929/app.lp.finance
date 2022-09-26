@@ -4,6 +4,7 @@ import Borrow from "components/Borrow";
 import Swap from "components/Swap";
 import Treasury from "components/Treasury";
 import PSM from "components/PSM";
+import Staking from "components/Staking";
 import LPFarming from "components/LPFarming";
 import Layout from "components/globalComponents/Layout";
 import WalletWrapper from "lib/WalletWrapper";
@@ -44,6 +45,7 @@ const App = () => {
                 <Route exact path="/psm" element={<PSM />} />
                 <Route exact path="/lp-farming" element={<LPFarming />} />
                 <Route exact path="/swap" element={<Swap />} />
+                <Route exact path="/staking" element={<Staking />} />
               </Routes>
             </Layout>
           </CbsProvider>

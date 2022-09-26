@@ -418,7 +418,7 @@ export const repay_cbs = async (
       OpenContractSnackbar(
         true,
         "Success",
-        `Successfully Withdrew ${amount} ${symbol}.`
+        `Successfully Repayment ${amount} ${symbol}.`
       );
 
       setMessage("Enter an amount");

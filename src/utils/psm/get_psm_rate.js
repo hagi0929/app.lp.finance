@@ -70,24 +70,33 @@ const getSwapRate = async (
         switchboard_dest
       );
 
-      const output_amount =
-        (Number(sol_price) / Number(dest_price)) *
-        Number(input_amount) *
-        Number(TRVC_SWAP_FEE);
+      const return_amount =
+        (Number(sol_price) / Number(dest_price)) * Number(input_amount);
 
-      return output_amount;
+      const output_amount = return_amount * Number(TRVC_SWAP_FEE);
+      const fee_amount = return_amount - output_amount;
+      return {
+        fee_amount,
+        output_amount,
+      };
     } else {
       const switchboard_src = getOracleAccount(input_token);
       const src_price = await getSwitchboardPrice(
         switchboardProgram,
         switchboard_src
       );
-      const zSOL_amount =
+      const zsol_amount =
         (Number(src_price) / Number(sol_price)) * input_amount;
-      return zSOL_amount;
+      return {
+        fee_amount: 0,
+        output_amount: zsol_amount,
+      };
     }
   } catch (error) {
-    return 0;
+    return {
+      fee_amount: 0,
+      output_amount: 0,
+    };
   }
 };
 
@@ -108,17 +117,26 @@ export const fetch_psm_rate = async (symbolA, symbolB, amount) => {
         Keypair.fromSeed(new Uint8Array(32).fill(1))
       );
 
-      const output_amount = await getSwapRate(
+      const { fee_amount, output_amount } = await getSwapRate(
         input_token,
         amount,
         output_token,
         switchboardProgram
       );
 
-      return output_amount;
+      console.log(`Output amount is ${output_amount}`);
+      console.log(`Fee amount is ${fee_amount}`);
+
+      return {
+        output_amount,
+        fee_amount,
+      };
     }
   } catch (error) {
-    return 0;
+    return {
+      fee_amount: 0,
+      output_amount: 0,
+    };
   }
 };
 

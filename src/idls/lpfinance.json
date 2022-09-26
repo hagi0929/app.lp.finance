@@ -228,11 +228,6 @@
           "isSigner": false
         },
         {
-          "name": "tokenMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
           "name": "ctokenInfoAccounts",
           "isMut": true,
           "isSigner": false
@@ -533,6 +528,9 @@
     },
     {
       "name": "borrow",
+      "docs": [
+        "Borrow CBS Token"
+      ],
       "accounts": [
         {
           "name": "userAuthority",
@@ -628,6 +626,9 @@
     },
     {
       "name": "withdraw",
+      "docs": [
+        "Withdraw Collateral Tokens"
+      ],
       "accounts": [
         {
           "name": "userAuthority",
@@ -733,6 +734,9 @@
     },
     {
       "name": "withdrawSol",
+      "docs": [
+        "Withdraw SOL"
+      ],
       "accounts": [
         {
           "name": "userAuthority",
@@ -813,6 +817,9 @@
     },
     {
       "name": "repayZsol",
+      "docs": [
+        "Repay with zsol"
+      ],
       "accounts": [
         {
           "name": "userAuthority",
@@ -873,6 +880,9 @@
     },
     {
       "name": "repayWithCtoken",
+      "docs": [
+        "Repay with msol/stsol"
+      ],
       "accounts": [
         {
           "name": "userAuthority",
@@ -953,6 +963,9 @@
     },
     {
       "name": "initTrvc",
+      "docs": [
+        "Init TRVC account"
+      ],
       "accounts": [
         {
           "name": "trvcAccount",
@@ -1019,6 +1032,9 @@
     },
     {
       "name": "updateTrvcAdmin",
+      "docs": [
+        "Update TRVC admin"
+      ],
       "accounts": [
         {
           "name": "trvcAccount",
@@ -1040,6 +1056,64 @@
         {
           "name": "trvcAdmin",
           "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "depositOnTrvc",
+      "docs": [
+        "Only TRVC admin is able to deposit collateral tokens on TRVC ATA."
+      ],
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": false,
+          "isSigner": true,
+          "docs": [
+            "Signer"
+          ]
+        },
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "TRVC state account"
+          ]
+        },
+        {
+          "name": "tokenMint",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Collateral tokens (mSOL, stSOL)"
+          ]
+        },
+        {
+          "name": "userAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "trvcAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ctokenInfoAccounts",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
         }
       ]
     },
@@ -1208,8 +1282,57 @@
       ]
     },
     {
+      "name": "repayZsolFromTrvc",
+      "docs": [
+        "Only TRVC admin is able to repay zSOL on TRVC"
+      ],
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": false,
+          "isSigner": true,
+          "docs": [
+            "Signer"
+          ]
+        },
+        {
+          "name": "trvcAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "TRVC state account"
+          ]
+        },
+        {
+          "name": "zsolMint",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "zSOL"
+          ]
+        },
+        {
+          "name": "userAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "mintZsol",
       "docs": [
+        "---- Peg Stability Module ------",
         "Deposit collaterals and mint zSOL"
       ],
       "accounts": [
@@ -1387,6 +1510,9 @@
     },
     {
       "name": "checkLiquidatable",
+      "docs": [
+        "Check liquidatable"
+      ],
       "accounts": [
         {
           "name": "owner",
@@ -1434,6 +1560,10 @@
     },
     {
       "name": "initLiquidatorAccount",
+      "docs": [
+        "Create Liquidator account",
+        "Init user account"
+      ],
       "accounts": [
         {
           "name": "liquidatorAccount",
@@ -1460,6 +1590,9 @@
     },
     {
       "name": "deleteLiquidatorAccount",
+      "docs": [
+        "Close user account"
+      ],
       "accounts": [
         {
           "name": "liquidatorAccount",
@@ -1476,6 +1609,9 @@
     },
     {
       "name": "liquidateStart",
+      "docs": [
+        "Start Liquidate"
+      ],
       "accounts": [
         {
           "name": "checkLiquidation",
@@ -1532,6 +1668,9 @@
     },
     {
       "name": "runLiquidateStep1",
+      "docs": [
+        "Liquidate step 1"
+      ],
       "accounts": [
         {
           "name": "userAccount",
@@ -1648,6 +1787,9 @@
     },
     {
       "name": "runLiquidateStep2",
+      "docs": [
+        "Liquidate step 2"
+      ],
       "accounts": [
         {
           "name": "liquidator",
@@ -1734,6 +1876,9 @@
     },
     {
       "name": "redeemLiquidatorReward",
+      "docs": [
+        "Redeem Liquidator Fee"
+      ],
       "accounts": [
         {
           "name": "liquidator",

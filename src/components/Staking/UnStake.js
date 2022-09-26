@@ -4,7 +4,7 @@ import Image from "Layout/Image";
 import Input from "Layout/Form/Input";
 import { TokenImgRegistry } from "assets/registry";
 
-const Unstake = ({ publicKey }) => {
+const UnStake = ({ publicKey }) => {
   return (
     <>
       <div className="Pay_section">
@@ -84,4 +84,4 @@ const Unstake = ({ publicKey }) => {
   );
 };
 
-export default Unstake;
+export default UnStake;

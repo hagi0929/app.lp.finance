@@ -23,7 +23,7 @@ const Treasury = () => {
   useMemo(() => {
     if (
       publicKey &&
-      publicKey?.toBase58() === "4y4wMTVz2FuTisGjcRYDnDYDPhfgpucUhH4p2CNwTdBF"
+      publicKey?.toBase58() === "BTu6x99R9Tay73YJ5h2p4iWtEfw2DhovHkiuL94Kafqw"
     ) {
       setIsAdmin(true);
     } else {

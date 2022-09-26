@@ -20,6 +20,10 @@ export const SEED_ZSOL_MINT_AUTHORITY_PDA = "zsol_mint";
 export const SEED_TRV_PDA = "typeless_repayment_vault2";
 export const SEED_LIQUIDATOR = "lpfinance-liquidator";
 
+export const TRVC_ADMIN = new PublicKey(
+  "AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD"
+);
+
 export const config = new PublicKey(
   "5gaw1XAoU6Ynu76GPPQ6WN1YRxWrwh13yxxgeVqMbGuC"
 );

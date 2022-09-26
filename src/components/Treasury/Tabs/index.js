@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { TreasuryTabsRegistry } from "assets/registry/TabRegistry";
+import Deposit from "./Deposit";
 import Borrow from "./Borrow";
 import Withdraw from "./Withdraw";
+import Repay from "./Repay";
 import LPFarmingTabWrapper from "styles/LPFarmingTab.style";
 
 const Tabs = ({
@@ -22,8 +24,12 @@ const Tabs = ({
     var i;
     for (i = 0; i < content.length; i++) {
       var remove = content[i];
-      if (remove.classList.contains("tabContentToggle2")) {
+      if (
+        remove.classList.contains("tabContentToggle2") ||
+        remove.classList.contains("tabContentToggle3")
+      ) {
         remove.classList.remove("tabContentToggle2");
+        remove.classList.remove("tabContentToggle3");
       }
     }
   };
@@ -37,7 +43,30 @@ const Tabs = ({
     var i;
     for (i = 0; i < content.length; i++) {
       var remove = content[i];
-      if (remove.classList.contains("tabContentToggle1")) {
+      if (
+        remove.classList.contains("tabContentToggle1") ||
+        remove.classList.contains("tabContentToggle3")
+      ) {
+        remove.classList.remove("tabContentToggle1");
+        remove.classList.remove("tabContentToggle3");
+      }
+    }
+  };
+
+  const addRadius = () => {
+    document
+      .getElementById("nav-tabContent")
+      .classList.add("tabContentToggle3");
+
+    var content = document.getElementsByClassName("tab-content");
+    var i;
+    for (i = 0; i < content.length; i++) {
+      var remove = content[i];
+      if (
+        remove.classList.contains("tabContentToggle2") ||
+        remove.classList.contains("tabContentToggle1")
+      ) {
+        remove.classList.remove("tabContentToggle2");
         remove.classList.remove("tabContentToggle1");
       }
     }
@@ -63,14 +92,20 @@ const Tabs = ({
                         return (
                           <p
                             key={ind}
-                            className={`col-6 ${val.class}`}
+                            className={`col-3 ${val.class}`}
                             id={val.id}
                             data-toggle="tab"
                             href={val.href}
                             role="tab"
                             aria-controls={val.ariaControls}
                             aria-selected={val.ariaSelected}
-                            onClick={ind === 1 ? changeRadius : removeRadius}
+                            onClick={
+                              ind === 3
+                                ? changeRadius
+                                : ind === 0
+                                ? removeRadius
+                                : addRadius
+                            }
                           >
                             {val.name}
                           </p>
@@ -80,7 +115,25 @@ const Tabs = ({
                   </nav>
                   <div className="tab-content" id="nav-tabContent">
                     <div
-                      className="tab-pane fade  show active"
+                      className="tab-pane fade show active"
+                      id="nav-Deposit"
+                      role="tabpanel"
+                      aria-labelledby="nav-Deposit-tab"
+                    >
+                      <Deposit
+                        {...{
+                          wallet,
+                          publicKey,
+                          PriceList,
+                          BalanceList,
+                          BalanceHandler,
+                          PriceHandler,
+                          OpenContractSnackbar,
+                        }}
+                      />
+                    </div>
+                    <div
+                      className="tab-pane fade"
                       id="nav-Borrow"
                       role="tabpanel"
                       aria-labelledby="nav-Borrow-tab"
@@ -104,6 +157,24 @@ const Tabs = ({
                       aria-labelledby="nav-Withdraw-tab"
                     >
                       <Withdraw
+                        {...{
+                          wallet,
+                          publicKey,
+                          PriceList,
+                          BalanceList,
+                          BalanceHandler,
+                          PriceHandler,
+                          OpenContractSnackbar,
+                        }}
+                      />
+                    </div>
+                    <div
+                      className="tab-pane fade"
+                      id="nav-Repay"
+                      role="tabpanel"
+                      aria-labelledby="nav-Repay-tab"
+                    >
+                      <Repay
                         {...{
                           wallet,
                           publicKey,

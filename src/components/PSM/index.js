@@ -28,6 +28,7 @@ const PSM = () => {
   const [RateLoading, setRateLoading] = useState(false);
   const [MaxLoading, setMaxLoading] = useState(false);
   const [isReceiveModel, setIsReceiveModel] = useState(false);
+  const [FeeRate, setFeeRate] = useState(0);
 
   const [PaySelected, setPaySelected] = useState({
     logoURI: TokenImgRegistry.zSOL,
@@ -55,14 +56,15 @@ const PSM = () => {
 
   const handlePsmRate = async () => {
     setRateLoading(true);
-    const PSM_rate = await fetch_psm_rate(
+    const { output_amount, fee_amount } = await fetch_psm_rate(
       PaySelected.symbol,
       ReceiveSelect.symbol,
       amount,
       PaySelected.balance
     );
-    if (PSM_rate) {
-      setPSM_Rate(CalcFiveDigit(PSM_rate));
+    if (output_amount) {
+      setPSM_Rate(CalcFiveDigit(output_amount));
+      setFeeRate(fee_amount);
       setRateLoading(false);
     } else {
       setPSM_Rate("");
@@ -400,6 +402,16 @@ const PSM = () => {
                         </div>
                       </div>
                     </div>
+
+                    {publicKey && (
+                      <div className="row mt-2">
+                        <div className="col-12 d-flex justify-content-end">
+                          <div className="feeRate">
+                            <p>Fee: ${CalcFiveDigit(FeeRate)}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     <div className="PSM_btn_section mt-5">
                       <div className="row">

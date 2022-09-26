@@ -51,8 +51,14 @@ export const NavbarRegistry = [
     pathName: "/treasury",
     href: "/treasury",
   },
+  // {
+  //   id: 5,
+  //   name: "Staking",
+  //   pathName: "/staking",
+  //   href: "/staking",
+  // },
   {
-    id: 5,
+    id: 6,
     name: "Swap",
     pathName: "/swap",
     href: "/swap",

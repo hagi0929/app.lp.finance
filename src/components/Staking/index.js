@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import StakeWrapper from "styles/Stake.style";
 import Card from "Layout/Card";
 import Stake from "./Stake";
-import Unstake from "./Unstake";
+import UnStake from "./UnStake";
 import { useWallet } from "@solana/wallet-adapter-react";
 
-const StakeSolana = () => {
+const Staking = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
   const [active, setActive] = useState(false);
@@ -16,10 +16,10 @@ const StakeSolana = () => {
         <div className="row">
           <div className="col-12 d-flex justify-content-center flex-column">
             <div className="stake_title text-center">
-              <h1>Stake Solana</h1>
+              <h1>LPFi Staking</h1>
             </div>
             <div className="stake_subtitle text-center">
-              <p>Stake SOL and use mSOL while earning rewards</p>
+              <p>Stake LPFi to earn protocol fees</p>
             </div>
           </div>
           <div className="col-12 d-flex justify-content-center mt-3">
@@ -48,7 +48,7 @@ const StakeSolana = () => {
                   className="stake_card"
                 >
                   {active ? (
-                    <Unstake publicKey={publicKey} />
+                    <UnStake publicKey={publicKey} />
                   ) : (
                     <Stake publicKey={publicKey} />
                   )}
@@ -62,4 +62,4 @@ const StakeSolana = () => {
   );
 };
 
-export default StakeSolana;
+export default Staking;

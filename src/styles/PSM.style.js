@@ -71,6 +71,13 @@ const PSMWrapper = styled.div`
         }
       }
 
+      .feeRate {
+        p {
+          color: ${(props) => props.theme.BodyTextColor};
+          font-size: 0.8rem;
+        }
+      }
+
       .switch_section {
         .switch_icon_section {
           height: 2.4rem;

@@ -1,101 +1,58 @@
-import React, { memo, useState, useMemo, useEffect } from "react";
+import React, { useState, memo, useMemo, useEffect } from "react";
 import Input from "Layout/Form/Input";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
-import { DepositTokens } from "assets/registry/BorrowRegistry";
+import { RepayTokens } from "assets/registry/TreasuryRegistry";
 import TokenModel from "models/TokenModel";
 import { TokenImgRegistry } from "assets/registry";
-import { deposit_cbs } from "lp-program/borrow";
+import { repay } from "lp-program/treasury";
 import { blockInvalidChar } from "helper";
 import WalletButton from "components/globalComponents/WalletButton";
-import { CalcFiveDigit } from "helper";
-import { calculateMaxAmount } from "utils/lp-protocol/get_user_info";
 
-const Deposit = ({
+const Repay = ({
   publicKey,
   PriceList,
   BalanceList,
   BalanceHandler,
   wallet,
   OpenContractSnackbar,
-  PriceHandler,
 }) => {
   const [selected, setSelected] = useState({
-    logoURI: TokenImgRegistry.SOL,
-    symbol: "SOL",
+    logoURI: TokenImgRegistry.zSOL,
+    symbol: "zSOL",
     balance: 0,
-    price: 0,
   });
   const [isModel, setIsModel] = useState(false);
-  const [message, setMessage] = useState("Deposit");
   const [amount, setAmount] = useState("");
-  const [MaxLoading, setMaxLoading] = useState(false);
+  const [message, setMessage] = useState("Repay");
   const [Required, setRequired] = useState(false);
 
   useMemo(() => {
-    setSelected({
-      ...selected,
-      balance: BalanceHandler[selected.symbol],
-    });
+    setSelected({ ...selected, balance: BalanceHandler[selected.symbol] });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BalanceHandler]);
 
-  useMemo(() => {
-    setSelected({
-      ...selected,
-      price: PriceHandler[selected.symbol],
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [PriceHandler]);
-
   useEffect(() => {
-    setMessage("Deposit");
+    setMessage("Repay");
     setAmount("");
     setRequired(false);
   }, [selected]);
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
-
-    if (e.target.value) {
-      if (e.target.value <= selected.balance) {
-        if (e.target.value >= CalcFiveDigit(10 / selected.price)) {
-          setMessage("Deposit");
-          setRequired(true);
-        } else {
-          setMessage("Required minimum amount");
-          setRequired(false);
-        }
-      } else {
-        setMessage("Insufficient Balance");
-        setRequired(false);
-      }
+    if (e.target.value > 0) {
+      setMessage("Repay");
+      setRequired(true);
     } else {
       setMessage("Enter an amount");
       setRequired(false);
     }
   };
 
-  const CalculateMax = async () => {
-    setMaxLoading(true);
-    const getMaxAmount = await calculateMaxAmount(
-      wallet,
-      selected.symbol,
-      "Deposit"
-    );
-    if (getMaxAmount) {
-      setAmount(CalcFiveDigit(getMaxAmount));
-      setMaxLoading(false);
-    } else {
-      setAmount(0);
-      setMaxLoading(false);
-    }
-  };
-
   const handleProgram = async () => {
     if (amount > 0) {
       if (Required && publicKey) {
-        await deposit_cbs(
+        await repay(
           wallet,
           selected.symbol,
           amount,
@@ -104,6 +61,8 @@ const Deposit = ({
           setAmount,
           OpenContractSnackbar
         );
+      } else {
+        setRequired(false);
       }
     } else {
       setMessage("Enter an amount");
@@ -125,18 +84,12 @@ const Deposit = ({
                     type="number"
                     placeholder="0.0"
                     value={amount}
-                    onChange={(e) => handleAmount(e)}
+                    onChange={handleAmount}
                     onKeyDown={blockInvalidChar}
                     active={2}
-                    disabled={!publicKey ? true : MaxLoading ? true : false}
-                    className={
-                      !publicKey
-                        ? "not-allowed"
-                        : MaxLoading
-                        ? "not-allowed"
-                        : null
-                    }
-                    p="0.7rem 0rem 0.7rem 6.5rem"
+                    disabled={!publicKey ? true : false}
+                    className={!publicKey ? "not-allowed" : null}
+                    p="0.7rem 0rem 0.7rem 3.5rem"
                     br="10px"
                   />
 
@@ -146,37 +99,8 @@ const Deposit = ({
                       p="0.3rem 0.6rem"
                       br="4px"
                       size="0.8rem"
-                      disabled={!publicKey ? true : MaxLoading ? true : false}
-                      className={
-                        !publicKey
-                          ? "not-allowed"
-                          : MaxLoading
-                          ? "not-allowed"
-                          : null
-                      }
-                      onClick={() => {
-                        setRequired(true);
-                        setAmount(CalcFiveDigit(10 / selected.price));
-                        setMessage("Deposit");
-                      }}
-                    >
-                      Min
-                    </Button>
-                    <Button
-                      active={3}
-                      p="0.3rem 0.6rem"
-                      br="4px"
-                      size="0.8rem"
-                      disabled={!publicKey ? true : MaxLoading ? true : false}
-                      className={`
-                        ${
-                          !publicKey
-                            ? "not-allowed"
-                            : MaxLoading
-                            ? "not-allowed"
-                            : null
-                        } ml-1`}
-                      onClick={CalculateMax}
+                      disabled={true}
+                      className="not-allowed"
                     >
                       Max
                     </Button>
@@ -198,20 +122,12 @@ const Deposit = ({
                         h="2rem"
                       />
                     )}
-
                     <p className="mx-1">{selected.symbol}</p>
                     <i className="zmdi zmdi-chevron-down pl-1" />
                   </Button>
                 </div>
               </div>
             </div>
-            {/* <div className="row min_amount">
-              <div className="col-12">
-                {selected.price !== 0 && (
-                  <p>Minimum amount- {CalcFiveDigit(10 / selected.price)}</p>
-                )}
-              </div>
-            </div> */}
           </div>
         </div>
 
@@ -226,14 +142,8 @@ const Deposit = ({
                     active={1}
                     p="0.6rem 2rem"
                     br="10px"
-                    disabled={!publicKey ? true : MaxLoading ? true : false}
-                    className={
-                      !publicKey
-                        ? "not-allowed"
-                        : MaxLoading
-                        ? "not-allowed"
-                        : null
-                    }
+                    disabled={!publicKey ? true : false}
+                    className={!publicKey ? "not-allowed" : null}
                     onClick={() => handleProgram()}
                   >
                     {message}
@@ -248,7 +158,7 @@ const Deposit = ({
         <TokenModel
           isOpen={isModel}
           isClose={() => setIsModel(false)}
-          List={DepositTokens}
+          List={RepayTokens}
           setSelected={setSelected}
           PriceList={PriceList}
           BalanceList={BalanceList}
@@ -258,4 +168,4 @@ const Deposit = ({
   );
 };
 
-export default memo(Deposit);
+export default memo(Repay);
