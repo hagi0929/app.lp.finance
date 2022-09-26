@@ -98,6 +98,36 @@ export const FooterRegistry = [
   },
 ];
 
-export var TokenPriceRegistry = ["SOL", "zSOL", "mSOL", "stSOL", "UXD", "SAMO"];
+export const TokenPriceRegistry = [
+  "SOL",
+  "zSOL",
+  "mSOL",
+  "stSOL",
+  "UXD",
+  "SAMO",
+];
 
-export var TokenBalRegistry = ["SOL", "mSOL", "zSOL", "stSOL", "UXD", "SAMO"];
+export const TokenBalRegistry = ["SOL", "mSOL", "zSOL", "stSOL", "UXD", "SAMO"];
+
+export const collateral_infos_colors = [
+  {
+    symbol: "SOL",
+    color: "#c45dd4",
+  },
+  {
+    symbol: "mSOL",
+    color: "#5dd4a8",
+  },
+  {
+    symbol: "stSOL",
+    color: "#24B7BE",
+  },
+  {
+    symbol: "SAMO",
+    color: "#2085ec",
+  },
+  {
+    symbol: "UXD",
+    color: "#8464a0",
+  },
+];

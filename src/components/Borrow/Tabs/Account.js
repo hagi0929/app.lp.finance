@@ -98,7 +98,7 @@ const Account = ({
                   <div className="chart_miters">
                     <div className="pie1">
                       <span className="pie1_tooltip">
-                        Borrowed: ${numFormatter(TotalBorrowed)}$ (
+                        Borrowed: ${numFormatter(TotalBorrowed)}(
                         {CalcOneDigit(LTV)}%)
                       </span>
                     </div>

@@ -143,8 +143,8 @@ const TreasuryWrapper = styled.div`
                 .totalSupplyPie {
                   position: absolute;
                   display: inline-block;
-                  top: 20px;
-                  left: 35.5px;
+                  top: 24px;
+                  left: 38.8px;
                   cursor: pointer;
                 }
 

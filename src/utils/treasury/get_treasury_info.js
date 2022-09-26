@@ -72,6 +72,7 @@ export const fetch_treasury_info = async (wallet) => {
     // calculate infos
     const TotalSupply = mSOL_value + stSOL_value;
     const TotalBorrowed = zSOL_value;
+    const NetLTV = (TotalBorrowed / TotalSupply) * 100;
 
     const LiquidStakingInfos = [
       {
@@ -89,12 +90,14 @@ export const fetch_treasury_info = async (wallet) => {
     return {
       TotalSupply,
       TotalBorrowed,
+      NetLTV,
       LiquidStakingInfos,
     };
   } catch (error) {
     return {
       TotalSupply: 0,
       TotalBorrowed: 0,
+      NetLTV: 0,
       LiquidStakingInfos: [
         {
           name: "mSOL",

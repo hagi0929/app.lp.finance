@@ -56,8 +56,6 @@ const NotifiWrapper = styled.div`
           }
         }
         .close {
-          width: ;
-
           i {
             color: ${(props) => props.theme.BodyMainColor};
             font-size: 1.3rem;

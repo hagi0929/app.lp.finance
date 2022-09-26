@@ -18,7 +18,7 @@ const Treasury = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const { treasuryInfo, cbsInfo } = useCbs();
+  const { treasuryInfo } = useCbs();
 
   useMemo(() => {
     if (
@@ -32,7 +32,7 @@ const Treasury = () => {
   }, [publicKey]);
 
   return (
-    <TreasuryWrapper pie={cbsInfo.NET_LTV}>
+    <TreasuryWrapper pie={treasuryInfo.NetLTV}>
       <div className="container Treasury">
         <div className="row">
           <div className="col-12 mt-lg-5 mt-md-4 mt-2">
@@ -80,7 +80,7 @@ const Treasury = () => {
                               <Image
                                 src="/images/figma/ellipse.png"
                                 alt="Loading..."
-                                h="5.8rem"
+                                h="5.15rem"
                               />
                             </div>
                           </div>
@@ -95,7 +95,7 @@ const Treasury = () => {
                           </div>
                           <div className="miter2">
                             <p className="ml-5 pl-2">
-                              {calc(cbsInfo.NET_LTV)}%
+                              {calc(treasuryInfo.NetLTV)}%
                             </p>
                             <Image
                               src="/images/figma/cartLine2.png"

@@ -1,8 +1,8 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import Card from "Layout/Card";
 import Button from "Layout/Button";
 import { numFormatter, calc } from "helper";
-// import CbsPieChartModel from "models/CbsPieChartModel";
+import CbsPieChartModel from "models/CbsPieChartModel";
 
 const Overview = ({
   TotalSupply,
@@ -10,18 +10,31 @@ const Overview = ({
   NET_LTV,
   TVL,
   collateral_infos,
+  borrowed_collateral_infos,
 }) => {
-  // const [model, setModel] = useState();
+  const [DepositModel, setDepositModel] = useState(false);
+  const [BorrowdModel, setBorrowdModel] = useState(false);
 
   return (
     <>
-      {/* {model && (
+      {DepositModel && (
         <CbsPieChartModel
-          isOpen={model}
-          isClose={() => setModel(false)}
+          isOpen={DepositModel}
+          isClose={() => setDepositModel(false)}
           List={collateral_infos}
+          TotalValue={TotalSupply}
+          title="Collateral Infos"
         />
-      )} */}
+      )}
+      {BorrowdModel && (
+        <CbsPieChartModel
+          isOpen={BorrowdModel}
+          isClose={() => setBorrowdModel(false)}
+          List={borrowed_collateral_infos}
+          TotalValue={TotalBorrowed}
+          title="Borrowed Infos"
+        />
+      )}
 
       <div className="row py-4  d-flex justify-content-center borrow_overview">
         <div className="col-lg-11 col-md-11 col-12">
@@ -56,12 +69,15 @@ const Overview = ({
                   <div className="row">
                     <div className="col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
                       <div className="borrow_cart">
-                        <div className="pie animate no-round"></div>
+                        <div
+                          className="pie animate no-round"
+                          onClick={() => setBorrowdModel(true)}
+                        ></div>
                         <div className="totalSupplyPie">
                           <img
                             src="/images/figma/ellipse.png"
                             alt="Loading..."
-                            // onClick={() => setModel(true)}
+                            onClick={() => setDepositModel(true)}
                           />
                         </div>
                       </div>

@@ -1,5 +1,6 @@
 import { loadSwitchboardProgram } from "@switchboard-xyz/switchboard-v2";
 import { Keypair } from "@solana/web3.js";
+import { collateral_infos_colors } from "assets/registry";
 import {
   getProgram,
   getConnection,
@@ -138,6 +139,8 @@ export const fetch_cbs_infos = async (wallet) => {
       connection
     );
 
+    const zSOLAmount = configData.borrowedZsolAmount;
+
     let NET_LTV;
     let TVL;
 
@@ -154,9 +157,38 @@ export const fetch_cbs_infos = async (wallet) => {
       TVL = 0;
     }
 
+    const collateral_infos_sort = each_collateral_infos.sort(function (a, b) {
+      return b.value - a.value;
+    });
+
+    const collateral_infos_list = collateral_infos_sort.map((items) => {
+      var collateral;
+      for (let i = 0; i < collateral_infos_colors.length; i++) {
+        let { color, symbol } = collateral_infos_colors[i];
+        if (items.symbol === symbol) {
+          collateral = {
+            ...items,
+            color,
+          };
+        }
+      }
+      return collateral;
+    });
+
+    const borrowed_collateral_infos = [
+      {
+        idx: 1,
+        symbol: "zSOL",
+        amount: zSOLAmount,
+        value: total_borrowed_value,
+        color: "#0c0",
+      },
+    ];
+
     return {
       TotalSupply: total_supply_value,
-      collateral_infos: each_collateral_infos,
+      collateral_infos: collateral_infos_list,
+      borrowed_collateral_infos,
       TotalBorrowed: total_borrowed_value,
       NET_LTV,
       TVL,
@@ -165,6 +197,7 @@ export const fetch_cbs_infos = async (wallet) => {
     return {
       TotalSupply: 0,
       collateral_infos: [],
+      borrowed_collateral_infos: [],
       TotalBorrowed: 0,
       NET_LTV: 0,
       TVL: 0,

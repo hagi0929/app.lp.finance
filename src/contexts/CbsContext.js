@@ -13,6 +13,7 @@ export const CbsProvider = ({ children }) => {
   const [cbsInfo, setCbsInfo] = useState({
     TotalSupply: 0,
     collateral_infos: [],
+    borrowed_collateral_infos: [],
     TotalBorrowed: 0,
     NET_LTV: 0,
     TVL: 0,
@@ -31,16 +32,24 @@ export const CbsProvider = ({ children }) => {
   const [treasuryInfo, setTreasuryInfo] = useState({
     TotalSupply: 0,
     TotalBorrowed: 0,
+    NetLTV: 0,
     LiquidStakingInfos: [],
   });
 
   const handleCbsInfo = async () => {
-    const { TotalSupply, collateral_infos, TotalBorrowed, NET_LTV, TVL } =
-      await fetch_cbs_infos(wallet);
+    const {
+      TotalSupply,
+      collateral_infos,
+      TotalBorrowed,
+      NET_LTV,
+      TVL,
+      borrowed_collateral_infos,
+    } = await fetch_cbs_infos(wallet);
 
     setCbsInfo({
       TotalSupply,
       collateral_infos,
+      borrowed_collateral_infos,
       TotalBorrowed,
       NET_LTV,
       TVL,
@@ -70,12 +79,13 @@ export const CbsProvider = ({ children }) => {
   };
 
   const handleTreasuryInfo = async () => {
-    const { TotalSupply, TotalBorrowed, LiquidStakingInfos } =
+    const { TotalSupply, TotalBorrowed, LiquidStakingInfos, NetLTV } =
       await fetch_treasury_info(wallet);
 
     setTreasuryInfo({
       TotalSupply,
       TotalBorrowed,
+      NetLTV,
       LiquidStakingInfos,
     });
   };
@@ -90,6 +100,7 @@ export const CbsProvider = ({ children }) => {
       setCbsInfo({
         TotalSupply: 0,
         collateral_infos: [],
+        borrowed_collateral_infos: [],
         TotalBorrowed: 0,
         NET_LTV: 0,
         TVL: 0,
@@ -98,6 +109,7 @@ export const CbsProvider = ({ children }) => {
       setTreasuryInfo({
         TotalSupply: 0,
         TotalBorrowed: 0,
+        NetLTV: 0,
         LiquidStakingInfos: [],
       });
     };

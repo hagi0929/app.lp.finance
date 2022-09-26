@@ -158,12 +158,12 @@ const BorrowWrapper = styled.div`
               .totalSupplyPie {
                 position: absolute;
                 display: inline-block;
-                top: 19.6px;
-                left: 35.3px;
+                top: 23.8px;
+                left: 38.8px;
                 cursor: pointer;
 
                 img {
-                  height: 5.8rem;
+                  height: 5.15rem;
                   width: auto;
                 }
               }

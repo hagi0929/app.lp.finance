@@ -23,11 +23,12 @@ const PieChartWrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    max-width: 380px !important;
-    min-width: 380px !important;
-    padding: 1rem 0.2rem;
+    max-width: 680px !important;
+    min-width: 680px !important;
+    padding: 1rem 1.5rem;
     border-radius: 18px;
     opacity: 0.5;
+    overflow: hidden;
     transition: all 300ms ease-in-out;
     background: ${(props) => props.theme.BodySecondaryBg};
     border: 1px solid ${(props) => props.theme.BodyMainColor};
@@ -41,11 +42,54 @@ const PieChartWrapper = styled.div`
 
   .popup {
     .pieChart {
-      height: auto !important;
-      width: 100% !important;
+      padding: 0.2rem 0rem;
 
-      .card_Section {
-        .content {
+      .pieChart_top_Section {
+        border-bottom: 3px solid ${(props) => props.theme.BodyPrimaryBg};
+
+        .title {
+          p {
+            font-size: 1.3rem;
+            color: ${(props) => props.theme.BodyMainColor};
+            font-weight: bold;
+          }
+        }
+        .close {
+          i {
+            color: ${(props) => props.theme.BodyMainColor};
+            font-size: 1.3rem;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .pie_Section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .collateral_list {
+          .items {
+            background: ${(props) => props.theme.BodyPrimaryBg};
+            border-radius: 4px;
+
+            .collateral_cart {
+              padding: 0.5rem 1rem;
+              width: 100%;
+
+              img {
+                width: auto;
+                height: 2rem;
+              }
+              p,
+              span {
+                color: ${(props) => props.theme.BodyMainColor};
+              }
+              span {
+                font-size: 0.9rem;
+              }
+            }
+          }
         }
       }
     }
@@ -56,10 +100,37 @@ const PieChartWrapper = styled.div`
       width: 95% !important;
       max-width: auto !important;
       min-width: auto !important;
+      min-height: 60%;
+      max-height: 98%;
     }
+
     .popup {
       .pieChart {
         padding: 1rem 0.3rem;
+
+        .pie_Section {
+          .collateral_list {
+            max-height: 190px;
+            min-height: 100px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+
+            &::-webkit-scrollbar {
+              width: 6px;
+              background: inherit;
+            }
+
+            &::-webkit-scrollbar-track {
+              border-radius: 10px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              background: ${(props) => props.theme.BodyPrimaryBg};
+              backdrop-filter: blur(5px);
+              border-radius: 10px;
+            }
+          }
+        }
       }
     }
   }
