@@ -68,7 +68,7 @@ p {
 }
  
 
-@media only screen and (max-width: 1200px) { 
+@media only screen and (max-width: 1232px) { 
   .container {
     padding-left:30px;
     padding-right:30px;
