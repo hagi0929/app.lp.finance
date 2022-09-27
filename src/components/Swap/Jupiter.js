@@ -902,7 +902,7 @@ const Jupiter = ({
         </div>
         <div className="col-lg-8 col-md-12 col-12 pb-lg-3 my-lg-4 my-md-5 my-4 my-2">
           <div className="row">
-            <div className="col-12 ">
+            <div className="col-12">
               <div className="TradingView_section">
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                   <li className="nav-item" role="presentation">

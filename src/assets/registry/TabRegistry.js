@@ -17,6 +17,41 @@ export const AuctionTabsRegistry = [
   },
 ];
 
+export const StakeTabsRegistry = [
+  {
+    id: "nav-Stake-tab",
+    name: "Stake",
+    class: "nav-link active",
+    href: "#nav-Stake",
+    ariaControls: "nav-Stake",
+    ariaSelected: true,
+  },
+  {
+    id: "nav-UnStake-tab",
+    name: "UnStake",
+    class: "nav-link",
+    href: "#nav-UnStake",
+    ariaControls: "nav-UnStake",
+    ariaSelected: false,
+  },
+  {
+    id: "nav-Account-tab",
+    name: "Account",
+    class: "nav-link",
+    href: "#nav-Account",
+    ariaControls: "nav-Account",
+    ariaSelected: true,
+  },
+  {
+    id: "nav-Details-tab",
+    name: "Details",
+    class: "nav-link",
+    href: "#nav-Details",
+    ariaControls: "nav-Details",
+    ariaSelected: false,
+  },
+];
+
 export const BorrowTabsRegistry = [
   {
     id: "nav-Deposit-tab",

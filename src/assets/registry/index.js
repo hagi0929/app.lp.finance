@@ -9,6 +9,7 @@ export const TokenImgRegistry = {
   UXD: "https://lptokenbucket.s3.amazonaws.com/8760a253c75f91ce069c1094350092a2",
   SAMO: "https://lptokenbucket.s3.amazonaws.com/c85a303ff798379f58f11fc8841a9fc1",
   zSOL: "https://lptokenbucket.s3.amazonaws.com/30bd9d88075d07b6a14086c63e9ac124",
+  LPFi: "https://lptokenbucket.s3.amazonaws.com/ce97477a6c673ea64233e88e06724341",
 };
 
 export const RpcRegistry = [
@@ -51,12 +52,12 @@ export const NavbarRegistry = [
     pathName: "/treasury",
     href: "/treasury",
   },
-  // {
-  //   id: 5,
-  //   name: "Staking",
-  //   pathName: "/staking",
-  //   href: "/staking",
-  // },
+  {
+    id: 5,
+    name: "Staking",
+    pathName: "/staking",
+    href: "/staking",
+  },
   {
     id: 6,
     name: "Swap",

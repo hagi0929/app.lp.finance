@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import StakeWrapper from "styles/Stake.style";
-import Card from "Layout/Card";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { StakeTabsRegistry } from "assets/registry/TabRegistry";
 import Stake from "./Stake";
 import UnStake from "./UnStake";
-import { useWallet } from "@solana/wallet-adapter-react";
 
 const Staking = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const [active, setActive] = useState(false);
 
   return (
     <StakeWrapper>
-      <div className="container Stake mb-5 mt-lg-4 mt-md-4 mt-2">
-        <div className="row">
+      <div className="container Stake">
+        <div className="row mt-3">
           <div className="col-12 d-flex justify-content-center flex-column">
             <div className="stake_title text-center">
               <h1>LPFi Staking</h1>
@@ -22,37 +21,52 @@ const Staking = () => {
               <p>Stake LPFi to earn protocol fees</p>
             </div>
           </div>
-          <div className="col-12 d-flex justify-content-center mt-3">
-            <div className="switch d-flex align-items-center">
-              <p
-                className={!active ? "active" : null}
-                onClick={() => setActive(false)}
-              >
-                Stake
-              </p>
-              <p
-                className={active ? "active" : null}
-                onClick={() => setActive(true)}
-              >
-                Unstake
-              </p>
-            </div>
-          </div>
-          <div className="col-12 stake_section mt-4">
-            <div className="row d-flex justify-content-center">
-              <div className="col-lg-5 col-md-6 col-12">
-                <Card
-                  active={1}
-                  p="2rem 2.5rem 1rem 2.5rem"
-                  br="18px"
-                  className="stake_card"
-                >
-                  {active ? (
-                    <UnStake publicKey={publicKey} />
-                  ) : (
-                    <Stake publicKey={publicKey} />
-                  )}
-                </Card>
+        </div>
+        <div className="row stake_section d-flex justify-content-center">
+          <div className="col-lg-6 col-md-12 col-12 stake_right"></div>
+          <div className="col-lg-8 col-md-12 col-12  stake_left pb-lg-3 my-lg-4 my-md-5 my-4 my-2">
+            <div className="row">
+              <div className="col-12">
+                <div className="switch_section">
+                  <ul className="nav nav-tabs" id="myTab" role="tablist">
+                    {StakeTabsRegistry.map((val, ind) => {
+                      return (
+                        <li className="nav-item" role="presentation">
+                          <a
+                            key={ind}
+                            className={`${val.class}`}
+                            id={val.id}
+                            data-toggle="tab"
+                            href={val.href}
+                            role="tab"
+                            aria-controls={val.ariaControls}
+                            aria-selected={val.ariaSelected}
+                          >
+                            <p> {val.name}</p>
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <div className="tab-content" id="myTabContent">
+                    <div
+                      className="tab-pane fade show active"
+                      id="nav-Stake"
+                      role="tabpanel"
+                      aria-labelledby="nav-Stake-tab"
+                    >
+                      <Stake {...{ publicKey }} />
+                    </div>
+                    <div
+                      className="tab-pane fade"
+                      id="nav-UnStake"
+                      role="tabpanel"
+                      aria-labelledby="nav-UnStake-tab"
+                    >
+                      <UnStake {...{ publicKey }} />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

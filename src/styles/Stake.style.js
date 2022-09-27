@@ -18,73 +18,77 @@ const StakeWrapper = styled.div`
       }
     }
 
-    .switch {
-      background: ${(props) => props.theme.BodyPrimaryBg};
-      border-radius: 50px;
-      padding: 0.2rem;
-
-      p {
-        color: ${(props) => props.theme.BodyMainColor};
-        padding: 0.5rem 2rem;
-        cursor: pointer;
-      }
-
-      .active {
-        color: ${(props) => props.theme.BodyMainColor};
-        background: ${(props) => props.theme.BodySecondaryBg};
-        border-radius: 50px;
-      }
-    }
-
     .stake_section {
-      .Pay_section,
-      .Receive_section {
-        .title {
-          font-size: 1.05rem;
-          font-weight: 500;
-          color: ${(props) => props.theme.BodyMainColor};
-        }
-        .balance {
-          p {
-            font-size: 0.89rem;
-            color: ${(props) => props.theme.BodySecondaryColor};
+      .stake_left {
+        .switch_section {
+          width: 100%;
+
+          .nav-tabs {
+            width: 100%;
+            border-bottom: 1px solid ${(props) => props.theme.BodyTraceryBg};
           }
-        }
+          .nav-tabs .nav-item {
+            width: 25%;
+            text-align: center;
+          }
 
-        .model_btn {
-          button {
-            img {
-              width: auto;
-              height: 1.8rem;
-              border-radius: 50%;
-            }
-            p {
-              font-size: 1.1rem;
-              color: ${(props) => props.theme.BodyMainColor};
-              font-weight: 500;
-            }
-            i {
-              font-size: 1rem;
-              color: ${(props) => props.theme.BodyMainColor};
+          .nav-tabs .nav-item .nav-link {
+            position: relative;
+            color: ${(props) => props.theme.BodyMainColor};
+            font-size: 1.1rem;
+            font-weight: 600;
+            background-color: transparent;
+            border: none;
+            transition: hover 0.4s;
+            padding: 0.6rem 2rem;
+          }
+
+          .nav-tabs .nav-item.show .nav-link,
+          .nav-tabs .nav-link.active {
+            &:before {
+              content: "";
+              position: absolute;
+              left: 0px;
+              bottom: 0;
+              width: 100%;
+              height: 2px;
+              opacity: 1;
+              background: ${(props) => props.theme.BodyTraceryBg};
+              transition: 450ms all;
             }
 
-            &:hover {
-              background: ${(props) => props.theme.BodyPrimaryBg};
+            h1 {
+              font-size: 1rem !important;
+              letter-spacing: 0.4px !important;
+              font-weight: 700 !important;
             }
           }
-        }
 
-        .input_form {
-          span {
-            color: ${(props) => props.theme.BodyPrimaryBg};
-            font-size: 0.8rem;
-          }
-        }
+          .tab-content {
+            padding: 1rem 0rem;
 
-        .value {
-          span {
-            color: ${(props) => props.theme.BodySecondaryColor};
-            font-size: 0.8rem;
+            .tab-pane {
+              .switch_content {
+                .switch_card {
+                  .input_form {
+                    position: relative;
+
+                    .max_btn {
+                      position: absolute;
+                      top: 10px;
+                      right: 8px;
+                    }
+                  }
+                  tab-content .min_amount {
+                    padding: 5px 0px 0px 12px;
+                    p {
+                      color: ${(props) => props.theme.BodyMainColor};
+                      font-size: 0.8rem;
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
