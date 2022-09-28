@@ -41,13 +41,8 @@ const Withdraw = ({
   const handleAmount = (e) => {
     setAmount(e.target.value);
     if (e.target.value > 0) {
-      if (e.target.value <= selected.balance) {
-        setMessage("Withdraw");
-        setRequired(true);
-      } else {
-        setMessage("Insufficient Balance");
-        setRequired(false);
-      }
+      setMessage("Withdraw");
+      setRequired(true);
     } else {
       setMessage("Enter an amount");
       setRequired(false);

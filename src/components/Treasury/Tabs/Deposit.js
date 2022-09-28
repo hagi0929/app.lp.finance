@@ -41,8 +41,13 @@ const Deposit = ({
   const handleAmount = (e) => {
     setAmount(e.target.value);
     if (e.target.value > 0) {
-      setMessage("Deposit");
-      setRequired(true);
+      if (e.target.value <= selected.balance) {
+        setMessage("Deposit");
+        setRequired(true);
+      } else {
+        setMessage("Insufficient Balance");
+        setRequired(false);
+      }
     } else {
       setMessage("Enter an amount");
       setRequired(false);
