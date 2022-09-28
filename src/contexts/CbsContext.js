@@ -12,6 +12,7 @@ export const CbsProvider = ({ children }) => {
   const wallet = useWallet();
   const { publicKey } = wallet;
   const [treasuryChart, setTreasuryChart] = useState([]);
+  const [cbsChartData, setCbsChartData] = useState([]);
   const [cbsInfo, setCbsInfo] = useState({
     TotalSupply: 0,
     collateral_infos: [],
@@ -92,6 +93,14 @@ export const CbsProvider = ({ children }) => {
     });
   };
 
+  const handleCbsChart = async () => {
+    const response = await axios.get(api.getCbsOverviewData);
+    if (response.status === 200) {
+      setCbsChartData(response.data);
+    } else {
+    }
+  };
+
   const handleTreasuryChart = async () => {
     const response = await axios.get(api.getTreasuryData);
     if (response.status === 200) {
@@ -101,14 +110,22 @@ export const CbsProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    handleTreasuryChart();
     if (wallet) {
       handleCbsInfo();
       handleTreasuryInfo();
     }
 
+    handleTreasuryChart();
+    handleCbsChart();
+    let TreasuryChartInterval = setInterval(async () => {
+      handleTreasuryChart();
+      handleCbsChart();
+    }, 3600000);
+
     return () => {
+      clearInterval(TreasuryChartInterval);
       setTreasuryChart([]);
+      setCbsChartData([]);
       setCbsInfo({
         TotalSupply: 0,
         collateral_infos: [],
@@ -157,6 +174,7 @@ export const CbsProvider = ({ children }) => {
         handleTreasuryInfo,
         treasuryInfo,
         treasuryChart,
+        cbsChartData,
       }}
     >
       {children}

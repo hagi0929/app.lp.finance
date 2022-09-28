@@ -23,8 +23,8 @@ const PieChartWrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    max-width: 680px !important;
-    min-width: 680px !important;
+    max-width: ${(props) => props.width} !important;
+    min-width: ${(props) => props.width} !important;
     padding: 1rem 1.5rem;
     border-radius: 18px;
     opacity: 0.5;
@@ -67,6 +67,13 @@ const PieChartWrapper = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
+        height: 300px;
+
+        .message {
+          p {
+            color: ${(props) => props.theme.BodyMainColor};
+          }
+        }
 
         .collateral_list {
           .items {
@@ -95,7 +102,7 @@ const PieChartWrapper = styled.div`
     }
   }
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 800px) {
     .popup .popup-container {
       width: 95% !important;
       max-width: auto !important;

@@ -86,7 +86,7 @@ const CbsPieChartModel = ({ isOpen, isClose, List, TotalValue, title }) => {
   }, [List]);
 
   return (
-    <PieChartWrapper>
+    <PieChartWrapper width="680px">
       <div className="popup">
         <div className="popup-container">
           <div className="container-fluid pieChart">

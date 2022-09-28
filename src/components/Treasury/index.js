@@ -3,7 +3,7 @@ import TreasuryWrapper from "styles/Treasury.style";
 import Card from "Layout/Card";
 import Image from "Layout/Image";
 import { TokenImgRegistry } from "assets/registry";
-import Chart from "./Chart";
+import GlobalChart from "components/globalComponents/GlobalChart";
 import { useCbs } from "contexts/CbsContext";
 import { numFormatter, calc, CalcFiveDigit } from "helper";
 import Tabs from "./Tabs";
@@ -11,7 +11,6 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useCrypto } from "contexts/CryptoContext";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
 import DataLoader from "components/globalComponents/Loaders/DataLoader";
-import { TreasuryChartList } from "assets/registry";
 
 const Treasury = () => {
   const { PriceList, PriceHandler, BalanceList, BalanceHandler } = useCrypto();
@@ -127,7 +126,9 @@ const Treasury = () => {
                   </div>
                 </div>
                 <div className="col-lg-6 col-12 mt-4 mb-3">
-                  <Chart {...{ treasuryChart, TreasuryChartList }} />
+                  <GlobalChart
+                    {...{ list: treasuryChart, filterList: TreasuryChartList }}
+                  />
                 </div>
               </div>
               <div
@@ -228,3 +229,22 @@ const Treasury = () => {
 };
 
 export default Treasury;
+
+const TreasuryChartList = [
+  {
+    id: 1,
+    name: "totalSupply",
+    dataKey: "totalSupply",
+    fill: "url(#totalSupply)",
+    stroke: "#0c0",
+    checked: true,
+  },
+  {
+    id: 2,
+    name: "totalBorrowed",
+    dataKey: "totalBorrowed",
+    fill: "url(#totalBorrowed)",
+    stroke: "#82ca9d",
+    checked: true,
+  },
+];

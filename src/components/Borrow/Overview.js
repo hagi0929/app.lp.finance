@@ -3,6 +3,7 @@ import Card from "Layout/Card";
 import Button from "Layout/Button";
 import { numFormatter, calc } from "helper";
 import CbsPieChartModel from "models/CbsPieChartModel";
+import CbsDataModel from "models/CbsDataModel.js";
 
 const Overview = ({
   TotalSupply,
@@ -11,10 +12,11 @@ const Overview = ({
   TVL,
   collateral_infos,
   borrowed_collateral_infos,
+  cbsChartData,
 }) => {
   const [DepositModel, setDepositModel] = useState(false);
   const [BorrowdModel, setBorrowdModel] = useState(false);
-
+  const [DataModel, setDataModel] = useState(false);
   return (
     <>
       {DepositModel && (
@@ -33,6 +35,13 @@ const Overview = ({
           List={borrowed_collateral_infos}
           TotalValue={TotalBorrowed}
           title="Borrowed Infos"
+        />
+      )}
+      {DataModel && (
+        <CbsDataModel
+          isOpen={DataModel}
+          isClose={() => setDataModel(false)}
+          List={cbsChartData}
         />
       )}
 
@@ -145,7 +154,7 @@ const Overview = ({
                       active={1}
                       br="10px"
                       p="0.6rem 1rem"
-                      className="not-allowed"
+                      onClick={() => setDataModel(true)}
                     >
                       Data
                     </Button>

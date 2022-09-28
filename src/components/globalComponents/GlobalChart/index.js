@@ -10,14 +10,14 @@ import {
 } from "recharts";
 import { getDate, DataFormatter } from "helper";
 
-const Chart = ({ treasuryChart, TreasuryChartList }) => {
+const GlobalChart = ({ list, filterList }) => {
   return (
     <div style={{ width: "100%", height: 260 }} className="NormalChart">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           width={500}
           height={400}
-          data={treasuryChart}
+          data={list}
           margin={{
             top: 10,
             right: 0,
@@ -26,14 +26,21 @@ const Chart = ({ treasuryChart, TreasuryChartList }) => {
           }}
         >
           <defs>
-            <linearGradient id="totalSupply" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#0c0" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#0c0" stopOpacity={0} />
-            </linearGradient>
-            <linearGradient id="totalBorrowed" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-            </linearGradient>
+            {filterList.map((list) => {
+              return (
+                <linearGradient
+                  id={list.dataKey}
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                  key={list.id}
+                >
+                  <stop offset="0%" stopColor={list.stroke} stopOpacity={0.8} />
+                  <stop offset="95%" stopColor={list.stroke} stopOpacity={0} />
+                </linearGradient>
+              );
+            })}
           </defs>
           <XAxis
             dataKey="timestamp"
@@ -60,7 +67,7 @@ const Chart = ({ treasuryChart, TreasuryChartList }) => {
               fontSize: "0.95rem",
             }}
           />
-          {TreasuryChartList.map((list) => {
+          {filterList.map((list) => {
             return (
               <Area
                 type="monotone"
@@ -78,4 +85,4 @@ const Chart = ({ treasuryChart, TreasuryChartList }) => {
   );
 };
 
-export default memo(Chart);
+export default memo(GlobalChart);

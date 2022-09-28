@@ -138,22 +138,3 @@ export const collateral_infos_colors = [
     color: "#8464a0",
   },
 ];
-
-export const TreasuryChartList = [
-  {
-    id: 1,
-    name: "totalSupply",
-    dataKey: "totalSupply",
-    fill: "url(#totalSupply)",
-    stroke: "#0c0",
-    checked: true,
-  },
-  {
-    id: 2,
-    name: "totalBorrowed",
-    dataKey: "totalBorrowed",
-    fill: "url(#totalBorrowed)",
-    stroke: "#82ca9d",
-    checked: true,
-  },
-];

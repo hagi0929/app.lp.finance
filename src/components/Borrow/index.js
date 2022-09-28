@@ -13,7 +13,7 @@ import { useCbs } from "contexts/CbsContext";
 const Borrow = () => {
   const { PriceList, PriceHandler, BalanceList, BalanceHandler } = useCrypto();
   const { OpenContractSnackbar } = useContractSnackbar();
-  const { cbsInfo, cbsUserInfo } = useCbs();
+  const { cbsInfo, cbsUserInfo, cbsChartData } = useCbs();
   const [notifi, setNotifi] = useState(false);
   const wallet = useWallet();
   const { publicKey } = wallet;
@@ -49,6 +49,7 @@ const Borrow = () => {
             {...{
               ...cbsInfo,
               publicKey,
+              cbsChartData,
             }}
           />
           <Tabs
