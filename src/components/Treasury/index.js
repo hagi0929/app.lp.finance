@@ -11,6 +11,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useCrypto } from "contexts/CryptoContext";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
 import DataLoader from "components/globalComponents/Loaders/DataLoader";
+import { TreasuryChartList } from "assets/registry";
 
 const Treasury = () => {
   const { PriceList, PriceHandler, BalanceList, BalanceHandler } = useCrypto();
@@ -18,7 +19,7 @@ const Treasury = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const { treasuryInfo } = useCbs();
+  const { treasuryInfo, treasuryChart } = useCbs();
 
   useMemo(() => {
     if (
@@ -126,7 +127,7 @@ const Treasury = () => {
                   </div>
                 </div>
                 <div className="col-lg-6 col-12 mt-4 mb-3">
-                  <Chart />
+                  <Chart {...{ treasuryChart, TreasuryChartList }} />
                 </div>
               </div>
               <div

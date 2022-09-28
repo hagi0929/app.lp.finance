@@ -1,8 +1,9 @@
-// const BaseUrl = "";
+const BaseUrl = "https://www.mainnet-api.lp.finance/api";
 
 const api = {
-  coingecko: "https://api.coingecko.com/api/v3/coins/list",
   price: "https://price.jup.ag/v1/price",
+  getTreasuryData: BaseUrl + "/global/getTreasuryData",
+  getCbsOverviewData: BaseUrl + "/global/getCbsOverviewData",
 };
 
 export default api;

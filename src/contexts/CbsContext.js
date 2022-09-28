@@ -1,15 +1,17 @@
-import React, { useContext, createContext, useState } from "react";
+import React, { useContext, createContext, useState, useEffect } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { fetch_cbs_infos } from "utils/lp-protocol/get_cbs_info";
 import { fetch_user_infos } from "utils/lp-protocol/get_user_info";
 import { fetch_treasury_info } from "utils/treasury/get_treasury_info";
-import { useEffect } from "react";
+import api from "api";
+import axios from "axios";
 
 export const CbsContext = createContext();
 
 export const CbsProvider = ({ children }) => {
   const wallet = useWallet();
   const { publicKey } = wallet;
+  const [treasuryChart, setTreasuryChart] = useState([]);
   const [cbsInfo, setCbsInfo] = useState({
     TotalSupply: 0,
     collateral_infos: [],
@@ -90,13 +92,23 @@ export const CbsProvider = ({ children }) => {
     });
   };
 
+  const handleTreasuryChart = async () => {
+    const response = await axios.get(api.getTreasuryData);
+    if (response.status === 200) {
+      setTreasuryChart(response.data);
+    } else {
+    }
+  };
+
   useEffect(() => {
+    handleTreasuryChart();
     if (wallet) {
       handleCbsInfo();
       handleTreasuryInfo();
     }
 
     return () => {
+      setTreasuryChart([]);
       setCbsInfo({
         TotalSupply: 0,
         collateral_infos: [],
@@ -144,6 +156,7 @@ export const CbsProvider = ({ children }) => {
         handleCbsUserInfo,
         handleTreasuryInfo,
         treasuryInfo,
+        treasuryChart,
       }}
     >
       {children}
