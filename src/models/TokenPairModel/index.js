@@ -123,12 +123,14 @@ const TokenPairModel = ({ isOpen, isClose, List, setSelected }) => {
                                       <Image
                                         src={item.pairOneImg}
                                         alt={item.pairOneName}
-                                        h="1.9rem"
+                                        h="2rem"
+                                        w="2rem"
                                       />
                                       <Image
                                         src={item.pairTwoImg}
                                         alt={item.pairTwoName}
-                                        h="1.9rem"
+                                        h="2rem"
+                                        w="2rem"
                                         className="toggle"
                                       />
 

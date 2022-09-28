@@ -71,6 +71,12 @@ const StakingWrapper = styled.div`
         }
 
         .details_card {
+          .img_section {
+            img {
+              height: 8rem;
+            }
+          }
+
           .card_right {
             border-left: 3px solid ${(props) => props.theme.BodyMainColor};
           }

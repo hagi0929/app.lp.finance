@@ -142,7 +142,8 @@ const TokenModel = ({
                                     <Image
                                       src={item.logoURI}
                                       alt={item.name}
-                                      h="1.9rem"
+                                      h="2rem"
+                                      w="2rem"
                                     />
                                     <div className="ml-3 details_name d-flex flex-column">
                                       <p>{item.symbol}</p>

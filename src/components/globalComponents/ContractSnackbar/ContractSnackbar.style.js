@@ -123,6 +123,16 @@ const ContractContractSnackbarWrapper = styled.div`
     z-index: 1100;
   }
 
+  .ContractSnackbar.success {
+    border-radius: 8px;
+    width: 395px;
+    min-height: 120px;
+    max-height: 200px;
+    bottom: 0px;
+    transition: none;
+    padding: 0rem;
+  }
+
   .ContractSnackbar .ContractSnackbar_content .progress_bar.active:before {
     animation: progress 7s linear forwards;
   }
@@ -141,6 +151,16 @@ const ContractContractSnackbarWrapper = styled.div`
         bottom: 5px;
         left: 5px;
       }
+    }
+
+    .ContractSnackbar.success {
+      border-radius: 8px;
+      width: 100%;
+      min-height: 120px;
+      max-height: 190px;
+      bottom: 0px;
+      transition: none;
+      padding: 0rem;
     }
   }
 `;

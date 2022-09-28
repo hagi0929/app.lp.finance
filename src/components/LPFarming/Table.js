@@ -27,11 +27,12 @@ const Table = () => {
                   <tr key={ind}>
                     <td>
                       <div className="details d-flex align-items-center">
-                        <Image src={list.Img1} alt={list.name1} h="1.9rem" />
+                        <Image src={list.Img1} alt={list.name1} h="2rem" />
                         <Image
                           src={list.Img2}
                           alt={list.name2}
-                          h="1.9rem"
+                          h="2rem"
+                          w="2rem"
                           className="toggle"
                         />
                         <a

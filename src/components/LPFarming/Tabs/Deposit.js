@@ -63,6 +63,7 @@ const Deposit = ({ publicKey }) => {
                         src={selected.pairOneImg}
                         alt={selected.pairOneName}
                         h="2rem"
+                        w="2rem"
                       />
                     )}
                     {selected.pairTwoImg && (
@@ -70,6 +71,7 @@ const Deposit = ({ publicKey }) => {
                         src={selected.pairTwoImg}
                         alt={selected.pairTwoName}
                         h="2rem"
+                        w="2rem"
                         className="toggle"
                       />
                     )}

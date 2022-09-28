@@ -136,32 +136,11 @@ const Deposit = ({
                         ? "not-allowed"
                         : null
                     }
-                    p="0.7rem 0rem 0.7rem 6.5rem"
+                    p="0.7rem 0rem 0.7rem 3.5rem"
                     br="10px"
                   />
 
                   <div className="max_btn d-flex align-items-center">
-                    <Button
-                      active={3}
-                      p="0.3rem 0.6rem"
-                      br="4px"
-                      size="0.8rem"
-                      disabled={!publicKey ? true : MaxLoading ? true : false}
-                      className={
-                        !publicKey
-                          ? "not-allowed"
-                          : MaxLoading
-                          ? "not-allowed"
-                          : null
-                      }
-                      onClick={() => {
-                        setRequired(true);
-                        setAmount(CalcFiveDigit(10 / selected.price));
-                        setMessage("Deposit");
-                      }}
-                    >
-                      Min
-                    </Button>
                     <Button
                       active={3}
                       p="0.3rem 0.6rem"
@@ -175,7 +154,7 @@ const Deposit = ({
                             : MaxLoading
                             ? "not-allowed"
                             : null
-                        } ml-1`}
+                        }`}
                       onClick={CalculateMax}
                     >
                       Max
@@ -196,6 +175,7 @@ const Deposit = ({
                         src={selected.logoURI}
                         alt={selected.symbol}
                         h="2rem"
+                        w="2rem"
                       />
                     )}
 
@@ -205,13 +185,13 @@ const Deposit = ({
                 </div>
               </div>
             </div>
-            {/* <div className="row min_amount">
+            <div className="row min_amount">
               <div className="col-12">
                 {selected.price !== 0 && (
                   <p>Minimum amount- {CalcFiveDigit(10 / selected.price)}</p>
                 )}
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
 

@@ -33,7 +33,6 @@ const ContractSnackbar = () => {
       const toast = document.querySelector(".ContractSnackbar");
       const progress = document.querySelector(".progress_bar");
       progress.classList.add("active");
-
       const timer = setTimeout(() => {
         toast.classList.remove("show");
         progress.classList.remove("active");
@@ -43,6 +42,19 @@ const ContractSnackbar = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ContractSnackbarType !== "Processing"]);
+
+  useEffect(() => {
+    if (ContractSnackbarType === "Success") {
+      const toast = document.querySelector(".ContractSnackbar");
+      toast.classList.add("success");
+
+      const timer = setTimeout(() => {
+        toast.classList.remove("success");
+      }, 7000);
+      return () => clearTimeout(timer);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ContractSnackbarType !== "Success"]);
 
   return (
     <>

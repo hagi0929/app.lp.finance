@@ -2,12 +2,11 @@ import React, { memo, useState } from "react";
 import Input from "Layout/Form/Input";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
-import { TokenImgRegistry } from "assets/registry";
 import WalletButton from "components/globalComponents/WalletButton";
 
 const Stake = ({ publicKey }) => {
   const [selected] = useState({
-    logoURI: TokenImgRegistry.LPFi,
+    logoURI: "/favicon.ico",
     symbol: "LPFi",
     balance: 0,
   });
@@ -53,6 +52,7 @@ const Stake = ({ publicKey }) => {
                         src={selected.logoURI}
                         alt={selected.symbol}
                         h="2rem"
+                        w="2rem"
                       />
                     )}
                     <p className="pl-2">{selected.symbol}</p>

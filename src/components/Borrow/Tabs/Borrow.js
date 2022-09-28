@@ -170,6 +170,7 @@ const Borrow = ({
                         src={selected.logoURI}
                         alt={selected.symbol}
                         h="2rem"
+                        w="2rem"
                       />
                     )}
 

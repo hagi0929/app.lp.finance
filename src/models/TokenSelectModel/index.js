@@ -151,7 +151,8 @@ const TokenSelectModel = ({
                                     <Image
                                       src={token?.logoURI}
                                       alt={token?.name}
-                                      h="1.9rem"
+                                      h="2rem"
+                                      w="2rem"
                                     />
 
                                     <div className="ml-3 details_name d-flex flex-column">

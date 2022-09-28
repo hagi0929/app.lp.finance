@@ -365,6 +365,7 @@ const Jupiter = ({
                                       src={inputTokenInfo?.logoURI}
                                       alt={inputTokenInfo?.symbol}
                                       h="2rem"
+                                      w="2rem"
                                     />
                                   ) : null}
 
@@ -448,6 +449,7 @@ const Jupiter = ({
                                       src={outputTokenInfo?.logoURI}
                                       alt={outputTokenInfo?.symbol}
                                       h="2rem"
+                                      w="2rem"
                                     />
                                   ) : null}
 

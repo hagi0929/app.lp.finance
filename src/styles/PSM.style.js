@@ -35,23 +35,8 @@ const PSMWrapper = styled.div`
 
         .model_btn {
           button {
-            img {
-              width: auto;
-              height: 1.8rem;
-              border-radius: 50%;
-            }
             p {
               font-size: 1.1rem;
-              color: ${(props) => props.theme.BodyMainColor};
-              font-weight: 500;
-            }
-            i {
-              font-size: 1rem;
-              color: ${(props) => props.theme.BodyMainColor};
-            }
-
-            &:hover {
-              background: ${(props) => props.theme.BodyPrimaryBg};
             }
           }
         }

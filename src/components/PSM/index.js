@@ -252,10 +252,10 @@ const PSM = () => {
                   >
                     <div className="Pay_section">
                       <div className="row">
-                        <div className="col-4 d-flex align-items-center">
+                        <div className="col-3 d-flex align-items-center">
                           <div className="title">Pay</div>
                         </div>
-                        <div className="col-8 d-flex justify-content-end align-items-center flex-row">
+                        <div className="col-9 d-flex justify-content-end align-items-center flex-row">
                           <div className="balance">
                             <p>Bal: {CalcFiveDigit(PaySelected.balance)}</p>
                           </div>
@@ -298,6 +298,7 @@ const PSM = () => {
                                 src={PaySelected.logoURI}
                                 alt={PaySelected.symbol}
                                 h="2rem"
+                                w="2rem"
                               />
                               <p className="mx-2">{PaySelected.symbol}</p>
                               <i className="zmdi zmdi-chevron-down" />
@@ -350,10 +351,10 @@ const PSM = () => {
                     {/* PSM receive section  */}
                     <div className="Receive_section mt-3">
                       <div className="row">
-                        <div className="col-4 d-flex align-items-center">
+                        <div className="col-3 d-flex align-items-center">
                           <div className="title">Receive</div>
                         </div>
-                        <div className="col-8 d-flex justify-content-end align-items-center flex-row">
+                        <div className="col-9 d-flex justify-content-end align-items-center flex-row">
                           <div className="balance">
                             <p>Bal: {CalcFiveDigit(ReceiveSelect.balance)}</p>
                           </div>
@@ -374,6 +375,7 @@ const PSM = () => {
                                 src={ReceiveSelect.logoURI}
                                 alt={ReceiveSelect.symbol}
                                 h="2rem"
+                                w="2rem"
                               />
                               <p className="mx-2">{ReceiveSelect.symbol}</p>
                               <i className="zmdi zmdi-chevron-down" />
