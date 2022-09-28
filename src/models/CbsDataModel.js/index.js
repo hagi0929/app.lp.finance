@@ -54,7 +54,7 @@ const CbsDataModel = ({ isOpen, isClose, List }) => {
               </div>
             </div>
             <div className="row pie_Section my-lg-4">
-              {List?.length !== 0 ? (
+              {List?.length === 0 ? (
                 <div className="col-12 message d-flex justify-content-center">
                   <p>Data is not available</p>
                 </div>
