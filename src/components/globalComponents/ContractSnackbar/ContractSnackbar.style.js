@@ -123,7 +123,7 @@ const ContractContractSnackbarWrapper = styled.div`
     z-index: 1100;
   }
 
-  .ContractSnackbar.success {
+  .ContractSnackbar.stop {
     border-radius: 8px;
     width: 395px;
     min-height: 120px;
@@ -153,7 +153,7 @@ const ContractContractSnackbarWrapper = styled.div`
       }
     }
 
-    .ContractSnackbar.success {
+    .ContractSnackbar.stop {
       border-radius: 8px;
       width: 100%;
       min-height: 120px;
