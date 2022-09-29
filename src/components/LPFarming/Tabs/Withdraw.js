@@ -11,10 +11,10 @@ const Withdraw = ({ publicKey }) => {
   const [isModel, setIsModel] = useState(false);
   const [selected, setSelected] = useState({
     pairOneImg: TokenImgRegistry.zSOL,
-    pairTwoImg: TokenImgRegistry.stSOL,
+    pairTwoImg: TokenImgRegistry.mSOL,
     pairOneName: "zSOL",
-    pairTwoName: "stSOL",
-    symbol: "zSOL-stSOL",
+    pairTwoName: "mSOL",
+    symbol: "zSOL-mSOL",
   });
 
   return (
