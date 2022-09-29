@@ -164,11 +164,11 @@ export const fetch_cbs_infos = async (wallet) => {
     const collateral_infos_list = collateral_infos_sort.map((items) => {
       var collateral;
       for (let i = 0; i < collateral_infos_colors.length; i++) {
-        let { color, symbol } = collateral_infos_colors[i];
+        let { fill, symbol } = collateral_infos_colors[i];
         if (items.symbol === symbol) {
           collateral = {
             ...items,
-            color,
+            fill,
           };
         }
       }
@@ -181,7 +181,7 @@ export const fetch_cbs_infos = async (wallet) => {
         symbol: "zSOL",
         amount: zSOLAmount /Math.pow(10,9),
         value: total_borrowed_value,
-        color: "#0c0",
+        fill: "#0c0",
       },
     ];
 

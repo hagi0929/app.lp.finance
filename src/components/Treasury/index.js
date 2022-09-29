@@ -194,7 +194,12 @@ const Treasury = () => {
                                       </div>
                                       <div className="details ml-3">
                                         <div className="balance">
-                                          <p>Total Balance</p>
+                                          {ind === 2 ? (
+                                            <p>Total Debt</p>
+                                          ) : (
+                                            <p>Total Balance</p>
+                                          )}
+
                                           <span>
                                             {CalcFiveDigit(list.balance)}{" "}
                                             {list.name} (≈$
@@ -202,9 +207,14 @@ const Treasury = () => {
                                           </span>
                                         </div>
                                         <div className="Earnings mt-2">
-                                          <p>
-                                            Estimated Treasury Earnings (12M)
-                                          </p>
+                                          {ind === 2 ? (
+                                            <p>Estimated Loan Interest (12M)</p>
+                                          ) : (
+                                            <p>
+                                              Estimated Treasury Earnings (12M)
+                                            </p>
+                                          )}
+
                                           <span>0 {list.name} (≈$0)</span>
                                         </div>
                                       </div>
@@ -244,7 +254,7 @@ const TreasuryChartList = [
     name: "totalBorrowed",
     dataKey: "totalBorrowed",
     fill: "url(#totalBorrowed)",
-    stroke: "#82ca9d",
+    stroke: "red",
     checked: true,
   },
 ];

@@ -119,22 +119,22 @@ export const TokenBalRegistry = ["SOL", "mSOL", "zSOL", "stSOL", "UXD", "SAMO"];
 export const collateral_infos_colors = [
   {
     symbol: "SOL",
-    color: "#00FFA3",
+    fill: "#00FFA3",
   },
   {
     symbol: "mSOL",
-    color: "#b0d9c9",
+    fill: "#b0d9c9",
   },
   {
     symbol: "stSOL",
-    color: "#73d6d9",
+    fill: "#73d6d9",
   },
   {
     symbol: "SAMO",
-    color: "#ccb7b7",
+    fill: "#ccb7b7",
   },
   {
     symbol: "UXD",
-    color: "#707070",
+    fill: "#707070",
   },
 ];

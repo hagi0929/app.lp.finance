@@ -1,11 +1,9 @@
 import React, { useEffect, memo } from "react";
 import PieChartWrapper from "./PieChart.style";
-import { calc, numFormatter, CalcFiveDigit } from "helper";
+import { numFormatter } from "helper";
 import DataLoader from "components/globalComponents/Loaders/DataLoader";
 import { TokenImgRegistry } from "assets/registry";
-import { Chart, registerables, ArcElement } from "chart.js";
-Chart.register(...registerables);
-Chart.register(ArcElement);
+import GlobalPieChart from "components/globalComponents/GlobalPieChart";
 
 const CbsPieChartModel = ({ isOpen, isClose, List, TotalValue, title }) => {
   useEffect(() => {
@@ -20,70 +18,6 @@ const CbsPieChartModel = ({ isOpen, isClose, List, TotalValue, title }) => {
       isClose();
     }, 400);
   };
-
-  const startPriceChart = () => {
-    let myTotalSupplyChart = null;
-
-    const chart = () => {
-      const type = "pie";
-
-      const ConfigPieChart = {
-        type: type,
-
-        data: {
-          labels: List,
-          datasets: [
-            {
-              label: title,
-              data: List.map((items) => {
-                return (items.value / TotalValue) * 100;
-              }),
-              backgroundColor: List.map((items) => {
-                return items.color;
-              }),
-            },
-          ],
-        },
-        options: {
-          responsive: false,
-          plugins: {
-            legend: {
-              display: false,
-            },
-            tooltip: {
-              yAlign: "bottom",
-              callbacks: {
-                label: (context) => {
-                  return ` ${CalcFiveDigit(context.label.amount)} ${
-                    context.label.symbol
-                  }(${calc((context.label.value / TotalValue) * 100)}%)`;
-                },
-              },
-            },
-          },
-          scales: {
-            ticks: {
-              display: false,
-            },
-          },
-        },
-      };
-
-      if (myTotalSupplyChart !== null) {
-        myTotalSupplyChart.destroy();
-      }
-      myTotalSupplyChart = new Chart("pie-chart", ConfigPieChart);
-    };
-
-    chart();
-  };
-
-  useEffect(() => {
-    if (List?.length > 0) {
-      startPriceChart();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [List]);
 
   return (
     <PieChartWrapper width="680px">
@@ -108,7 +42,7 @@ const CbsPieChartModel = ({ isOpen, isClose, List, TotalValue, title }) => {
               ) : (
                 <>
                   <div className="col-lg-6 col-md-6 col-12 d-flex justify-content-center mt-lg-0 mt-md-0 mt-3">
-                    <canvas id="pie-chart" width="220"></canvas>
+                    <GlobalPieChart List={List} TotalValue={TotalValue} />
                   </div>
                   <div className="col-lg-6 col-md-6 col-12 d-flex justify-content-center mt-lg-0 mt-md-0 mt-3">
                     <div className="row d-flex justify-content-center">
