@@ -2,28 +2,6 @@ import React, { useEffect, memo } from "react";
 import PieChartWrapper from "../CbsPieChartModel/PieChart.style";
 import GlobalChart from "components/globalComponents/GlobalChart";
 
-const totalSupplyChartList = [
-  {
-    id: 1,
-    name: "totalSupply",
-    dataKey: "totalSupply",
-    fill: "url(#totalSupply)",
-    stroke: "#0c0",
-    checked: true,
-  },
-];
-
-const totalBorrowedChartList = [
-  {
-    id: 1,
-    name: "totalBorrowed",
-    dataKey: "totalBorrowed",
-    fill: "url(#totalBorrowed)",
-    stroke: "#82ca9d",
-    checked: true,
-  },
-];
-
 const CbsDataModel = ({ isOpen, isClose, List }) => {
   useEffect(() => {
     if (isOpen) {
@@ -83,3 +61,57 @@ const CbsDataModel = ({ isOpen, isClose, List }) => {
 };
 
 export default memo(CbsDataModel);
+
+const totalSupplyChartList = [
+  {
+    id: 1,
+    name: "SOL",
+    dataKey: "SOL",
+    fill: "url(#SOL)",
+    stroke: "#00FFA3",
+    checked: true,
+  },
+  {
+    id: 2,
+    name: "mSOL",
+    dataKey: "mSOL",
+    fill: "url(#mSOL)",
+    stroke: "#b0d9c9",
+    checked: true,
+  },
+  {
+    id: 3,
+    name: "stSOL",
+    dataKey: "stSOL",
+    fill: "url(#stSOL)",
+    stroke: "#73d6d9",
+    checked: true,
+  },
+  {
+    id: 4,
+    name: "SAMO",
+    dataKey: "SAMO",
+    fill: "url(#SAMO)",
+    stroke: "#ccb7b7",
+    checked: true,
+  },
+  {
+    id: 5,
+    name: "UXD",
+    dataKey: "UXD",
+    fill: "url(#UXD)",
+    stroke: "#707070",
+    checked: true,
+  },
+];
+
+const totalBorrowedChartList = [
+  {
+    id: 1,
+    name: "zSOL",
+    dataKey: "zSOL",
+    fill: "url(#zSOL)",
+    stroke: "#0c0",
+    checked: true,
+  },
+];

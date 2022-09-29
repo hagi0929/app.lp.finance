@@ -85,6 +85,11 @@ export const fetch_treasury_info = async (wallet) => {
         balance: stSOL_amount,
         value: stSOL_value,
       },
+      {
+        name: "zSOL",
+        balance: zSOL_amount,
+        value: zSOL_value,
+      },
     ];
 
     return {
@@ -106,6 +111,11 @@ export const fetch_treasury_info = async (wallet) => {
         },
         {
           name: "stSOL",
+          balance: 0,
+          value: 0,
+        },
+        {
+          name: "zSOL",
           balance: 0,
           value: 0,
         },

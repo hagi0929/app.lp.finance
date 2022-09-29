@@ -120,7 +120,7 @@ export const CbsProvider = ({ children }) => {
     let TreasuryChartInterval = setInterval(async () => {
       handleTreasuryChart();
       handleCbsChart();
-    }, 3600000);
+    }, 300000);
 
     return () => {
       clearInterval(TreasuryChartInterval);

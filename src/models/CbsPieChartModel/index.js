@@ -1,6 +1,6 @@
 import React, { useEffect, memo } from "react";
 import PieChartWrapper from "./PieChart.style";
-import { calc, numFormatter } from "helper";
+import { calc, numFormatter, CalcFiveDigit } from "helper";
 import DataLoader from "components/globalComponents/Loaders/DataLoader";
 import { TokenImgRegistry } from "assets/registry";
 import { Chart, registerables, ArcElement } from "chart.js";
@@ -54,7 +54,7 @@ const CbsPieChartModel = ({ isOpen, isClose, List, TotalValue, title }) => {
               yAlign: "bottom",
               callbacks: {
                 label: (context) => {
-                  return ` ${context.label.amount} ${
+                  return ` ${CalcFiveDigit(context.label.amount)} ${
                     context.label.symbol
                   }(${calc((context.label.value / TotalValue) * 100)}%)`;
                 },

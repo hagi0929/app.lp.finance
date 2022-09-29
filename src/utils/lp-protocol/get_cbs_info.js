@@ -179,7 +179,7 @@ export const fetch_cbs_infos = async (wallet) => {
       {
         idx: 1,
         symbol: "zSOL",
-        amount: zSOLAmount,
+        amount: zSOLAmount /Math.pow(10,9),
         value: total_borrowed_value,
         color: "#0c0",
       },

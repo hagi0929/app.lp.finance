@@ -181,7 +181,7 @@ const Treasury = () => {
                                   return (
                                     <div
                                       className={`${
-                                        isAdmin ? "col-12" : "col-lg-5 col-12"
+                                        isAdmin ? "col-12" : "col-lg-4 col-12"
                                       } card_section d-flex flex-row pt-4`}
                                       key={ind}
                                     >
