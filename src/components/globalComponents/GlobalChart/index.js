@@ -61,7 +61,6 @@ const GlobalChart = ({ list, filterList }) => {
             return (
               <Area
                 type="monotone"
-                stackId="0"
                 key={list.dataKey}
                 dataKey={list.dataKey}
                 stroke={list.stroke}
