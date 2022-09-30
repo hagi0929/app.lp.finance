@@ -20,7 +20,7 @@ export const ContractSnackbarProvider = ({ children }) => {
 
   const CloseContractSnackbar = () => {
     setIsOpenContractSnackbar(false);
-    setContractSnackbarMess(false);
+    setContractSnackbarMess("");
     setContractSnackbarType("");
   };
 

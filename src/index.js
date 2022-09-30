@@ -9,22 +9,25 @@ import { SnackbarProvider } from "contexts/SnackbarContext";
 import { ContractSnackbarProvider } from "contexts/ContractSnackbarContext";
 import Snackbar from "components/globalComponents/Snackbar";
 import ContractSnackbar from "components/globalComponents/ContractSnackbar";
+import { CommandProvider } from "contexts/CommandContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ClusterProvider>
-      <SnackbarProvider>
-        <ContractSnackbarProvider>
-          <ModeProvider>
-            <Snackbar />
-            <ContractSnackbar />
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </ModeProvider>
-        </ContractSnackbarProvider>
-      </SnackbarProvider>
-    </ClusterProvider>
+    <ModeProvider>
+      <ClusterProvider>
+        <SnackbarProvider>
+          <ContractSnackbarProvider>
+            <CommandProvider>
+              <Snackbar />
+              <ContractSnackbar />
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </CommandProvider>
+          </ContractSnackbarProvider>
+        </SnackbarProvider>
+      </ClusterProvider>
+    </ModeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

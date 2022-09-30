@@ -89,8 +89,31 @@ const CliWrapper = styled.div`
 
         .terminal_card {
           padding: 1rem 0rem;
+
+          .command {
+            display: flex;
+            align-items: center;
+
+            p {
+              color: ${(props) => props.theme.BodyMainColor};
+              font-size: 0.9rem;
+            }
+
+            input {
+              width: 100%;
+              outline: none;
+              border: none;
+              background: transparent;
+              color: ${(props) => props.theme.BodyTextColor};
+              -moz-appearance: textfield;
+              display: flex;
+              align-items: center;
+              font-size: 0.9rem;
+            }
+          }
+
           p {
-            color: ${(props) => props.theme.BodyMainColor};
+            color: ${(props) => props.theme.BodyTextColor};
             font-size: 0.9rem;
           }
         }

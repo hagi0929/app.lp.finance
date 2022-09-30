@@ -280,6 +280,25 @@ export const getSwitchboardAccount = (token) => {
   return Account;
 };
 
+export const getSymbol = (token) => {
+  let symbol;
+
+  if (token === "sol") {
+    symbol = "SOL";
+  } else if (token === "msol") {
+    symbol = "mSOL";
+  } else if (token === "stsol") {
+    symbol = "stSOL";
+  } else if (token === "uxd") {
+    symbol = "UXD";
+  } else if (token === "samo") {
+    symbol = "SAMO";
+  } else if (token === "zsol") {
+    symbol = "zSOL";
+  }
+  return symbol;
+};
+
 export const CollateralTokenName = {
   SOL: 0,
   MSOL: 1,

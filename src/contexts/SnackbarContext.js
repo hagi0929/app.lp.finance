@@ -20,7 +20,7 @@ export const SnackbarProvider = ({ children }) => {
 
   const CloseSnackbar = () => {
     setIsOpenSnackbar(false);
-    setSnackbarMess(false);
+    setSnackbarMess("");
     setSnackbarType("");
   };
 

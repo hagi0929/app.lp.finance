@@ -11,10 +11,16 @@ import CliModel from "models/CliModel";
 import { useCrypto } from "contexts/CryptoContext";
 import { useCbs } from "contexts/CbsContext";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
+import { useCommand } from "contexts/CommandContext";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const Header = () => {
+  const wallet = useWallet();
+  const { publicKey } = wallet;
   const { Cluster, changeCluster } = useCluster();
-  const { storePrice, storeBal } = useCrypto();
+  const { CommandMess, OpenCommand, isOpenCommand, CommandType, closeCommand } =
+    useCommand();
+  const { PriceHandler, BalanceHandler, storePrice, storeBal } = useCrypto();
   const { handleCbsInfo, handleCbsUserInfo, handleTreasuryInfo } = useCbs();
   const { ContractSnackbarType } = useContractSnackbar();
   const location = useLocation();
@@ -57,7 +63,21 @@ const Header = () => {
 
   return (
     <>
-      {cli && <CliModel isOpen={cli} isClose={() => setCli(false)} />}
+      {cli && (
+        <CliModel
+          isOpen={cli}
+          isClose={() => setCli(false)}
+          OpenCommand={OpenCommand}
+          CommandMess={CommandMess}
+          wallet={wallet}
+          publicKey={publicKey}
+          PriceHandler={PriceHandler}
+          BalanceHandler={BalanceHandler}
+          isOpenCommand={isOpenCommand}
+          CommandType={CommandType}
+          closeCommand={closeCommand}
+        />
+      )}
       <HeaderWrapper>
         <div id="mySidenav" className="sideNav mb-4">
           <div className="container-fluid">
