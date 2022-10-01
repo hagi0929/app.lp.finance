@@ -117,6 +117,13 @@ const CliWrapper = styled.div`
             color: ${(props) => props.theme.BodyTextColor};
             font-size: 0.9rem;
           }
+
+          table {
+            tr {
+              color: ${(props) => props.theme.BodyTextColor} !important;
+              font-size: 0.85rem;
+            }
+          }
         }
       }
     }

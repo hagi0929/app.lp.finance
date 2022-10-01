@@ -124,9 +124,6 @@ export const fetch_psm_rate = async (symbolA, symbolB, amount) => {
         switchboardProgram
       );
 
-      console.log(`Output amount is ${output_amount}`);
-      console.log(`Fee amount is ${fee_amount}`);
-
       return {
         output_amount,
         fee_amount,
