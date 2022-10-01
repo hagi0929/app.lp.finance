@@ -16,10 +16,8 @@ import { useWallet } from "@solana/wallet-adapter-react";
 
 const Header = () => {
   const wallet = useWallet();
-  const { publicKey } = wallet;
   const { Cluster, changeCluster } = useCluster();
-  const { CommandMess, OpenCommand, isOpenCommand, CommandType, closeCommand } =
-    useCommand();
+  const { CommandMess, OpenCommand, CommandType, closeCommand } = useCommand();
   const { PriceHandler, BalanceHandler, storePrice, storeBal } = useCrypto();
   const { handleCbsInfo, handleCbsUserInfo, handleTreasuryInfo } = useCbs();
   const { ContractSnackbarType } = useContractSnackbar();
@@ -70,10 +68,8 @@ const Header = () => {
           OpenCommand={OpenCommand}
           CommandMess={CommandMess}
           wallet={wallet}
-          publicKey={publicKey}
           PriceHandler={PriceHandler}
           BalanceHandler={BalanceHandler}
-          isOpenCommand={isOpenCommand}
           CommandType={CommandType}
           closeCommand={closeCommand}
         />

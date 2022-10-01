@@ -5,6 +5,7 @@ import { handleCommand } from "command";
 
 const Input = ({ handleTx }) => {
   const [handleInput, setHandleInput] = useState("");
+  // const [disabled, setDisabled] = useState(false);
 
   return (
     <div className="command">
@@ -14,10 +15,12 @@ const Input = ({ handleTx }) => {
         aria-invalid="false"
         className="pl-1"
         value={handleInput}
+        // disabled={disabled}
         onChange={(e) => setHandleInput(e.target.value)}
         onKeyPress={(event) => {
           if (event.key === "Enter") {
             handleTx(handleInput);
+            // setDisabled(true);
           }
         }}
         autoFocus
@@ -40,10 +43,9 @@ const CliModel = ({
   const [count, setCount] = useState([]);
 
   useEffect(() => {
-    setCount([...count, count + 1]);
+    setCount([...count, 0]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   useEffect(() => {
     if (isOpen) {
       document.querySelector(".popup").classList.add("active");
@@ -75,7 +77,7 @@ const CliModel = ({
 
   useEffect(() => {
     if (CommandType === "Success" || CommandType === "Error") {
-      setCount([...count, count + 1]);
+      setCount([...count, count.length - 1 + 1]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [CommandType]);

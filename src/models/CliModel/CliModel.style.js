@@ -32,6 +32,7 @@ const CliWrapper = styled.div`
     background: ${(props) => props.theme.BodySecondaryBg};
     border: 1px solid ${(props) => props.theme.BodyMainColor};
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
   }
 
   .popup.active .popup-container {
@@ -70,7 +71,7 @@ const CliWrapper = styled.div`
         max-height: 200px;
         min-height: 400px;
         overflow-y: scroll;
-        overflow-x: hidden;
+        overflow-x: scroll;
 
         &::-webkit-scrollbar {
           width: 7px;
