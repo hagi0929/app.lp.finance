@@ -18,6 +18,8 @@ export const CryptoProvider = ({ children }) => {
     mSOL: 0,
     stSOL: 0,
     zSOL: 0,
+    USDC: 0,
+    LPFi: 0,
   });
   const [BalanceHandler, setBalanceHandler] = useState({
     SAMO: 0,
@@ -26,6 +28,8 @@ export const CryptoProvider = ({ children }) => {
     mSOL: 0,
     stSOL: 0,
     zSOL: 0,
+    USDC: 0,
+    LPFi: 0,
   });
 
   const storePrice = async () => {
@@ -67,6 +71,8 @@ export const CryptoProvider = ({ children }) => {
         mSOL: 0,
         stSOL: 0,
         zSOL: 0,
+        USDC: 0,
+        LPFi: 0,
       });
     };
   }, []);
@@ -83,6 +89,8 @@ export const CryptoProvider = ({ children }) => {
         mSOL: 0,
         stSOL: 0,
         zSOL: 0,
+        USDC: 0,
+        LPFi: 0,
       });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

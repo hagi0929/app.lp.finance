@@ -208,3 +208,30 @@ export const TreasuryTabsRegistry = [
     ariaSelected: false,
   },
 ];
+
+export const ExchangeTabsRegistry = [
+  {
+    id: "nav-Deposit-usdc-tab",
+    name: "Deposit USDC",
+    class: "nav-link active",
+    href: "#nav-Deposit-usdc",
+    ariaControls: "nav-Deposit-usdc",
+    ariaSelected: true,
+  },
+  {
+    id: "nav-Withdraw-usdc-tab",
+    name: "Withdraw USDC",
+    class: "nav-link",
+    href: "#nav-Withdraw-usdc",
+    ariaControls: "nav-Withdraw-usdc",
+    ariaSelected: false,
+  },
+  {
+    id: "nav-Withdraw-lpfi-tab",
+    name: "Withdraw LPFi",
+    class: "nav-link",
+    href: "#nav-Withdraw-lpfi",
+    ariaControls: "nav-Withdraw-lpfi",
+    ariaSelected: false,
+  },
+];

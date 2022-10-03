@@ -119,9 +119,20 @@ export const TokenPriceRegistry = [
   "stSOL",
   "UXD",
   "SAMO",
+  "USDC",
+  "LPFi",
 ];
 
-export const TokenBalRegistry = ["SOL", "mSOL", "zSOL", "stSOL", "UXD", "SAMO"];
+export const TokenBalRegistry = [
+  "SOL",
+  "mSOL",
+  "zSOL",
+  "stSOL",
+  "UXD",
+  "SAMO",
+  "USDC",
+  "LPFi",
+];
 
 export const collateral_infos_colors = [
   {

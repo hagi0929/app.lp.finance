@@ -266,6 +266,10 @@ export const getMint = (token) => {
     mint = SAMOMint;
   } else if (token === "zSOL") {
     mint = zSOL_MINT;
+  } else if (token === "USC") {
+    mint = USDC_MINT;
+  } else if (token === "LPFi") {
+    mint = LPFi_MINT;
   }
 
   return mint;
@@ -303,6 +307,10 @@ export const getSymbol = (token) => {
     symbol = "SAMO";
   } else if (token === "zsol") {
     symbol = "zSOL";
+  } else if (token === "usdc") {
+    symbol = "USDC";
+  } else if (token === "lpfi") {
+    symbol = "LPFi";
   }
   return symbol;
 };
