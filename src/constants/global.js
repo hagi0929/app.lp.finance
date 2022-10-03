@@ -19,6 +19,7 @@ export const SEED_SOL = "lpfinance-sol";
 export const SEED_ZSOL_MINT_AUTHORITY_PDA = "zsol_mint";
 export const SEED_TRV_PDA = "typeless_repayment_vault2";
 export const SEED_LIQUIDATOR = "lpfinance-liquidator";
+export const SEED_LPFi_BUYBACK = "lpfinance-buyback";
 
 export const TRVC_ADMIN = new PublicKey(
   "AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD"
@@ -72,11 +73,11 @@ export const zSOL_MINT = new PublicKey(
 );
 
 export const LPFi_MINT = new PublicKey(
-  "LPFiNAybMobY5oHfYVdy9jPozFBGKpPiEGoobK2xCe3"
+  "12MSWiWZ6XMLcLTZq6vT1BQ55CDZLhK9MHCgBz4FkUUK"
 );
 
 export const USDC_MINT = new PublicKey(
-  "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+  "2RtrvLYctbASH4QcSCBQescp7VKqX9F52UVBqoD9j4jA"
 );
 
 // MAINNET-BETA PYth price config
@@ -266,7 +267,7 @@ export const getMint = (token) => {
     mint = SAMOMint;
   } else if (token === "zSOL") {
     mint = zSOL_MINT;
-  } else if (token === "USC") {
+  } else if (token === "USDC") {
     mint = USDC_MINT;
   } else if (token === "LPFi") {
     mint = LPFi_MINT;

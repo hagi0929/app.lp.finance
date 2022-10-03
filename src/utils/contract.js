@@ -1,5 +1,6 @@
 import * as anchor from "@project-serum/anchor";
 import lp_idl from "idls/lpfinance.json";
+import lpfi_program_idl from "idls/lpfi_program.json";
 import { getCTokenInfo } from "constants/global";
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -64,6 +65,8 @@ export const getProgram = (wallet, idl_name) => {
   let idl;
   if (idl_name === "lpIdl") {
     idl = lp_idl;
+  } else if (idl_name === "lpfiIdl") {
+    idl = lpfi_program_idl;
   }
   const provider = getProvider(wallet);
   anchor.setProvider(provider);
@@ -81,26 +84,41 @@ export const getATAPublicKey = async (tokenMint, owner) => {
     true
   );
 };
+
+export const findAssociatedTokenAddress = async (
+  walletAddress,
+  tokenMintAddress
+) => {
+  return (
+    await PublicKey.findProgramAddress(
+      [
+        walletAddress.toBuffer(),
+        TOKEN_PROGRAM_ID.toBuffer(),
+        tokenMintAddress.toBuffer(),
+      ],
+      ASSOCIATED_TOKEN_PROGRAM_ID
+    )
+  )[0];
+};
+
 export const tokenBalance = async (connection, ata) => {
   const accountInfo = await connection.getTokenAccountBalance(ata);
   return accountInfo.value.uiAmount;
-}
+};
 
 export const convert_to_wei_value_with_decimal = (val, decimal) => {
   const decimalBN = Math.pow(10, decimal);
 
   const wei_value = Number(val) * Number(decimalBN);
   return new anchor.BN(wei_value.toString());
-
-}
+};
 
 export const convert_from_wei_value_with_decimal = (wei_value, decimal) => {
   const decimalBN = Math.pow(10, decimal);
 
   const val = Number(wei_value) / Number(decimalBN);
   return val;
-
-}
+};
 
 // Convert token amount to wei value: Important
 export const convert_to_wei_value = (token_mint, amount) => {
@@ -110,35 +128,43 @@ export const convert_to_wei_value = (token_mint, amount) => {
 
   const wei_value = Number(amount) * Number(decimalBN);
   return new anchor.BN(wei_value.toString());
-}
+};
 
 // Convert token amount to wei value: Important
 export const convert_from_wei_value = (token_mint, wei_value) => {
   const ctoken_info = getCTokenInfo(token_mint);
   const decimal = ctoken_info.decimal;
   const decimalBN = Math.pow(10, decimal);
-  
+
   return Number(wei_value) / Number(decimalBN);
-}
+};
 
 export const getSwitchboardPrice = async (program, switchboardFeed) => {
   // load the switchboard aggregator
   const aggregator = new AggregatorAccount({
-      program,
-      publicKey: switchboardFeed,
+    program,
+    publicKey: switchboardFeed,
   });
 
   // get the result
   const result = await aggregator.getLatestValue();
   // console.log(`Switchboard Result: ${result}`);
-  
-  return Number(result);
-}
 
-export const getTokenValue = async (switchboardProgram, amount, decimal, switchboardFeed) => {
-  const tokenPrice = await getSwitchboardPrice(switchboardProgram, switchboardFeed);
+  return Number(result);
+};
+
+export const getTokenValue = async (
+  switchboardProgram,
+  amount,
+  decimal,
+  switchboardFeed
+) => {
+  const tokenPrice = await getSwitchboardPrice(
+    switchboardProgram,
+    switchboardFeed
+  );
   const decimalPow = Math.pow(10, decimal);
-  const tokenValue = tokenPrice * Number(amount) / Number(decimalPow);
+  const tokenValue = (tokenPrice * Number(amount)) / Number(decimalPow);
 
   return Number(tokenValue);
-}
+};

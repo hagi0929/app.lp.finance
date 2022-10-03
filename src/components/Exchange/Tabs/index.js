@@ -5,7 +5,13 @@ import WithdrawUsdc from "./WithdrawUsdc";
 import WithdrawLPFi from "./WithdrawLPFi";
 import LPFarmingTabWrapper from "styles/LPFarmingTab.style";
 
-const Tabs = ({ publicKey }) => {
+const Tabs = ({
+  wallet,
+  publicKey,
+  BalanceHandler,
+  PriceHandler,
+  OpenContractSnackbar,
+}) => {
   const changeRadius = () => {
     document
       .getElementById("nav-tabContent")
@@ -111,7 +117,15 @@ const Tabs = ({ publicKey }) => {
                       role="tabpanel"
                       aria-labelledby="nav-Deposit-usdc-tab"
                     >
-                      <DepositUsdc publicKey={publicKey} />
+                      <DepositUsdc
+                        {...{
+                          wallet,
+                          publicKey,
+                          BalanceHandler,
+                          PriceHandler,
+                          OpenContractSnackbar,
+                        }}
+                      />
                     </div>
 
                     <div
@@ -120,7 +134,15 @@ const Tabs = ({ publicKey }) => {
                       role="tabpanel"
                       aria-labelledby="nav-Withdraw-usdc-tab"
                     >
-                      <WithdrawUsdc publicKey={publicKey} />
+                      <WithdrawUsdc
+                        {...{
+                          wallet,
+                          publicKey,
+                          BalanceHandler,
+                          PriceHandler,
+                          OpenContractSnackbar,
+                        }}
+                      />
                     </div>
                     <div
                       className="tab-pane fade"
@@ -128,7 +150,15 @@ const Tabs = ({ publicKey }) => {
                       role="tabpanel"
                       aria-labelledby="nav-Withdraw-lpfi-tab"
                     >
-                      <WithdrawLPFi publicKey={publicKey} />
+                      <WithdrawLPFi
+                        {...{
+                          wallet,
+                          publicKey,
+                          BalanceHandler,
+                          PriceHandler,
+                          OpenContractSnackbar,
+                        }}
+                      />
                     </div>
                   </div>
                 </div>

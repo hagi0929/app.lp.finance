@@ -10,19 +10,28 @@ import Input from "Layout/Form/Input";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Tabs from "./Tabs";
 import { useCrypto } from "contexts/CryptoContext";
+import { swap_lpfi } from "lp-program/exchange";
+import { useContractSnackbar } from "contexts/ContractSnackbarContext";
+import { CalcFiveDigit } from "helper";
+import { useEffect } from "react";
 
 const Exchange = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
+
+  const { BalanceHandler, PriceHandler } = useCrypto();
+  const { OpenContractSnackbar } = useContractSnackbar();
+
   const [isAdmin, setIsAdmin] = useState(false);
   const [amount, setAmount] = useState("");
-
-  const { BalanceHandler } = useCrypto();
+  const [message, setMessage] = useState("Exchange");
+  const [Required, setRequired] = useState(false);
+  const [exchangeRate, setExchangeRate] = useState("");
 
   useMemo(() => {
     if (
       publicKey &&
-      publicKey?.toBase58() === "7KDQhb9KX8y9rkrtyAw4arkRVctGhaRhaUMCadfg4bEk"
+      publicKey?.toBase58() === "BTu6x99R9Tay73YJ5h2p4iWtEfw2DhovHkiuL94Kafqw"
     ) {
       setIsAdmin(true);
     } else {
@@ -36,7 +45,42 @@ const Exchange = () => {
 
   const handleInput = (e) => {
     setAmount(e.target.value);
+
+    if (e.target.value) {
+      if (e.target.value <= BalanceHandler.LPFi) {
+        setMessage("Exchange");
+        setRequired(true);
+      } else {
+        setMessage("Insufficient Balance");
+        setRequired(false);
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
   };
+
+  const handleProgram = async () => {
+    if (amount > 0) {
+      if (Required && publicKey) {
+        await swap_lpfi(
+          wallet,
+          amount,
+          setMessage,
+          setRequired,
+          setAmount,
+          OpenContractSnackbar
+        );
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
+
+  useEffect(() => {
+    setExchangeRate(CalcFiveDigit(amount * 0.05));
+  }, [amount]);
 
   return (
     <>
@@ -167,6 +211,7 @@ const Exchange = () => {
                           className="not-allowed"
                           placeholder="0.0"
                           type="number"
+                          value={exchangeRate}
                           pattern="[0-9]*"
                           active={1}
                           p="0.6rem 1rem"
@@ -201,8 +246,9 @@ const Exchange = () => {
                           size="1.1rem"
                           disabled={!publicKey ? true : false}
                           className={!publicKey ? "not-allowed" : null}
+                          onClick={handleProgram}
                         >
-                          Exchange
+                          {message}
                         </Button>
                       )}
                     </div>
@@ -212,7 +258,15 @@ const Exchange = () => {
             </div>
             {isAdmin && (
               <div className="col-lg-7 col-md-7 col-12 mt-lg-0  mt-md-0 mt-5">
-                <Tabs {...{ publicKey }} />
+                <Tabs
+                  {...{
+                    wallet,
+                    publicKey,
+                    BalanceHandler,
+                    PriceHandler,
+                    OpenContractSnackbar,
+                  }}
+                />
               </div>
             )}
           </div>

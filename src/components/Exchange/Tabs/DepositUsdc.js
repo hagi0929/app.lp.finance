@@ -1,17 +1,79 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useMemo } from "react";
 import Input from "Layout/Form/Input";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import { TokenImgRegistry } from "assets/registry";
 import WalletButton from "components/globalComponents/WalletButton";
+import { deposit_usdc } from "lp-program/exchange";
 
-const DepositUsdc = ({ publicKey }) => {
-  const [selected] = useState({
+const DepositUsdc = ({
+  wallet,
+  publicKey,
+  BalanceHandler,
+  PriceHandler,
+  OpenContractSnackbar,
+}) => {
+  const [message, setMessage] = useState("Deposit USDC");
+  const [amount, setAmount] = useState("");
+  const [Required, setRequired] = useState(false);
+
+  const [selected, setSelected] = useState({
     logoURI: TokenImgRegistry.USDC,
     symbol: "USDC",
     balance: 0,
     price: 0,
   });
+
+  useMemo(() => {
+    setSelected({
+      ...selected,
+      balance: BalanceHandler[selected.symbol],
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [BalanceHandler]);
+
+  useMemo(() => {
+    setSelected({
+      ...selected,
+      price: PriceHandler[selected.symbol],
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [PriceHandler]);
+
+  const handleAmount = (e) => {
+    setAmount(e.target.value);
+
+    if (e.target.value) {
+      if (e.target.value <= selected.balance) {
+        setMessage("Deposit USDC");
+        setRequired(true);
+      } else {
+        setMessage("Insufficient Balance");
+        setRequired(false);
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
+
+  const handleProgram = async () => {
+    if (amount > 0) {
+      if (Required && publicKey) {
+        await deposit_usdc(
+          wallet,
+          amount,
+          setMessage,
+          setRequired,
+          setAmount,
+          OpenContractSnackbar
+        );
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
 
   return (
     <>
@@ -29,6 +91,7 @@ const DepositUsdc = ({ publicKey }) => {
                     placeholder="0.0"
                     disabled={publicKey ? false : true}
                     active={2}
+                    onChange={handleAmount}
                     p="0.7rem 0rem 0.7rem 3.5rem"
                     br="10px"
                   />
@@ -73,9 +136,11 @@ const DepositUsdc = ({ publicKey }) => {
                 active={1}
                 p="0.6rem 2rem"
                 br="10px"
-                className="not-allowed"
+                className={publicKey ? null : "not-allowed"}
+                disabled={publicKey ? false : true}
+                onClick={handleProgram}
               >
-                Deposit USDC
+                {message}
               </Button>
             </div>
           )}

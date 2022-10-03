@@ -14,6 +14,15 @@ export const getTokenPrice = async () => {
       let response;
       if (symbol === "zSOL") {
         response = await axios.get(`${api.price}?id=SOL`);
+      } else if (symbol === "LPFi") {
+        response = {
+          status: 200,
+          data: {
+            data: {
+              price: 0.05,
+            },
+          },
+        };
       } else {
         response = await axios.get(`${api.price}?id=${symbol}`);
       }
