@@ -71,6 +71,14 @@ export const zSOL_MINT = new PublicKey(
   "3vwVSHkx6Wh212mvRoyzK4g969QAhmLeBmyiHaEuFkyg"
 );
 
+export const LPFi_MINT = new PublicKey(
+  "LPFiNAybMobY5oHfYVdy9jPozFBGKpPiEGoobK2xCe3"
+);
+
+export const USDC_MINT = new PublicKey(
+  "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+);
+
 // MAINNET-BETA PYth price config
 // ===================================
 export const SOL_Account = new PublicKey(

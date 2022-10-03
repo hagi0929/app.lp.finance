@@ -6,6 +6,7 @@ import Treasury from "components/Treasury";
 import PSM from "components/PSM";
 import Staking from "components/Staking";
 import LPFarming from "components/LPFarming";
+import Exchange from "components/Exchange";
 import Layout from "components/globalComponents/Layout";
 import WalletWrapper from "lib/WalletWrapper";
 import ScreenLoader from "components/globalComponents/ScreenLoader";
@@ -46,6 +47,7 @@ const App = () => {
                 <Route exact path="/lp-farming" element={<LPFarming />} />
                 <Route exact path="/swap" element={<Swap />} />
                 <Route exact path="/staking" element={<Staking />} />
+                <Route exact path="/exchange" element={<Exchange />} />
               </Routes>
             </Layout>
           </CbsProvider>

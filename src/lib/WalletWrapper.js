@@ -15,6 +15,7 @@ import {
   SolletWalletAdapter,
   SolongWalletAdapter,
   Coin98WalletAdapter,
+  ExodusWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 
 require("assets/css/wallet.css");
@@ -54,11 +55,12 @@ const WalletWrapper = ({ children }) => {
     () => [
       new PhantomWalletAdapter(),
       new SolflareWalletAdapter({ network }),
-      new SlopeWalletAdapter(),
-      new SolongWalletAdapter(),
-      new LedgerWalletAdapter(),
       new SolletWalletAdapter({ network }),
       new SolletExtensionWalletAdapter({ network }),
+      new SlopeWalletAdapter(),
+      new SolongWalletAdapter(),
+      new ExodusWalletAdapter(),
+      new LedgerWalletAdapter(),
       new Coin98WalletAdapter(),
     ],
     [network]

@@ -77,6 +77,22 @@ const PSMWrapper = styled.div`
         }
       }
     }
+
+    .details {
+      table {
+        width: 100%;
+
+        tbody {
+          tr {
+            td {
+              padding: 0.2rem 0rem;
+              font-size: 0.9rem;
+              color: ${(props) => props.theme.BodyTextColor};
+            }
+          }
+        }
+      }
+    }
   }
 `;
 

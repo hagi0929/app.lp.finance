@@ -42,12 +42,20 @@ const ButtonWrapper = styled.button`
     
   `}
 
+  ${(props) =>
+    props.active === 4 &&
+    `
+      color:#0c0;
+      background: none;
+    }
+    
+  `}
+
   @media only screen and (max-width: 600px) {
     ${(props) =>
       props.active === 2 &&
       `
       padding: 0rem;
-
       &:hover {
         background: none !important;
       }

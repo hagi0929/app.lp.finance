@@ -88,7 +88,7 @@ const HeaderWrapper = styled.div`
             font-weight: 500;
             font-size: 1rem;
             text-align: center;
-            padding: 0.4rem 1rem 0.4rem 1rem;
+            padding: 0.4rem 0.7rem;
             transition: hover 0.4s;
             padding-bottom: 10px;
 
@@ -119,7 +119,7 @@ const HeaderWrapper = styled.div`
             font-weight: 500;
             font-size: 1rem;
             text-align: center;
-            padding: 0.4rem 1rem 0.4rem 1rem;
+            padding: 0.4rem 0.7rem;
             transition: hover 0.4s;
             padding-bottom: 10px;
             text-decoration: none;
