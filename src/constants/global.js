@@ -22,7 +22,7 @@ export const SEED_LIQUIDATOR = "lpfinance-liquidator";
 export const SEED_LPFi_BUYBACK = "lpfinance-buyback";
 
 export const ADMIN = new PublicKey(
-  "7KDQhb9KX8y9rkrtyAw4arkRVctGhaRhaUMCadfg4bEk"
+  "4y4wMTVz2FuTisGjcRYDnDYDPhfgpucUhH4p2CNwTdBF"
 );
 
 export const TRVC_ADMIN = new PublicKey(

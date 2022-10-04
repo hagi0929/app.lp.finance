@@ -31,7 +31,7 @@ const Exchange = () => {
   useMemo(() => {
     if (
       publicKey &&
-      publicKey?.toBase58() === "7KDQhb9KX8y9rkrtyAw4arkRVctGhaRhaUMCadfg4bEk"
+      publicKey?.toBase58() === "4y4wMTVz2FuTisGjcRYDnDYDPhfgpucUhH4p2CNwTdBF"
     ) {
       setIsAdmin(true);
     } else {
