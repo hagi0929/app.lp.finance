@@ -21,6 +21,10 @@ export const SEED_TRV_PDA = "typeless_repayment_vault2";
 export const SEED_LIQUIDATOR = "lpfinance-liquidator";
 export const SEED_LPFi_BUYBACK = "lpfinance-buyback";
 
+export const ADMIN = new PublicKey(
+  "BTu6x99R9Tay73YJ5h2p4iWtEfw2DhovHkiuL94Kafqw"
+);
+
 export const TRVC_ADMIN = new PublicKey(
   "AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD"
 );
@@ -73,11 +77,11 @@ export const zSOL_MINT = new PublicKey(
 );
 
 export const LPFi_MINT = new PublicKey(
-  "12MSWiWZ6XMLcLTZq6vT1BQ55CDZLhK9MHCgBz4FkUUK"
+  "3AgQ9NsfKu3Lycj5MDbNvNN3b8m1G339HpbDc3maiUQY"
 );
 
 export const USDC_MINT = new PublicKey(
-  "2RtrvLYctbASH4QcSCBQescp7VKqX9F52UVBqoD9j4jA"
+  "ErYRY4wVDhci1iKs2KzPNmd3EcaUCC1Dm3FemgxTSNBv"
 );
 
 // MAINNET-BETA PYth price config

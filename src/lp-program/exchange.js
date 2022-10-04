@@ -1,5 +1,9 @@
 import * as anchor from "@project-serum/anchor";
-import { getProgram, findAssociatedTokenAddress } from "utils/contract";
+import {
+  getProgram,
+  findAssociatedTokenAddress,
+  convert_to_wei_value_with_decimal,
+} from "utils/contract";
 import { SEED_LPFi_BUYBACK, USDC_MINT, LPFi_MINT } from "constants/global";
 import {
   TOKEN_PROGRAM_ID,
@@ -54,7 +58,7 @@ export const swap_lpfi = async (
       LPFi_MINT
     );
 
-    await program.rpc.swapLpfi(new anchor.BN(amount), {
+    await program.rpc.swapLpfi(convert_to_wei_value_with_decimal(amount, 9), {
       accounts: {
         user: user_wallet,
         poolState: pool_state_pda[0],
@@ -118,20 +122,23 @@ export const deposit_usdc = async (
       USDC_MINT
     );
 
-    await program.rpc.depositUsdc(new anchor.BN(amount), {
-      accounts: {
-        admin: user_wallet,
-        poolState: pool_state_pda[0],
-        tokenUsdc: USDC_MINT,
-        tokenLpfi: LPFi_MINT,
-        adminAtaUsdc: admin_ata_usdc,
-        poolAtaUsdc: pool_ata_usdc,
-        systemProgram: SystemProgram.programId,
-        tokenProgram: TOKEN_PROGRAM_ID,
-        associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
-        rent: SYSVAR_RENT_PUBKEY,
-      },
-    });
+    await program.rpc.depositUsdc(
+      convert_to_wei_value_with_decimal(amount, 6),
+      {
+        accounts: {
+          admin: user_wallet,
+          poolState: pool_state_pda[0],
+          tokenUsdc: USDC_MINT,
+          tokenLpfi: LPFi_MINT,
+          adminAtaUsdc: admin_ata_usdc,
+          poolAtaUsdc: pool_ata_usdc,
+          systemProgram: SystemProgram.programId,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+          rent: SYSVAR_RENT_PUBKEY,
+        },
+      }
+    );
 
     OpenContractSnackbar(true, "Success", `Successfully deposited usdc.`);
 
@@ -184,20 +191,23 @@ export const withdraw_usdc = async (
       USDC_MINT
     );
 
-    await program.rpc.withdrawUsdc(new anchor.BN(amount), {
-      accounts: {
-        admin: user_wallet,
-        poolState: pool_state_pda[0],
-        tokenUsdc: USDC_MINT,
-        tokenLpfi: LPFi_MINT,
-        adminAtaUsdc: admin_ata_usdc,
-        poolAtaUsdc: pool_ata_usdc,
-        systemProgram: SystemProgram.programId,
-        tokenProgram: TOKEN_PROGRAM_ID,
-        associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
-        rent: SYSVAR_RENT_PUBKEY,
-      },
-    });
+    await program.rpc.withdrawUsdc(
+      convert_to_wei_value_with_decimal(amount, 6),
+      {
+        accounts: {
+          admin: user_wallet,
+          poolState: pool_state_pda[0],
+          tokenUsdc: USDC_MINT,
+          tokenLpfi: LPFi_MINT,
+          adminAtaUsdc: admin_ata_usdc,
+          poolAtaUsdc: pool_ata_usdc,
+          systemProgram: SystemProgram.programId,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+          rent: SYSVAR_RENT_PUBKEY,
+        },
+      }
+    );
 
     OpenContractSnackbar(true, "Success", `Successfully withdraw usdc.`);
 
@@ -250,20 +260,23 @@ export const withdraw_lpfi = async (
       LPFi_MINT
     );
 
-    await program.rpc.withdrawLpfi(new anchor.BN(amount), {
-      accounts: {
-        admin: user_wallet,
-        poolState: pool_state_pda[0],
-        tokenUsdc: USDC_MINT,
-        tokenLpfi: LPFi_MINT,
-        adminAtaLpfi: admin_ata_lpfi,
-        poolAtaLpfi: pool_ata_lpfi,
-        systemProgram: SystemProgram.programId,
-        tokenProgram: TOKEN_PROGRAM_ID,
-        associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
-        rent: SYSVAR_RENT_PUBKEY,
-      },
-    });
+    await program.rpc.withdrawLpfi(
+      convert_to_wei_value_with_decimal(amount, 9),
+      {
+        accounts: {
+          admin: user_wallet,
+          poolState: pool_state_pda[0],
+          tokenUsdc: USDC_MINT,
+          tokenLpfi: LPFi_MINT,
+          adminAtaLpfi: admin_ata_lpfi,
+          poolAtaLpfi: pool_ata_lpfi,
+          systemProgram: SystemProgram.programId,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+          rent: SYSVAR_RENT_PUBKEY,
+        },
+      }
+    );
 
     OpenContractSnackbar(true, "Success", `Successfully withdraw lpfi.`);
 

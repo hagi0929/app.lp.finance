@@ -53,15 +53,15 @@ const WalletWrapper = ({ children }) => {
 
   const wallets = useMemo(
     () => [
-      new PhantomWalletAdapter(),
+      new PhantomWalletAdapter({ network }),
       new SolflareWalletAdapter({ network }),
       new SolletWalletAdapter({ network }),
       new SolletExtensionWalletAdapter({ network }),
-      new SlopeWalletAdapter(),
-      new SolongWalletAdapter(),
-      new ExodusWalletAdapter(),
-      new LedgerWalletAdapter(),
-      new Coin98WalletAdapter(),
+      new SlopeWalletAdapter({ network }),
+      new SolongWalletAdapter({ network }),
+      new ExodusWalletAdapter({ network }),
+      new LedgerWalletAdapter({ network }),
+      new Coin98WalletAdapter({ network }),
     ],
     [network]
   );
