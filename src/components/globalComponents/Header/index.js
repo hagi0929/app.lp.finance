@@ -19,7 +19,12 @@ const Header = () => {
   const { Cluster, changeCluster } = useCluster();
   const { CommandMess, OpenCommand, CommandType, closeCommand } = useCommand();
   const { PriceHandler, BalanceHandler, storePrice, storeBal } = useCrypto();
-  const { handleCbsInfo, handleCbsUserInfo, handleTreasuryInfo } = useCbs();
+  const {
+    handleCbsInfo,
+    handleCbsUserInfo,
+    handleTreasuryInfo,
+    handleExchange,
+  } = useCbs();
   const { ContractSnackbarType } = useContractSnackbar();
   const location = useLocation();
   const [dropdown, setDropdown] = useState(false);
@@ -35,9 +40,6 @@ const Header = () => {
 
   const handleRefreshData = () => {
     storeBal();
-    handleCbsInfo();
-    handleCbsUserInfo();
-    handleTreasuryInfo();
   };
 
   useEffect(() => {
@@ -210,6 +212,7 @@ const Header = () => {
                                   handleCbsInfo();
                                   handleCbsUserInfo();
                                   handleTreasuryInfo();
+                                  handleExchange();
                                 }}
                               >
                                 <div className="name">

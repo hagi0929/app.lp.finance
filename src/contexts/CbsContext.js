@@ -3,6 +3,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { fetch_cbs_infos } from "utils/lp-protocol/get_cbs_info";
 import { fetch_user_infos } from "utils/lp-protocol/get_user_info";
 import { fetch_treasury_info } from "utils/treasury/get_treasury_info";
+import { get_info } from "utils/exchange/get_info";
 import api from "api";
 import axios from "axios";
 
@@ -13,6 +14,12 @@ export const CbsProvider = ({ children }) => {
   const { publicKey } = wallet;
   const [treasuryChart, setTreasuryChart] = useState([]);
   const [cbsChartData, setCbsChartData] = useState([]);
+  const [Exchange, setExchange] = useState({
+    amount_USDC: 0,
+    amount_LPFi: 0,
+    price_LPFi: 0,
+  });
+
   const [cbsInfo, setCbsInfo] = useState({
     TotalSupply: 0,
     collateral_infos: [],
@@ -109,10 +116,20 @@ export const CbsProvider = ({ children }) => {
     }
   };
 
+  const handleExchange = async () => {
+    const { amount_USDC, amount_LPFi, price_LPFi } = await get_info(wallet);
+    setExchange({
+      amount_USDC,
+      amount_LPFi,
+      price_LPFi,
+    });
+  };
+
   useEffect(() => {
     if (wallet) {
       handleCbsInfo();
       handleTreasuryInfo();
+      handleExchange();
     }
 
     handleTreasuryChart();
@@ -175,6 +192,8 @@ export const CbsProvider = ({ children }) => {
         treasuryInfo,
         treasuryChart,
         cbsChartData,
+        Exchange,
+        handleExchange,
       }}
     >
       {children}

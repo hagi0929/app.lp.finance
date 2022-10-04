@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
+import { useWallet } from "@solana/wallet-adapter-react";
 import StakeWrapper from "styles/PSM.style";
 import { TokenImgRegistry } from "assets/registry";
 import { blockInvalidChar } from "helper";
@@ -7,20 +8,20 @@ import Card from "Layout/Card";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import Input from "Layout/Form/Input";
-import { useWallet } from "@solana/wallet-adapter-react";
 import Tabs from "./Tabs";
 import { useCrypto } from "contexts/CryptoContext";
 import { swap_lpfi } from "lp-program/exchange";
+import { useCbs } from "contexts/CbsContext";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
 import { CalcFiveDigit } from "helper";
-import { useEffect } from "react";
 
 const Exchange = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
 
   const { BalanceHandler, PriceHandler } = useCrypto();
-  const { OpenContractSnackbar } = useContractSnackbar();
+  const { OpenContractSnackbar, ContractSnackbarType } = useContractSnackbar();
+  const { Exchange, handleExchange } = useCbs();
 
   const [isAdmin, setIsAdmin] = useState(false);
   const [amount, setAmount] = useState("");
@@ -45,11 +46,15 @@ const Exchange = () => {
 
   const handleInput = (e) => {
     setAmount(e.target.value);
-
     if (e.target.value) {
       if (e.target.value <= BalanceHandler.LPFi) {
-        setMessage("Exchange");
-        setRequired(true);
+        if (e.target.value <= Exchange.amount_LPFi) {
+          setMessage("Exchange");
+          setRequired(true);
+        } else {
+          setMessage("Amount exceeded");
+          setRequired(false);
+        }
       } else {
         setMessage("Insufficient Balance");
         setRequired(false);
@@ -79,8 +84,15 @@ const Exchange = () => {
   };
 
   useEffect(() => {
-    setExchangeRate(CalcFiveDigit(amount * 0.05));
-  }, [amount]);
+    setExchangeRate(CalcFiveDigit(amount * Exchange.price_LPFi));
+  }, [Exchange.price_LPFi, amount]);
+
+  useEffect(() => {
+    if (ContractSnackbarType === "Success") {
+      handleExchange();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ContractSnackbarType]);
 
   return (
     <>
@@ -167,7 +179,7 @@ const Exchange = () => {
                 <div className="row mt-2">
                   <div className="col-12 d-flex justify-content-end">
                     <div className="feeRate">
-                      <p>1 LPFi = 0.05 USDC</p>
+                      <p>1 LPFi = {Exchange.price_LPFi} USDC</p>
                     </div>
                   </div>
                 </div>
@@ -227,7 +239,10 @@ const Exchange = () => {
                 <div className="row mt-2">
                   <div className="col-12 d-flex justify-content-end">
                     <div className="feeRate">
-                      <p>Remaining USDC: 0 USDC</p>
+                      <p>
+                        Remaining USDC: {CalcFiveDigit(Exchange.amount_USDC)}{" "}
+                        USDC
+                      </p>
                     </div>
                   </div>
                 </div>
