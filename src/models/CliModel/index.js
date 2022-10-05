@@ -46,6 +46,7 @@ const CliModel = ({
     setCount([...count, 0]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   useEffect(() => {
     if (isOpen) {
       document.querySelector(".popup").classList.add("active");
@@ -60,19 +61,26 @@ const CliModel = ({
   };
 
   const handleTx = async (handleInput) => {
-    await handleCommand(
-      wallet,
-      handleInput,
-      OpenCommand,
-      PriceHandler,
-      BalanceHandler
-    );
+    if (handleInput === "clear") {
+      const elements = document.getElementsByClassName("terminal_card");
+      while (elements.length > 0) {
+        elements[0].parentNode.removeChild(elements[0]);
+      }
+    } else {
+      await handleCommand(
+        wallet,
+        handleInput,
+        OpenCommand,
+        PriceHandler,
+        BalanceHandler
+      );
+    }
   };
 
   useEffect(() => {
     if (!CommandMess) return;
     var id = document.querySelector(".terminal_card");
-    id.insertAdjacentHTML("beforeend", `<p>${CommandMess}</p>`);
+    id.insertAdjacentHTML("beforeend", `<p class="mess">${CommandMess}</p>`);
   }, [CommandMess]);
 
   useEffect(() => {

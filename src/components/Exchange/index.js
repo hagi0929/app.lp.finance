@@ -41,14 +41,22 @@ const Exchange = () => {
   }, [publicKey]);
 
   const handleMax = () => {
-    setAmount(BalanceHandler.LPFi);
+    if (BalanceHandler.LPFi * Exchange.price_LPFi <= Exchange.amount_USDC) {
+      setAmount(BalanceHandler.LPFi);
+      setMessage("Exchange");
+      setRequired(true);
+    } else {
+      setAmount(BalanceHandler.LPFi);
+      setMessage("Amount exceeded");
+      setRequired(false);
+    }
   };
 
   const handleInput = (e) => {
     setAmount(e.target.value);
     if (e.target.value) {
       if (e.target.value <= BalanceHandler.LPFi) {
-        if (e.target.value <= Exchange.amount_LPFi) {
+        if (e.target.value * Exchange.price_LPFi <= Exchange.amount_USDC) {
           setMessage("Exchange");
           setRequired(true);
         } else {
