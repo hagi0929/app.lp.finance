@@ -62,10 +62,20 @@ const CliModel = ({
 
   const handleTx = async (handleInput) => {
     if (handleInput === "clear") {
-      const elements = document.getElementsByClassName("terminal_card");
-      while (elements.length > 0) {
-        elements[0].parentNode.removeChild(elements[0]);
+      const elements = document
+        .getElementById("terminal_card")
+        .querySelectorAll(".mess");
+      const elements1 = document
+        .getElementById("terminal_card")
+        .querySelectorAll("table");
+
+      for (let i = 0; i < elements.length; i++) {
+        elements[i].parentNode.removeChild(elements[i]);
       }
+      for (let i = 0; i < elements1.length; i++) {
+        elements1[i].parentNode.removeChild(elements1[i]);
+      }
+      setCount([0]);
     } else {
       await handleCommand(
         wallet,
