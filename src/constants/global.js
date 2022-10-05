@@ -22,7 +22,7 @@ export const SEED_LIQUIDATOR = "lpfinance-liquidator";
 export const SEED_LPFi_BUYBACK = "lpfinance-buyback";
 
 export const ADMIN = new PublicKey(
-  "4y4wMTVz2FuTisGjcRYDnDYDPhfgpucUhH4p2CNwTdBF"
+  "7KDQhb9KX8y9rkrtyAw4arkRVctGhaRhaUMCadfg4bEk"
 );
 
 export const TRVC_ADMIN = new PublicKey(
@@ -77,11 +77,11 @@ export const zSOL_MINT = new PublicKey(
 );
 
 export const LPFi_MINT = new PublicKey(
-  "3AgQ9NsfKu3Lycj5MDbNvNN3b8m1G339HpbDc3maiUQY"
+  "LPFiNAybMobY5oHfYVdy9jPozFBGKpPiEGoobK2xCe3"
 );
 
 export const USDC_MINT = new PublicKey(
-  "ErYRY4wVDhci1iKs2KzPNmd3EcaUCC1Dm3FemgxTSNBv"
+  "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
 );
 
 // MAINNET-BETA PYth price config
