@@ -4,7 +4,7 @@ import Deposit from "./Deposit";
 import Borrow from "./Borrow";
 import Withdraw from "./Withdraw";
 import Repay from "./Repay";
-import LPFarmingTabWrapper from "styles/LPFarmingTab.style";
+import LPIncentivesTabWrapper from "styles/LPIncentivesTab.style";
 
 const Tabs = ({
   wallet,
@@ -80,8 +80,8 @@ const Tabs = ({
 
   return (
     <>
-      <LPFarmingTabWrapper>
-        <div className="row LPFarming_tab_section d-flex justify-content-center">
+      <LPIncentivesTabWrapper>
+        <div className="row LPIncentives_tab_section d-flex justify-content-center">
           <div className="col-12">
             <div className="row d-flex justify-content-center">
               <div className="col-lg-11 col-12">
@@ -192,7 +192,7 @@ const Tabs = ({
             </div>
           </div>
         </div>
-      </LPFarmingTabWrapper>
+      </LPIncentivesTabWrapper>
     </>
   );
 };

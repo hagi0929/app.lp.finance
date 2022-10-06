@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { LPFarmingTabsApi } from "assets/registry/TabRegistry";
+import { LPIncentivesTabsApi } from "assets/registry/TabRegistry";
 import Deposit from "./Deposit";
 import Account from "./Account";
 import Withdraw from "./Withdraw";
-import LPFarmingTabWrapper from "styles/LPFarmingTab.style";
+import LPIncentivesTabWrapper from "styles/LPIncentivesTab.style";
 
 const Tabs = ({ publicKey, PriceList, BalanceList }) => {
   const changeRadius = () => {
@@ -44,15 +44,15 @@ const Tabs = ({ publicKey, PriceList, BalanceList }) => {
 
   return (
     <>
-      <LPFarmingTabWrapper pieLTV={0}>
-        <div className="row my-lg-5 my-md-5 my-sm-4 my-5 pb-lg-4 pb-md-4 pb-sm-3 pb-3 pt-lg-2 pt-md-2 pt-sm-2 pt-0 LPFarming_tab_section d-flex justify-content-center">
+      <LPIncentivesTabWrapper pieLTV={0}>
+        <div className="row my-lg-5 my-md-5 my-sm-4 my-5 pb-lg-4 pb-md-4 pb-sm-3 pb-3 pt-lg-2 pt-md-2 pt-sm-2 pt-0 LPIncentives_tab_section d-flex justify-content-center">
           <div className="col-lg-6 col-md-10 col-12">
             <div className="row d-flex justify-content-center">
               <div className="col-lg-11 col-12">
                 <div className="tabs_card">
                   <nav>
                     <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                      {LPFarmingTabsApi.map((val, ind) => {
+                      {LPIncentivesTabsApi.map((val, ind) => {
                         return (
                           <p
                             key={ind}
@@ -106,7 +106,7 @@ const Tabs = ({ publicKey, PriceList, BalanceList }) => {
             <Account />
           </div>
         </div>
-      </LPFarmingTabWrapper>
+      </LPIncentivesTabWrapper>
     </>
   );
 };

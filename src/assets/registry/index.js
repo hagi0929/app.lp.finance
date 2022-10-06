@@ -43,9 +43,9 @@ export const NavbarRegistry = [
   },
   {
     id: 3,
-    name: "LP Farming",
-    pathName: "/lp-farming",
-    href: "/lp-farming",
+    name: "LP Incentives",
+    pathName: "/lp-incentives",
+    href: "/lp-incentives",
   },
   {
     id: 4,
@@ -55,18 +55,12 @@ export const NavbarRegistry = [
   },
   {
     id: 5,
-    name: "Exchange",
-    pathName: "/exchange",
-    href: "/exchange",
-  },
-  {
-    id: 6,
     name: "Staking",
     pathName: "/staking",
     href: "/staking",
   },
   {
-    id: 7,
+    id: 6,
     name: "Swap",
     pathName: "/swap",
     href: "/swap",

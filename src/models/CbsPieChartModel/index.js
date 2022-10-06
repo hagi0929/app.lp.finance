@@ -44,7 +44,7 @@ const CbsPieChartModel = ({ isOpen, isClose, List, TotalValue, title }) => {
                   <div className="col-lg-6 col-md-6 col-12 d-flex justify-content-center mt-lg-0 mt-md-0 mt-3">
                     <GlobalPieChart List={List} TotalValue={TotalValue} />
                   </div>
-                  <div className="col-lg-6 col-md-6 col-12 d-flex justify-content-center mt-lg-0 mt-md-0 mt-3">
+                  <div className="col-lg-6 col-md-6 col-12 d-flex justify-content-center">
                     <div className="row d-flex justify-content-center">
                       <div
                         className={

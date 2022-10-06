@@ -1,6 +1,6 @@
 import { TokenImgRegistry } from "./index";
 
-export const LPFarmingItems = [
+export const LPIncentivesItems = [
   {
     id: 1,
     website: "https://lifinity.io/pools",
@@ -25,7 +25,7 @@ export const LPFarmingItems = [
   },
 ];
 
-export const LPFarmingTokenRegistry = [
+export const LPIncentivesTokenRegistry = [
   {
     id: 1,
     pairOneImg: TokenImgRegistry.zSOL,

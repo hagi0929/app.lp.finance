@@ -153,7 +153,7 @@ export const ThemeTabsRegistry = [
   },
 ];
 
-export const LPFarmingTabsApi = [
+export const LPIncentivesTabsApi = [
   {
     id: "nav-Deposit-tab",
     name: "Deposit",

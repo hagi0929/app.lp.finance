@@ -3,7 +3,7 @@ import Input from "Layout/Form/Input";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import { TokenImgRegistry } from "assets/registry";
-import { LPFarmingTokenRegistry } from "assets/registry/LPFarmingRegistry";
+import { LPIncentivesTokenRegistry } from "assets/registry/LPIncentivesRegistry";
 import TokenPairModel from "models/TokenPairModel";
 import WalletButton from "components/globalComponents/WalletButton";
 
@@ -108,7 +108,7 @@ const Withdraw = ({ publicKey }) => {
         <TokenPairModel
           isOpen={isModel}
           isClose={() => setIsModel(false)}
-          List={LPFarmingTokenRegistry}
+          List={LPIncentivesTokenRegistry}
           setSelected={setSelected}
         />
       )}

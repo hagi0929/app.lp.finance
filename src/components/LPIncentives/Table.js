@@ -1,12 +1,12 @@
 import React from "react";
-import { LPFarmingItems } from "assets/registry/LPFarmingRegistry";
+import { LPIncentivesItems } from "assets/registry/LPIncentivesRegistry";
 import Image from "Layout/Image";
 
 const HeadersList = ["Pools", "Total Staked", "Reward APR"];
 
 const Table = () => {
   return (
-    <div className="row mt-4 LPFarming_table_section pb-3">
+    <div className="row mt-4 LPIncentives_table_section pb-3">
       <div className="col-12">
         <div className="table_card">
           <table className="table table-hover">
@@ -22,7 +22,7 @@ const Table = () => {
               </tr>
             </thead>
             <tbody>
-              {LPFarmingItems.map((list, ind) => {
+              {LPIncentivesItems.map((list, ind) => {
                 return (
                   <tr key={ind}>
                     <td>

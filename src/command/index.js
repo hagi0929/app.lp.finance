@@ -75,10 +75,10 @@ export const balanceCommand = async (wallet, array, OpenCommand) => {
   const token = array[0];
   const symbol = getSymbol(token);
   const balance = await getBalance(symbol, user_wallet, connection);
-  if (balance) {
+  if (balance > 0) {
     OpenCommand(false, "Success", balance);
   } else {
-    OpenCommand(false, "Success", 0);
+    OpenCommand(false, "Success", "0");
   }
 };
 

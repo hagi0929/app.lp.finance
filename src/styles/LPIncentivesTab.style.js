@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-const LPFarmingTabWrapper = styled.div`
-  .LPFarming_tab_section {
+const LPIncentivesTabWrapper = styled.div`
+  .LPIncentives_tab_section {
     .tabs_card {
       .nav,
       .nav-tabs {
@@ -91,7 +91,7 @@ const LPFarmingTabWrapper = styled.div`
       }
     }
 
-    .LPFarming_Account {
+    .LPIncentives_Account {
       .Account_title {
         p {
           color: ${(props) => props.theme.BodyMainColor};
@@ -196,7 +196,7 @@ const LPFarmingTabWrapper = styled.div`
   }
 
   @media only screen and (max-width: 1200px) {
-    .LPFarming_tab_section {
+    .LPIncentives_tab_section {
       .tabs_card {
         .tab-content {
           padding: 2.5rem 1rem;
@@ -206,7 +206,7 @@ const LPFarmingTabWrapper = styled.div`
   }
 
   @media only screen and (max-width: 700px) {
-    .LPFarming_tab_section {
+    .LPIncentives_tab_section {
       .tabs_card {
         .nav-tabs {
           .nav-link {
@@ -218,7 +218,7 @@ const LPFarmingTabWrapper = styled.div`
   }
 
   @media only screen and (max-width: 600px) {
-    .LPFarming_tab_section {
+    .LPIncentives_tab_section {
       .tabs_card {
         .tab-content {
           padding: 2.5rem 0.5rem;
@@ -232,7 +232,7 @@ const LPFarmingTabWrapper = styled.div`
         }
       }
 
-      .LPFarming_Account {
+      .LPIncentives_Account {
         .Account_title {
           p {
             text-align: center;
@@ -251,4 +251,4 @@ const LPFarmingTabWrapper = styled.div`
   }
 `;
 
-export default LPFarmingTabWrapper;
+export default LPIncentivesTabWrapper;

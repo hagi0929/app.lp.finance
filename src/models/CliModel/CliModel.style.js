@@ -3,41 +3,50 @@ import styled from "styled-components";
 const CliWrapper = styled.div`
   .popup {
     position: fixed;
-    top: -100vh;
-    left: 0px;
     width: 100%;
     height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: rgba(0, 0, 0, 0.8);
-    transition: top 0ms ease-in-out 200ms;
-    z-index: 1000;
+    transition: all 0ms ease-in-out 200ms;
+    z-index: -1;
+    visibility: hidden;
+    overflow-y: scroll;
+    padding: 1rem 0rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+      background: inherit;
+    }
   }
 
   .popup.active {
-    transition: top 0ms ease-in-out;
-    top: 0vh;
+    transition: all 0ms ease-in-out;
     z-index: 1000;
+    visibility: visible;
   }
 
   .popup .popup-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
+    position: relative;
+    transform: scale(0);
     max-width: 800px !important;
     min-width: 800px !important;
-    padding: 0rem 0rem;
     border-radius: 18px;
     opacity: 0.5;
     transition: all 300ms ease-in-out;
     background: ${(props) => props.theme.BodySecondaryBg};
     border: 1px solid ${(props) => props.theme.BodyMainColor};
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
   }
 
   .popup.active .popup-container {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: scale(1);
   }
 
   .popup {

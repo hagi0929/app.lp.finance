@@ -4,7 +4,7 @@ import Button from "Layout/Button";
 import Image from "Layout/Image";
 import TokenPairModel from "models/TokenPairModel";
 import { TokenImgRegistry } from "assets/registry";
-import { LPFarmingTokenRegistry } from "assets/registry/LPFarmingRegistry";
+import { LPIncentivesTokenRegistry } from "assets/registry/LPIncentivesRegistry";
 import WalletButton from "components/globalComponents/WalletButton";
 
 const Deposit = ({ publicKey }) => {
@@ -109,7 +109,7 @@ const Deposit = ({ publicKey }) => {
         <TokenPairModel
           isOpen={isModel}
           isClose={() => setIsModel(false)}
-          List={LPFarmingTokenRegistry}
+          List={LPIncentivesTokenRegistry}
           setSelected={setSelected}
         />
       )}

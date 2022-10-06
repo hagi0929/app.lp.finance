@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-const LPFarmingWrapper = styled.div`
-  .LPFarming {
-    .LPFarming_title {
+const LPIncentivesWrapper = styled.div`
+  .LPIncentives {
+    .LPIncentives_title {
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .LPFarming_subtitle {
+    .LPIncentives_subtitle {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -19,7 +19,7 @@ const LPFarmingWrapper = styled.div`
       }
     }
 
-    .LPFarming_table_section {
+    .LPIncentives_table_section {
       .table_card {
         border: 1px solid ${(props) => props.theme.BodyMainColor};
         background: transparent;
@@ -110,4 +110,4 @@ const LPFarmingWrapper = styled.div`
   }
 `;
 
-export default LPFarmingWrapper;
+export default LPIncentivesWrapper;
