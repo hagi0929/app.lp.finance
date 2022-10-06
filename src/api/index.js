@@ -4,6 +4,7 @@ const api = {
   price: "https://price.jup.ag/v1/price",
   getTreasuryData: BaseUrl + "/global/getTreasuryData",
   getCbsOverviewData: BaseUrl + "/global/getCbsOverviewData",
+  storeSwapSize: BaseUrl + "/global/storeSwapSize",
 };
 
 export default api;

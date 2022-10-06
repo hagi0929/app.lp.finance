@@ -18,7 +18,7 @@ import Input from "Layout/Form/Input";
 const PSM = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const { PriceList, BalanceList, BalanceHandler } = useCrypto();
+  const { PriceList, BalanceList, BalanceHandler, PriceHandler } = useCrypto();
   const { OpenContractSnackbar } = useContractSnackbar();
   const [isPayModel, setIsPayModel] = useState(false);
   const [message, setMessage] = useState("Get mSOL");
@@ -33,12 +33,14 @@ const PSM = () => {
     logoURI: TokenImgRegistry.zSOL,
     symbol: "zSOL",
     balance: 0,
+    price: 0,
   });
 
   const [ReceiveSelect, setReceiveSelect] = useState({
     logoURI: TokenImgRegistry.mSOL,
     symbol: "mSOL",
     balance: 0,
+    price: 0,
   });
 
   useMemo(() => {
@@ -52,6 +54,18 @@ const PSM = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BalanceHandler]);
+
+  useMemo(() => {
+    setPaySelected({
+      ...PaySelected,
+      price: PriceHandler[PaySelected.symbol],
+    });
+    setReceiveSelect({
+      ...ReceiveSelect,
+      price: PriceHandler[ReceiveSelect.symbol],
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [PriceHandler]);
 
   const handlePsmRate = async () => {
     setRateLoading(true);
@@ -120,11 +134,13 @@ const PSM = () => {
       logoURI: ReceiveSelect.logoURI,
       symbol: ReceiveSelect.symbol,
       balance: ReceiveSelect.balance,
+      price: PriceHandler[ReceiveSelect.symbol],
     });
     setReceiveSelect({
       logoURI: PaySelected.logoURI,
       symbol: PaySelected.symbol,
       balance: PaySelected.balance,
+      price: PriceHandler[PaySelected.symbol],
     });
   };
 
@@ -154,7 +170,8 @@ const PSM = () => {
               setMessage,
               setAmount,
               setRequired,
-              OpenContractSnackbar
+              OpenContractSnackbar,
+              PaySelected.price
             );
           } else if (
             (PaySelected.symbol === "zSOL" &&
@@ -168,7 +185,8 @@ const PSM = () => {
               setMessage,
               setAmount,
               setRequired,
-              OpenContractSnackbar
+              OpenContractSnackbar,
+              PaySelected.price
             );
           }
         } else {
@@ -193,6 +211,7 @@ const PSM = () => {
         logoURI: TokenImgRegistry?.zSOL,
         symbol: "zSOL",
         balance: BalanceHandler?.zSOL,
+        price: PriceHandler["zSOL"],
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -207,6 +226,7 @@ const PSM = () => {
         logoURI: TokenImgRegistry?.zSOL,
         symbol: "zSOL",
         balance: BalanceHandler?.zSOL,
+        price: PriceHandler["zSOL"],
       });
       setMessage(`Get ${ReceiveSelect.symbol}`);
     } else {

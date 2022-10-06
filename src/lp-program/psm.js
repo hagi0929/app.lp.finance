@@ -1,4 +1,6 @@
 import * as anchor from "@project-serum/anchor";
+import axios from "axios";
+import api from "api";
 import {
   getProgram,
   getATAPublicKey,
@@ -32,7 +34,8 @@ export const burn_zSOL = async (
   setMessage,
   setAmount,
   setRequired,
-  OpenContractSnackbar
+  OpenContractSnackbar,
+  price
 ) => {
   let mess;
   if (tokenB === "mSOL" || tokenB === "stSOL") {
@@ -93,6 +96,12 @@ export const burn_zSOL = async (
     setMessage("Enter an amount");
     setRequired(false);
     setAmount("");
+
+    var swapSize = amount * price;
+
+    await axios.post(api.storeSwapSize, {
+      size: swapSize,
+    });
   } catch (error) {
     console.log(error);
     OpenContractSnackbar(
@@ -113,7 +122,8 @@ export const mint_zSOL = async (
   setMessage,
   setAmount,
   setRequired,
-  OpenContractSnackbar
+  OpenContractSnackbar,
+  price
 ) => {
   try {
     OpenContractSnackbar(true, "Processing", `Start mint ${tokenB}...`);
@@ -169,6 +179,12 @@ export const mint_zSOL = async (
     setMessage("Enter an amount");
     setRequired(false);
     setAmount("");
+
+    var swapSize = amount * price;
+
+    await axios.post(api.storeSwapSize, {
+      size: swapSize,
+    });
   } catch (error) {
     console.log(error);
     OpenContractSnackbar(
