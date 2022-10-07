@@ -1,6 +1,5 @@
 import * as anchor from "@project-serum/anchor";
 import lp_idl from "idls/lpfinance.json";
-import lpfi_program_idl from "idls/lpfi_program.json";
 import { getCTokenInfo } from "constants/global";
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -65,9 +64,7 @@ export const getProgram = (wallet, idl_name) => {
   let idl;
   if (idl_name === "lpIdl") {
     idl = lp_idl;
-  } else if (idl_name === "lpfiIdl") {
-    idl = lpfi_program_idl;
-  }
+  } 
   const provider = getProvider(wallet);
   anchor.setProvider(provider);
   const programId = new PublicKey(idl.metadata.address);
