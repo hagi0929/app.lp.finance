@@ -42,12 +42,14 @@ const CbsDataModel = ({ isOpen, isClose, List }) => {
                     <GlobalChart
                       list={List}
                       filterList={totalSupplyChartList}
+                      height="260px"
                     />
                   </div>
                   <div className="col-lg-6 col-12 mt-lg-0 mt-md-0 mt-3">
                     <GlobalChart
                       list={List}
                       filterList={totalBorrowedChartList}
+                      height="260px"
                     />
                   </div>
                 </>

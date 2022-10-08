@@ -13,6 +13,7 @@ export const CbsProvider = ({ children }) => {
   const { publicKey } = wallet;
   const [treasuryChart, setTreasuryChart] = useState([]);
   const [cbsChartData, setCbsChartData] = useState([]);
+  const [PsmChart, setPsmChart] = useState([]);
 
   const [cbsInfo, setCbsInfo] = useState({
     TotalSupply: 0,
@@ -98,7 +99,6 @@ export const CbsProvider = ({ children }) => {
     const response = await axios.get(api.getCbsOverviewData);
     if (response.status === 200) {
       setCbsChartData(response.data);
-    } else {
     }
   };
 
@@ -106,7 +106,13 @@ export const CbsProvider = ({ children }) => {
     const response = await axios.get(api.getTreasuryData);
     if (response.status === 200) {
       setTreasuryChart(response.data);
-    } else {
+    }
+  };
+
+  const handlePsmChart = async () => {
+    const response = await axios.get(api.getDaySwapSize);
+    if (response.status === 200) {
+      setPsmChart(response.data);
     }
   };
 
@@ -118,6 +124,8 @@ export const CbsProvider = ({ children }) => {
 
     handleTreasuryChart();
     handleCbsChart();
+    handlePsmChart();
+
     let TreasuryChartInterval = setInterval(async () => {
       handleTreasuryChart();
       handleCbsChart();
@@ -127,6 +135,7 @@ export const CbsProvider = ({ children }) => {
       clearInterval(TreasuryChartInterval);
       setTreasuryChart([]);
       setCbsChartData([]);
+      setPsmChart([]);
       setCbsInfo({
         TotalSupply: 0,
         collateral_infos: [],
@@ -176,6 +185,7 @@ export const CbsProvider = ({ children }) => {
         treasuryInfo,
         treasuryChart,
         cbsChartData,
+        PsmChart,
       }}
     >
       {children}

@@ -10,14 +10,17 @@ import { blockInvalidChar, CalcFiveDigit } from "helper";
 import WalletButton from "components/globalComponents/WalletButton";
 import { fetch_psm_rate, getMxAmount } from "utils/psm/get_psm_rate";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
+import GlobalChart from "components/globalComponents/GlobalChart";
 import Card from "Layout/Card";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import Input from "Layout/Form/Input";
+import { useCbs } from "contexts/CbsContext";
 
 const PSM = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
+  const { PsmChart } = useCbs();
   const { PriceList, BalanceList, BalanceHandler, PriceHandler } = useCrypto();
   const { OpenContractSnackbar } = useContractSnackbar();
   const [isPayModel, setIsPayModel] = useState(false);
@@ -258,13 +261,20 @@ const PSM = () => {
                 <h1>PSM</h1>
               </div>
             </div>
-
-            <div className="col-12 PSM_section mt-2">
+          </div>
+          <div className="row mt-4 d-flex justify-content-center">
+            <div
+              className={`${
+                PsmChart.length > 0
+                  ? "col-lg-4 col-md-5 col-12"
+                  : "col-lg-5 col-md-5 col-12"
+              } PSM_section`}
+            >
               <div className="row d-flex justify-content-center">
-                <div className="col-lg-5 col-md-6 col-12">
+                <div className="col-lg-12 col-md-12 col-12">
                   <Card
                     active={1}
-                    p="1.5rem 2rem"
+                    p="1.5rem 1rem"
                     br="18px"
                     className="PSM_card"
                   >
@@ -475,6 +485,17 @@ const PSM = () => {
                 </div>
               </div>
             </div>
+            {PsmChart?.length > 0 && (
+              <div className="col-lg-8 col-md-7 col-12 mt-12 mt-lg-0 mt-md-0 mt-5">
+                <GlobalChart
+                  {...{
+                    list: PsmChart,
+                    filterList: PSMChartList,
+                    height: "400px",
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </StakeWrapper>
@@ -507,3 +528,14 @@ const PSM = () => {
 };
 
 export default PSM;
+
+const PSMChartList = [
+  {
+    id: 1,
+    name: "totalSwapSize",
+    dataKey: "totalSwapSize",
+    fill: "url(#totalSwapSize)",
+    stroke: "#0c0",
+    checked: true,
+  },
+];

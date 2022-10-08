@@ -10,9 +10,9 @@ import {
 } from "recharts";
 import { getDate, DataFormatter } from "helper";
 
-const GlobalChart = ({ list, filterList }) => {
+const GlobalChart = ({ list, filterList, height }) => {
   return (
-    <div style={{ width: "100%", height: 260 }} className="NormalChart">
+    <div style={{ width: "100%", height: height }} className="NormalChart">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={list} stackOffset="off">
           <defs>

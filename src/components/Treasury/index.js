@@ -127,7 +127,11 @@ const Treasury = () => {
                 </div>
                 <div className="col-lg-6 col-12 mt-4 mb-3">
                   <GlobalChart
-                    {...{ list: treasuryChart, filterList: TreasuryChartList }}
+                    {...{
+                      list: treasuryChart,
+                      filterList: TreasuryChartList,
+                      height: "260px",
+                    }}
                   />
                 </div>
               </div>
