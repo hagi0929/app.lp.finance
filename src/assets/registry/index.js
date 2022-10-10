@@ -7,7 +7,7 @@ export const TokenImgRegistry = {
   STSOL:
     "https://lptokenbucket.s3.amazonaws.com/c8e60e5099ff1a97c766ca39dac5fe71",
   UXD: "https://lptokenbucket.s3.amazonaws.com/8760a253c75f91ce069c1094350092a2",
-  SAMO: "https://lptokenbucket.s3.amazonaws.com/c85a303ff798379f58f11fc8841a9fc1",
+  SAMO: "https://lptokenbucket.s3.amazonaws.com/1257088c4e5d2dff5585d1ef1e02bb2f",
   zSOL: "https://lptokenbucket.s3.amazonaws.com/30bd9d88075d07b6a14086c63e9ac124",
   LPFi: "https://lptokenbucket.s3.amazonaws.com/ce97477a6c673ea64233e88e06724341",
   USDC: "https://lptokenbucket.s3.amazonaws.com/c65abd7ddaeb4bd9dac7af64fe64a98b",
