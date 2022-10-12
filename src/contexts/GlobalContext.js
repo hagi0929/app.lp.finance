@@ -5,10 +5,11 @@ import { fetch_user_infos } from "utils/lp-protocol/get_user_info";
 import { fetch_treasury_info } from "utils/treasury/get_treasury_info";
 import api from "api";
 import axios from "axios";
+import { get_staker_account_info, get_config_info } from "utils/lpIncentives";
 
-export const CbsContext = createContext();
+export const GlobalContext = createContext();
 
-export const CbsProvider = ({ children }) => {
+export const GlobalProvider = ({ children }) => {
   const wallet = useWallet();
   const { publicKey } = wallet;
   const [treasuryChart, setTreasuryChart] = useState([]);
@@ -39,6 +40,15 @@ export const CbsProvider = ({ children }) => {
     TotalBorrowed: 0,
     NetLTV: 0,
     LiquidStakingInfos: [],
+  });
+
+  const [nLPInfo, setNLPInfo] = useState({
+    total_staked_amount: 0,
+  });
+
+  const [nLPUserInfo, setNLPUserInfo] = useState({
+    staked_amount: 0,
+    RewardList: [],
   });
 
   const handleCbsInfo = async () => {
@@ -116,10 +126,27 @@ export const CbsProvider = ({ children }) => {
     }
   };
 
+  const handle_nlp_user_info = async () => {
+    const { staked_amount, RewardList } = await get_staker_account_info(wallet);
+
+    setNLPUserInfo({
+      staked_amount,
+      RewardList,
+    });
+  };
+
+  const handle_nlp_Info = async () => {
+    const { total_staked_amount } = get_config_info(wallet);
+    setNLPInfo({
+      total_staked_amount,
+    });
+  };
+
   useEffect(() => {
     if (wallet) {
       handleCbsInfo();
       handleTreasuryInfo();
+      handle_nlp_Info();
     }
 
     handleTreasuryChart();
@@ -151,6 +178,10 @@ export const CbsProvider = ({ children }) => {
         NetLTV: 0,
         LiquidStakingInfos: [],
       });
+
+      setNLPInfo({
+        total_staked_amount: 0,
+      });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -158,6 +189,7 @@ export const CbsProvider = ({ children }) => {
   useEffect(() => {
     if (publicKey) {
       handleCbsUserInfo();
+      handle_nlp_user_info();
     }
 
     return () => {
@@ -170,12 +202,17 @@ export const CbsProvider = ({ children }) => {
         LTV: 0,
         LiquidationThreshold: 0,
       });
+
+      setNLPUserInfo({
+        staked_amount: 0,
+        RewardList: [],
+      });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publicKey]);
 
   return (
-    <CbsContext.Provider
+    <GlobalContext.Provider
       value={{
         cbsInfo,
         handleCbsInfo,
@@ -186,11 +223,16 @@ export const CbsProvider = ({ children }) => {
         treasuryChart,
         cbsChartData,
         PsmChart,
+        nLPUserInfo,
+        setNLPUserInfo,
+        handle_nlp_user_info,
+        handle_nlp_Info,
+        nLPInfo,
       }}
     >
       {children}
-    </CbsContext.Provider>
+    </GlobalContext.Provider>
   );
 };
 
-export const useCbs = () => useContext(CbsContext);
+export const useGlobal = () => useContext(GlobalContext);

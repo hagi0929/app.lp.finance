@@ -9,7 +9,7 @@ import Image from "Layout/Image";
 import WalletButton from "../WalletButton";
 import CliModel from "models/CliModel";
 import { useCrypto } from "contexts/CryptoContext";
-import { useCbs } from "contexts/CbsContext";
+import { useGlobal } from "contexts/GlobalContext";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
 import { useCommand } from "contexts/CommandContext";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -24,7 +24,7 @@ const Header = () => {
     handleCbsUserInfo,
     handleTreasuryInfo,
     handleExchange,
-  } = useCbs();
+  } = useGlobal();
   const { ContractSnackbarType } = useContractSnackbar();
   const location = useLocation();
   const [dropdown, setDropdown] = useState(false);

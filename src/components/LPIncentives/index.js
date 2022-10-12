@@ -2,13 +2,20 @@ import React from "react";
 import Tabs from "./Tabs";
 import LPIncentivesWrapper from "styles/LPIncentives.style";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useCrypto } from "contexts/CryptoContext";
 import Table from "./Table";
+import { useContractSnackbar } from "contexts/ContractSnackbarContext";
+import { useGlobal } from "contexts/GlobalContext";
+// import { get_config_info } from "utils/lpIncentives";
 
 const LPIncentives = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const { PriceList, BalanceList } = useCrypto();
+  const { OpenContractSnackbar } = useContractSnackbar();
+  const { nLPUserInfo, nLPInfo } = useGlobal();
+
+  // useEffect(() => {
+  //   get_config_info(wallet);
+  // }, []);
 
   return (
     <>
@@ -24,11 +31,14 @@ const LPIncentives = () => {
               </div>
             </div>
           </div>
-          <Table />
+          <Table {...{ nLPInfo }} />
           <Tabs
-            publicKey={publicKey}
-            PriceList={PriceList}
-            BalanceList={BalanceList}
+            {...{
+              publicKey,
+              wallet,
+              OpenContractSnackbar,
+              nLPUserInfo,
+            }}
           />
         </div>
       </LPIncentivesWrapper>

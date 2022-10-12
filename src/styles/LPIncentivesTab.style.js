@@ -165,28 +165,22 @@ const LPIncentivesTabWrapper = styled.div`
             }
 
             .right {
-              span {
+              span,
+              p {
                 color: ${(props) => props.theme.BodyMainColor};
+
+                span {
+                  font-size: 0.9rem;
+                }
               }
 
-              .Collateral_list {
-                .Collateral_list_details {
-                  img {
-                    height: 1, 7rem;
-                    width: 1.7rem;
-                  }
-                }
-                .Collateral_list_Price,
-                .Collateral_list_APY {
-                  p {
-                    font-size: 0.8rem;
+              span {
+                font-size: 0.8rem;
+              }
 
-                    img {
-                      height: 1rem;
-                      width: auto;
-                    }
-                  }
-                }
+              img {
+                height: 2rem;
+                width: 2rem;
               }
             }
           }

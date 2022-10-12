@@ -11,7 +11,7 @@ import WalletWrapper from "lib/WalletWrapper";
 import ScreenLoader from "components/globalComponents/ScreenLoader";
 import { CryptoProvider } from "contexts/CryptoContext";
 import MainModel from "models/MainModel";
-import { CbsProvider } from "contexts/CbsContext";
+import { GlobalProvider } from "contexts/GlobalContext";
 
 const App = () => {
   const [Loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ const App = () => {
     <>
       <WalletWrapper>
         <CryptoProvider>
-          <CbsProvider>
+          <GlobalProvider>
             <Layout>
               <Routes>
                 <Route exact path="/" element={<Borrow />} />
@@ -48,7 +48,7 @@ const App = () => {
                 <Route exact path="/staking" element={<Staking />} />
               </Routes>
             </Layout>
-          </CbsProvider>
+          </GlobalProvider>
         </CryptoProvider>
       </WalletWrapper>
       {model ? (

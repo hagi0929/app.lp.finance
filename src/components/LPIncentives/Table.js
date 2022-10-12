@@ -1,10 +1,30 @@
-import React from "react";
-import { LPIncentivesItems } from "assets/registry/LPIncentivesRegistry";
+import React, { useMemo, useState } from "react";
+import { TokenImgRegistry } from "assets/registry";
 import Image from "Layout/Image";
+import { numFormatter } from "helper";
 
 const HeadersList = ["Pools", "Total Staked", "Reward APR"];
 
-const Table = () => {
+const Table = ({ nLPInfo }) => {
+  const [List, setList] = useState([]);
+
+  useMemo(() => {
+    const LPIncentivesItems = [
+      {
+        id: 1,
+        website: "https://lifinity.io/pools",
+        Img1: TokenImgRegistry.zSOL,
+        Img2: TokenImgRegistry.mSOL,
+        name1: "zSOL",
+        name2: "mSOL",
+        TotalStaked: numFormatter(nLPInfo.total_staked_amount),
+        RewardAPR: 0,
+        Rewards: [],
+      },
+    ];
+    setList(LPIncentivesItems);
+  }, [nLPInfo]);
+
   return (
     <div className="row mt-4 LPIncentives_table_section pb-3">
       <div className="col-12">
@@ -22,7 +42,7 @@ const Table = () => {
               </tr>
             </thead>
             <tbody>
-              {LPIncentivesItems.map((list, ind) => {
+              {List.map((list, ind) => {
                 return (
                   <tr key={ind}>
                     <td>

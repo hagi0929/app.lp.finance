@@ -6,9 +6,14 @@ import TokenPairModel from "models/TokenPairModel";
 import { TokenImgRegistry } from "assets/registry";
 import { LPIncentivesTokenRegistry } from "assets/registry/LPIncentivesRegistry";
 import WalletButton from "components/globalComponents/WalletButton";
+import { blockInvalidChar } from "helper";
+import { nlp_deposit } from "lp-program/lpIncentives";
 
-const Deposit = ({ publicKey }) => {
+const Deposit = ({ publicKey, wallet, OpenContractSnackbar }) => {
   const [isModel, setIsModel] = useState(false);
+  const [message, setMessage] = useState("Deposit");
+  const [amount, setAmount] = useState("");
+  const [Required, setRequired] = useState(false);
   const [selected, setSelected] = useState({
     pairOneImg: TokenImgRegistry.zSOL,
     pairTwoImg: TokenImgRegistry.mSOL,
@@ -16,6 +21,35 @@ const Deposit = ({ publicKey }) => {
     pairTwoName: "mSOL",
     symbol: "zSOL-mSOL",
   });
+
+  const handleAmount = (e) => {
+    setAmount(e.target.value);
+    if (e.target.value) {
+      setMessage("Deposit");
+      setRequired(true);
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
+
+  const handleProgram = async () => {
+    if (amount > 0) {
+      if (Required && publicKey) {
+        await nlp_deposit(
+          wallet,
+          amount,
+          setMessage,
+          setRequired,
+          setAmount,
+          OpenContractSnackbar
+        );
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
 
   return (
     <>
@@ -31,6 +65,9 @@ const Deposit = ({ publicKey }) => {
                     type="number"
                     className={publicKey ? null : "not-allowed"}
                     placeholder="0.0"
+                    value={amount}
+                    onChange={(e) => handleAmount(e)}
+                    onKeyDown={blockInvalidChar}
                     disabled={publicKey ? false : true}
                     active={2}
                     p="0.7rem 0rem 0.7rem 3.5rem"
@@ -95,9 +132,11 @@ const Deposit = ({ publicKey }) => {
                     active={1}
                     p="0.6rem 2rem"
                     br="10px"
-                    className="not-allowed"
+                    disabled={!publicKey ? true : false}
+                    className={!publicKey ? "not-allowed" : null}
+                    onClick={() => handleProgram()}
                   >
-                    Deposit
+                    {message}
                   </Button>
                 </div>
               )}

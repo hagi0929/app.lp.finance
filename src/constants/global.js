@@ -77,11 +77,15 @@ export const zSOL_MINT = new PublicKey(
 );
 
 export const LPFi_MINT = new PublicKey(
-  "LPFiNAybMobY5oHfYVdy9jPozFBGKpPiEGoobK2xCe3"
+  "2vAxp4x5ZFiz9xXYpWScwtjcamWkfPpT6MzbbyNzUPp5"
 );
 
 export const USDC_MINT = new PublicKey(
   "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+);
+
+export const nLP_MINT = new PublicKey(
+  "B8gLyBqHKGW1iHqiuq4X64dF4Fk7eFw3auB3aWNq7wN1"
 );
 
 // MAINNET-BETA PYth price config
@@ -275,6 +279,8 @@ export const getMint = (token) => {
     mint = USDC_MINT;
   } else if (token === "LPFi") {
     mint = LPFi_MINT;
+  } else if (token === "nlp") {
+    mint = nLP_MINT;
   }
 
   return mint;

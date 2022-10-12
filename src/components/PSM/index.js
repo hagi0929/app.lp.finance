@@ -15,12 +15,12 @@ import Card from "Layout/Card";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import Input from "Layout/Form/Input";
-import { useCbs } from "contexts/CbsContext";
+import { useGlobal } from "contexts/GlobalContext";
 
 const PSM = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const { PsmChart } = useCbs();
+  const { PsmChart } = useGlobal();
   const { PriceList, BalanceList, BalanceHandler, PriceHandler } = useCrypto();
   const { OpenContractSnackbar } = useContractSnackbar();
   const [isPayModel, setIsPayModel] = useState(false);

@@ -5,7 +5,7 @@ import Account from "./Account";
 import Withdraw from "./Withdraw";
 import LPIncentivesTabWrapper from "styles/LPIncentivesTab.style";
 
-const Tabs = ({ publicKey, PriceList, BalanceList }) => {
+const Tabs = ({ publicKey, wallet, OpenContractSnackbar, nLPUserInfo }) => {
   const changeRadius = () => {
     document
       .getElementById("nav-tabContent")
@@ -79,9 +79,11 @@ const Tabs = ({ publicKey, PriceList, BalanceList }) => {
                       aria-labelledby="nav-Deposit-tab"
                     >
                       <Deposit
-                        publicKey={publicKey}
-                        PriceList={PriceList}
-                        BalanceList={BalanceList}
+                        {...{
+                          publicKey,
+                          wallet,
+                          OpenContractSnackbar,
+                        }}
                       />
                     </div>
 
@@ -92,9 +94,11 @@ const Tabs = ({ publicKey, PriceList, BalanceList }) => {
                       aria-labelledby="nav-Withdraw-tab"
                     >
                       <Withdraw
-                        publicKey={publicKey}
-                        PriceList={PriceList}
-                        BalanceList={BalanceList}
+                        {...{
+                          publicKey,
+                          wallet,
+                          OpenContractSnackbar,
+                        }}
                       />
                     </div>
                   </div>
@@ -103,7 +107,7 @@ const Tabs = ({ publicKey, PriceList, BalanceList }) => {
             </div>
           </div>
           <div className="col-lg-6 col-12">
-            <Account />
+            <Account {...{ nLPUserInfo }} />
           </div>
         </div>
       </LPIncentivesTabWrapper>

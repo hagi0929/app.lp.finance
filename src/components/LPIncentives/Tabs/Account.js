@@ -1,22 +1,31 @@
-import React, { memo } from "react";
+import React, { memo, useMemo, useState } from "react";
 import Card from "Layout/Card";
+import Button from "Layout/Button";
+import { numFormatter } from "helper";
+import { TokenImgRegistry } from "assets/registry";
 
-var AccountTable = [
-  {
-    id: 1,
-    title: "Staked",
-    price: "$0",
-    css: "3px solid rgba(255, 255, 255, 0.2)",
-  },
-  {
-    id: 2,
-    title: "Rewards",
-    price: "$0",
-    css: "3px solid rgba(255, 255, 255, 0.2)",
-  },
-];
+const Account = ({ nLPUserInfo }) => {
+  const [List, setList] = useState([]);
 
-const Account = () => {
+  useMemo(() => {
+    var AccountTable = [
+      {
+        id: 1,
+        title: "Staked",
+        value: `$${numFormatter(nLPUserInfo.staked_amount)}`,
+        css: "3px solid rgba(255, 255, 255, 0.2)",
+      },
+      {
+        id: 2,
+        title: "Rewards",
+        value: "$0",
+        RewardList: nLPUserInfo.RewardList,
+        css: "3px solid rgba(255, 255, 255, 0.2)",
+      },
+    ];
+    setList(AccountTable);
+  }, [nLPUserInfo]);
+
   return (
     <>
       <div className="row d-flex justify-content-center LPIncentives_Account mt-lg-0 mt-5">
@@ -48,28 +57,70 @@ const Account = () => {
             >
               <table width="100%" className="mt-3">
                 <tbody>
-                  {AccountTable &&
-                    AccountTable.map((val, ind) => {
-                      return (
-                        <tr
-                          key={ind}
-                          style={
-                            val.css
-                              ? { borderBottom: val.css }
-                              : { borderBottom: "" }
-                          }
-                        >
-                          <td className="left">
-                            <p>{val.title}</p>
-                          </td>
-                          <td className="right text-right">
-                            <span>{val.price}</span>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                  {List?.map((val, ind) => {
+                    return (
+                      <tr
+                        key={val.id + 10}
+                        style={val.css ? { borderBottom: val.css } : null}
+                      >
+                        <td className="left">
+                          <p>{val.title}</p>
+                        </td>
+                        <td className="right text-right d-flex flex-column">
+                          {ind === 1 ? (
+                            <>
+                              {val?.RewardList?.length > 0 ? (
+                                <>
+                                  {val.RewardList.map((item, index) => {
+                                    if (item.amount) {
+                                      return (
+                                        <label key={item.id}>
+                                          <p
+                                            className="d-flex flex-row align-items-center justify-content-end"
+                                            style={
+                                              index !== 0
+                                                ? { paddingTop: "15px" }
+                                                : null
+                                            }
+                                          >
+                                            <span>
+                                              {numFormatter(item.amount)}
+                                              <span className="ml-1">
+                                                {item.token}
+                                              </span>
+                                            </span>
+
+                                            <img
+                                              src={TokenImgRegistry[item.token]}
+                                              alt="Loading..."
+                                              className="ml-2"
+                                            />
+                                          </p>
+                                        </label>
+                                      );
+                                    } else {
+                                      return null;
+                                    }
+                                  })}
+                                </>
+                              ) : (
+                                <p>{val.value}</p>
+                              )}
+                            </>
+                          ) : (
+                            <p>{val.value}</p>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
+              <div className="mt-3">
+                <Button active={3} p="0.4rem 0rem" br="8px">
+                  Claim
+                </Button>
+              </div>
             </Card>
           </div>
         </div>

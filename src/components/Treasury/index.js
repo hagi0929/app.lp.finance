@@ -4,7 +4,7 @@ import Card from "Layout/Card";
 import Image from "Layout/Image";
 import { TokenImgRegistry } from "assets/registry";
 import GlobalChart from "components/globalComponents/GlobalChart";
-import { useCbs } from "contexts/CbsContext";
+import { useGlobal } from "contexts/GlobalContext";
 import { numFormatter, calc, CalcFiveDigit } from "helper";
 import Tabs from "./Tabs";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -18,7 +18,7 @@ const Treasury = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const { treasuryInfo, treasuryChart } = useCbs();
+  const { treasuryInfo, treasuryChart } = useGlobal();
 
   useMemo(() => {
     if (

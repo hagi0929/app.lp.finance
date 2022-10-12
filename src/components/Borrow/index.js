@@ -8,7 +8,7 @@ import Button from "Layout/Button";
 import Image from "Layout/Image";
 import NotifiModel from "models/NotifiModel";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
-import { useCbs } from "contexts/CbsContext";
+import { useGlobal } from "contexts/GlobalContext";
 
 const Borrow = () => {
   const { PriceList, PriceHandler, BalanceList, BalanceHandler } = useCrypto();
@@ -20,7 +20,7 @@ const Borrow = () => {
     handleCbsInfo,
     handleCbsUserInfo,
     handleTreasuryInfo,
-  } = useCbs();
+  } = useGlobal();
 
   const { ContractSnackbarType } = useContractSnackbar();
 
