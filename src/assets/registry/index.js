@@ -126,6 +126,7 @@ export const TokenBalRegistry = [
   "SAMO",
   "USDC",
   "LPFi",
+  "nlp",
 ];
 
 export const collateral_infos_colors = [

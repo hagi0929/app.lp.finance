@@ -5,6 +5,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import Table from "./Table";
 import { useContractSnackbar } from "contexts/ContractSnackbarContext";
 import { useGlobal } from "contexts/GlobalContext";
+import { useCrypto } from "contexts/CryptoContext";
 // import { get_config_info } from "utils/lpIncentives";
 
 const LPIncentives = () => {
@@ -12,6 +13,7 @@ const LPIncentives = () => {
   const { publicKey } = wallet;
   const { OpenContractSnackbar } = useContractSnackbar();
   const { nLPUserInfo, nLPInfo } = useGlobal();
+  const { BalanceHandler } = useCrypto();
 
   // useEffect(() => {
   //   get_config_info(wallet);
@@ -38,6 +40,7 @@ const LPIncentives = () => {
               wallet,
               OpenContractSnackbar,
               nLPUserInfo,
+              BalanceHandler,
             }}
           />
         </div>

@@ -1,16 +1,21 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useMemo } from "react";
 import Input from "Layout/Form/Input";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
-import TokenPairModel from "models/TokenPairModel";
+// import TokenPairModel from "models/TokenPairModel";
 import { TokenImgRegistry } from "assets/registry";
-import { LPIncentivesTokenRegistry } from "assets/registry/LPIncentivesRegistry";
+// import { LPIncentivesTokenRegistry } from "assets/registry/LPIncentivesRegistry";
 import WalletButton from "components/globalComponents/WalletButton";
 import { blockInvalidChar } from "helper";
 import { nlp_deposit } from "lp-program/lpIncentives";
 
-const Deposit = ({ publicKey, wallet, OpenContractSnackbar }) => {
-  const [isModel, setIsModel] = useState(false);
+const Deposit = ({
+  publicKey,
+  wallet,
+  OpenContractSnackbar,
+  BalanceHandler,
+}) => {
+  // const [isModel, setIsModel] = useState(false);
   const [message, setMessage] = useState("Deposit");
   const [amount, setAmount] = useState("");
   const [Required, setRequired] = useState(false);
@@ -20,17 +25,36 @@ const Deposit = ({ publicKey, wallet, OpenContractSnackbar }) => {
     pairOneName: "zSOL",
     pairTwoName: "mSOL",
     symbol: "zSOL-mSOL",
+    balance: 0,
   });
+
+  useMemo(() => {
+    setSelected({
+      ...selected,
+      balance: BalanceHandler["nlp"],
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [BalanceHandler]);
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
     if (e.target.value) {
-      setMessage("Deposit");
-      setRequired(true);
+      if (e.target.value <= selected.balance) {
+        setMessage("Deposit");
+        setRequired(true);
+      } else {
+        setMessage("Insufficient Balance");
+        setRequired(false);
+      }
     } else {
       setMessage("Enter an amount");
       setRequired(false);
     }
+  };
+  const CalculateMax = async () => {
+    setAmount(selected.balance);
+    setMessage("Deposit");
+    setRequired(true);
   };
 
   const handleProgram = async () => {
@@ -80,7 +104,9 @@ const Deposit = ({ publicKey, wallet, OpenContractSnackbar }) => {
                       p="0.3rem 0.6rem"
                       br="4px"
                       size="0.8rem"
-                      className="not-allowed"
+                      className={publicKey ? null : "not-allowed"}
+                      disabled={publicKey ? false : true}
+                      onClick={CalculateMax}
                     >
                       Max
                     </Button>
@@ -93,7 +119,7 @@ const Deposit = ({ publicKey, wallet, OpenContractSnackbar }) => {
                     active={2}
                     p="0.6rem 0.3rem"
                     br="10px"
-                    onClick={() => setIsModel(true)}
+                    // onClick={() => setIsModel(true)}
                   >
                     {selected.pairOneImg && (
                       <Image
@@ -144,14 +170,14 @@ const Deposit = ({ publicKey, wallet, OpenContractSnackbar }) => {
           </div>
         </div>
       </div>
-      {isModel && (
+      {/* {isModel && (
         <TokenPairModel
           isOpen={isModel}
           isClose={() => setIsModel(false)}
           List={LPIncentivesTokenRegistry}
           setSelected={setSelected}
         />
-      )}
+      )} */}
     </>
   );
 };

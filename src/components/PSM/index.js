@@ -70,6 +70,16 @@ const PSM = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [PriceHandler]);
 
+  const getSubmitText = () => {
+    let mess;
+    if (ReceiveSelect.symbol === "mSOL" || ReceiveSelect.symbol === "stSOL") {
+      mess = `Get ${ReceiveSelect.symbol}`;
+    } else {
+      mess = `Mint ${ReceiveSelect.symbol}`;
+    }
+    return mess;
+  };
+
   const handlePsmRate = async () => {
     setRateLoading(true);
     const { output_amount } = await fetch_psm_rate(
@@ -95,12 +105,18 @@ const PSM = () => {
       ReceiveSelect.symbol,
       PaySelected.balance
     );
+    var mess = getSubmitText();
+
     if (max) {
       setAmount(max);
       setMaxLoading(false);
+      setMessage(mess);
+      setRequired(true);
     } else {
       setMaxLoading(false);
       setAmount("");
+      setMessage(mess);
+      setRequired(false);
     }
   };
 
@@ -109,15 +125,7 @@ const PSM = () => {
 
     if (e.target.value) {
       if (e.target.value <= PaySelected.balance) {
-        let mess;
-        if (
-          ReceiveSelect.symbol === "mSOL" ||
-          ReceiveSelect.symbol === "stSOL"
-        ) {
-          mess = `Get ${ReceiveSelect.symbol}`;
-        } else {
-          mess = `Mint ${ReceiveSelect.symbol}`;
-        }
+        var mess = getSubmitText();
         setMessage(mess);
         setRequired(true);
       } else {
@@ -443,7 +451,7 @@ const PSM = () => {
                       </div>
                     )}
 
-                    <div className="PSM_btn_section mt-5">
+                    <div className="PSM_btn_section mt-3">
                       <div className="row">
                         <div className="col-12">
                           {!publicKey ? (

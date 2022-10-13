@@ -5,7 +5,13 @@ import Account from "./Account";
 import Withdraw from "./Withdraw";
 import LPIncentivesTabWrapper from "styles/LPIncentivesTab.style";
 
-const Tabs = ({ publicKey, wallet, OpenContractSnackbar, nLPUserInfo }) => {
+const Tabs = ({
+  publicKey,
+  wallet,
+  OpenContractSnackbar,
+  nLPUserInfo,
+  BalanceHandler,
+}) => {
   const changeRadius = () => {
     document
       .getElementById("nav-tabContent")
@@ -44,7 +50,7 @@ const Tabs = ({ publicKey, wallet, OpenContractSnackbar, nLPUserInfo }) => {
 
   return (
     <>
-      <LPIncentivesTabWrapper pieLTV={0}>
+      <LPIncentivesTabWrapper>
         <div className="row my-lg-5 my-md-5 my-sm-4 my-5 pb-lg-4 pb-md-4 pb-sm-3 pb-3 pt-lg-2 pt-md-2 pt-sm-2 pt-0 LPIncentives_tab_section d-flex justify-content-center">
           <div className="col-lg-6 col-md-10 col-12">
             <div className="row d-flex justify-content-center">
@@ -83,6 +89,7 @@ const Tabs = ({ publicKey, wallet, OpenContractSnackbar, nLPUserInfo }) => {
                           publicKey,
                           wallet,
                           OpenContractSnackbar,
+                          BalanceHandler,
                         }}
                       />
                     </div>
@@ -98,6 +105,7 @@ const Tabs = ({ publicKey, wallet, OpenContractSnackbar, nLPUserInfo }) => {
                           publicKey,
                           wallet,
                           OpenContractSnackbar,
+                          nLPUserInfo,
                         }}
                       />
                     </div>

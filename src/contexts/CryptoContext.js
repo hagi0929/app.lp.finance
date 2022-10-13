@@ -30,6 +30,7 @@ export const CryptoProvider = ({ children }) => {
     zSOL: 0,
     USDC: 0,
     LPFi: 0,
+    nlp: 0,
   });
 
   const storePrice = async () => {

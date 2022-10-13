@@ -3,18 +3,18 @@ import Input from "Layout/Form/Input";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import { TokenImgRegistry } from "assets/registry";
-import { LPIncentivesTokenRegistry } from "assets/registry/LPIncentivesRegistry";
-import TokenPairModel from "models/TokenPairModel";
+// import { LPIncentivesTokenRegistry } from "assets/registry/LPIncentivesRegistry";
+// import TokenPairModel from "models/TokenPairModel";
 import WalletButton from "components/globalComponents/WalletButton";
 import { blockInvalidChar } from "helper";
 import { nlp_withdraw } from "lp-program/lpIncentives";
 
-const Withdraw = ({ publicKey, wallet, OpenContractSnackbar }) => {
-  const [isModel, setIsModel] = useState(false);
+const Withdraw = ({ publicKey, wallet, OpenContractSnackbar, nLPUserInfo }) => {
+  // const [isModel, setIsModel] = useState(false);
   const [message, setMessage] = useState("Withdraw");
   const [amount, setAmount] = useState("");
   const [Required, setRequired] = useState(false);
-  const [selected, setSelected] = useState({
+  const [selected] = useState({
     pairOneImg: TokenImgRegistry.zSOL,
     pairTwoImg: TokenImgRegistry.mSOL,
     pairOneName: "zSOL",
@@ -25,12 +25,23 @@ const Withdraw = ({ publicKey, wallet, OpenContractSnackbar }) => {
   const handleAmount = (e) => {
     setAmount(e.target.value);
     if (e.target.value) {
-      setMessage("Withdraw");
-      setRequired(true);
+      if (e.target.value <= nLPUserInfo.staked_amount) {
+        setMessage("Withdraw");
+        setRequired(true);
+      } else {
+        setMessage("Withdraw amount exceeded");
+        setRequired(false);
+      }
     } else {
       setMessage("Enter an amount");
       setRequired(false);
     }
+  };
+
+  const CalculateMax = async () => {
+    setAmount(nLPUserInfo.staked_amount);
+    setMessage("Withdraw");
+    setRequired(true);
   };
 
   const handleProgram = async () => {
@@ -80,7 +91,9 @@ const Withdraw = ({ publicKey, wallet, OpenContractSnackbar }) => {
                       p="0.3rem 0.6rem"
                       br="4px"
                       size="0.8rem"
-                      className="not-allowed"
+                      className={publicKey ? null : "not-allowed"}
+                      disabled={publicKey ? false : true}
+                      onClick={CalculateMax}
                     >
                       Max
                     </Button>
@@ -93,7 +106,7 @@ const Withdraw = ({ publicKey, wallet, OpenContractSnackbar }) => {
                     active={2}
                     p="0.6rem 0.3rem"
                     br="10px"
-                    onClick={() => setIsModel(true)}
+                    // onClick={() => setIsModel(true)}
                   >
                     {selected.pairOneImg && (
                       <Image
@@ -143,14 +156,14 @@ const Withdraw = ({ publicKey, wallet, OpenContractSnackbar }) => {
           </div>
         </div>
       </div>
-      {isModel && (
+      {/* {isModel && (
         <TokenPairModel
           isOpen={isModel}
           isClose={() => setIsModel(false)}
           List={LPIncentivesTokenRegistry}
           setSelected={setSelected}
         />
-      )}
+      )} */}
     </>
   );
 };
