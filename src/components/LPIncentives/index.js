@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Tabs from "./Tabs";
 import LPIncentivesWrapper from "styles/LPIncentives.style";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -11,13 +11,19 @@ import { useCrypto } from "contexts/CryptoContext";
 const LPIncentives = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const { OpenContractSnackbar } = useContractSnackbar();
-  const { nLPUserInfo, nLPInfo } = useGlobal();
+  const { OpenContractSnackbar, ContractSnackbarType } = useContractSnackbar();
+
+  const { nLPUserInfo, nLPInfo, handle_nlp_user_info, handle_nlp_Info } =
+    useGlobal();
   const { BalanceHandler } = useCrypto();
 
-  // useEffect(() => {
-  //   get_config_info(wallet);
-  // }, []);
+  useEffect(() => {
+    if (ContractSnackbarType === "Success") {
+      handle_nlp_user_info();
+      handle_nlp_Info();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ContractSnackbarType]);
 
   return (
     <>

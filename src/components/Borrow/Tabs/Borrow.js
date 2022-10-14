@@ -18,12 +18,15 @@ const Borrow = ({
   BalanceHandler,
   wallet,
   OpenContractSnackbar,
+  PriceHandler,
 }) => {
   const [selected, setSelected] = useState({
     logoURI: TokenImgRegistry.zSOL,
     symbol: "zSOL",
     balance: 0,
+    price: 0,
   });
+
   const [isModel, setIsModel] = useState(false);
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("Borrow");
@@ -34,6 +37,14 @@ const Borrow = ({
     setSelected({ ...selected, balance: BalanceHandler[selected.symbol] });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BalanceHandler]);
+
+  useMemo(() => {
+    setSelected({
+      ...selected,
+      price: PriceHandler[selected.symbol],
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [PriceHandler]);
 
   useEffect(() => {
     setMessage("Borrow");
@@ -93,7 +104,8 @@ const Borrow = ({
             setMessage,
             setRequired,
             setAmount,
-            OpenContractSnackbar
+            OpenContractSnackbar,
+            selected.price
           );
         } else {
           setMaxLoading(false);

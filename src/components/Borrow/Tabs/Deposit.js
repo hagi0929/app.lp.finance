@@ -102,7 +102,8 @@ const Deposit = ({
           setMessage,
           setRequired,
           setAmount,
-          OpenContractSnackbar
+          OpenContractSnackbar,
+          selected.price
         );
       }
     } else {

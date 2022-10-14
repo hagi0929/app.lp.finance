@@ -27,6 +27,8 @@ import {
   TOKEN_PROGRAM_ID,
   ASSOCIATED_TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
+import api from "api";
+import axios from "axios";
 
 const { PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } = anchor.web3;
 
@@ -39,7 +41,8 @@ export const deposit_cbs = async (
   setMessage,
   setRequired,
   setAmount,
-  OpenContractSnackbar
+  OpenContractSnackbar,
+  price
 ) => {
   try {
     OpenContractSnackbar(true, "Processing", "Start Deposit...");
@@ -98,6 +101,8 @@ export const deposit_cbs = async (
         .rpc();
     }
 
+    var totalValue = amount * price;
+
     if (symbol !== "SOL") {
       await program.methods
         .deposit(convert_to_wei_value(tokenMint, amount))
@@ -126,6 +131,11 @@ export const deposit_cbs = async (
       setMessage("Enter an amount");
       setRequired(false);
       setAmount("");
+
+      await axios.post(api.storeCbsDeposit, {
+        symbol: symbol,
+        value: totalValue,
+      });
     } else {
       await program.methods
         .depositSol(convert_to_wei_value_with_decimal(amount, SOL_DECIMAL))
@@ -152,6 +162,11 @@ export const deposit_cbs = async (
       setMessage("Enter an amount");
       setRequired(false);
       setAmount("");
+
+      await axios.post(api.storeCbsDeposit, {
+        symbol: symbol,
+        value: totalValue,
+      });
     }
   } catch (error) {
     console.log(error);
@@ -168,7 +183,8 @@ export const borrow_cbs = async (
   setMessage,
   setRequired,
   setAmount,
-  OpenContractSnackbar
+  OpenContractSnackbar,
+  price
 ) => {
   try {
     OpenContractSnackbar(true, "Processing", "Start Borrow...");
@@ -224,6 +240,13 @@ export const borrow_cbs = async (
     setMessage("Enter an amount");
     setRequired(false);
     setAmount("");
+
+    var totalValue = amount * price;
+
+    await axios.post(api.storeCbsBorrow, {
+      symbol: symbol,
+      value: totalValue,
+    });
   } catch (error) {
     OpenContractSnackbar(true, "Error", `Borrow failed. Please try again.`);
   }

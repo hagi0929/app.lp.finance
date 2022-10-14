@@ -6,6 +6,10 @@ const api = {
   getCbsOverviewData: BaseUrl + "/global/getCbsOverviewData",
   storeSwapSize: BaseUrl + "/global/storeSwapSize",
   getDaySwapSize: BaseUrl + "/global/getDaySwapSize",
+  storeCbsDeposit: BaseUrl + "/global/storeCbsDeposit",
+  getCbsDeposited: BaseUrl + "/global/getCbsDeposited",
+  storeCbsBorrow: BaseUrl + "/global/storeCbsBorrow",
+  getCbsBorrowed: BaseUrl + "/global/getCbsBorrowed",
 };
 
 export default api;

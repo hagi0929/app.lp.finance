@@ -24,6 +24,8 @@ const Header = () => {
     handleCbsUserInfo,
     handleTreasuryInfo,
     handleExchange,
+    handle_nlp_user_info,
+    handle_nlp_Info,
   } = useGlobal();
   const { ContractSnackbarType } = useContractSnackbar();
   const location = useLocation();
@@ -213,6 +215,8 @@ const Header = () => {
                                   handleCbsUserInfo();
                                   handleTreasuryInfo();
                                   handleExchange();
+                                  handle_nlp_user_info();
+                                  handle_nlp_Info();
                                 }}
                               >
                                 <div className="name">
