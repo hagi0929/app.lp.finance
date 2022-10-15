@@ -13,6 +13,8 @@ const Overview = ({
   collateral_infos,
   borrowed_collateral_infos,
   cbsChartData,
+  CbsDepositData,
+  CbsBorrowData,
 }) => {
   const [DepositModel, setDepositModel] = useState(false);
   const [BorrowdModel, setBorrowdModel] = useState(false);
@@ -42,6 +44,8 @@ const Overview = ({
           isOpen={DataModel}
           isClose={() => setDataModel(false)}
           List={cbsChartData}
+          CbsDepositData={CbsDepositData}
+          CbsBorrowData={CbsBorrowData}
         />
       )}
 

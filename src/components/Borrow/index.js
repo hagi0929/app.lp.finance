@@ -20,6 +20,8 @@ const Borrow = () => {
     handleCbsInfo,
     handleCbsUserInfo,
     handleTreasuryInfo,
+    CbsDepositData,
+    CbsBorrowData,
   } = useGlobal();
 
   const { ContractSnackbarType } = useContractSnackbar();
@@ -69,6 +71,8 @@ const Borrow = () => {
               ...cbsInfo,
               publicKey,
               cbsChartData,
+              CbsDepositData,
+              CbsBorrowData,
             }}
           />
           <Tabs

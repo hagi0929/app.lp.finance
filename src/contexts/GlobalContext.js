@@ -15,6 +15,8 @@ export const GlobalProvider = ({ children }) => {
   const [treasuryChart, setTreasuryChart] = useState([]);
   const [cbsChartData, setCbsChartData] = useState([]);
   const [PsmChart, setPsmChart] = useState([]);
+  const [CbsDepositData, setCbsDepositData] = useState([]);
+  const [CbsBorrowData, setCbsBorrowData] = useState([]);
 
   const [cbsInfo, setCbsInfo] = useState({
     TotalSupply: 0,
@@ -105,6 +107,22 @@ export const GlobalProvider = ({ children }) => {
     });
   };
 
+  const handle_nlp_user_info = async () => {
+    const { staked_amount, RewardList } = await get_staker_account_info(wallet);
+
+    setNLPUserInfo({
+      staked_amount,
+      RewardList,
+    });
+  };
+
+  const handle_nlp_Info = async () => {
+    const { total_staked_amount } = get_config_info(wallet);
+    setNLPInfo({
+      total_staked_amount,
+    });
+  };
+
   const handleCbsChart = async () => {
     const response = await axios.get(api.getCbsOverviewData);
     if (response.status === 200) {
@@ -126,20 +144,18 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  const handle_nlp_user_info = async () => {
-    const { staked_amount, RewardList } = await get_staker_account_info(wallet);
-
-    setNLPUserInfo({
-      staked_amount,
-      RewardList,
-    });
+  const handleCbsDepositChart = async () => {
+    const response = await axios.get(api.getCbsDeposited);
+    if (response.status === 200) {
+      setCbsDepositData(response.data);
+    }
   };
 
-  const handle_nlp_Info = async () => {
-    const { total_staked_amount } = get_config_info(wallet);
-    setNLPInfo({
-      total_staked_amount,
-    });
+  const handleCbsBorrowChart = async () => {
+    const response = await axios.get(api.getCbsBorrowed);
+    if (response.status === 200) {
+      setCbsBorrowData(response.data);
+    }
   };
 
   useEffect(() => {
@@ -152,6 +168,8 @@ export const GlobalProvider = ({ children }) => {
     handleTreasuryChart();
     handleCbsChart();
     handlePsmChart();
+    handleCbsDepositChart();
+    handleCbsBorrowChart();
 
     let TreasuryChartInterval = setInterval(async () => {
       handleTreasuryChart();
@@ -228,6 +246,8 @@ export const GlobalProvider = ({ children }) => {
         handle_nlp_user_info,
         handle_nlp_Info,
         nLPInfo,
+        CbsDepositData,
+        CbsBorrowData,
       }}
     >
       {children}

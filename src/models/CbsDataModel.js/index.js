@@ -1,8 +1,20 @@
 import React, { useEffect, memo } from "react";
 import PieChartWrapper from "../CbsPieChartModel/PieChart.style";
 import GlobalChart from "components/globalComponents/GlobalChart";
+import {
+  totalSupplyChartList,
+  totalBorrowedChartList,
+  totalDepositTokenChartList,
+  totalBorrowedTokenChartList,
+} from "assets/registry/BorrowRegistry";
 
-const CbsDataModel = ({ isOpen, isClose, List }) => {
+const CbsDataModel = ({
+  isOpen,
+  isClose,
+  List,
+  CbsDepositData,
+  CbsBorrowData,
+}) => {
   useEffect(() => {
     if (isOpen) {
       document.querySelector(".popup").classList.add("active");
@@ -52,6 +64,20 @@ const CbsDataModel = ({ isOpen, isClose, List }) => {
                       height="260px"
                     />
                   </div>
+                  <div className="col-lg-6 col-12 mt-lg-0 mt-md-0 mt-3">
+                    <GlobalChart
+                      list={CbsDepositData}
+                      filterList={totalDepositTokenChartList}
+                      height="260px"
+                    />
+                  </div>
+                  <div className="col-lg-6 col-12 mt-lg-0 mt-md-0 mt-3">
+                    <GlobalChart
+                      list={CbsBorrowData}
+                      filterList={totalBorrowedTokenChartList}
+                      height="260px"
+                    />
+                  </div>
                 </>
               )}
             </div>
@@ -63,57 +89,3 @@ const CbsDataModel = ({ isOpen, isClose, List }) => {
 };
 
 export default memo(CbsDataModel);
-
-const totalSupplyChartList = [
-  {
-    id: 1,
-    name: "SOL",
-    dataKey: "SOL",
-    fill: "url(#SOL)",
-    stroke: "#00FFA3",
-    checked: true,
-  },
-  {
-    id: 2,
-    name: "mSOL",
-    dataKey: "mSOL",
-    fill: "url(#mSOL)",
-    stroke: "#b0d9c9",
-    checked: true,
-  },
-  {
-    id: 3,
-    name: "stSOL",
-    dataKey: "stSOL",
-    fill: "url(#stSOL)",
-    stroke: "#73d6d9",
-    checked: true,
-  },
-  {
-    id: 4,
-    name: "SAMO",
-    dataKey: "SAMO",
-    fill: "url(#SAMO)",
-    stroke: "#ccb7b7",
-    checked: true,
-  },
-  {
-    id: 5,
-    name: "UXD",
-    dataKey: "UXD",
-    fill: "url(#UXD)",
-    stroke: "#707070",
-    checked: true,
-  },
-];
-
-const totalBorrowedChartList = [
-  {
-    id: 1,
-    name: "zSOL",
-    dataKey: "zSOL",
-    fill: "url(#zSOL)",
-    stroke: "#0c0",
-    checked: true,
-  },
-];

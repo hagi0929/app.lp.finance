@@ -124,3 +124,111 @@ export var WithdrawTokens = [
     symbol: "SAMO",
   },
 ];
+
+export const totalSupplyChartList = [
+  {
+    id: 1,
+    name: "SOL",
+    dataKey: "SOL",
+    fill: "url(#SOL)",
+    stroke: "#00FFA3",
+    checked: true,
+  },
+  {
+    id: 2,
+    name: "mSOL",
+    dataKey: "mSOL",
+    fill: "url(#mSOL)",
+    stroke: "#b0d9c9",
+    checked: true,
+  },
+  {
+    id: 3,
+    name: "stSOL",
+    dataKey: "stSOL",
+    fill: "url(#stSOL)",
+    stroke: "#73d6d9",
+    checked: true,
+  },
+  {
+    id: 4,
+    name: "SAMO",
+    dataKey: "SAMO",
+    fill: "url(#SAMO)",
+    stroke: "#ccb7b7",
+    checked: true,
+  },
+  {
+    id: 5,
+    name: "UXD",
+    dataKey: "UXD",
+    fill: "url(#UXD)",
+    stroke: "#707070",
+    checked: true,
+  },
+];
+
+export const totalBorrowedChartList = [
+  {
+    id: 1,
+    name: "zSOL",
+    dataKey: "zSOL",
+    fill: "url(#zSOL)",
+    stroke: "#0c0",
+    checked: true,
+  },
+];
+
+export const totalDepositTokenChartList = [
+  {
+    id: 1,
+    name: "SOL",
+    dataKey: "SOL",
+    fill: "url(#SOL)",
+    stroke: "#00FFA3",
+    checked: true,
+  },
+  {
+    id: 2,
+    name: "mSOL",
+    dataKey: "mSOL",
+    fill: "url(#mSOL)",
+    stroke: "#b0d9c9",
+    checked: true,
+  },
+  {
+    id: 3,
+    name: "stSOL",
+    dataKey: "stSOL",
+    fill: "url(#stSOL)",
+    stroke: "#73d6d9",
+    checked: true,
+  },
+  {
+    id: 4,
+    name: "SAMO",
+    dataKey: "SAMO",
+    fill: "url(#SAMO)",
+    stroke: "#ccb7b7",
+    checked: true,
+  },
+  {
+    id: 5,
+    name: "UXD",
+    dataKey: "UXD",
+    fill: "url(#UXD)",
+    stroke: "#707070",
+    checked: true,
+  },
+];
+
+export const totalBorrowedTokenChartList = [
+  {
+    id: 1,
+    name: "zSOL",
+    dataKey: "zSOL",
+    fill: "url(#zSOL)",
+    stroke: "#0c0",
+    checked: true,
+  },
+];
