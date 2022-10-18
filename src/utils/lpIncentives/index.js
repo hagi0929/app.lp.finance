@@ -1,11 +1,11 @@
 import * as anchor from "@project-serum/anchor";
-import { getProgram, getConnection } from "utils/contract";
+import { getMint } from "constants/global";
 import {
-  config,
-  SEED_PDA,
-  zSOL_reward_history_pub,
-  LPFi_reward_history_pub,
-} from "constants/lpIncentives";
+  getProgram,
+  getConnection,
+  convert_from_wei_value_with_decimal,
+} from "utils/contract";
+import { SEED_PDA } from "constants/lpIncentives";
 
 const { PublicKey } = anchor.web3;
 
@@ -14,9 +14,21 @@ export const get_config_info = async (wallet) => {
   try {
     const program = getProgram(wallet, "lpIn_Idl");
 
+    const nlp_mint = getMint("nlp");
+
+    const [config, _bump] = await PublicKey.findProgramAddress(
+      [Buffer.from(SEED_PDA), Buffer.from(nlp_mint.toBuffer())],
+      program.programId
+    );
+
     const configData = await program.account.config.fetch(config);
 
-    const total_staked_amount = configData.totalStakedAmount.toString();
+    const get_total_staked_amount = configData.totalStakedAmount.toString();
+    const total_staked_amount = convert_from_wei_value_with_decimal(
+      get_total_staked_amount,
+      9
+    );
+
     return {
       total_staked_amount,
     };
@@ -57,7 +69,11 @@ export const get_staker_account_info = async (wallet) => {
         stakerAccountPDA[0]
       );
 
-      const staked_amount = stakerData.stakedAmount.toString();
+      const get_staked_amount = stakerData.stakedAmount.toString();
+      const staked_amount = convert_from_wei_value_with_decimal(
+        get_staked_amount,
+        9
+      );
       const zSOL_reward_amount = stakerData.zsolRewardAmount.toString();
       const LPFi_reward_amount = stakerData.lpfiRewardAmount.toString();
 
@@ -95,33 +111,5 @@ export const get_all_staker_account_info = async (wallet) => {
     const stakersData = await program.account.stakerAccount.all();
 
     console.table(stakersData);
-  } catch (error) {}
-};
-
-export const get_zsol_reward_history = async (wallet) => {
-  try {
-    const program = getProgram(wallet, "lpIn_Idl");
-
-    const zsolRewardHistoryData = await program.account.zsolRewardHistory.fetch(
-      zSOL_reward_history_pub
-    );
-
-    const total_count = zsolRewardHistoryData.totalCount.toString();
-
-    console.log(total_count);
-    console.table(zsolRewardHistoryData);
-  } catch (error) {}
-};
-
-export const nLp_staking_program = async (wallet) => {
-  try {
-    const program = getProgram(wallet, "lpIn_Idl");
-
-    const lpfiRewardHistoryData = await program.account.lpFiRewardHistory.fetch(
-      LPFi_reward_history_pub
-    );
-
-    console.log(lpfiRewardHistoryData);
-    console.table(lpfiRewardHistoryData);
   } catch (error) {}
 };

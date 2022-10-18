@@ -117,7 +117,8 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const handle_nlp_Info = async () => {
-    const { total_staked_amount } = get_config_info(wallet);
+    const { total_staked_amount } = await get_config_info(wallet);
+
     setNLPInfo({
       total_staked_amount,
     });

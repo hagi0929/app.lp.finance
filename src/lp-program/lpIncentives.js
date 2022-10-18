@@ -6,12 +6,7 @@ import {
   convert_to_wei_value_with_decimal,
 } from "utils/contract";
 import { getMint } from "constants/global";
-import {
-  config,
-  LPFi_reward_history_pub,
-  zSOL_reward_history_pub,
-  SEED_PDA,
-} from "constants/lpIncentives";
+import { SEED_PDA } from "constants/lpIncentives";
 import {
   TOKEN_PROGRAM_ID,
   ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -37,6 +32,11 @@ export const nlp_deposit = async (
     const user_wallet = wallet.publicKey;
 
     const nlp_mint = getMint("nlp");
+
+    const [config, _bump] = await PublicKey.findProgramAddress(
+      [Buffer.from(SEED_PDA), Buffer.from(nlp_mint.toBuffer())],
+      program.programId
+    );
 
     const stakerAccountPDA = await PublicKey.findProgramAddress(
       [Buffer.from(SEED_PDA), Buffer.from(user_wallet.toBuffer())],
@@ -68,13 +68,25 @@ export const nlp_deposit = async (
         .rpc();
     }
 
+    const stakerAccountData = await program.account.stakerAccount.fetch(
+      stakerAccountPDA[0]
+    );
+    const stakerNLP = stakerAccountData.nlpMint;
+
+    if (stakerNLP.equals(nlp_mint) === false) {
+      OpenContractSnackbar(
+        true,
+        "Info",
+        `You are using old nlp staking. Please withdraw old nlp and renew with new nlp staking.`
+      );
+      return;
+    }
+
     await program.methods
       .stakeNlp(convert_to_wei_value_with_decimal(amount, 9))
       .accounts({
         stakerAccount: stakerAccountPDA[0],
         config,
-        zsolRewardHistory: zSOL_reward_history_pub,
-        lpfiRewardHistory: LPFi_reward_history_pub,
         userAuthority: user_wallet,
         userNlpAta: userAta,
         poolNlpAta: poolAta,
@@ -111,6 +123,11 @@ export const nlp_withdraw = async (
 
     const nlp_mint = getMint("nlp");
 
+    const [config, _bump] = await PublicKey.findProgramAddress(
+      [Buffer.from(SEED_PDA), Buffer.from(nlp_mint.toBuffer())],
+      program.programId
+    );
+
     const stakerAccountPDA = await PublicKey.findProgramAddress(
       [Buffer.from(SEED_PDA), Buffer.from(user_wallet.toBuffer())],
       program.programId
@@ -139,8 +156,6 @@ export const nlp_withdraw = async (
         userAuthority: user_wallet,
         stakerAccount: stakerAccountPDA[0],
         config,
-        zsolRewardHistory: zSOL_reward_history_pub,
-        lpfiRewardHistory: LPFi_reward_history_pub,
         nlpMint: nlp_mint,
         userNlpAta: userAta,
         poolNlpAta: poolAta,

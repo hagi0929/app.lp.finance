@@ -11,12 +11,23 @@
         {
           "name": "owner",
           "isMut": true,
-          "isSigner": true
+          "isSigner": true,
+          "docs": [
+            "Token program authority"
+          ]
+        },
+        {
+          "name": "nlpMint",
+          "isMut": false,
+          "isSigner": false
         },
         {
           "name": "config",
           "isMut": true,
-          "isSigner": true
+          "isSigner": false,
+          "docs": [
+            "Config Accounts"
+          ]
         },
         {
           "name": "systemProgram",
@@ -35,63 +46,10 @@
           "type": "publicKey"
         },
         {
-          "name": "nlpMint",
-          "type": "publicKey"
-        },
-        {
           "name": "lpfiDailyRewardAmount",
           "type": "u64"
         }
       ]
-    },
-    {
-      "name": "createZsolRewardHistory",
-      "docs": [
-        "------ Create RewardHistory accounts",
-        "Create ZSOL Reward History account"
-      ],
-      "accounts": [
-        {
-          "name": "zsolRewardHistory",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "config",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "owner",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "createLpfiRewardHistory",
-      "docs": [
-        "Create LPFI Reward History account"
-      ],
-      "accounts": [
-        {
-          "name": "lpfiRewardHistory",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "config",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "owner",
-          "isMut": false,
-          "isSigner": true
-        }
-      ],
-      "args": []
     },
     {
       "name": "createStakerAccount",
@@ -183,22 +141,6 @@
           "isSigner": false
         },
         {
-          "name": "zsolRewardHistory",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "Only readable. Check history account owner."
-          ]
-        },
-        {
-          "name": "lpfiRewardHistory",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "Only readable. Check history account owner."
-          ]
-        },
-        {
           "name": "userAuthority",
           "isMut": true,
           "isSigner": true,
@@ -260,19 +202,6 @@
         {
           "name": "config",
           "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "zsolRewardHistory",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "Only readable"
-          ]
-        },
-        {
-          "name": "lpfiRewardHistory",
-          "isMut": false,
           "isSigner": false
         },
         {
@@ -357,19 +286,6 @@
         {
           "name": "config",
           "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "zsolRewardHistory",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "Only readable"
-          ]
-        },
-        {
-          "name": "lpfiRewardHistory",
-          "isMut": false,
           "isSigner": false
         },
         {
@@ -494,6 +410,11 @@
           "isSigner": false
         },
         {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
@@ -566,9 +487,9 @@
       ]
     },
     {
-      "name": "updateNlpPub",
+      "name": "pauseReward",
       "docs": [
-        "update_nlp_pub"
+        "Pause reward"
       ],
       "accounts": [
         {
@@ -582,12 +503,26 @@
           "isSigner": false
         }
       ],
-      "args": [
+      "args": []
+    },
+    {
+      "name": "pauseStaking",
+      "docs": [
+        "Pause staking"
+      ],
+      "accounts": [
         {
-          "name": "newNlpPub",
-          "type": "publicKey"
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
         }
-      ]
+      ],
+      "args": []
     },
     {
       "name": "updateLpfiDailyRewardAmount",
@@ -677,11 +612,6 @@
       ],
       "accounts": [
         {
-          "name": "zsolRewardHistory",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
           "name": "config",
           "isMut": true,
           "isSigner": false
@@ -702,11 +632,6 @@
     {
       "name": "addLpfiReward",
       "accounts": [
-        {
-          "name": "lpfiRewardHistory",
-          "isMut": true,
-          "isSigner": false
-        },
         {
           "name": "config",
           "isMut": true,
@@ -749,13 +674,6 @@
             "type": "publicKey"
           },
           {
-            "name": "nlpIndex",
-            "docs": [
-              "This is just index of token kinds"
-            ],
-            "type": "u8"
-          },
-          {
             "name": "lpfiDailyRewardAmount",
             "docs": [
               "Daily distribute amount"
@@ -793,16 +711,30 @@
             "type": "i64"
           },
           {
-            "name": "rewardStartTs",
+            "name": "lpfiRewardRate",
             "docs": [
-              "Distribution start timestamp"
+              "LPFI reward share percent"
+            ],
+            "type": "f64"
+          },
+          {
+            "name": "zsolRewardRate",
+            "docs": [
+              "zSOL reward share percent"
+            ],
+            "type": "f64"
+          },
+          {
+            "name": "zsolRewardLastTs",
+            "docs": [
+              "Distribution zsol reward timestamp"
             ],
             "type": "i64"
           },
           {
-            "name": "rewardLastTs",
+            "name": "lpfiRewardLastTs",
             "docs": [
-              "Distribution last timestamp"
+              "Distribution lpfi last timestamp"
             ],
             "type": "i64"
           },
@@ -819,29 +751,6 @@
               "check if program is paused or not"
             ],
             "type": "bool"
-          }
-        ]
-      }
-    },
-    {
-      "name": "LPFiRewardHistory",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "totalCount",
-            "type": "u8"
-          },
-          {
-            "name": "history",
-            "type": {
-              "array": [
-                {
-                  "defined": "LPFiReward"
-                },
-                2000
-              ]
-            }
           }
         ]
       }
@@ -883,6 +792,20 @@
             "type": "u64"
           },
           {
+            "name": "zsolRewardRate",
+            "docs": [
+              "Last reward percent (zSOL)"
+            ],
+            "type": "f64"
+          },
+          {
+            "name": "lpfiRewardRate",
+            "docs": [
+              "Last reward percent (zSOL)"
+            ],
+            "type": "f64"
+          },
+          {
             "name": "lastActionTs",
             "docs": [
               "staked timestamp (datetime) in seconds"
@@ -890,117 +813,11 @@
             "type": "i64"
           },
           {
-            "name": "nlpIndex",
-            "docs": [
-              "nLP token index"
-            ],
-            "type": "u8"
-          },
-          {
             "name": "nlpMint",
             "docs": [
               "Current depositing nlp token mint"
             ],
             "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "ZSOLRewardHistory",
-      "docs": [
-        "zSOL reward history"
-      ],
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "totalCount",
-            "type": "u8"
-          },
-          {
-            "name": "history",
-            "type": {
-              "array": [
-                {
-                  "defined": "ZSOLReward"
-                },
-                2000
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ],
-  "types": [
-    {
-      "name": "LPFiReward",
-      "docs": [
-        "LPFi reward history"
-      ],
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "totalDepositedNlp",
-            "docs": [
-              "Total staked amount"
-            ],
-            "type": "u64"
-          },
-          {
-            "name": "rewardAmount",
-            "docs": [
-              "Total LPFi reward amount"
-            ],
-            "type": "u64"
-          },
-          {
-            "name": "createdAt",
-            "docs": [
-              "timestamp that reward supplied"
-            ],
-            "type": "i64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "ZSOLReward",
-      "docs": [
-        "zSOL Reward"
-      ],
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "totalDepositedNlp",
-            "docs": [
-              "Total staked amount"
-            ],
-            "type": "u64"
-          },
-          {
-            "name": "rewardAmount",
-            "docs": [
-              "Total zsol reward amount"
-            ],
-            "type": "u64"
-          },
-          {
-            "name": "createdAt",
-            "docs": [
-              "timestamp that reward supplied"
-            ],
-            "type": "i64"
-          },
-          {
-            "name": "nlpIndex",
-            "docs": [
-              "nLP token index"
-            ],
-            "type": "u8"
           }
         ]
       }
@@ -1106,9 +923,29 @@
       "code": 6019,
       "name": "OldNLPWtihdrawRequired",
       "msg": "NLP is now new version, Please use withdraw old nlp option"
+    },
+    {
+      "code": 6020,
+      "name": "OverflowMaxHistorySize",
+      "msg": "Overflow Max History Size"
+    },
+    {
+      "code": 6021,
+      "name": "StakerNotExist",
+      "msg": "Anyone have not participated on staking"
+    },
+    {
+      "code": 6022,
+      "name": "RewardPaused",
+      "msg": "Reward paused"
+    },
+    {
+      "code": 6023,
+      "name": "StakingPaused",
+      "msg": "Staking paused"
     }
   ],
   "metadata": {
-    "address": "C8QWqRhJAdgYFZQvVPVPrffXV75eRDJ9XrDWA4YYGviR"
+    "address": "EUtcGYBakaqKpvKRon5xrBQVJe7MLVxS3xKkwoN3HKSj"
   }
 }
