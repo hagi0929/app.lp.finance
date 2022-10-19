@@ -8,6 +8,7 @@ import {
   convert_to_wei_value_with_decimal,
 } from "utils/contract";
 import {
+  SEED_PDA,
   SEED_TRV_PDA,
   SEED_ZSOL_MINT_AUTHORITY_PDA,
   zSOL_MINT,
@@ -66,6 +67,11 @@ export const burn_zSOL = async (
     const trvcCollateralAta = await getATAPublicKey(token_dest, PDA[0]);
     const feeAta = await getATAPublicKey(token_dest, getFeeAccount);
 
+    const [stability_fee, _bump] = await PublicKey.findProgramAddress(
+      [Buffer.from(SEED_PDA), Buffer.from("stability_fee")],
+      program.programId
+    );
+
     await program.methods
       .burnZsol(convert_to_wei_value_with_decimal(amount, zSOL_DECIMAL))
       .accounts({
@@ -73,6 +79,7 @@ export const burn_zSOL = async (
         trvcAccount: PDA[0],
         zsolMint: zSOL_MINT,
         userZsolAta,
+        stabilityFee: stability_fee,
         ctokenInfoAccounts: cTokenInfoAccounts,
         collateralToken: token_dest, // variables
         userCollateralAta: userCollateralAta,
@@ -149,6 +156,11 @@ export const mint_zSOL = async (
     const userZsolAta = await getATAPublicKey(zSOL_MINT, user_wallet);
     const trvcCollateralAta = await getATAPublicKey(token_src, PDA[0]);
 
+    const [stability_fee, _bump] = await PublicKey.findProgramAddress(
+      [Buffer.from(SEED_PDA), Buffer.from("stability_fee")],
+      program.programId
+    );
+
     await program.methods
       .mintZsol(convert_to_wei_value(token_src, amount))
       .accounts({
@@ -158,6 +170,7 @@ export const mint_zSOL = async (
         collateralToken: token_src,
         userCollateralAta: userCollateralAta,
         zsolMint: zSOL_MINT,
+        stabilityFee: stability_fee,
         userZsolAta,
         trvcCollateralAta,
         userAuthority: user_wallet,

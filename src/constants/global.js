@@ -13,13 +13,18 @@ export const TRVC_SWAP_FEE = 0.9995;
 export const zSOL_DECIMAL = 9;
 export const SOL_DECIMAL = 9;
 
-export const SEED_PDA = "lpfinance";
+export const SEED_PDA = "lpfinancev2";
 export const SEED_TOKEN = "lpfinance-token";
 export const SEED_SOL = "lpfinance-sol";
 export const SEED_ZSOL_MINT_AUTHORITY_PDA = "zsol_mint";
 export const SEED_TRV_PDA = "typeless_repayment_vault2";
 export const SEED_LIQUIDATOR = "lpfinance-liquidator";
 export const SEED_LPFi_BUYBACK = "lpfinance-buyback";
+export const NLP_SEED_PDA = "nlp-staking";
+
+export const NLP_STAKING_PROGRAM = new PublicKey(
+  "EUtcGYBakaqKpvKRon5xrBQVJe7MLVxS3xKkwoN3HKSj"
+);
 
 export const ADMIN = new PublicKey(
   "7KDQhb9KX8y9rkrtyAw4arkRVctGhaRhaUMCadfg4bEk"
@@ -30,11 +35,11 @@ export const TRVC_ADMIN = new PublicKey(
 );
 
 export const config = new PublicKey(
-  "5gaw1XAoU6Ynu76GPPQ6WN1YRxWrwh13yxxgeVqMbGuC"
+  "3JCXdf4Q869N3ntazP7w6ZKg3F37F1QzhKgZQkNmgNkv"
 );
 
 export const cTokenInfoAccounts = new PublicKey(
-  "6mMbMUE881zKscsvKAACuPkf1Ezwy3yLwHCAxgbBNrq4"
+  "HfojroGNETbjwWxVMu3arqBdfEznq9HZYUjRYVEiumHy"
 );
 
 export const zSOL_MINT_AUTHORITY = new PublicKey(
@@ -50,6 +55,8 @@ export const MintAddress = {
   UXD: "EN2CV9nCnH9nBF9GyGYG9B3haNriNBkrPo8jF4c6mzUi",
   SAMO: "5rUhzmWf8pyhJvjYfbQ8xPJJHDJgkeZBUDWN7rd48Hux",
   zSOL: "3vwVSHkx6Wh212mvRoyzK4g969QAhmLeBmyiHaEuFkyg",
+  nLP_MINT: "B8gLyBqHKGW1iHqiuq4X64dF4Fk7eFw3auB3aWNq7wN1",
+  LPFi: "2vAxp4x5ZFiz9xXYpWScwtjcamWkfPpT6MzbbyNzUPp5",
 };
 
 export const SOLMint = new PublicKey(
@@ -65,7 +72,7 @@ export const stSOLMint = new PublicKey(
 );
 
 export const UXDMint = new PublicKey(
-  "EN2CV9nCnH9nBF9GyGYG9B3haNriNBkrPo8jF4c6mzUi"
+  "5AZAa4gj2Z8UKgUKRbQwj1CRk8f8tUyctXvBnbnvEiTk"
 );
 
 export const SAMOMint = new PublicKey(

@@ -101,6 +101,11 @@ export const deposit_cbs = async (
         .rpc();
     }
 
+    const [stability_fee, _bump] = await PublicKey.findProgramAddress(
+      [Buffer.from(SEED_PDA), Buffer.from("stability_fee")],
+      program.programId
+    );
+
     var totalValue = amount * price;
 
     if (symbol !== "SOL") {
@@ -114,6 +119,7 @@ export const deposit_cbs = async (
           userAta: userAta,
           cbsAta,
           feeAta,
+          stabilityFee: stability_fee,
           ctokenInfoAccounts: cTokenInfoAccounts,
           userAuthority: user_wallet,
           systemProgram: SystemProgram.programId,
@@ -146,6 +152,7 @@ export const deposit_cbs = async (
           ctokenInfoAccounts: cTokenInfoAccounts,
           switchboardSol: switchboardAccount,
           config,
+          stabilityFee: stability_fee,
           userAccount: userAccountPDA[0],
           systemProgram: SystemProgram.programId,
           tokenProgram: TOKEN_PROGRAM_ID,
@@ -209,6 +216,11 @@ export const borrow_cbs = async (
 
     const userZsolAta = await getATAPublicKey(tokenMint, user_wallet);
 
+    const [stability_fee, _bump] = await PublicKey.findProgramAddress(
+      [Buffer.from(SEED_PDA), Buffer.from("stability_fee")],
+      program.programId
+    );
+
     await program.methods
       .borrow(convert_to_wei_value_with_decimal(amount, zSOL_DECIMAL), is_max)
       .accounts({
@@ -216,6 +228,7 @@ export const borrow_cbs = async (
         userAccount: userAccountPDA[0],
         zsolMintAuthorityPda: zsolMintAuthorityPda[0],
         config,
+        stabilityFee: stability_fee,
         zsolMint: tokenMint,
         userZsolAta,
         switchboardSol: switchboardSolAccount,
@@ -293,6 +306,11 @@ export const withdraw_cbs = async (
       );
     }
 
+    const [stability_fee, _bump] = await PublicKey.findProgramAddress(
+      [Buffer.from(SEED_PDA), Buffer.from("stability_fee")],
+      program.programId
+    );
+
     let switchboardDest;
     let userCollateralAta;
     let cbsCollateralAta;
@@ -314,6 +332,7 @@ export const withdraw_cbs = async (
           tokenMint: tokenMint,
           userCollateralAta,
           cbsCollateralAta,
+          stabilityFee: stability_fee,
           switchboardSol: switchboardSolAccount,
           switchboardMsol: switchboardMsolAccount,
           switchboardStsol: switchboardStsolAccount,
@@ -348,6 +367,7 @@ export const withdraw_cbs = async (
           userAccount: userAccountPDA[0],
           solAccount: PDA[0],
           config,
+          stabilityFee: stability_fee,
           switchboardSol: switchboardSolAccount,
           switchboardMsol: switchboardMsolAccount,
           switchboardStsol: switchboardStsolAccount,
@@ -408,6 +428,11 @@ export const repay_cbs = async (
       program.programId
     );
 
+    const [stability_fee, _bump] = await PublicKey.findProgramAddress(
+      [Buffer.from(SEED_PDA), Buffer.from("stability_fee")],
+      program.programId
+    );
+
     let switchboardDest;
     let trvcCollateralAta;
 
@@ -425,6 +450,7 @@ export const repay_cbs = async (
           userAuthority: user_wallet,
           userAccount: userAccountPDA[0],
           config,
+          stabilityFee: stability_fee,
           trvcAccount: PDA[0],
           ctokenInfoAccounts: cTokenInfoAccounts,
           collateralToken: tokenMint,
@@ -460,6 +486,7 @@ export const repay_cbs = async (
           config,
           trvcAccount: PDA[0],
           zsolMint: tokenMint,
+          stabilityFee: stability_fee,
           userZsolAta: userCollateralAta,
           systemProgram: SystemProgram.programId,
           tokenProgram: TOKEN_PROGRAM_ID,

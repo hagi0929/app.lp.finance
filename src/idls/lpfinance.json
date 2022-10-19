@@ -37,6 +37,175 @@
       ]
     },
     {
+      "name": "createStabilityFee",
+      "docs": [
+        "Create stability_fee account"
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "stabilityFee",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "applyStabilityFee",
+      "docs": [
+        "apply apply stability fee"
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "config account"
+          ]
+        },
+        {
+          "name": "zsolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "stabilityFee",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "zsolMintAuthorityPda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nlpPoolAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nlpConfig",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "nlpStakingProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "updateDailyStabilityFee",
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "stabilityFee",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "dailyMultiplier",
+          "type": "f64"
+        }
+      ]
+    },
+    {
+      "name": "updateStabilityAdmin",
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "stabilityFee",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newOwner",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updateZsolNlpAta",
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "stabilityFee",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newNlpAta",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
       "name": "updateFeeAccount",
       "docs": [
         "Update fee_account address"
@@ -438,6 +607,11 @@
           "isSigner": false
         },
         {
+          "name": "stabilityFee",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "ctokenInfoAccounts",
           "isMut": false,
           "isSigner": false
@@ -490,6 +664,11 @@
         },
         {
           "name": "switchboardSol",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "stabilityFee",
           "isMut": false,
           "isSigner": false
         },
@@ -584,6 +763,11 @@
         },
         {
           "name": "switchboardSamo",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "stabilityFee",
           "isMut": false,
           "isSigner": false
         },
@@ -696,6 +880,11 @@
           "isSigner": false
         },
         {
+          "name": "stabilityFee",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "ctokenInfoAccounts",
           "isMut": false,
           "isSigner": false
@@ -789,6 +978,11 @@
           "isSigner": false
         },
         {
+          "name": "stabilityFee",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
@@ -849,6 +1043,11 @@
         {
           "name": "userZsolAta",
           "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "stabilityFee",
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -931,6 +1130,11 @@
         },
         {
           "name": "switchboardDest",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "stabilityFee",
           "isMut": false,
           "isSigner": false
         },
@@ -1392,6 +1596,11 @@
           "isSigner": false
         },
         {
+          "name": "stabilityFee",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
@@ -1477,6 +1686,11 @@
         },
         {
           "name": "switchboardDest",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "stabilityFee",
           "isMut": false,
           "isSigner": false
         },
@@ -1660,6 +1874,11 @@
         },
         {
           "name": "userAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "config",
           "isMut": true,
           "isSigner": false
         }
@@ -1993,6 +2212,38 @@
       }
     },
     {
+      "name": "StabilityFee",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "publicKey"
+          },
+          {
+            "name": "nlpZsolAta",
+            "type": "publicKey"
+          },
+          {
+            "name": "frequency",
+            "type": "u64"
+          },
+          {
+            "name": "totalMultiplier",
+            "type": "f64"
+          },
+          {
+            "name": "dailyMultiplier",
+            "type": "f64"
+          },
+          {
+            "name": "lastActionTs",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
       "name": "TypelessRepaymentVault",
       "type": {
         "kind": "struct",
@@ -2020,6 +2271,10 @@
           {
             "name": "adminPub",
             "type": "publicKey"
+          },
+          {
+            "name": "stabilityFeeRate",
+            "type": "f64"
           }
         ]
       }
@@ -2049,6 +2304,10 @@
           {
             "name": "borrowedZsolAmount",
             "type": "u64"
+          },
+          {
+            "name": "stabilityFeeRate",
+            "type": "f64"
           }
         ]
       }
@@ -2357,9 +2616,19 @@
       "code": 6044,
       "name": "InvalidOracleConfig",
       "msg": "Input oracle config is invalid"
+    },
+    {
+      "code": 6045,
+      "name": "InvalidTxSigner",
+      "msg": "Invalid Transaction Signer"
+    },
+    {
+      "code": 6046,
+      "name": "TooOftenFeeApply",
+      "msg": "Too often to apply stability fee"
     }
   ],
   "metadata": {
-    "address": "5xQqoavVdqMKgHAkagpS8Yc2NFNzQ3N6njzQFAa2UsQH"
+    "address": "GidAzkhnJBK4pcuhiDpHzxNCJDNUxwsqnPbihKgaUJrA"
   }
 }
