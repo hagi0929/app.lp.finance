@@ -12,19 +12,16 @@ import { useGlobal } from "contexts/GlobalContext";
 
 const Borrow = () => {
   const { PriceList, PriceHandler, BalanceList, BalanceHandler } = useCrypto();
-  const { OpenContractSnackbar } = useContractSnackbar();
+  const { OpenContractSnackbar, ContractSnackbarType } = useContractSnackbar();
   const {
     cbsInfo,
     cbsUserInfo,
     cbsChartData,
     handleCbsInfo,
     handleCbsUserInfo,
-    handleTreasuryInfo,
     CbsDepositData,
     CbsBorrowData,
   } = useGlobal();
-
-  const { ContractSnackbarType } = useContractSnackbar();
 
   const [notifi, setNotifi] = useState(false);
   const wallet = useWallet();
@@ -34,7 +31,6 @@ const Borrow = () => {
     if (ContractSnackbarType === "Success") {
       handleCbsInfo();
       handleCbsUserInfo();
-      handleTreasuryInfo();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ContractSnackbarType]);

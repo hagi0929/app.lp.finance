@@ -20,9 +20,9 @@ import { useGlobal } from "contexts/GlobalContext";
 const PSM = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
-  const { PsmChart } = useGlobal();
+  const { PsmChart, handleTreasuryInfo } = useGlobal();
   const { PriceList, BalanceList, BalanceHandler, PriceHandler } = useCrypto();
-  const { OpenContractSnackbar } = useContractSnackbar();
+  const { OpenContractSnackbar, ContractSnackbarType } = useContractSnackbar();
   const [isPayModel, setIsPayModel] = useState(false);
   const [message, setMessage] = useState("Get mSOL");
   const [amount, setAmount] = useState("");
@@ -258,6 +258,13 @@ const PSM = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount]);
+
+  useEffect(() => {
+    if (ContractSnackbarType === "Success") {
+      handleTreasuryInfo();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ContractSnackbarType]);
 
   return (
     <>
