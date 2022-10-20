@@ -95,7 +95,7 @@ export const deposit_cbs = async (
         .accounts({
           userAccount: userAccountPDA[0],
           userAuthority: user_wallet,
-          systemProgram: anchor.web3.SystemProgram.programId,
+          systemProgram: SystemProgram.programId,
           rent: SYSVAR_RENT_PUBKEY,
         })
         .rpc();
@@ -261,6 +261,7 @@ export const borrow_cbs = async (
       value: totalValue,
     });
   } catch (error) {
+    console.log(error);
     OpenContractSnackbar(true, "Error", `Borrow failed. Please try again.`);
   }
 };

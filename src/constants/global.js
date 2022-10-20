@@ -54,7 +54,7 @@ export const MintAddress = {
   stSOL: "FjNXKDtDWzo9usb6YdWNUxRwKyGWrF2aTLWydYzjtSU4",
   UXD: "EN2CV9nCnH9nBF9GyGYG9B3haNriNBkrPo8jF4c6mzUi",
   SAMO: "5rUhzmWf8pyhJvjYfbQ8xPJJHDJgkeZBUDWN7rd48Hux",
-  zSOL: "3vwVSHkx6Wh212mvRoyzK4g969QAhmLeBmyiHaEuFkyg",
+  zSOL: "DQcNmbmCWG5AGwFTKosWJ9N2E7TbWvtLgLCW8XR3GzpT",
   nLP_MINT: "B8gLyBqHKGW1iHqiuq4X64dF4Fk7eFw3auB3aWNq7wN1",
   LPFi: "2vAxp4x5ZFiz9xXYpWScwtjcamWkfPpT6MzbbyNzUPp5",
 };
@@ -80,7 +80,7 @@ export const SAMOMint = new PublicKey(
 );
 
 export const zSOL_MINT = new PublicKey(
-  "3vwVSHkx6Wh212mvRoyzK4g969QAhmLeBmyiHaEuFkyg"
+  "DQcNmbmCWG5AGwFTKosWJ9N2E7TbWvtLgLCW8XR3GzpT"
 );
 
 export const LPFi_MINT = new PublicKey(
@@ -136,7 +136,7 @@ export const switchboardSamoAccount = new PublicKey(
   "529QhfiesSavTZfMhvKKm5nwrHfdwfjzqC13CE4CfqRE"
 );
 export const switchboardUxdAccount = new PublicKey(
-  "BV9mGAy5MJLYWJT5HF74izYKjF9CmL4BqkswfTu9gW2w"
+  "31pmbiYPvVa9ywUwo6UdwSwugTgw1fgCZkJpNz6PSuMA"
 ); // Right
 
 // Marinade finance config
