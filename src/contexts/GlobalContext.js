@@ -6,6 +6,10 @@ import { fetch_treasury_info } from "utils/treasury/get_treasury_info";
 import api from "api";
 import axios from "axios";
 import { get_staker_account_info, get_config_info } from "utils/lpIncentives";
+import {
+  get_lpfi_config_info,
+  get_lpfi_staker_account_info,
+} from "utils/lpfi-staking";
 
 export const GlobalContext = createContext();
 
@@ -51,6 +55,14 @@ export const GlobalProvider = ({ children }) => {
   const [nLPUserInfo, setNLPUserInfo] = useState({
     staked_amount: 0,
     RewardList: [],
+  });
+
+  const [lpfi_Info, set_lpfi_Info] = useState({
+    total_staked_amount: 0,
+  });
+
+  const [lpfi_user_Info, set_lpfi_user_Info] = useState({
+    staked_amount: 0,
   });
 
   const handleCbsInfo = async () => {
@@ -124,6 +136,22 @@ export const GlobalProvider = ({ children }) => {
     });
   };
 
+  const handle_lpfi_info = async () => {
+    const { total_staked_amount } = await get_lpfi_config_info(wallet);
+
+    set_lpfi_Info({
+      total_staked_amount,
+    });
+  };
+
+  const handle_lpfi_user_info = async () => {
+    const { staked_amount } = await get_lpfi_staker_account_info(wallet);
+
+    set_lpfi_user_Info({
+      staked_amount,
+    });
+  };
+
   const handleCbsChart = async () => {
     const response = await axios.get(api.getCbsOverviewData);
     if (response.status === 200) {
@@ -164,6 +192,7 @@ export const GlobalProvider = ({ children }) => {
       handleCbsInfo();
       handleTreasuryInfo();
       handle_nlp_Info();
+      handle_lpfi_info();
     }
 
     handleTreasuryChart();
@@ -201,6 +230,9 @@ export const GlobalProvider = ({ children }) => {
       setNLPInfo({
         total_staked_amount: 0,
       });
+      set_lpfi_Info({
+        total_staked_amount: 0,
+      });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -209,6 +241,7 @@ export const GlobalProvider = ({ children }) => {
     if (publicKey) {
       handleCbsUserInfo();
       handle_nlp_user_info();
+      handle_lpfi_user_info();
     }
 
     return () => {
@@ -226,7 +259,12 @@ export const GlobalProvider = ({ children }) => {
         staked_amount: 0,
         RewardList: [],
       });
+
+      set_lpfi_user_Info({
+        staked_amount: 0,
+      });
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publicKey]);
 
@@ -249,6 +287,10 @@ export const GlobalProvider = ({ children }) => {
         nLPInfo,
         CbsDepositData,
         CbsBorrowData,
+        lpfi_Info,
+        lpfi_user_Info,
+        handle_lpfi_info,
+        handle_lpfi_user_info,
       }}
     >
       {children}

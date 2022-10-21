@@ -1,23 +1,36 @@
-import React, { memo } from "react";
+import React, { useState, memo, useMemo } from "react";
 import Card from "Layout/Card";
 import Button from "Layout/Button";
+import { numFormatter } from "helper";
+import { claim_reward } from "lp-program/lpfiStaking";
 
-var AccountTable = [
-  {
-    id: 1,
-    title: "Staked",
-    price: "0",
-    css: "3px solid rgba(255, 255, 255, 0.2)",
-  },
-  {
-    id: 2,
-    title: "days",
-    price: "0",
-    css: "3px solid rgba(255, 255, 255, 0.2)",
-  },
-];
+const Account = ({
+  publicKey,
+  wallet,
+  lpfi_user_Info,
+  OpenContractSnackbar,
+}) => {
+  const [List, setList] = useState([]);
 
-const Account = () => {
+  useMemo(() => {
+    var AccountTable = [
+      {
+        id: 1,
+        title: "Staked",
+        price: `$${numFormatter(lpfi_user_Info.staked_amount)}`,
+        css: "3px solid rgba(255, 255, 255, 0.2)",
+      },
+      {
+        id: 2,
+        title: "days",
+        price: "0",
+        css: "3px solid rgba(255, 255, 255, 0.2)",
+      },
+    ];
+
+    setList(AccountTable);
+  }, [lpfi_user_Info]);
+
   return (
     <>
       <div className="row d-flex justify-content-center Staking_Account mt-lg-0 mt-5">
@@ -49,8 +62,8 @@ const Account = () => {
             >
               <table width="100%" className="mt-3">
                 <tbody>
-                  {AccountTable &&
-                    AccountTable.map((val, ind) => {
+                  {List &&
+                    List.map((val, ind) => {
                       return (
                         <tr
                           key={ind}
@@ -72,8 +85,19 @@ const Account = () => {
                 </tbody>
               </table>
               <div className="mt-3">
-                <Button active={3} p="0.4rem 0rem" br="8px">
-                  Redeem Fees
+                <Button
+                  active={3}
+                  p="0.4rem 0rem"
+                  br="8px"
+                  className={publicKey ? null : "not-allowed"}
+                  disabled={publicKey ? false : true}
+                  onClick={() => {
+                    if (publicKey) {
+                      claim_reward(wallet, OpenContractSnackbar);
+                    }
+                  }}
+                >
+                  Claim reward
                 </Button>
               </div>
             </Card>

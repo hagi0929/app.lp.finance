@@ -1,15 +1,79 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useMemo } from "react";
 import Input from "Layout/Form/Input";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import WalletButton from "components/globalComponents/WalletButton";
+import { blockInvalidChar } from "helper";
+import { stake_lpfi } from "lp-program/lpfiStaking";
 
-const Stake = ({ publicKey }) => {
-  const [selected] = useState({
+const Stake = ({
+  PriceHandler,
+  BalanceHandler,
+  publicKey,
+  wallet,
+  OpenContractSnackbar,
+}) => {
+  const [message, setMessage] = useState("Stake");
+  const [amount, setAmount] = useState("");
+  const [Required, setRequired] = useState(false);
+
+  const [selected, setSelected] = useState({
     logoURI: "/favicon.ico",
     symbol: "LPFi",
     balance: 0,
+    price: 0,
   });
+
+  useMemo(() => {
+    setSelected({
+      ...selected,
+      balance: BalanceHandler[selected.symbol],
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [BalanceHandler]);
+
+  useMemo(() => {
+    setSelected({
+      ...selected,
+      price: PriceHandler[selected.symbol],
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [PriceHandler]);
+
+  const handleAmount = (e) => {
+    setAmount(e.target.value);
+
+    if (e.target.value) {
+      if (e.target.value <= selected.balance) {
+        setMessage("Stake");
+        setRequired(true);
+      } else {
+        setMessage("Insufficient Balance");
+        setRequired(false);
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
+
+  const handleProgram = async () => {
+    if (amount > 0) {
+      if (Required && publicKey) {
+        await stake_lpfi(
+          wallet,
+          amount,
+          setMessage,
+          setRequired,
+          setAmount,
+          OpenContractSnackbar
+        );
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
 
   return (
     <>
@@ -23,9 +87,12 @@ const Stake = ({ publicKey }) => {
                     name="amount"
                     id="amount"
                     type="number"
+                    value={amount}
+                    onChange={(e) => handleAmount(e)}
+                    onKeyDown={blockInvalidChar}
                     className={publicKey ? null : "not-allowed"}
-                    placeholder="0.0"
                     disabled={publicKey ? false : true}
+                    placeholder="0.0"
                     active={2}
                     p="0.7rem 0rem 0.7rem 3.5rem"
                     br="10px"
@@ -37,7 +104,14 @@ const Stake = ({ publicKey }) => {
                       p="0.3rem 0.6rem"
                       br="4px"
                       size="0.8rem"
-                      className="not-allowed"
+                      disabled={!publicKey ? true : false}
+                      className={`
+                        ${!publicKey ? "not-allowed" : null}`}
+                      onClick={() => {
+                        setAmount(selected.balance);
+                        setRequired(true);
+                        setMessage("Stake");
+                      }}
                     >
                       Max
                     </Button>
@@ -74,9 +148,11 @@ const Stake = ({ publicKey }) => {
                     active={1}
                     p="0.6rem 2rem"
                     br="10px"
-                    className="not-allowed"
+                    disabled={!publicKey ? true : false}
+                    className={!publicKey ? "not-allowed" : null}
+                    onClick={() => handleProgram()}
                   >
-                    Stake
+                    {message}
                   </Button>
                 </div>
               )}

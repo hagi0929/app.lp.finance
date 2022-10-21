@@ -1,7 +1,8 @@
 import React, { memo } from "react";
 import Card from "Layout/Card";
+import { numFormatter } from "helper";
 
-const Overview = () => {
+const Overview = ({ lpfi_Info }) => {
   return (
     <>
       <div className="row py-4  d-flex justify-content-center staking_overview">
@@ -64,7 +65,9 @@ const Overview = () => {
                       <tbody>
                         <tr>
                           <td>Total Staked</td>
-                          <td className="list_section_right">: 0 LPFi (≈$0)</td>
+                          <td className="list_section_right">
+                            : ${numFormatter(lpfi_Info.total_staked_amount)} LPFi (≈$0)
+                          </td>
                         </tr>
                         <tr>
                           <td>Total Fees</td>

@@ -1,0 +1,1001 @@
+{
+    "version": "0.1.0",
+    "name": "lpfi_staking",
+    "instructions": [
+      {
+        "name": "createConfig",
+        "docs": [
+          "Create program config and set admin & daily lpfi reward amount rate."
+        ],
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": true,
+            "isSigner": true,
+            "docs": [
+              "Token program authority"
+            ]
+          },
+          {
+            "name": "config",
+            "isMut": true,
+            "isSigner": true,
+            "docs": [
+              "Config Accounts"
+            ]
+          },
+          {
+            "name": "systemProgram",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "rent",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "lpfiDailyRewardAmount",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "createPool",
+        "docs": [
+          "Create ATA for pool"
+        ],
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": true,
+            "isSigner": true
+          },
+          {
+            "name": "config",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "tokenMint",
+            "isMut": false,
+            "isSigner": false,
+            "docs": [
+              "token_mint"
+            ]
+          },
+          {
+            "name": "poolAta",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "User nLP ATA"
+            ]
+          },
+          {
+            "name": "poolAuthority",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "systemProgram",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "tokenProgram",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "associatedTokenProgram",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "rent",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": []
+      },
+      {
+        "name": "createStakerAccount",
+        "docs": [
+          "create staker account"
+        ],
+        "accounts": [
+          {
+            "name": "userAuthority",
+            "isMut": true,
+            "isSigner": true,
+            "docs": [
+              "Token program authority"
+            ]
+          },
+          {
+            "name": "stakerAccount",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "StakerAccount Account"
+            ]
+          },
+          {
+            "name": "systemProgram",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "rent",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": []
+      },
+      {
+        "name": "deleteStakerAccount",
+        "docs": [
+          "Close staker account"
+        ],
+        "accounts": [
+          {
+            "name": "userAuthority",
+            "isMut": true,
+            "isSigner": true,
+            "docs": [
+              "Token program authority"
+            ]
+          },
+          {
+            "name": "stakerAccount",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "StakerAccount Account"
+            ]
+          }
+        ],
+        "args": []
+      },
+      {
+        "name": "stake",
+        "docs": [
+          "stake LPFI"
+        ],
+        "accounts": [
+          {
+            "name": "userAuthority",
+            "isMut": true,
+            "isSigner": true,
+            "docs": [
+              "staker would be Signer"
+            ]
+          },
+          {
+            "name": "config",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "config"
+            ]
+          },
+          {
+            "name": "stakerAccount",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "Staker account for each user/wallet"
+            ]
+          },
+          {
+            "name": "lpfiMint",
+            "isMut": false,
+            "isSigner": false,
+            "docs": [
+              "LPFI token mint"
+            ]
+          },
+          {
+            "name": "userLpfiAta",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "User LPFi ATA"
+            ]
+          },
+          {
+            "name": "poolLpfiAta",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "Pool LPFi ATA"
+            ]
+          },
+          {
+            "name": "rewardMint",
+            "isMut": false,
+            "isSigner": false,
+            "docs": [
+              "Extra reward token"
+            ]
+          },
+          {
+            "name": "poolRewardAta",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "Pool Extra reward token ATA"
+            ]
+          },
+          {
+            "name": "reward",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "Reward Accounts"
+            ]
+          },
+          {
+            "name": "poolAuthority",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "tokenProgram",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "stakeAmount",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "unstake",
+        "docs": [
+          "unstake LPFI"
+        ],
+        "accounts": [
+          {
+            "name": "userAuthority",
+            "isMut": true,
+            "isSigner": true,
+            "docs": [
+              "staker would be Signer"
+            ]
+          },
+          {
+            "name": "stakerAccount",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "Staker account for each user/wallet"
+            ]
+          },
+          {
+            "name": "lpfiMint",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "LPFI token mint"
+            ]
+          },
+          {
+            "name": "config",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "config"
+            ]
+          },
+          {
+            "name": "userLpfiAta",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "User LPFi ATA"
+            ]
+          },
+          {
+            "name": "poolLpfiAta",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "Pool LPFi ATA"
+            ]
+          },
+          {
+            "name": "rewardMint",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "Extra reward token"
+            ]
+          },
+          {
+            "name": "reward",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "Reward Accounts"
+            ]
+          },
+          {
+            "name": "poolAuthority",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "systemProgram",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "tokenProgram",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "associatedTokenProgram",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "rent",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "unstakeAmount",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "claimReward",
+        "docs": [
+          "Claim reward",
+          "This is for newly created another Reward tokens."
+        ],
+        "accounts": [
+          {
+            "name": "userAuthority",
+            "isMut": true,
+            "isSigner": true,
+            "docs": [
+              "staker would be Signer"
+            ]
+          },
+          {
+            "name": "stakerAccount",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "Staker account for each user/wallet"
+            ]
+          },
+          {
+            "name": "rewardMint",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "LPFI token mint"
+            ]
+          },
+          {
+            "name": "config",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "config"
+            ]
+          },
+          {
+            "name": "userRewardAta",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "User Reward ATA"
+            ]
+          },
+          {
+            "name": "poolRewardAta",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "Pool Reward ATA"
+            ]
+          },
+          {
+            "name": "poolAuthority",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "reward",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "Reward Accounts"
+            ]
+          },
+          {
+            "name": "systemProgram",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "tokenProgram",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "associatedTokenProgram",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "rent",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": []
+      },
+      {
+        "name": "updateOwner",
+        "docs": [
+          "Update owner address"
+        ],
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": false,
+            "isSigner": true
+          },
+          {
+            "name": "config",
+            "isMut": true,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "newOwner",
+            "type": "publicKey"
+          }
+        ]
+      },
+      {
+        "name": "updateAdmin",
+        "docs": [
+          "update_admin"
+        ],
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": false,
+            "isSigner": true
+          },
+          {
+            "name": "config",
+            "isMut": true,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "newAdmin",
+            "type": "publicKey"
+          }
+        ]
+      },
+      {
+        "name": "updateLpfiDailyRewardAmount",
+        "docs": [
+          "update lpfi daily reward amount"
+        ],
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": false,
+            "isSigner": true
+          },
+          {
+            "name": "config",
+            "isMut": true,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "lpfiDailyRewardAmount",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "setRewardPausable",
+        "docs": [
+          "Pause reward"
+        ],
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": false,
+            "isSigner": true
+          },
+          {
+            "name": "config",
+            "isMut": true,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "isPause",
+            "type": "bool"
+          }
+        ]
+      },
+      {
+        "name": "pauseStaking",
+        "docs": [
+          "Pause staking"
+        ],
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": false,
+            "isSigner": true
+          },
+          {
+            "name": "config",
+            "isMut": true,
+            "isSigner": false
+          }
+        ],
+        "args": []
+      },
+      {
+        "name": "createNewReward",
+        "docs": [
+          "Create new reward account and set admin & daily reward amount rate."
+        ],
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": true,
+            "isSigner": true,
+            "docs": [
+              "Token program authority"
+            ]
+          },
+          {
+            "name": "rewardMint",
+            "isMut": false,
+            "isSigner": false,
+            "docs": [
+              "Reward Token Mint"
+            ]
+          },
+          {
+            "name": "reward",
+            "isMut": true,
+            "isSigner": false,
+            "docs": [
+              "Reward Accounts"
+            ]
+          },
+          {
+            "name": "systemProgram",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "rent",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "dailyRewardAmount",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "updateRewardAdmin",
+        "docs": [
+          "update_admin"
+        ],
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": false,
+            "isSigner": true
+          },
+          {
+            "name": "reward",
+            "isMut": true,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "newAdmin",
+            "type": "publicKey"
+          }
+        ]
+      },
+      {
+        "name": "updateDailyRewardAmount",
+        "docs": [
+          "Update daily reward amount for newly created reward account"
+        ],
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": false,
+            "isSigner": true
+          },
+          {
+            "name": "reward",
+            "isMut": true,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "newDailyRewardAmount",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "setThirdRewardPausable",
+        "docs": [
+          "Pause reward"
+        ],
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": false,
+            "isSigner": true
+          },
+          {
+            "name": "reward",
+            "isMut": true,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "isPause",
+            "type": "bool"
+          }
+        ]
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Config",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "owner",
+              "docs": [
+                "Program deployer/owner"
+              ],
+              "type": "publicKey"
+            },
+            {
+              "name": "admin",
+              "docs": [
+                "Backend admin to distribute rewards"
+              ],
+              "type": "publicKey"
+            },
+            {
+              "name": "totalStakedAmount",
+              "docs": [
+                "Total LPFI staked amount"
+              ],
+              "type": "u64"
+            },
+            {
+              "name": "totalRewardedAmount",
+              "docs": [
+                "Total lpfi rewarded amount"
+              ],
+              "type": "u64"
+            },
+            {
+              "name": "dailyRewardAmount",
+              "docs": [
+                "Daily distribute amount"
+              ],
+              "type": "u64"
+            },
+            {
+              "name": "rewardRate",
+              "docs": [
+                "LPFI reward share percent"
+              ],
+              "type": "f64"
+            },
+            {
+              "name": "lastRewardedTs",
+              "docs": [
+                "Last lpfi rewarded timestamp"
+              ],
+              "type": "i64"
+            },
+            {
+              "name": "frequency",
+              "docs": [
+                "Frequency: 24 hours (12pm EST)"
+              ],
+              "type": "i64"
+            },
+            {
+              "name": "isRewardPaused",
+              "docs": [
+                "check if reward is paused or not"
+              ],
+              "type": "bool"
+            },
+            {
+              "name": "isPaused",
+              "docs": [
+                "check if program is paused or not"
+              ],
+              "type": "bool"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Reward",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "admin",
+              "docs": [
+                "Backend admin to distribute rewards"
+              ],
+              "type": "publicKey"
+            },
+            {
+              "name": "rewardMint",
+              "docs": [
+                "Reward Token Mint Address"
+              ],
+              "type": "publicKey"
+            },
+            {
+              "name": "totalRewardedAmount",
+              "docs": [
+                "Total Rewarded Token Amount"
+              ],
+              "type": "u64"
+            },
+            {
+              "name": "dailyRewardAmount",
+              "docs": [
+                "Daily Reward Token Amount to be distributed"
+              ],
+              "type": "u64"
+            },
+            {
+              "name": "rewardRate",
+              "docs": [
+                "Reward Token Share Percent"
+              ],
+              "type": "f64"
+            },
+            {
+              "name": "lastRewardedTs",
+              "docs": [
+                "Last Distribution Reward timestamp"
+              ],
+              "type": "i64"
+            },
+            {
+              "name": "frequency",
+              "docs": [
+                "Frequency: 24 hours (12pm EST)"
+              ],
+              "type": "i64"
+            },
+            {
+              "name": "isRewardPaused",
+              "docs": [
+                "check if reward is paused or not"
+              ],
+              "type": "bool"
+            }
+          ]
+        }
+      },
+      {
+        "name": "StakerAccount",
+        "docs": [
+          "Staker account to store each stakers info"
+        ],
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "owner",
+              "docs": [
+                "Stake Account Owner (Staker) to upgrade/delete any values."
+              ],
+              "type": "publicKey"
+            },
+            {
+              "name": "stakedAmount",
+              "docs": [
+                "staked amount in total"
+              ],
+              "type": "u64"
+            },
+            {
+              "name": "lastRewardRate",
+              "docs": [
+                "lpfi last reward rate"
+              ],
+              "type": "f64"
+            },
+            {
+              "name": "secRewardAmount",
+              "docs": [
+                "Second reward amount"
+              ],
+              "type": "u64"
+            },
+            {
+              "name": "lastSecRewardRate",
+              "docs": [
+                "last reward rate"
+              ],
+              "type": "f64"
+            },
+            {
+              "name": "lastActionTs",
+              "docs": [
+                "staked timestamp (datetime) in seconds"
+              ],
+              "type": "i64"
+            }
+          ]
+        }
+      }
+    ],
+    "errors": [
+      {
+        "code": 6000,
+        "name": "InvalidTxSigner",
+        "msg": "Invalid Transaction Signer"
+      },
+      {
+        "code": 6001,
+        "name": "InvalidProgramOwner",
+        "msg": "Invalid Program Deployer"
+      },
+      {
+        "code": 6002,
+        "name": "InvalidAccountOwner",
+        "msg": "Invalid Account Owner"
+      },
+      {
+        "code": 6003,
+        "name": "InvalidAdmin",
+        "msg": "Invalid Account Admin"
+      },
+      {
+        "code": 6004,
+        "name": "InvalidTokenAccountOwner",
+        "msg": "Invalid Token Account Owner"
+      },
+      {
+        "code": 6005,
+        "name": "InvalidTokenAccountMint",
+        "msg": "Invalid Token Account Mint"
+      },
+      {
+        "code": 6006,
+        "name": "InvalidArguments",
+        "msg": "Invalid Arguments"
+      },
+      {
+        "code": 6007,
+        "name": "InvalidInputAmount",
+        "msg": "Invalid Input Amount"
+      },
+      {
+        "code": 6008,
+        "name": "InvalidInputAddress",
+        "msg": "Invalid Input Address"
+      },
+      {
+        "code": 6009,
+        "name": "InvalidLPFi",
+        "msg": "Invalid LPFi Token"
+      },
+      {
+        "code": 6010,
+        "name": "ZeroToClose",
+        "msg": "Data should be zero to close account"
+      },
+      {
+        "code": 6011,
+        "name": "InvalidProgramId",
+        "msg": "Invalid Program ID"
+      },
+      {
+        "code": 6012,
+        "name": "UnexpectedAccount",
+        "msg": "Unexpected account"
+      },
+      {
+        "code": 6013,
+        "name": "AccountInUse",
+        "msg": "Account is in use"
+      },
+      {
+        "code": 6014,
+        "name": "ValueInUse",
+        "msg": "Value is in use"
+      },
+      {
+        "code": 6015,
+        "name": "StakerNotExist",
+        "msg": "Anyone have not participated on staking"
+      },
+      {
+        "code": 6016,
+        "name": "RewardPaused",
+        "msg": "Reward paused"
+      },
+      {
+        "code": 6017,
+        "name": "StakingPaused",
+        "msg": "Staking paused"
+      },
+      {
+        "code": 6018,
+        "name": "InsufficientAccountBalance",
+        "msg": "Insufficient Staker Account Balance"
+      },
+      {
+        "code": 6019,
+        "name": "InsufficientPool",
+        "msg": "Insufficient Pool Balance"
+      }
+    ],
+    "metadata": {
+      "address": "5WC8qPFp6dJ4aC5HQ4Jb9gBwKx4yXVQTyH2s5rXNNkLp"
+    }
+  }

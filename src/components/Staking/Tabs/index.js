@@ -5,7 +5,14 @@ import Account from "./Account";
 import UnStake from "./UnStake";
 import StakingTabWrapper from "styles/StakingTab.style";
 
-const Tabs = ({ publicKey }) => {
+const Tabs = ({
+  PriceHandler,
+  BalanceHandler,
+  publicKey,
+  wallet,
+  OpenContractSnackbar,
+  lpfi_user_Info,
+}) => {
   const changeRadius = () => {
     document
       .getElementById("nav-tabContent")
@@ -78,7 +85,15 @@ const Tabs = ({ publicKey }) => {
                       role="tabpanel"
                       aria-labelledby="nav-Stake-tab"
                     >
-                      <Stake publicKey={publicKey} />
+                      <Stake
+                        {...{
+                          PriceHandler,
+                          BalanceHandler,
+                          publicKey,
+                          wallet,
+                          OpenContractSnackbar,
+                        }}
+                      />
                     </div>
 
                     <div
@@ -87,7 +102,14 @@ const Tabs = ({ publicKey }) => {
                       role="tabpanel"
                       aria-labelledby="nav-UnStake-tab"
                     >
-                      <UnStake publicKey={publicKey} />
+                      <UnStake
+                        {...{
+                          publicKey,
+                          wallet,
+                          OpenContractSnackbar,
+                          lpfi_user_Info,
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -95,7 +117,9 @@ const Tabs = ({ publicKey }) => {
             </div>
           </div>
           <div className="col-lg-6 col-12">
-            <Account />
+            <Account
+              {...{ publicKey, wallet, lpfi_user_Info, OpenContractSnackbar }}
+            />
           </div>
         </div>
       </StakingTabWrapper>

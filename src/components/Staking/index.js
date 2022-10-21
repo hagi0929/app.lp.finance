@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Tabs from "./Tabs";
 import StakingWrapper from "styles/Staking.style";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Overview from "./Overview";
+import { useCrypto } from "contexts/CryptoContext";
+import { useContractSnackbar } from "contexts/ContractSnackbarContext";
+import { useGlobal } from "contexts/GlobalContext";
 
 const Staking = () => {
   const wallet = useWallet();
   const { publicKey } = wallet;
+
+  const { lpfi_Info, lpfi_user_Info, handle_lpfi_info, handle_lpfi_user_info } =
+    useGlobal();
+  const { PriceHandler, BalanceHandler } = useCrypto();
+  const { OpenContractSnackbar, ContractSnackbarType } = useContractSnackbar();
+
+  useEffect(() => {
+    if (ContractSnackbarType === "Success") {
+      handle_lpfi_info();
+      handle_lpfi_user_info();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ContractSnackbarType]);
 
   return (
     <>
@@ -22,8 +38,17 @@ const Staking = () => {
               </div>
             </div>
           </div>
-          <Overview />
-          <Tabs publicKey={publicKey} />
+          <Overview {...{ lpfi_Info }} />
+          <Tabs
+            {...{
+              wallet,
+              PriceHandler,
+              BalanceHandler,
+              publicKey,
+              OpenContractSnackbar,
+              lpfi_user_Info,
+            }}
+          />
         </div>
       </StakingWrapper>
     </>

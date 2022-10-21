@@ -3,13 +3,58 @@ import Input from "Layout/Form/Input";
 import Button from "Layout/Button";
 import Image from "Layout/Image";
 import WalletButton from "components/globalComponents/WalletButton";
+import { blockInvalidChar } from "helper";
+import { unstake_lpfi } from "lp-program/lpfiStaking";
 
-const UnStake = ({ publicKey }) => {
+const UnStake = ({
+  publicKey,
+  wallet,
+  OpenContractSnackbar,
+  lpfi_user_Info,
+}) => {
+  const [message, setMessage] = useState("UnStake");
+  const [amount, setAmount] = useState("");
+  const [Required, setRequired] = useState(false);
+
   const [selected] = useState({
     logoURI: "/favicon.ico",
     symbol: "LPFi",
-    balance: 0,
   });
+
+  const handleAmount = (e) => {
+    setAmount(e.target.value);
+
+    if (e.target.value) {
+      if (e.target.value <= lpfi_user_Info.staked_amount) {
+        setMessage("UnStake");
+        setRequired(true);
+      } else {
+        setMessage("UnStake amount exceeded");
+        setRequired(false);
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
+
+  const handleProgram = async () => {
+    if (amount > 0) {
+      if (Required && publicKey) {
+        await unstake_lpfi(
+          wallet,
+          amount,
+          setMessage,
+          setRequired,
+          setAmount,
+          OpenContractSnackbar
+        );
+      }
+    } else {
+      setMessage("Enter an amount");
+      setRequired(false);
+    }
+  };
 
   return (
     <>
@@ -23,6 +68,9 @@ const UnStake = ({ publicKey }) => {
                     name="amount"
                     id="amount"
                     type="number"
+                    value={amount}
+                    onChange={(e) => handleAmount(e)}
+                    onKeyDown={blockInvalidChar}
                     className={publicKey ? null : "not-allowed"}
                     placeholder="0.0"
                     disabled={publicKey ? false : true}
@@ -37,7 +85,13 @@ const UnStake = ({ publicKey }) => {
                       p="0.3rem 0.6rem"
                       br="4px"
                       size="0.8rem"
-                      className="not-allowed"
+                      className={publicKey ? null : "not-allowed"}
+                      disabled={publicKey ? false : true}
+                      onClick={() => {
+                        setAmount(lpfi_user_Info.staked_amount);
+                        setRequired(true);
+                        setMessage("UnStake");
+                      }}
                     >
                       Max
                     </Button>
@@ -74,9 +128,11 @@ const UnStake = ({ publicKey }) => {
                     active={1}
                     p="0.6rem 2rem"
                     br="10px"
-                    className="not-allowed"
+                    disabled={!publicKey ? true : false}
+                    className={!publicKey ? "not-allowed" : null}
+                    onClick={() => handleProgram()}
                   >
-                    UnStake
+                    {message}
                   </Button>
                 </div>
               )}

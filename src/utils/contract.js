@@ -1,5 +1,6 @@
 import * as anchor from "@project-serum/anchor";
 import lp_idl from "idls/lpfinance.json";
+import lpfi_staking_idl from "idls/lpfi_staking.json";
 import lpIncentives_Idl from "idls/lpIncentives.json";
 import { getCTokenInfo } from "constants/global";
 import {
@@ -67,6 +68,8 @@ export const getProgram = (wallet, idl_name) => {
     idl = lp_idl;
   } else if (idl_name === "lpIn_Idl") {
     idl = lpIncentives_Idl;
+  } else if (idl_name === "lpfi_staking_idl") {
+    idl = lpfi_staking_idl;
   }
 
   const provider = getProvider(wallet);
