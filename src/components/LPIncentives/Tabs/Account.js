@@ -12,7 +12,7 @@ const Account = ({ nLPUserInfo }) => {
       {
         id: 1,
         title: "Staked",
-        value: `$${numFormatter(nLPUserInfo.staked_amount)}`,
+        value: `${numFormatter(nLPUserInfo.staked_amount)}`,
         css: "3px solid rgba(255, 255, 255, 0.2)",
       },
       {

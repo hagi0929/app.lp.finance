@@ -17,8 +17,9 @@ const Account = ({
       {
         id: 1,
         title: "Staked",
-        price: `$${numFormatter(lpfi_user_Info.staked_amount)}`,
+        price: `${numFormatter(lpfi_user_Info.staked_amount)} LPFi`,
         css: "3px solid rgba(255, 255, 255, 0.2)",
+        img: "/favicon.ico",
       },
       {
         id: 2,
@@ -77,7 +78,17 @@ const Account = ({
                             <p>{val.title}</p>
                           </td>
                           <td className="right text-right">
-                            <span>{val.price}</span>
+                            <p>
+                              <span>{val.price}</span>
+                              {val.img && (
+                                <img
+                                  src={val.img}
+                                  alt="LPFi"
+                                  loading="lazy"
+                                  className="ml-1"
+                                />
+                              )}
+                            </p>
                           </td>
                         </tr>
                       );

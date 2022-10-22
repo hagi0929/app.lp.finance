@@ -39,6 +39,7 @@ export const get_lpfi_staker_account_info = async (wallet) => {
 
       const program = getProgram(wallet, "lpfi_staking_idl");
 
+      // eslint-disable-next-line no-unused-vars
       const [stakerAccount, _bump] = await PublicKey.findProgramAddress(
         [Buffer.from(PDA_SEED), Buffer.from(user_wallet.toBuffer())],
         program.programId

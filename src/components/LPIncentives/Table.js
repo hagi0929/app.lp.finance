@@ -68,7 +68,7 @@ const Table = ({ nLPInfo }) => {
                       </div>
                     </td>
                     <td>
-                      <p>${list.TotalStaked}</p>
+                      <p>{list.TotalStaked}</p>
                     </td>
                     <td>
                       <p>{list.RewardAPR}%</p>

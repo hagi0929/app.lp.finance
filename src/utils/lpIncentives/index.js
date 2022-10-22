@@ -16,6 +16,7 @@ export const get_config_info = async (wallet) => {
 
     const nlp_mint = getMint("nlp");
 
+    // eslint-disable-next-line no-unused-vars
     const [config, _bump] = await PublicKey.findProgramAddress(
       [Buffer.from(SEED_PDA), Buffer.from(nlp_mint.toBuffer())],
       program.programId
@@ -101,15 +102,4 @@ export const get_staker_account_info = async (wallet) => {
       RewardList: [],
     };
   }
-};
-
-// get global all account info
-export const get_all_staker_account_info = async (wallet) => {
-  try {
-    const program = getProgram(wallet, "lpIn_Idl");
-
-    const stakersData = await program.account.stakerAccount.all();
-
-    console.table(stakersData);
-  } catch (error) {}
 };

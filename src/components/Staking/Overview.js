@@ -66,7 +66,8 @@ const Overview = ({ lpfi_Info }) => {
                         <tr>
                           <td>Total Staked</td>
                           <td className="list_section_right">
-                            : ${numFormatter(lpfi_Info.total_staked_amount)} LPFi (≈$0)
+                            : {numFormatter(lpfi_Info.total_staked_amount)} LPFi
+                            (≈$0)
                           </td>
                         </tr>
                         <tr>

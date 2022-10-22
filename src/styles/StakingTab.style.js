@@ -165,28 +165,18 @@ const StakingTabWrapper = styled.div`
             }
 
             .right {
+              p {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+
+                img {
+                  height: 2.2rem;
+                  width: auto;
+                }
+              }
               span {
                 color: ${(props) => props.theme.BodyMainColor};
-              }
-
-              .Collateral_list {
-                .Collateral_list_details {
-                  img {
-                    height: 1, 7rem;
-                    width: 1.7rem;
-                  }
-                }
-                .Collateral_list_Price,
-                .Collateral_list_APY {
-                  p {
-                    font-size: 0.8rem;
-
-                    img {
-                      height: 1rem;
-                      width: auto;
-                    }
-                  }
-                }
               }
             }
           }
