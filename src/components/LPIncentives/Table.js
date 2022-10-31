@@ -71,7 +71,7 @@ const Table = ({ nLPInfo }) => {
                       <p>{list.TotalStaked}</p>
                     </td>
                     <td>
-                      <p>{list.RewardAPR}%</p>
+                      <p>{list.RewardAPR}</p>
                     </td>
                   </tr>
                 );
